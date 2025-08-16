@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    margin: 0;
 }
 
 body {
@@ -9,13 +10,24 @@ body {
     align-items: stretch;
 }
 
+a {
+    text-decoration: none;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
 
 /* ——— Sidebar ——— */
 .sidebar {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    background-color: darkgrey;
+    background-color: #2a3647;
+    padding: 64px 0 64px 0;
+    width: 232px;
 }
 
 .sidebar ul {
@@ -40,24 +52,26 @@ main {
 }
 
 header {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     /* zweite Zeile für Titel */
     align-items: center;
     justify-content: space-between;
     row-gap: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+
 }
 
 
 
 /* ——— Header ——— */
 .app-tagline {
-    order: 1;
     align-self: center;
 }
 
 .user-actions {
-    order: 1;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -70,9 +84,14 @@ header {
     justify-content: center;
 }
 
-.header-title {
-    order: 2;
-    flex-basis: 100%;
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.headline {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -85,10 +104,9 @@ header {
     align-self: stretch;
 }
 
-.subline {
+.subheadline {
     display: inline-flex;
     align-items: center;
-
 }
 
 
