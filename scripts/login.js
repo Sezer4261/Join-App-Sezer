@@ -27,3 +27,8 @@ function processLogin(signedUpUser) {
 function navigateToSignup() {
      window.location.href = "signup.html";
 }
+
+function guestLogin() {
+  // Beispiel für Gastlogin (optional)
+  window.location.href = "summary.html";
+}

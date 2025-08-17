@@ -1,0 +1,293 @@
+:root {
+  --sidebar-bg: #2a3647;
+  --sidebar-text: #fff;
+  --main-bg: #f6f7f9;
+  --panel-bg: #fff;
+  --border: #d1d5db;
+  --urgent: #ff3d00;
+  --medium: #ffa800;
+  --low: #7ae229;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: var(--main-bg);
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 16px;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  padding: 12px;
+  border-radius: 8px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  font-size: 15px;
+  text-align: left;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.sidebar-footer a {
+  color: #d1d5db;
+  text-decoration: none;
+}
+
+.sidebar-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 60px;
+  background: var(--panel-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Content */
+.content {
+  padding: 24px 40px;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.task-form {
+  display: flex;
+  gap: 40px;
+}
+
+.form-left,
+.form-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.req {
+  color: red;
+  margin-left: 4px;
+}
+
+input,
+textarea,
+select {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.note {
+  font-size: 12px;
+  color: red;
+}
+
+/* Priority */
+.priority {
+  display: flex;
+  gap: 8px;
+}
+
+.prio {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+}
+
+.prio.urgent { background: var(--urgent); }
+.prio.medium { background: var(--medium); color: #000; }
+.prio.low { background: var(--low); color: #000; }
+
+/* Subtasks */
+.subtasks {
+  display: flex;
+  gap: 8px;
+}
+
+.plus {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.clear,
+.create {
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border);
+}
+
+.clear {
+  background: var(--panel-bg);
+}
+
+.create {
+  background: var(--sidebar-bg);
+  color: #fff;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablet: Sidebar schmal, 1-spaltiges Formular */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 70px;
+    align-items: center;
+    padding: 20px 8px;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .nav-item {
+    text-align: center;
+    font-size: 13px;
+    padding: 8px 4px;
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+
+  .task-form {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Smartphone: Sidebar wird Bottom-Navigation */
+@media (max-width: 600px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  .side-nav {
+    flex-direction: row;
+    gap: 16px;
+    margin: 0;
+  }
+
+  .nav-item {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .logo,
+  .sidebar-footer {
+    display: none;
+  }
+
+  .main {
+    margin-bottom: 60px; /* Platz für Bottom-Bar */
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+}
