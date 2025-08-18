@@ -6,6 +6,7 @@ html,
 body {
     height: 100%;
     margin: 0;
+    background-color: #F6F7F8;
 }
 
 body {
@@ -119,8 +120,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    column-gap: 16px;
-    row-gap: 8px;
+    gap: 32px;
 }
 
 h1 {
@@ -161,7 +161,13 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 32px;
+    width: 264px;
+    height: 168px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .card-text {
@@ -185,12 +191,25 @@ h1 {
 }
 
 /* Deadline-Card */
+
+.deadline-container {
+    display: flex;
+    justify-content: center;
+}
+
 .deadline-card {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 24px;
     flex-wrap: wrap;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    width: 560px;
+    height: 168px;
+
 }
 
 .deadline-card-left {
@@ -236,6 +255,12 @@ h1 {
     align-items: center;
     justify-content: center;
     text-align: center;
+    width: 168px;
+    height: 168px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 aside {
