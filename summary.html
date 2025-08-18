@@ -31,21 +31,25 @@
     </nav>
     <main>
         <header>
-            <p class="app-tagline">Kanban Project Management Tool</p>
+            <div class="center">
+                <p class="app-tagline">Kanban Project Management Tool</p>
+            </div>
+
             <div class="user-actions">
                 <img class="help-icon" src="./assets/icons/help.svg" alt="Help">
                 <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
             </div>
         </header>
-        <div class="headline">
-            <h1>Join 360</h1>
-            <div class="header-separating-line-v"></div>
-            <span class="subheadline">Key Metrics at a Glance</span>
-        </div>
 
         <div class="wrapper">
 
             <section class="dashboard">
+                <div class="headline">
+                    <h1>Join 360</h1>
+                    <div class="header-separating-line-v"></div>
+                    <span class="subheadline">Key Metrics at a Glance</span>
+                </div>
+
                 <div class="kpi-container">
                     <div class="kpi-card">
                         <img src="./assets/icons/edit.svg" alt="Edit-Icon">
@@ -89,21 +93,21 @@
                     <div class="task-summary-card">
                         <figure>
                             <h2 class="card-value" id="total-tasks-board">0</h2>
-                            <figcaption class="card-subtitle">Tasks in Board</figcaption>
+                            <figcaption class="card-subtitle">Tasks in<br>Board</figcaption>
                         </figure>
 
                     </div>
                     <div class="task-summary-card">
                         <figure>
                             <h2 class="card-value" id="total-tasks-progress">0</h2>
-                            <figcaption class="card-subtitle">Tasks in Progress</figcaption>
+                            <figcaption class="card-subtitle">Tasks in<br>Progress</figcaption>
                         </figure>
 
                     </div>
                     <div class="task-summary-card">
                         <figure>
                             <h2 class="card-value" id="total-awaiting-feedback">0</h2>
-                            <figcaption class="card-subtitle">Awaiting Feedback</figcaption>
+                            <figcaption class="card-subtitle">Awaiting<br>Feedback</figcaption>
                         </figure>
                     </div>
                 </div>
@@ -112,7 +116,7 @@
 
             <aside>
                 <div class="welcome-msg-box" id="welcome-msg-box">
-                    <h2 class="welcome-msg" id="welcome-msg">Welcome, </h2>
+                    <span class="welcome-msg" id="welcome-msg">Welcome, </span>
                     <span class="username-field" id="username-field">User</span>
                 </div>
             </aside>
