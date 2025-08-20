@@ -36,6 +36,13 @@ body {
   padding: 24px 16px;
 }
 
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
 .side-nav {
   display: flex;
   flex-direction: column;
