@@ -163,23 +163,56 @@ textarea {
 }
 
 /* Priority */
-.priority {
+.priority-options {
   display: flex;
   gap: 8px;
 }
 
-.prio {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  color: #fff;
+.priority-options input {
+  display: none; /* Radio Buttons ausblenden */
 }
 
-.prio.urgent { background: var(--urgent); }
-.prio.medium { background: var(--medium); color: #000; }
-.prio.low { background: var(--low); color: #000; }
+.priority-options label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 100px;
+  padding: 8px 16px;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
+  color: #000;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.priority-options .icon {
+  width: 10px;
+  height: 10px;
+}
+
+/* Aktive Auswahl färben */
+.priority-options input#urgent:checked + label.urgent {
+  background: #FF3D00;
+  color: white;
+  border-color: #FF3D00;
+}
+
+.priority-options input#medium:checked + label.medium {
+  background: #FFA800;
+  color: white;
+  border-color: #FFA800;
+}
+
+.priority-options input#low:checked + label.low {
+  background: #7AE229;
+  color: white;
+  border-color: #7AE229;
+}
+
+
 
 /* Subtasks */
 .subtasks {

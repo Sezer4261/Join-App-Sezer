@@ -1,17 +1,19 @@
 <!doctype html>
 <html lang="de">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Join – Add Task</title>
   <link rel="stylesheet" href="./styles/addTask.css">
 </head>
+
 <body>
   <div class="app">
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="logo">
-       <img src="./assets/img/join_logo_white.svg" alt="JOIN-LOGO">
+        <img src="./assets/img/join_logo_white.svg" alt="JOIN-LOGO">
       </div>
 
       <nav class="side-nav">
@@ -58,14 +60,21 @@
 
           <!-- Right side -->
           <div class="form-right">
-            <label>
-              Priority
-              <div class="priority">
-                <button type="button" class="prio urgent">Urgent</button>
-                <button type="button" class="prio medium">Medium</button>
-                <button type="button" class="prio low">Low</button>
+            <div class="priority">
+              <span>Priority</span>
+              <div class="priority-options">
+                <input type="radio" id="urgent" name="priority" value="urgent">
+                <label for="urgent" class="urgent">Urgent <img src="./assets/img/Category_Urgent.svg" alt="Kategorie Urgent" class="icon"></label>
+
+                <input type="radio" id="medium" name="priority" value="medium" checked>
+                <label for="medium" class="medium">Medium <img src="./assets/img/Category_Medium.svg" alt="Kategorie Medium" class="icon"></label>
+
+                <input type="radio" id="low" name="priority" value="low">
+                <label for="low" class="low">Low <img src="./assets/img/Category_Low.svg" alt="Kategorie Low" class="icon"></label>
               </div>
-            </label>
+            </div>
+
+
 
             <label>
               Assigned to
@@ -99,4 +108,5 @@
     </main>
   </div>
 </body>
+
 </html>
