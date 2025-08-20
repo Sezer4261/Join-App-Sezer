@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join - Log In</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="main-nav">
+    <ul>
+        <li><a href="board.html">Board</a></li>
+        <li><a href="contacts.html">Contacts</a></li>
+        <li><a href="add-task.html">Add Task</a></li>
+        <li><a href="help.html">Help</a></li>
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="legal-notice.html">Legal Notice</a></li>
+    </ul>
+</nav>
+
+
+    <div class="top-right-link">
+        <span>Not a Join User?</span>
+        <button class="btn btn-primary" onclick="window.location.href='signup.html'">Sign Up</button>
+    </div>
+
+    <main>
+        <div class="login-container">
+            <h2>Log In</h2>
+            <form onsubmit="handleLogin(event)">
+                <input type="email" id="email" placeholder="E-Mail" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <div style="display:flex; gap:10px; justify-content:center; margin-top: 10px;">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="button" class="btn btn-secondary" onclick="guestLogin()">Guest Log in</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            window.location.href = 'board.html';
+        }
+
+        function guestLogin() {
+            window.location.href = 'board.html';
+        }
+    </script>
+
+</body>
+</html>

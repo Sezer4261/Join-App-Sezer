@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/summary.css">
+
+    <title>Summary</title>
+</head>
+
+<body>
+    <nav class="sidebar">
+        <img class="logo" src="./assets/img/join_logo_white.svg" alt="Join Logo">
+
+        <ul>
+            <li><img src="./assets/icons/vector_summ.svg" alt="Vector-Summary-Icon"><a href="summary.html"
+                    aria-current="page">Summary</a></li>
+            <li><img src="./assets/icons/edit_square.svg" alt=" Edit-Square-Icon"><a href="add-task.html">Add Task</a>
+            </li>
+            <li><img src="./assets/icons/vector_board.svg" alt="Vector-Board-Icon"><a href="board.html">Board</a></li>
+            <li><img src="./assets/icons/perm_contact_calendar.svg" alt="Contact-Calendar-Icon"><a
+                    href="contacts.html">Contacts</a></li>
+        </ul>
+
+
+        <footer class="sidebar-footer">
+            <a href="./privacy-policy.html">Privacy Policy</a>
+            <a href="./legal-notice.html">Legal notice</a>
+        </footer>
+    </nav>
+    <main>
+        <header>
+            <div class="center">
+                <p class="app-tagline">Kanban Project Management Tool</p>
+            </div>
+
+            <div class="user-actions">
+                <img class="help-icon" src="./assets/icons/help.svg" alt="Help">
+                <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
+            </div>
+        </header>
+
+        <div class="wrapper">
+
+            <section class="dashboard">
+                <div class="headline">
+                    <h1>Join 360</h1>
+                    <div class="header-separating-line-v"></div>
+                    <span class="subheadline">Key Metrics at a Glance</span>
+                </div>
+
+                <div class="kpi-container">
+                    <div class="kpi-card">
+                        <img src="./assets/icons/edit.svg" alt="Edit-Icon">
+                        <figure class="card-text">
+                            <h2 class="card-value" id="total-to-do">0</h2>
+                            <figcaption class="card-subtitle">To-do</figcaption>
+                        </figure>
+                    </div>
+
+                    <div class="kpi-card">
+
+                        <img src="./assets/icons/checkmark.svg" alt="Checkmark-Icon">
+                        <figure class="card-text">
+                            <h2 class="card-value" id="total-done">0</h2>
+                            <figcaption class="card-subtitle">Done</figcaption>
+                        </figure>
+                    </div>
+
+                </div>
+                
+                <div class="deadline-container">
+                    <div class="deadline-card">
+                        <div class="deadline-card-left">
+                            <img src="./assets/icons/prio_alta.svg" alt="Prio Alta">
+                            <figure class="card-text">
+                                <h2 class="card-value" id="total-urgent">0</h2>
+                                <figcaption class="card-subtitle">Urgent</figcaption>
+                            </figure>
+                        </div>
+
+                        <div class="deadline-card-separating-line-v"></div>
+
+                        <div class="deadline-card-right">
+                            <figure class="card-text">
+                                <h3 class="due-date" id="due-date">Month DD, YYYY</h3>
+                                <figcaption class="card-subtitle">Upcoming Deadline</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-summary">
+                    <div class="task-summary-card">
+                        <figure>
+                            <h2 class="card-value" id="total-tasks-board">0</h2>
+                            <figcaption class="card-subtitle">Tasks in<br>Board</figcaption>
+                        </figure>
+
+                    </div>
+                    <div class="task-summary-card">
+                        <figure>
+                            <h2 class="card-value" id="total-tasks-progress">0</h2>
+                            <figcaption class="card-subtitle">Tasks in<br>Progress</figcaption>
+                        </figure>
+
+                    </div>
+                    <div class="task-summary-card">
+                        <figure>
+                            <h2 class="card-value" id="total-awaiting-feedback">0</h2>
+                            <figcaption class="card-subtitle">Awaiting<br>Feedback</figcaption>
+                        </figure>
+                    </div>
+                </div>
+
+            </section>
+
+            <aside>
+                <div class="welcome-msg-box" id="welcome-msg-box">
+                    <span class="welcome-msg" id="welcome-msg">Welcome, </span>
+                    <span class="username-field" id="username-field">User</span>
+                </div>
+            </aside>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

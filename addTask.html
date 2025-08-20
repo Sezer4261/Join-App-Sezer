@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join – Add Task</title>
+  <link rel="stylesheet" href="./styles/addTask.css">
+</head>
+
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="./assets/img/join_logo_white.svg" alt="JOIN-LOGO">
+      </div>
+
+      <nav class="side-nav">
+        <a href="#" class="nav-item">Summary</a>
+        <a href="#" class="nav-item active">Add Task</a>
+        <a href="#" class="nav-item">Board</a>
+        <a href="#" class="nav-item">Contacts</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Legal notice</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <header class="topbar">
+        <div class="avatar">SM</div>
+      </header>
+
+      <section class="content">
+        <h1>Add Task</h1>
+
+        <form class="task-form">
+          <!-- Left side -->
+          <div class="form-left">
+            <label>
+              Title<span class="req">*</span>
+              <input type="text" placeholder="Enter a title">
+            </label>
+
+            <label>
+              Description
+              <textarea placeholder="Enter a Description"></textarea>
+            </label>
+
+            <label>
+              Due date<span class="req">*</span>
+              <input type="text" placeholder="dd/mm/yyyy">
+            </label>
+            <p class="note">* This field is required</p>
+          </div>
+
+          <!-- Right side -->
+          <div class="form-right">
+            <div class="priority">
+              <span>Priority</span>
+              <div class="priority-options">
+                <input type="radio" id="urgent" name="priority" value="urgent">
+                <label for="urgent" class="urgent">Urgent <img src="./assets/img/Category_Urgent.svg" alt="Kategorie Urgent" class="icon"></label>
+
+                <input type="radio" id="medium" name="priority" value="medium" checked>
+                <label for="medium" class="medium">Medium <img src="./assets/img/Category_Medium.svg" alt="Kategorie Medium" class="icon"></label>
+
+                <input type="radio" id="low" name="priority" value="low">
+                <label for="low" class="low">Low <img src="./assets/img/Category_Low.svg" alt="Kategorie Low" class="icon"></label>
+              </div>
+            </div>
+
+
+
+            <label>
+              Assigned to
+              <select>
+                <option>Select contacts to assign</option>
+              </select>
+            </label>
+
+            <label>
+              Category<span class="req">*</span>
+              <select>
+                <option>Select task category</option>
+              </select>
+            </label>
+
+            <label>
+              Subtasks
+              <div class="subtasks">
+                <input type="text" placeholder="Add new subtask">
+                <button type="button" class="plus">+</button>
+              </div>
+            </label>
+
+            <div class="actions">
+              <button type="reset" class="clear">Clear ✕</button>
+              <button type="submit" class="create">Create Task ▾</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>
