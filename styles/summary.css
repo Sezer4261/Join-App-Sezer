@@ -15,99 +15,6 @@ body {
     align-items: stretch;
 }
 
-a {
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.logo {
-    width: 100px;
-    height: auto;
-    margin-bottom: 110px;
-}
-
-
-/* ——— Sidebar ——— */
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #2a3647;
-    padding: 64px 0 64px 0;
-    width: 232px;
-}
-
-.sidebar ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 16px;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar ul div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-    width: 100px;
-    cursor: pointer;
-}
-
-.sidebar li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-    width: 232px;
-    cursor: pointer;
-    padding: 8px 0;
-}
-
-.sidebar li:hover {
-    background-color: #2A3D59;
-}
-
-ul img {
-    width: 30px;
-    height: 30px;
-}
-
-.sidebar ul a {
-    width: 63px;
-    text-align: left;
-    color: #cdcdcd;
-    font-weight: 400;
-    font-size: 16px;
-}
-
-.sidebar-footer {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.sidebar-footer a {
-    color: #cdcdcd;
-    font-size: 16px;
-    font-weight: 400;
-    padding: 4px;
-    margin: 4px;
-    cursor: pointer;
-}
-
-.sidebar-footer a:hover {
-    color: #29abe2;
-    transform: scale(1.05);
-}
-
 main {
     display: flex;
     flex-direction: column;
@@ -133,8 +40,6 @@ header {
     width: 668px;
 }
 
-
-/* ——— Header ——— */
 .app-tagline {
     font-size: 20px;
     width: 575px;
@@ -165,7 +70,6 @@ header {
     width: 32px;
     height: 32px;
     cursor: pointer;
-
 }
 
 .wrapper {
@@ -200,8 +104,6 @@ h1 {
     align-items: center;
 }
 
-
-/* ——— Dashboard-Section ——— */
 .dashboard {
     display: flex;
     flex-direction: column;
@@ -210,7 +112,6 @@ h1 {
     width: 700px;
 }
 
-/* KPI (To-do / Done) */
 .kpi-container {
     display: flex;
     justify-content: center;
@@ -235,7 +136,6 @@ h1 {
     transform: scale(1.1);
     background-color: #2a3647;
     color: white;
-
 }
 
 .kpi-card:hover .card-icon {
@@ -256,13 +156,11 @@ h1 {
     align-items: center;
     justify-content: center;
     text-align: center;
-
 }
 
 .card-value {
     text-align: center;
     font-size: 64px;
-
 }
 
 .card-subtitle {
@@ -283,8 +181,6 @@ h1 {
 .edit-svg-path {
     fill: white;
 }
-
-/* Deadline-Card */
 
 .deadline-container {
     display: flex;
@@ -327,7 +223,6 @@ h1 {
 }
 
 .deadline-card-separating-line-v {
-
     height: 102px;
     width: 2px;
     background-color: #D1D1D1;
@@ -340,7 +235,6 @@ h1 {
     font-style: bold;
 }
 
-/* Task Summary */
 .task-summary {
     display: flex;
     align-items: stretch;
@@ -374,7 +268,6 @@ aside {
     justify-content: center;
 }
 
-/* ——— Greeting/Aside ——— */
 .welcome-msg-box {
     display: flex;
     flex-direction: column;
