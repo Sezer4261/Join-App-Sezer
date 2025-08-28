@@ -51,7 +51,7 @@
     padding: 8px 0;
 }
 
-.sidebar li:hover {
+.sidebar-li-hover-effect:hover {
     background-color: #2A3D59;
 }
 
@@ -72,19 +72,33 @@ ul img {
     margin-top: auto;
     display: flex;
     flex-direction: column;
-    gap: 8px;
 }
 
 .sidebar-footer a {
     color: #cdcdcd;
     font-size: 16px;
     font-weight: 400;
-    padding: 4px;
-    margin: 4px;
     cursor: pointer;
+    text-align: left;
+    width: 95px;
+
 }
 
-.sidebar-footer a:hover {
+.sidebar-footer-link-hover-effect:hover {
     color: #29abe2;
     transform: scale(1.05);
+
+}
+
+
+.footer-link-container {
+    width: 232px;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.highlighted {
+    background-color: #091931;
 }
