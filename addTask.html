@@ -6,28 +6,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Join – Add Task</title>
   <link rel="stylesheet" href="./styles/addTask.css">
+  <link rel="stylesheet" href="./styles/sidebar.css">
 </head>
 
 <body>
   <div class="app">
     <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="logo">
-        <img src="./assets/img/join_logo_white.svg" alt="JOIN-LOGO">
-      </div>
+    <nav class="sidebar">
+      <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
 
-      <nav class="side-nav">
-        <a href="#" class="nav-item">Summary</a>
-        <a href="#" class="nav-item active">Add Task</a>
-        <a href="#" class="nav-item">Board</a>
-        <a href="#" class="nav-item">Contacts</a>
-      </nav>
+      <ul>
+        <li>
+          <div>
+            <img src="./assets/icons/vector_summ.svg" alt="Summary-Icon">
+            <a href="summary.html" aria-current="page">Summary</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="./assets/icons/edit_square.svg" alt=" Edit-Square-Icon">
+            <a href="addTask.html">Add Task</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="./assets/icons/vector_board.svg" alt="Board-Icon">
+            <a href="board.html">Board</a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <img src="./assets/icons/perm_contact_calendar.svg" alt="Contact-Calendar-Icon">
+            <a href="contacts.html">Contacts</a>
+          </div>
+        </li>
+      </ul>
 
-      <div class="sidebar-footer">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Legal notice</a>
-      </div>
-    </aside>
+      <footer class="sidebar-footer">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <a href="./legal-notice.html">Legal notice</a>
+      </footer>
+    </nav>
 
     <!-- Main -->
     <main class="main">
@@ -64,13 +83,16 @@
               <span>Priority</span>
               <div class="priority-options">
                 <input type="radio" id="urgent" name="priority" value="urgent">
-                <label for="urgent" class="urgent">Urgent <img src="./assets/img/Category_Urgent.svg" alt="Kategorie Urgent" class="icon"></label>
+                <label for="urgent" class="urgent">Urgent <img src="./assets/img/Category_Urgent.svg"
+                    alt="Kategorie Urgent" class="icon"></label>
 
                 <input type="radio" id="medium" name="priority" value="medium" checked>
-                <label for="medium" class="medium">Medium <img src="./assets/img/Category_Medium.svg" alt="Kategorie Medium" class="icon"></label>
+                <label for="medium" class="medium">Medium <img src="./assets/img/Category_Medium.svg"
+                    alt="Kategorie Medium" class="icon"></label>
 
                 <input type="radio" id="low" name="priority" value="low">
-                <label for="low" class="low">Low <img src="./assets/img/Category_Low.svg" alt="Kategorie Low" class="icon"></label>
+                <label for="low" class="low">Low <img src="./assets/img/Category_Low.svg" alt="Kategorie Low"
+                    class="icon"></label>
               </div>
             </div>
 

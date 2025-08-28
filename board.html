@@ -6,26 +6,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanban Board</title>
     <link rel="stylesheet" href="./styles/board.css">
+    <link rel="stylesheet" href="./styles/sidebar.css">
+    <script src="./boardKopie.js"></script>
 </head>
 
-<body>
+<body onload="renderBoard()">
     <div class="app">
-        <!-- Sidebar -->
+        <!-- Sidebar 
         <aside class="sidebar">
             <div class="logo">
                 <img src="./assets/img/join_logo_white.svg" alt="Join Logo">
             </div>
             <nav class="side-nav">
-                <a href="#" class="nav-item">Summary</a>
-                <a href="#" class="nav-item">Add Task</a>
-                <a href="#" class="nav-item active">Board</a>
-                <a href="#" class="nav-item">Contacts</a>
+                <a href="./summary.html" class="nav-item">Summary</a>
+                <a href="./addTask.html" class="nav-item">Add Task</a>
+                <a href="./board.html" class="nav-item active">Board</a>
+                <a href="./contacts.html" class="nav-item">Contacts</a>
             </nav>
             <div class="sidebar-footer">
                 <a href="#">Privacy Policy</a>
                 <a href="#">Legal notice</a>
             </div>
-        </aside>
+        </aside> -->
+
+        <nav class="sidebar">
+            <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
+
+            <ul>
+                <li class="nav-item">
+                    <div>
+                        <img src="./assets/icons/vector_summ.svg" alt="Summary-Icon">
+                        <a href="summary.html" aria-current="page">Summary</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div>
+                        <img src="./assets/icons/edit_square.svg" alt=" Edit-Square-Icon">
+                        <a href="addTask.html">Add Task</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div>
+                        <img src="./assets/icons/vector_board.svg" alt="Board-Icon">
+                        <a href="board.html">Board</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div>
+                        <img src="./assets/icons/perm_contact_calendar.svg" alt="Contact-Calendar-Icon">
+                        <a href="contacts.html">Contacts</a>
+                    </div>
+                </li>
+            </ul>
+
+
+            <footer class="sidebar-footer">
+                <a href="./privacy-policy.html">Privacy Policy</a>
+                <a href="./legal-notice.html">Legal notice</a>
+            </footer>
+        </nav>
 
         <!-- Main -->
         <main class="main">
@@ -35,112 +74,17 @@
             </div>
 
             <!-- Content -->
-            <div class="content">
-                <div class="board-header">
-                    <h1>Board</h1>
-                    <div class="board-actions">
-                        <div class="board-search">
-                            <input type="text" placeholder="Find Task">
-                            <!-- Lupe als Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
-                            </svg>
-                        </div>
-                        <button class="add-task-btn">Add Task +</button>
-                    </div>
-                </div>
-                <div class="board">
-                    <!-- Column -->
-                    <div class="column">
-                        <div class="column-header">
-                            <h2>To do</h2>
-                            <button class="add-col">+</button>
-                        </div>
-                        <div class="card empty">No tasks To do</div>
-                    </div>
+            <div class="content" id="board-content">
 
-                    <div class="column">
-                        <div class="column-header">
-                            <h2>In progress</h2>
-                            <button class="add-col">+</button>
-                        </div>
-                        <div class="card">
-                            <span class="tag blue">User Story</span>
-                            <h3>Kochwelt Page & Recipe Recommender</h3>
-                            <p>Build start page with recipe recommendations…</p>
-                            <div class="progress">
-                                <div class="bar"></div>
-                            </div>
-                            <div class="footer">
-                                <div class="avatars">
-                                    <span class="circle">AM</span>
-                                    <span class="circle">EM</span>
-                                    <span class="circle">MB</span>
-                                </div>
-                                <span class="subtasks">1/2 Subtasks</span>
-                            </div>
-                        </div>
-                    </div>
+            </div>
 
-                    <div class="column">
-                        <div class="column-header">
-                            <h2>Await feedback</h2>
-                            <button class="add-col">+</button>
-                        </div>
-                        <div class="card">
-                            <span class="tag green">Technical Task</span>
-                            <h3>HTML Base Template Creation</h3>
-                            <p>Create reusable HTML base templates…</p>
-                            <div class="footer">
-                                <div class="avatars">
-                                    <span class="circle pink">DE</span>
-                                    <span class="circle violet">BZ</span>
-                                    <span class="circle purple">AS</span>
-                                </div>
-                                <span class="status">✔</span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <span class="tag blue">User Story</span>
-                            <h3>Daily Kochwelt Recipe</h3>
-                            <p>Implement daily recipe and portion calculator…</p>
-                            <div class="footer">
-                                <div class="avatars">
-                                    <span class="circle orange">EF</span>
-                                    <span class="circle red">AS</span>
-                                    <span class="circle pink">TW</span>
-                                </div>
-                                <span class="status">≡</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="column">
-                        <div class="column-header">
-                            <h2>Done</h2>
-                            <button class="add-col">+</button>
-                        </div>
-                        <div class="card">
-                            <span class="tag green">Technical Task</span>
-                            <h3>CSS Architecture Planning</h3>
-                            <p>Define CSS naming conventions and structure…</p>
-                            <div class="progress">
-                                <div class="bar full"></div>
-                            </div>
-                            <div class="footer">
-                                <div class="avatars">
-                                    <span class="circle teal">SM</span>
-                                    <span class="circle violet">BZ</span>
-                                </div>
-                                <span class="subtasks">2/2 Subtasks</span>
-                            </div>
-                        </div>
-                    </div>
+            <div id="taskModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeModal()">&times;</span>
+                    <div id="modal-body"></div>
                 </div>
             </div>
+
         </main>
     </div>
 </body>
