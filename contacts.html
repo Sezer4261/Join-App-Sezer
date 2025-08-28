@@ -1,47 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join - Contacts</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacts</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="contacts.js" defer></script>
 </head>
 <body>
-
-    <nav class="main-nav">
-    <ul>
-        <li><a href="board.html">Board</a></li>
-        <li><a href="contacts.html">Contacts</a></li>
-        <li><a href="add-task.html">Add Task</a></li>
-        <li><a href="help.html">Help</a></li>
-        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-        <li><a href="legal-notice.html">Legal Notice</a></li>
-    </ul>
-</nav>
-
-
-<header>
-    <img src="assets/logo.png" alt="Join Logo" class="logo">
+  <header>
     <h1>Contacts</h1>
-</header>
+  </header>
 
-<main>
-    <div class="contacts-container">
-        <div class="contacts-sidebar">
-            <button class="btn btn-primary" onclick="openAddContact()">Add Contact</button>
-            <div id="contacts-list"></div>
-        </div>
-        <div class="contacts-details" id="contact-details">
-            <p>Select a contact to view details</p>
-        </div>
-    </div>
-</main>
+  <main>
+    <section>
+      <form id="add-contact-form">
+        <input type="text" id="contact-name" placeholder="Name" required>
+        <input type="email" id="contact-email" placeholder="Email" required>
+        <input type="tel" id="contact-phone" placeholder="Phone" required>
+        <button type="submit">Add Contact</button>
+      </form>
+    </section>
 
-<div class="overlay hidden" id="contact-overlay">
-    <div class="overlay-content" id="contact-overlay-content"></div>
-</div>
+    <section id="contacts-container" class="contacts-list">
+    </section>
+  </main>
 
-<script src="contacts.js"></script>
-
+  <div id="overlay" class="overlay"></div>
 </body>
 </html>
