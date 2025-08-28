@@ -55,6 +55,11 @@
     background-color: #2A3D59;
 }
 
+/* .nav-item:hover,
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.15);
+} */
+
 ul img {
     width: 30px;
     height: 30px;
