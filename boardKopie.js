@@ -1,81 +1,89 @@
-const tasks = [
-  {
-    id: 1,
-    type: "User Story",
-    title: "Kochwelt Page & Recipe Recommender",
-    description: "Build start page with recipe recommendation.",
-    dueDate: "10/05/2023",
-    priority: "Medium =",
-    status: "In Progress",
-    assigned: [
-      { name: "Emmanuel Mauer", initials: "EM", color: "#00bfa5" },
-      { name: "Marcel Bauer", initials: "MB", color: "#673ab7" },
-      { name: "Anton Mayer", initials: "AM", color: "#1e88e5" }
-    ],
-    subtasks: [
-      { text: "Implement Recipe Recommendation", done: true },
-      { text: "Start Page Layout", done: false }
-    ]
-  },
-  {
-    id: 2,
-    type: "Task",
-    title: "Backend API Setup",
-    description: "Initialize project and build authentication routes.",
-    dueDate: "15/05/2023",
-    priority: "Urgent ⬆",
-    status: "To Do",
-    assigned: [
-      { name: "Lisa Schmidt", initials: "LS", color: "#ef6c00" }
-    ],
-    subtasks: [
-      { text: "Setup Express", done: false },
-      { text: "Create User Model", done: false }
-    ]
-  },
-  {
-    id: 3,
-    type: "Bug",
-    title: "Fix Login Issue",
-    description: "Resolve bug where users cannot log in with Safari.",
-    dueDate: "12/05/2023",
-    priority: "Low ⬇",
-    status: "Done",
-    assigned: [
-      { name: "Tom Becker", initials: "TB", color: "#c2185b" }
-    ],
-    subtasks: [
-      { text: "Reproduce issue", done: true },
-      { text: "Fix session handling", done: true }
-    ]
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadTasks();
+  renderBoard();
+});
+
+/** Tasks aus Firebase laden */
+async function loadTasks() {
+  try {
+    const response = await fetch(`${BASE_URL}/tasks.json`);
+    const data = await response.json();
+    tasks = data ? Object.entries(data).map(([id, task]) => ({ firebaseId: id, ...task })) : [];
+  } catch (error) {
+    console.error("Fehler beim Laden der Tasks:", error);
   }
-];
+}
 
-// Spalten
-const columns = ["To Do", "In Progress", "Done"];
+/** Task in Firebase updaten */
+async function updateTask(task) {
+  try {
+    await fetch(`${BASE_URL}/tasks/${task.firebaseId}.json`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task),
+    });
+  } catch (error) {
+    console.error("Fehler beim Updaten des Tasks:", error);
+  }
+}
 
+/** Task in Firebase löschen */
+async function deleteTask() {
+  if (!activeTask) return;
+
+  try {
+    await fetch(`${BASE_URL}/tasks/${activeTask.firebaseId}.json`, {
+      method: "DELETE"
+    });
+    tasks = tasks.filter(t => t.firebaseId !== activeTask.firebaseId);
+    closeModal();
+    renderBoard();
+  } catch (error) {
+    console.error("Fehler beim Löschen des Tasks:", error);
+  }
+}
+
+/** Board rendern */
 function renderBoard() {
   const content = document.getElementById("board-content");
-
-  let html = `<div class="board-columns">`;
-
-  columns.forEach(col => {
+  let html = `
+    <div class="board-header">
+      <h1>Board</h1>
+      <div class="board-actions">
+        <div class="board-search">
+          <input type="text" placeholder="Find Task">
+          <!-- Lupe als Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+          </svg>
+        </div>
+        <button class="add-task-btn">Add Task +</button>
+      </div>
+    </div>
+    
+    <div class="board-columns">
+  `;
+    
+    columns.forEach(col => {
     html += `
       <div class="board-column" 
            ondragover="allowDrop(event)" 
-           ondrop="drop(event, '${col}')"
-           ondragleave="leaveDrop(event)">
+           ondrop="dropTask(event, '${col}')">
         <h2>${col}</h2>
         ${tasks
           .filter(t => t.status === col)
           .map(task => `
             <div class="task-card" 
                  draggable="true" 
-                 ondragstart="drag(event, ${task.id})"
+                 ondragstart="startDrag(${task.id})"
                  onclick="openModal(${task.id})">
-              <span class="tag ${getTagColor(task.type)}">${task.type}</span>
+              <span class="tag ${task.priority}">${task.category}</span>
+              <h2>${task.category}</h2>
               <h3>${task.title}</h3>
               <p>${task.description.substring(0, 50)}...</p>
+              <small>Due: ${task.dueDate}</small>
             </div>
           `).join('')}
       </div>
@@ -86,87 +94,67 @@ function renderBoard() {
   content.innerHTML = html;
 }
 
-function getTagColor(type) {
-  switch(type) {
-    case "User Story": return "blue";
-    case "Task": return "green";
-    case "Bug": return "red";
-    default: return "blue";
-  }
+/** Drag starten */
+function startDrag(id) {
+  draggedTaskId = id;
 }
 
-function openModal(taskId) {
-  const task = tasks.find(t => t.id === taskId);
-  const modalBody = document.getElementById("modal-body");
+/** Drop erlauben */
+function allowDrop(event) {
+  event.preventDefault();
+}
 
-  modalBody.innerHTML = `
-    <span class="tag ${getTagColor(task.type)}">${task.type}</span>
-    <h2>${task.title}</h2>
-    <p>${task.description}</p>
-    <p><strong>Due date:</strong> ${task.dueDate}</p>
-    <p><strong>Priority:</strong> ${task.priority}</p>
+/** Task ablegen und in Firebase speichern */
+function dropTask(event, newStatus) {
+  event.preventDefault();
 
-    <h3>Assigned To:</h3>
-    <div class="assigned-users">
-      ${task.assigned.map(user => `
-        <div class="assigned-user">
-          <div class="avatar" style="background:${user.color}">${user.initials}</div>
-          ${user.name}
-        </div>`).join('')}
-    </div>
+  const task = tasks.find(t => t.id === draggedTaskId);
+  if (!task) return;
 
-    <h3>Subtasks</h3>
-    <div class="subtasks">
-      ${task.subtasks.map(st => `
-        <label>
-          <input type="checkbox" ${st.done ? "checked" : ""}>
-          ${st.text}
-        </label>`).join('')}
-    </div>
+  task.status = newStatus;
+  updateTask(task);
 
-    <div class="modal-actions">
-      <button class="delete-btn">🗑 Delete</button>
-      <button class="edit-btn">✏️ Edit</button>
+  renderBoard();
+}
+
+/** Modal dynamisch ins DOM rendern */
+function openModal(id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+
+  activeTask = task;
+
+  // Falls schon ein Modal existiert, vorher entfernen
+  const oldModal = document.getElementById("taskModal");
+  if (oldModal) oldModal.remove();
+
+  // Neues Modal erzeugen
+  const modal = document.createElement("div");
+  modal.id = "taskModal";
+  modal.className = "modal";
+
+  modal.innerHTML = `
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>${task.title}</h2>
+      <p>${task.description}</p>
+      <p><strong>Due date:</strong> ${task.dueDate}</p>
+      <p><strong>Priority:</strong> ${task.priority}</p>
+      <p><strong>Category:</strong> ${task.category}</p>
+
+      <div class="modal-actions">
+        <button onclick="deleteTask()">🗑 Delete</button>
+        <button onclick="closeModal()">Close</button>
+      </div>
     </div>
   `;
 
-  document.getElementById("taskModal").style.display = "block";
+  document.body.appendChild(modal);
 }
 
+/** Modal schließen */
 function closeModal() {
-  document.getElementById("taskModal").style.display = "none";
-};
-
-window.addEventListener("click", (event) => {
-  if (event.target.id === "taskModal") {
-    document.getElementById("taskModal").style.display = "none";
-  }
-});
-
-// Drag & Drop Functions
-let draggedTaskId = null;
-
-function drag(event, taskId) {
-  draggedTaskId = taskId;
-}
-
-function allowDrop(event) {
-  event.preventDefault();
-  event.currentTarget.classList.add("drag-over");
-}
-
-function leaveDrop(event) {
-  event.currentTarget.classList.remove("drag-over");
-}
-
-function drop(event, newStatus) {
-  event.preventDefault();
-  event.currentTarget.classList.remove("drag-over");
-
-  const task = tasks.find(t => t.id === draggedTaskId);
-  if (task) {
-    task.status = newStatus;
-  }
-
-  renderBoard();
+  const modal = document.getElementById("taskModal");
+  if (modal) modal.remove();
+  activeTask = null;
 }
