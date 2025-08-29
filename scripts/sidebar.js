@@ -1,4 +1,6 @@
 function sidebarHighlightingSummary() {
+    window.location.href = "summary.html";
+
     document.getElementById("summary-li").classList = "highlighted";
     document.getElementById("add-task-li").classList = "sidebar-li-hover-effect";
     document.getElementById("board-li").classList = "sidebar-li-hover-effect";
@@ -9,6 +11,8 @@ function sidebarHighlightingSummary() {
 }
 
 function sidebarHighlightingAddTask() {
+    window.location.href = "addTask.html";
+
     document.getElementById("summary-li").classList = "sidebar-li-hover-effect";
     document.getElementById("add-task-li").classList = "highlighted";
     document.getElementById("board-li").classList = "sidebar-li-hover-effect";
@@ -19,6 +23,8 @@ function sidebarHighlightingAddTask() {
 }
 
 function sidebarHighlightingBoard() {
+    window.location.href = "board.html";
+
     document.getElementById("summary-li").classList = "sidebar-li-hover-effect";
     document.getElementById("add-task-li").classList = "sidebar-li-hover-effect";
     document.getElementById("board-li").classList = "highlighted";
@@ -57,3 +63,4 @@ function sidebarHighlightingLegalNotice() {
     document.getElementById("privacy-policy-div").classList = "sidebar-footer-link-hover-effect";
     document.getElementById("legal-notice-div").classList = "highlighted";
 }
+
