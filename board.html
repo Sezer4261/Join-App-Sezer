@@ -7,6 +7,8 @@
     <title>Kanban Board</title>
     <link rel="stylesheet" href="./styles/board.css">
     <link rel="stylesheet" href="./styles/sidebar.css">
+
+    <script src="./scripts/sidebar.js"></script>
     <script src="./script.js"></script>
     <script src="./boardKopie.js"></script>
 </head>
@@ -34,25 +36,25 @@
             <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
 
             <ul>
-                <li class="nav-item">
+                <li onclick="sidebarHighlightingSummary()" class="sidebar-li-hover-effect" id="summary-li">
                     <div>
                         <img src="./assets/icons/vector_summ.svg" alt="Summary-Icon">
                         <a href="summary.html" aria-current="page">Summary</a>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li onclick="sidebarHighlightingAddTask()" class="sidebar-li-hover-effect" id="add-task-li">
                     <div>
                         <img src="./assets/icons/edit_square.svg" alt=" Edit-Square-Icon">
                         <a href="addTask.html">Add Task</a>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li onclick="sidebarHighlightingBoard()" class="highlighted" id="board-li">
                     <div>
                         <img src="./assets/icons/vector_board.svg" alt="Board-Icon">
                         <a href="board.html">Board</a>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li onclick="sidebarHighlightingContacts()" class="sidebar-li-hover-effect" id="contacts-li">
                     <div>
                         <img src="./assets/icons/perm_contact_calendar.svg" alt="Contact-Calendar-Icon">
                         <a href="contacts.html">Contacts</a>
@@ -62,8 +64,12 @@
 
 
             <footer class="sidebar-footer">
-                <a href="./privacy-policy.html">Privacy Policy</a>
-                <a href="./legal-notice.html">Legal notice</a>
+                <div onclick="sidebarHighlightingPrivacyPolicy()" class="footer-link-container" id="privacy-policy-div">
+                    <a href="./privacy-policy.html" class="sidebar-footer-link-hover-effect">Privacy Policy</a>
+                </div>
+                <div onclick="sidebarHighlightingLegalNotice()" class="footer-link-container" id="legal-notice-div">
+                    <a href="./legal-notice.html" class="sidebar-footer-link-hover-effect">Legal notice</a>
+                </div>
             </footer>
         </nav>
 
