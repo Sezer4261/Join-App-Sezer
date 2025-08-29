@@ -46,9 +46,27 @@ async function deleteTask() {
 /** Board rendern */
 function renderBoard() {
   const content = document.getElementById("board-content");
-  let html = `<div class="board-columns">`;
-
-  columns.forEach(col => {
+  let html = `
+    <div class="board-header">
+      <h1>Board</h1>
+      <div class="board-actions">
+        <div class="board-search">
+          <input type="text" placeholder="Find Task">
+          <!-- Lupe als Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+          </svg>
+        </div>
+        <button class="add-task-btn">Add Task +</button>
+      </div>
+    </div>
+    
+    <div class="board-columns">
+  `;
+    
+    columns.forEach(col => {
     html += `
       <div class="board-column" 
            ondragover="allowDrop(event)" 
@@ -62,6 +80,7 @@ function renderBoard() {
                  ondragstart="startDrag(${task.id})"
                  onclick="openModal(${task.id})">
               <span class="tag ${task.priority}">${task.category}</span>
+              <h2>${task.category}</h2>
               <h3>${task.title}</h3>
               <p>${task.description.substring(0, 50)}...</p>
               <small>Due: ${task.dueDate}</small>
