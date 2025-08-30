@@ -70,7 +70,9 @@
           <!-- Left side -->
           <div class="form-left">
             <label>
-              Title<span class="req">*</span>
+              <span>
+                Title<span class="req">*</span>
+              </span>
               <input type="text" placeholder="Enter a title">
             </label>
 
@@ -80,10 +82,11 @@
             </label>
 
             <label>
-              Due date<span class="req">*</span>
+              <span>
+                Due date<span class="req">*</span>
+              </span>
               <input type="text" placeholder="dd/mm/yyyy">
             </label>
-            <p class="note">* This field is required</p>
           </div>
 
           <!-- Right side -->
@@ -115,11 +118,13 @@
             </label>
 
             <label>
-              Category<span class="req">*</span>
+              <span>
+                Category<span class="req">*</span>
+              </span>
               <select>
                 <option>Select task category</option>
-                  <option value="Technical Task">Technical task</option>
-                  <option value="User Story">User Story</option>
+                <option value="Technical Task">Technical task</option>
+                <option value="User Story">User Story</option>
               </select>
             </label>
 
@@ -137,6 +142,9 @@
             </div>
           </div>
         </form>
+
+        <p class="note"><span class="req">*</span>This field is required</p>
+
       </section>
     </main>
   </div>

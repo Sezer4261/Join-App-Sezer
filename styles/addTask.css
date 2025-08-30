@@ -13,6 +13,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-size: 20px;
   /* font-family: "Segoe UI", Arial, sans-serif; */
 }
 
@@ -59,7 +60,7 @@ body {
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 60px;
   margin-bottom: 20px;
 }
 
@@ -80,13 +81,10 @@ label {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-weight: 600;
-  font-size: 14px;
 }
 
 .req {
-  color: red;
-  margin-left: 4px;
+  color: #ff8190;
 }
 
 input,
@@ -95,7 +93,6 @@ select {
   padding: 10px;
   border: 1px solid var(--border);
   border-radius: 6px;
-  font-size: 14px;
 }
 
 textarea {
@@ -104,8 +101,7 @@ textarea {
 }
 
 .note {
-  font-size: 12px;
-  color: red;
+  font-size: 20px;
 }
 
 /* Priority */
