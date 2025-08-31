@@ -7,6 +7,8 @@
   <title>Contacts</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="./styles/sidebar.css">
+  <link rel="stylesheet" href="./styles/header.css">
+
 
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -59,9 +61,17 @@
 
 
   <header>
-    <h1>Contacts</h1>
+    <div class="center">
+      <p class="app-tagline">Kanban Project Management Tool</p>
+    </div>
+
+    <div class="user-actions">
+      <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+      <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
+    </div>
   </header>
 
+  <h1>Contacts</h1>
 
 
   <main>

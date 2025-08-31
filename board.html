@@ -7,6 +7,9 @@
     <title>Kanban Board</title>
     <link rel="stylesheet" href="./styles/board.css">
     <link rel="stylesheet" href="./styles/sidebar.css">
+    <link rel="stylesheet" href="./styles/header.css">
+    
+
 
     <script src="./scripts/sidebar.js"></script>
     <script src="./script.js"></script>
@@ -76,9 +79,16 @@
         <!-- Main -->
         <main class="main">
             <!-- Topbar -->
-            <div class="topbar">
-                <div class="avatar">SM</div>
-            </div>
+            <header>
+                <div class="center">
+                    <p class="app-tagline">Kanban Project Management Tool</p>
+                </div>
+
+                <div class="user-actions">
+                    <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+                    <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
+                </div>
+            </header>
 
             <!-- Content -->
             <div class="content" id="board-content">

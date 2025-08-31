@@ -1,40 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join - Legal Notice</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/sidebar.css">
+    <link rel="stylesheet" href="./styles/header.css">
+    
+    <script src="./scripts/sidebar.js"></script>
 </head>
+
 <body>
+    <nav class="sidebar">
+        <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
 
-<header>
-    <img src="assets/logo.png" alt="Join Logo" class="logo">
+        <ul>
+            <li onclick="sidebarHighlightingSummary()" class="sidebar-li-hover-effect" id="summary-li">
+                <div>
+                    <img src="./assets/icons/vector_summ.svg" alt="Summary-Icon">
+                    <a href="summary.html" aria-current="page">Summary</a>
+                </div>
+            </li>
+            <li onclick="sidebarHighlightingAddTask()" class="highlighted" id="add-task-li">
+                <div>
+                    <img src="./assets/icons/edit_square.svg" alt=" Edit-Square-Icon">
+                    <a href="addTask.html">Add Task</a>
+                </div>
+            </li>
+            <li onclick="sidebarHighlightingBoard()" class="sidebar-li-hover-effect" id="board-li">
+                <div>
+                    <img src="./assets/icons/vector_board.svg" alt="Board-Icon">
+                    <a href="board.html">Board</a>
+                </div>
+            </li>
+            <li onclick="sidebarHighlightingContacts()" class="sidebar-li-hover-effect" id="contacts-li">
+                <div>
+                    <img src="./assets/icons/perm_contact_calendar.svg" alt="Contact-Calendar-Icon">
+                    <a href="contacts.html">Contacts</a>
+                </div>
+            </li>
+        </ul>
+
+
+        <footer class="sidebar-footer">
+            <div onclick="sidebarHighlightingPrivacyPolicy()" class="footer-link-container" id="privacy-policy-div">
+                <a href="./privacy-policy.html" class="sidebar-footer-link-hover-effect">Privacy Policy</a>
+            </div>
+            <div onclick="sidebarHighlightingLegalNotice()" class="footer-link-container" id="legal-notice-div">
+                <a href="./legal-notice.html" class="sidebar-footer-link-hover-effect">Legal notice</a>
+            </div>
+        </footer>
+    </nav>
+
+
+
+    <header>
+        <div class="center">
+            <p class="app-tagline">Kanban Project Management Tool</p>
+        </div>
+
+        <div class="user-actions">
+            <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+            <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
+        </div>
+    </header>
     <h1>Legal Notice</h1>
-</header>
 
-<main>
-    <div class="legal-notice-container">
-        <h2>Impressum</h2>
-        <p><strong>Firma:</strong> Join App GmbH</p>
-        <p><strong>Adresse:</strong> Musterstraße 1, 12345 Musterstadt</p>
-        <p><strong>Telefon:</strong> +49 123 456 789</p>
-        <p><strong>E-Mail:</strong> info@joinapp.de</p>
+    <main>
+        <div class="legal-notice-container">
+            <h2>Impressum</h2>
+            <p><strong>Firma:</strong> Join App GmbH</p>
+            <p><strong>Adresse:</strong> Musterstraße 1, 12345 Musterstadt</p>
+            <p><strong>Telefon:</strong> +49 123 456 789</p>
+            <p><strong>E-Mail:</strong> info@joinapp.de</p>
 
-        <h2>Vertreten durch</h2>
-        <p>Max Mustermann (Geschäftsführer)</p>
+            <h2>Vertreten durch</h2>
+            <p>Max Mustermann (Geschäftsführer)</p>
 
-        <h2>Registereintrag</h2>
-        <p>Handelsregister: HRB 12345</p>
-        <p>Registergericht: Amtsgericht Musterstadt</p>
+            <h2>Registereintrag</h2>
+            <p>Handelsregister: HRB 12345</p>
+            <p>Registergericht: Amtsgericht Musterstadt</p>
 
-        <h2>Umsatzsteuer-ID</h2>
-        <p>DE123456789</p>
+            <h2>Umsatzsteuer-ID</h2>
+            <p>DE123456789</p>
 
-        <h2>Haftungsausschluss</h2>
-        <p>Alle Angaben wurden sorgfältig geprüft. Für die Richtigkeit, Vollständigkeit und Aktualität können wir jedoch keine Garantie übernehmen.</p>
-    </div>
-</main>
+            <h2>Haftungsausschluss</h2>
+            <p>Alle Angaben wurden sorgfältig geprüft. Für die Richtigkeit, Vollständigkeit und Aktualität können wir
+                jedoch keine Garantie übernehmen.</p>
+        </div>
+    </main>
 
 </body>
+
 </html>

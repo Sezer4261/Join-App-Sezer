@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
@@ -7,6 +7,8 @@
   <title>Join – Add Task</title>
   <link rel="stylesheet" href="./styles/addTask.css">
   <link rel="stylesheet" href="./styles/sidebar.css">
+  <link rel="stylesheet" href="./styles/header.css">
+
 
   <script src="./scripts/sidebar.js"></script>
   <script src="./script.js"></script>
@@ -59,8 +61,15 @@
 
     <!-- Main -->
     <main class="main">
-      <header class="topbar">
-        <div class="avatar">SM</div>
+      <header>
+        <div class="center">
+          <p class="app-tagline">Kanban Project Management Tool</p>
+        </div>
+
+        <div class="user-actions">
+          <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+          <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
+        </div>
       </header>
 
       <section class="content">
@@ -85,7 +94,7 @@
               <span>
                 Due date<span class="req">*</span>
               </span>
-              <input type="text" placeholder="dd/mm/yyyy">
+              <input type="date">
             </label>
           </div>
 

@@ -1,52 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join - Privacy Policy</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/sidebar.css">
+    <link rel="stylesheet" href="./styles/header.css">
 </head>
+
 <body>
 
-    <nav class="main-nav">
-    <ul>
-        <li><a href="board.html">Board</a></li>
-        <li><a href="contacts.html">Contacts</a></li>
-        <li><a href="add-task.html">Add Task</a></li>
-        <li><a href="help.html">Help</a></li>
-        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-        <li><a href="legal-notice.html">Legal Notice</a></li>
-    </ul>
-</nav>
+    <nav class="sidebar">
+        <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
+
+        <ul>
+            <li onclick="sidebarHighlightingSummary()" class="sidebar-li-hover-effect" id="summary-li">
+                <div>
+                    <img src="./assets/icons/vector_summ.svg" alt="Summary-Icon">
+                    <a href="summary.html" aria-current="page">Summary</a>
+                </div>
+            </li>
+            <li onclick="sidebarHighlightingAddTask()" class="highlighted" id="add-task-li">
+                <div>
+                    <img src="./assets/icons/edit_square.svg" alt=" Edit-Square-Icon">
+                    <a href="addTask.html">Add Task</a>
+                </div>
+            </li>
+            <li onclick="sidebarHighlightingBoard()" class="sidebar-li-hover-effect" id="board-li">
+                <div>
+                    <img src="./assets/icons/vector_board.svg" alt="Board-Icon">
+                    <a href="board.html">Board</a>
+                </div>
+            </li>
+            <li onclick="sidebarHighlightingContacts()" class="sidebar-li-hover-effect" id="contacts-li">
+                <div>
+                    <img src="./assets/icons/perm_contact_calendar.svg" alt="Contact-Calendar-Icon">
+                    <a href="contacts.html">Contacts</a>
+                </div>
+            </li>
+        </ul>
 
 
-<header>
-    <img src="assets/logo.png" alt="Join Logo" class="logo">
+        <footer class="sidebar-footer">
+            <div onclick="sidebarHighlightingPrivacyPolicy()" class="footer-link-container" id="privacy-policy-div">
+                <a href="./privacy-policy.html" class="sidebar-footer-link-hover-effect">Privacy Policy</a>
+            </div>
+            <div onclick="sidebarHighlightingLegalNotice()" class="footer-link-container" id="legal-notice-div">
+                <a href="./legal-notice.html" class="sidebar-footer-link-hover-effect">Legal notice</a>
+            </div>
+        </footer>
+    </nav>
+
+
+    <header>
+        <div class="center">
+            <p class="app-tagline">Kanban Project Management Tool</p>
+        </div>
+
+        <div class="user-actions">
+            <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+            <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
+        </div>
+    </header>
     <h1>Privacy Policy</h1>
-</header>
 
-<main>
-    <div class="privacy-container">
-        <h2>Datenschutzerklärung</h2>
-        <p>Der Schutz Ihrer persönlichen Daten ist uns wichtig. Diese Datenschutzerklärung erläutert, welche Daten wir erheben, wie wir sie verwenden und welche Rechte Sie in Bezug auf Ihre Daten haben.</p>
+    <main>
+        <div class="privacy-container">
+            <h2>Datenschutzerklärung</h2>
+            <p>Der Schutz Ihrer persönlichen Daten ist uns wichtig. Diese Datenschutzerklärung erläutert, welche Daten
+                wir erheben, wie wir sie verwenden und welche Rechte Sie in Bezug auf Ihre Daten haben.</p>
 
-        <h3>1. Verantwortlicher</h3>
-        <p>Join App GmbH, Musterstraße 1, 12345 Musterstadt, info@joinapp.de</p>
+            <h3>1. Verantwortlicher</h3>
+            <p>Join App GmbH, Musterstraße 1, 12345 Musterstadt, info@joinapp.de</p>
 
-        <h3>2. Erhebung und Verarbeitung personenbezogener Daten</h3>
-        <p>Wir erheben personenbezogene Daten nur, wenn Sie uns diese im Rahmen Ihrer Nutzung der App freiwillig mitteilen.</p>
+            <h3>2. Erhebung und Verarbeitung personenbezogener Daten</h3>
+            <p>Wir erheben personenbezogene Daten nur, wenn Sie uns diese im Rahmen Ihrer Nutzung der App freiwillig
+                mitteilen.</p>
 
-        <h3>3. Ihre Rechte</h3>
-        <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten.</p>
+            <h3>3. Ihre Rechte</h3>
+            <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten.
+            </p>
 
-        <h3>4. Kontakt</h3>
-        <p>Wenn Sie Fragen zu dieser Datenschutzerklärung haben, können Sie uns jederzeit kontaktieren.</p>
-    </div>
-</main>
+            <h3>4. Kontakt</h3>
+            <p>Wenn Sie Fragen zu dieser Datenschutzerklärung haben, können Sie uns jederzeit kontaktieren.</p>
+        </div>
+    </main>
 
-<footer>
-    <p>&copy; 2025 Join App GmbH | <a href="legal-notice.html">Legal Notice</a></p>
-</footer>
+    <footer>
+        <p>&copy; 2025 Join App GmbH | <a href="legal-notice.html">Legal Notice</a></p>
+    </footer>
 
 </body>
+
 </html>
