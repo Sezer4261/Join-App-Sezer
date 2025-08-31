@@ -108,7 +108,8 @@ textarea {
 }
 
 .priority-options input {
-  display: none; /* Radio Buttons ausblenden */
+  display: none;
+  /* Radio Buttons ausblenden */
 }
 
 .priority-options label {
@@ -132,23 +133,44 @@ textarea {
   height: 10px;
 }
 
+.priority-btn {
+  flex-direction: row;
+}
+
+.priority-btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 /* Aktive Auswahl färben */
-.priority-options input#urgent:checked + label.urgent {
+.priority-options input#urgent:checked+label.urgent {
   background: #FF3D00;
   color: white;
+  fill: white;
   border-color: #FF3D00;
 }
 
-.priority-options input#medium:checked + label.medium {
+.priority-options input#urgent:checked+label.urgent path {
+  fill: white;
+}
+
+.priority-options input#medium:checked+label.medium {
   background: #FFA800;
   color: white;
   border-color: #FFA800;
 }
 
-.priority-options input#low:checked + label.low {
+.priority-options input#medium:checked+label.medium path {
+  fill: white;
+}
+
+.priority-options input#low:checked+label.low {
   background: #7AE229;
   color: white;
   border-color: #7AE229;
+}
+
+.priority-options input#low:checked+label.low path {
+  fill: white;
 }
 
 
@@ -259,7 +281,8 @@ textarea {
   }
 
   .main {
-    margin-bottom: 60px; /* Platz für Bottom-Bar */
+    margin-bottom: 60px;
+    /* Platz für Bottom-Bar */
   }
 
   .content {
