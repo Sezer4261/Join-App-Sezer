@@ -296,27 +296,14 @@ main {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    object-fit: cover;
+    background: #4caf50;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 16px;
 }
-
-.avatar-large {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 20px;
-}
-
-.contact-details-card {
-    background: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;
-    max-width: 300px;
-    width: 100%;
-}
-
 
 .overlay {
     position: fixed;
@@ -324,44 +311,76 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
-    display: flex;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
-.overlay.hidden {
-    display: none;
-}
-
 .overlay-content {
     background: #fff;
-    padding: 20px;
+    padding: 30px;
     border-radius: 12px;
     max-width: 400px;
     width: 100%;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.overlay-content form {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     display: flex;
     flex-direction: column;
     gap: 15px;
+    text-align: center;
+}
+
+.overlay-content h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #333;
 }
 
 .overlay-content input {
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 14px;
 }
 
-.overlay-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+.overlay-content button {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.3s;
 }
+
+.overlay-content button[type="submit"] {
+    background: #4caf50;
+    color: #fff;
+}
+
+.overlay-content button[type="submit"]:hover {
+    background: #43a047;
+}
+
+.overlay-content button[type="button"] {
+    background: #f44336;
+    color: #fff;
+}
+
+.overlay-content button[type="button"]:hover {
+    background: #e53935;
+}
+
+.overlay-content button:last-child {
+    background: #ccc;
+    color: #333;
+}
+
+.overlay-content button:last-child:hover {
+    background: #bbb;
+}
+
 
 .btn {
     padding: 8px 15px;

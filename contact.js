@@ -17,12 +17,12 @@ async function loadContacts() {
   snapshot.forEach((doc) => {
     const contact = doc.data();
     contactsContainer.innerHTML += `
-      <div class="contact-card" onclick="openContact('${doc.id}')">
+      <div class="contact-item" onclick="openContact('${doc.id}')">
         <div class="avatar">${contact.name.charAt(0).toUpperCase()}</div>
-        <div>
-          <strong>${contact.name}</strong><br>
-          <small>${contact.email}</small><br>
-          <small>${contact.phone}</small>
+        <div class="contact-info">
+          <h4>${contact.name}</h4>
+          <p>${contact.email}</p>
+          <p>${contact.phone}</p>
         </div>
       </div>
     `;
