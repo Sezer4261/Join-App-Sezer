@@ -671,7 +671,7 @@ footer a {
   background: #4caf50;
 }
 
-/* Overlay angepasst für Tasks */
+
 .overlay {
   position: fixed;
   top: 0;
@@ -738,7 +738,7 @@ footer a {
   color: #fff;
 }
 
-/* Add Task Page */
+
 .task-form {
   max-width: 500px;
   margin: 40px auto;
@@ -823,6 +823,175 @@ footer a {
   background: #1e2633;
 }
 
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: #2A3647;
+  color: #fff;
+}
+
+.header-left img {
+  height: 40px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.btn-signup {
+  background: #29ABE2;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn-signup:hover {
+  background: #007bb5;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+  background: #f9f9f9;
+}
+
+.login {
+  background: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login h1 {
+  margin-bottom: 10px;
+  color: #2A3647;
+}
+
+.login-separater {
+  width: 40px;
+  height: 3px;
+  background: #29ABE2;
+  margin: 0 auto 20px;
+}
+
+.login-input {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-input input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.login-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.btn-login,
+.btn-guestlogin {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn-login {
+  background: #2A3647;
+}
+
+.btn-login:hover {
+  background: #1e2633;
+}
+
+.btn-guestlogin {
+  background: #29ABE2;
+}
+
+.btn-guestlogin:hover {
+  background: #007bb5;
+}
+
+
+
+.signup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.signup-header img {
+  cursor: pointer;
+  height: 24px;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: #fff;
+}
+
+.input-field input {
+  border: none;
+  flex: 1;
+  font-size: 14px;
+  outline: none;
+}
+
+.accept-privacy-policy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.accept-privacy-policy a {
+  color: #29ABE2;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.accept-privacy-policy a:hover {
+  text-decoration: underline;
+}
+
+#msgBox {
+  margin-top: 15px;
+  color: red;
+  font-size: 14px;
+}
 
 
 
