@@ -1,113 +1,160 @@
-let currentOverlayTaskId = null;
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadTasks();
+  renderBoard();
+});
 
-function loadBoard() {
-    const columns = {
-        "todo": document.getElementById("todo"),
-        "in-progress": document.getElementById("in-progress"),
-        "await-feedback": document.getElementById("await-feedback"),
-        "done": document.getElementById("done")
-    };
+/** Tasks aus Firebase laden */
+async function loadTasks() {
+  try {
+    const response = await fetch(`${BASE_URL}/tasks.json`);
+    const data = await response.json();
+    tasks = data ? Object.entries(data).map(([id, task]) => ({ firebaseId: id, ...task })) : [];
+  } catch (error) {
+    console.error("Fehler beim Laden der Tasks:", error);
+  }
+}
 
-    Object.values(columns).forEach(col => col.innerHTML = "");
-
-    tasks.forEach(task => {
-        const taskCard = document.createElement("div");
-        taskCard.classList.add("task-card");
-        taskCard.draggable = true;
-        taskCard.addEventListener("dragstart", e => dragStart(e, task.id));
-
-        const titleEl = document.createElement("div");
-        titleEl.classList.add("task-title");
-        titleEl.textContent = task.title;
-        titleEl.addEventListener("click", () => openOverlay(task.id));
-
-        const priorityEl = document.createElement("span");
-        priorityEl.classList.add("priority-badge", `priority-${task.priority}`);
-        priorityEl.textContent = task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
-
-        const avatarsEl = document.createElement("div");
-        avatarsEl.classList.add("avatar-group");
-        avatarsEl.innerHTML = task.assignedTo.map(user => `<img class="avatar" src="${user.avatar}" alt="${user.name}">`).join('');
-
-        taskCard.appendChild(titleEl);
-        taskCard.appendChild(priorityEl);
-        taskCard.appendChild(avatarsEl);
-
-        columns[task.status].appendChild(taskCard);
+/** Task in Firebase updaten */
+async function updateTask(task) {
+  try {
+    await fetch(`${BASE_URL}/tasks/${task.firebaseId}.json`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task),
     });
+  } catch (error) {
+    console.error("Fehler beim Updaten des Tasks:", error);
+  }
 }
 
-function dragStart(e, taskId) {
-    e.dataTransfer.setData("text/plain", taskId);
+/** Task in Firebase löschen */
+async function deleteTask() {
+  if (!activeTask) return;
+
+  try {
+    await fetch(`${BASE_URL}/tasks/${activeTask.firebaseId}.json`, {
+      method: "DELETE"
+    });
+    tasks = tasks.filter(t => t.firebaseId !== activeTask.firebaseId);
+    closeModal();
+    renderBoard();
+  } catch (error) {
+    console.error("Fehler beim Löschen des Tasks:", error);
+  }
 }
 
-function allowDrop(e) {
-    e.preventDefault();
-}
-
-function drop(e, newStatus) {
-    e.preventDefault();
-    const taskId = e.dataTransfer.getData("text/plain");
-    const task = tasks.find(t => t.id == taskId);
-    if (task) {
-        task.status = newStatus;
-        loadBoard();
-    }
-}
-
-function openOverlay(taskId) {
-    const task = tasks.find(t => t.id === taskId);
-    if (!task) return;
-
-    currentOverlayTaskId = taskId;
-
-    const overlayContent = document.getElementById("overlay-content");
-    overlayContent.innerHTML = `
-        <h2>${task.title}</h2>
-        <p>${task.description}</p>
-        <div class="overlay-footer">
-            <span class="priority-badge priority-${task.priority}">${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}</span>
-            <div class="avatar-group">
-                ${task.assignedTo.map(user => `<img class="avatar" src="${user.avatar}" alt="${user.name}">`).join('')}
+/** Board rendern */
+function renderBoard() {
+  const content = document.getElementById("board-content");
+  let html = `
+    <div class="board-header">
+      <h1>Board</h1>
+      <div class="board-actions">
+        <div class="board-search">
+          <input type="text" placeholder="Find Task">
+          <!-- Lupe als Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+          </svg>
+        </div>
+        <button class="add-task-btn">Add Task +</button>
+      </div>
+    </div>
+    
+    <div class="board-columns">
+  `;
+    
+    columns.forEach(col => {
+    html += `
+      <div class="board-column" 
+           ondragover="allowDrop(event)" 
+           ondrop="dropTask(event, '${col}')">
+        <h2>${col}</h2>
+        ${tasks
+          .filter(t => t.status === col)
+          .map(task => `
+            <div class="task-card" 
+                 draggable="true" 
+                 ondragstart="startDrag(${task.id})"
+                 onclick="openModal(${task.id})">
+              <span class="tag">${task.type}</span>
+              <h2>${task.category}</h2>
+              <h3>${task.title}</h3>
+              <p>${task.description.substring(0, 50)}...</p>
+              <small>Due: ${task.dueDate}</small>
             </div>
-        </div>
-        <div class="overlay-actions">
-            <button class="btn btn-edit" onclick="editTask()">Edit</button>
-            <button class="btn btn-delete" onclick="deleteTask()">Delete</button>
-            <button class="btn btn-secondary" onclick="closeOverlay()">Close</button>
-        </div>
+          `).join('')}
+      </div>
     `;
+  });
 
-    document.getElementById("task-overlay").classList.remove("hidden");
+  html += `</div>`;
+  content.innerHTML = html;
 }
 
-function closeOverlay() {
-    document.getElementById("task-overlay").classList.add("hidden");
+/** Drag starten */
+function startDrag(id) {
+  draggedTaskId = id;
 }
 
-function editTask() {
-    const task = tasks.find(t => t.id === currentOverlayTaskId);
-    if (!task) return;
-
-    const newTitle = prompt("Edit Title:", task.title);
-    const newDesc = prompt("Edit Description:", task.description);
-    const newPriority = prompt("Edit Priority (urgent, medium, low):", task.priority);
-
-    if (newTitle) task.title = newTitle;
-    if (newDesc) task.description = newDesc;
-    if (newPriority) task.priority = newPriority.toLowerCase();
-
-    loadBoard();
-    closeOverlay();
+/** Drop erlauben */
+function allowDrop(event) {
+  event.preventDefault();
 }
 
-function deleteTask() {
-    const index = tasks.findIndex(t => t.id === currentOverlayTaskId);
-    if (index > -1) {
-        tasks.splice(index, 1);
-        loadBoard();
-        closeOverlay();
-    }
+/** Task ablegen und in Firebase speichern */
+function dropTask(event, newStatus) {
+  event.preventDefault();
+
+  const task = tasks.find(t => t.id === draggedTaskId);
+  if (!task) return;
+
+  task.status = newStatus;
+  updateTask(task);
+
+  renderBoard();
 }
 
-document.addEventListener("DOMContentLoaded", loadBoard);
+/** Modal dynamisch ins DOM rendern */
+function openModal(id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+
+  activeTask = task;
+
+  // Falls schon ein Modal existiert, vorher entfernen
+  const oldModal = document.getElementById("taskModal");
+  if (oldModal) oldModal.remove();
+
+  // Neues Modal erzeugen
+  const modal = document.createElement("div");
+  modal.id = "taskModal";
+  modal.className = "modal";
+
+  modal.innerHTML = `
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>${task.title}</h2>
+      <p>${task.description}</p>
+      <p><strong>Due date:</strong> ${task.dueDate}</p>
+      <p><strong>Priority:</strong> ${task.priority}</p>
+      <p><strong>Category:</strong> ${task.category}</p>
+
+      <div class="modal-actions">
+        <button onclick="deleteTask()">🗑 Delete</button>
+        <button onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
+/** Modal schließen */
+function closeModal() {
+  const modal = document.getElementById("taskModal");
+  if (modal) modal.remove();
+  activeTask = null;
+}

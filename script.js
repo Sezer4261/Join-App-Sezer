@@ -51,7 +51,7 @@ let tasks = [
     ]
   }
 ];
-let columns = ["To Do", "In Progress", "Done"];
+let columns = ["To Do", "In Progress", "Await Feedback", "Done"];
 let draggedTaskId = null;
 let activeTask = null; // Aktives Modal-Task
 let users = [
