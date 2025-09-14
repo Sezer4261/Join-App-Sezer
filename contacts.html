@@ -4,17 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contacts</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./styles/summary.css">
   <link rel="stylesheet" href="./styles/sidebar.css">
   <link rel="stylesheet" href="./styles/header.css">
+  <link rel="stylesheet" href="./styles/contacts.css">
+
+  <script src="./scripts/summary.js" defer></script>
+  <script src="./scripts/sidebar.js" defer></script>
 
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script src="contacts.js" defer></script>
-  <script src="./scripts/sidebar.js"></script>
 
+  <title>Summary</title>
 </head>
 
 <body>
@@ -58,37 +58,37 @@
       </div>
     </footer>
   </nav>
-
-
-  <header>
-    <div class="center">
-      <p class="app-tagline">Kanban Project Management Tool</p>
-    </div>
-
-    <div class="user-actions">
-      <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
-      <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
-    </div>
-  </header>
-
-  <h1>Contacts</h1>
-
-
+  
   <main>
-    <section>
-      <form id="add-contact-form">
-        <input type="text" id="contact-name" placeholder="Name" required>
-        <input type="email" id="contact-email" placeholder="Email" required>
-        <input type="tel" id="contact-phone" placeholder="Phone" required>
-        <button type="submit">Add Contact</button>
-      </form>
-    </section>
+    <header>
+      <div class="center">
+        <p class="app-tagline">Kanban Project Management Tool</p>
+      </div>
 
-    <section id="contacts-container" class="contacts-list">
-    </section>
+      <div class="user-actions">
+        <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+        <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
+      </div>
+    </header>
+
+    <div class="wrapper">
+
+      <section class="contact-list">
+        <button class="add-contact-btn" onclick="">Add new contact <img src="./assets/icons/person_add.svg" alt="add Person"></button>
+
+      </section>
+
+      <section>
+        <div class="welcome-msg-box" id="welcome-msg-box">
+          <span class="welcome-msg" id="welcome-msg">Welcome, </span>
+          <span class="username-field" id="username-field">User</span>
+        </div>
+      </section>
+
+    </div>
+
   </main>
 
-  <div id="overlay" class="overlay"></div>
 </body>
 
 </html>
