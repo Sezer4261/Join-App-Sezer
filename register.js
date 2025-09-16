@@ -5,17 +5,22 @@ function addUser() {
   const confirmPassword = document.getElementById("registerPasswordConfirm").value;
 
   if (password !== confirmPassword) {
-    document.getElementById("msgBox").innerText = "Passwords do not match!";
+    showMessage("Passwörter stimmen nicht überein ❌", "error");
     return;
   }
 
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      const user = userCredential.user;
-      localStorage.setItem("username", name);
-      window.location.href = "login.html";
-    })
-    .catch(error => {
-      document.getElementById("msgBox").innerText = "Sign up failed: " + error.message;
-    });
+  if (!name || !email || !password) {
+    showMessage("Bitte alle Felder ausfüllen ❌", "error");
+    return;
+  }
+
+  showMessage("Account erfolgreich erstellt ✅", "success");
+
+  setTimeout(() => {
+    navigateToLogin();
+  }, 2000);
+}
+
+function navigateToLogin() {
+  window.location.href = "login.html";
 }
