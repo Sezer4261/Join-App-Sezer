@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const title = form.querySelector('input[placeholder="Enter a title"]').value.trim();
     const description = form.querySelector("textarea").value.trim();
-    const dueDate = form.querySelector('input[placeholder="dd/mm/yyyy"]').value.trim();
+    const dueDate = form.querySelector('input').value.trim();
     const priority = form.querySelector('input[name="priority"]:checked').value;
     const category = form.querySelectorAll("select")[1].value;
 

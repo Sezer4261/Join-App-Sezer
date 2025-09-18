@@ -79,11 +79,15 @@ function renderBoard() {
                  draggable="true" 
                  ondragstart="startDrag(${task.id})"
                  onclick="openModal(${task.id})">
-              <span class="tag">${task.type}</span>
-              <h2>${task.category}</h2>
+              <h2 class="task-category">${task.category}</h2>
               <h3>${task.title}</h3>
-              <p>${task.description.substring(0, 50)}...</p>
-              <small>Due: ${task.dueDate}</small>
+              <span>${task.description.substring(0, 50)}...</span>
+              <span>Due: ${task.dueDate}</span>
+              <div>Hier stehen subtasks </div>
+              <div class="task-footer">
+                <div>Contacts</div>
+                <div>Priority</div>
+              </div>
             </div>
           `).join('')}
       </div>
