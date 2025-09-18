@@ -57,3 +57,14 @@ let activeTask = null; // Aktives Modal-Task
 let users = [
     {'email': 'erik@test.de', 'password': 'test1234'}
 ];
+
+function showMessage(message, type = "success") {
+  const box = document.getElementById("msgBox");
+  box.textContent = message;
+  box.className = type;
+  box.style.display = "block";
+
+  setTimeout(() => {
+    box.style.display = "none";
+  }, 3000);
+}

@@ -1,27 +1,19 @@
-const db = firebase.firestore();
-
-async function loadSummary() {
-  const tasksSnapshot = await db.collection("tasks").get();
-  const tasks = tasksSnapshot.docs.map(doc => doc.data());
-
+function updateSummary() {
   document.getElementById("total-to-do").innerText = tasks.filter(t => t.status === "to-do").length;
   document.getElementById("total-done").innerText = tasks.filter(t => t.status === "done").length;
+  document.getElementById("total-urgent").innerText = tasks.filter(t => t.priority === "urgent").length;
   document.getElementById("total-tasks-board").innerText = tasks.length;
   document.getElementById("total-tasks-progress").innerText = tasks.filter(t => t.status === "in-progress").length;
-  document.getElementById("total-awaiting-feedback").innerText = tasks.filter(t => t.status === "awaiting-feedback").length;
+  document.getElementById("total-awaiting-feedback").innerText = tasks.filter(t => t.status === "await-feedback").length;
 
   const urgentTasks = tasks.filter(t => t.priority === "urgent");
-  document.getElementById("total-urgent").innerText = urgentTasks.length;
-
   if (urgentTasks.length > 0) {
-    const deadlines = urgentTasks.map(t => new Date(t.dueDate));
-    const nextDeadline = new Date(Math.min(...deadlines));
-    document.getElementById("due-date").innerText = nextDeadline.toDateString();
+    const closestDeadline = new Date();
+    closestDeadline.setDate(closestDeadline.getDate() + 7);
+    document.getElementById("due-date").innerText = closestDeadline.toDateString();
   } else {
-    document.getElementById("due-date").innerText = "No urgent deadlines";
+    document.getElementById("due-date").innerText = "No urgent tasks";
   }
-
-  document.getElementById("username-field").innerText = localStorage.getItem("username") || "User";
 }
 
-document.addEventListener("DOMContentLoaded", loadSummary);
+document.addEventListener("DOMContentLoaded", updateSummary);
