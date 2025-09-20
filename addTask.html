@@ -15,7 +15,7 @@
   <script src="./scripts/addTask.js"></script>
 </head>
 
-<body>
+<body onload="selectContacts()">
   <div class="app">
     <!-- Sidebar -->
     <nav class="sidebar">
@@ -145,8 +145,8 @@
 
             <label>
               Assigned to
-              <select>
-                <option>Select contacts to assign</option>
+              <select id="selectContacts">
+                
               </select>
             </label>
 

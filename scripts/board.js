@@ -85,7 +85,7 @@ function renderBoard() {
               <span>Due: ${task.dueDate}</span>
               <div>Hier stehen subtasks </div>
               <div class="task-footer">
-                <div>Contacts</div>
+                <div>${task.contact}</div>
                 <div>Priority</div>
               </div>
             </div>
