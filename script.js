@@ -1,4 +1,4 @@
-let BASE_URL = "https://join-app-firebase-default-rtdb.europe-west1.firebasedatabase.app/";
+let BASE_URL = "https://join-app-firebase-default-rtdb.europe-west1.firebasedatabase.app";
 let tasks = [
     {
     id: 1,

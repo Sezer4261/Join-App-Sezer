@@ -105,17 +105,6 @@ body {
     background: #091931;
 }
 
-.avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #e0e0e0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
 /* Board */
 .content {
     padding: 24px 40px;
@@ -219,36 +208,55 @@ h1 {
 
 }
 
+.subtask-card {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+
+}
+
+.subtask-progress {
+    height: 8px;
+    width: 120px;
+    background-color: rgb(209, 209, 209);
+    margin-right: 24px;
+    border-radius: 8px;
+
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: -10px;
+    border: 2px solid white;
+    flex-shrink: 0;
+    /* verhindert Verzerrung */
+}
+
+.avatar-container {
+    display: flex;
+}
+
 .task-footer {
     display: flex;
     justify-content: space-between;
-}
-
-/* Tags (z. B. User Story) */
-.tag {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: bold;
-    color: white;
-}
-
-.tag.blue {
-    background: #2979ff;
-}
-
-.tag.red {
-    background: #d32f2f;
-}
-
-.tag.green {
-    background: #388e3c;
+    align-items: center;
 }
 
 /* Modal */
 .modal {
     display: none;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -260,15 +268,26 @@ h1 {
 }
 
 .modal-content {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     margin: 5% auto;
     padding: 20px 30px;
     border-radius: 12px;
     width: 400px;
+    height: auto;
     max-width: 90%;
     /* font-family: Arial, sans-serif; */
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.3s ease-in-out;
+    transform: translateX(100%);
+    /* Startposition rechts außerhalb */
+    transition: transform 0.3s ease-out;
+    /* Slide-In Animation */
+}
+
+.close {
+    cursor: pointer;
+    margin-bottom: 12px;
 }
 
 .close-btn {
@@ -282,160 +301,74 @@ h1 {
     color: red;
 }
 
-.modal-content h2 {
-    font-size: 24px;
+.modal-title h2 {
+    font-size: 40px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin: 12px 0 10px 0;
 }
 
-.assigned-users {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+.modal-description {
+    margin-bottom: 12px;
 }
 
-.assigned-user {
-    display: flex;
-    align-items: center;
-    margin: 5px 0;
+.modal-date {
+    margin-bottom: 12px;
 }
 
-.assigned-user .avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    margin-right: 8px;
-}
-
-.subtasks {
-    margin-top: 15px;
-}
-
-.subtasks label {
+.modal-priority {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 12px;
 }
 
-.subtasks input[type="checkbox"] {
-    margin-right: 8px;
+.modal-priority strong {
+    margin-right: 24px;
 }
 
-.card {
-    background: var(--panel-bg);
-    padding: 14px;
-    border-radius: 12px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+.modal-priority div {
+    margin-right: 12px;
+}
+
+.modal-contacts {
+    margin-bottom: 12px;
+}
+
+.modal-contacts div {
+    margin: 4px 0 0 12px;
+}
+
+.modal-subtasks div {
+    margin: 4px 0 0 12px;
+}
+
+.modal-actions {
     display: flex;
-    flex-direction: column;
+    align-self: flex-end;
+    margin-top: 30px;
+}
+
+.modal-actions div {
+    display: flex;
+    align-items: center;
     gap: 8px;
 }
 
-.card.empty {
-    border: 2px dashed var(--border);
-    text-align: center;
-    color: #888;
-}
-
-.tag {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #fff;
-}
-
-.tag.blue {
-    background: var(--blue);
-}
-
-.tag.green {
-    background: var(--green);
-}
-
-h3 {
-    font-size: 15px;
-    font-weight: 600;
-}
-
-p {
-    font-size: 13px;
-    color: #555;
-}
-
-.progress {
-    background: #eee;
-    border-radius: 4px;
-    height: 6px;
-    overflow: hidden;
-}
-
-.progress .bar {
-    width: 50%;
-    height: 100%;
-    background: var(--blue);
-}
-
-.progress .bar.full {
-    width: 100%;
-}
-
-.footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-}
-
-.avatars {
-    display: flex;
-    gap: 4px;
-}
-
-.circle {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
+.modal-delete:hover {
+    cursor: pointer;
     font-weight: bold;
-    color: #fff;
 }
 
-.circle.orange {
-    background: var(--orange);
+.modal-edit:hover {
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.circle.red {
-    background: var(--red);
-}
-
-.circle.pink {
-    background: var(--pink);
-}
-
-.circle.violet {
-    background: var(--violet);
-}
-
-.circle.purple {
-    background: var(--purple);
-}
-
-.circle.teal {
-    background: var(--teal);
-}
-
-.circle {
-    background: #999;
+.action-separator {
+    height: 25px;
+    width: 2px;
+    background-color: #b5b5b5;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 /* Responsive */

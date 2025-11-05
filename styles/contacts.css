@@ -1,22 +1,494 @@
-.contact-list {
+main {
+    gap: 0px;
+    height: 100vh;
+    background-color: white
+}
+
+.wrapper {
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.contact-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 24px;
     width: 456px;
+    margin-left: 40px;
+    margin-top: 24px;
 }
 
 .add-contact-btn {
     border: none;
-    width: 352px;
+    width: 100%;
+    max-width: 352px;
     color: white;
     background-color: #2A3647;
-    padding: 10px 20px;
+    padding: 12px 0;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 600;
     border-radius: 10px;
     cursor: pointer;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.add-contact-btn img {
+    width: 22px;
+    height: 22px;
+    margin-left: 8px;
+}
+
+.contact-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-height: calc(100vh - 400px);
+    /* Höhe abzüglich Header/Buttons */
+    overflow-y: auto;
+    padding-right: 8px;
+    /* Platz für Scrollbalken */
+}
+
+/* Optionaler Webkit Scrollbar Style für Chrome/Safari/Edge */
+.contact-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.contact-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.contact-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.contact-list::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+.contact-group-letter {
+    font-size: 20px;
+    font-weight: 400;
+    color: #2A3647;
+    margin: 0 0 8px 0;
+    padding-left: 24px;
+    letter-spacing: 2px;
+}
+
+.dividing-line {
+    width: 100%;
+    height: 1.5px;
+    background: #D1D1D1;
+    margin-bottom: 8px;
+}
+
+.contact-area {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.contact-area:hover,
+.contact-item:hover {
+    background: #a7a7a796;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px 0 rgba(44, 62, 80, 0.08);
+    cursor: pointer;
+}
+
+/* Selected state style */
+.contact-area.selected,
+.contact-item.selected {
+    background: #2A3647;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px 0 rgba(44, 62, 80, 0.15);
+}
+
+.contact-area.selected .contact-name,
+.contact-item.selected .contact-name-wrapper>div:last-child {
+    color: white;
+}
+
+.contact-area.selected .contact-email,
+.contact-item.selected .contact-email {
+    color: #29ABE2;
+}
+
+.contact-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #FFA500;
+    /* Default orange, will be overwritten by inline style if needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    margin-right: 0;
+}
+
+/* Avatar-Bereich für großes Kontakt-Detail */
+.contact-avatar-large {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+}
+
+.avatar-placeholder {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+
+.contact-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #2A3647;
+    margin: 0;
+}
+
+/* Stelle sicher, dass alle Kontakt-Links nur Textbreite haben */
+.contact-email,
+.contact-item a {
+    display: inline-block;
+    width: auto;
+    flex: 0 0 auto;
+    text-decoration: none;
+    color: #007CEE;
+    margin-top: 2px;
+    transition: text-decoration 0.2s;
+    background: none;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.contact-email:hover,
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+/* Kontaktgruppenabstand */
+.contact-card {
+    margin-bottom: 24px;
+}
+
+/* Responsive Anpassung */
+@media (max-width: 600px) {
+    .contact-section {
+        width: 100%;
+        margin-left: 0;
+        padding: 0 8px;
+    }
+
+    .add-contact-btn {
+        max-width: 100%;
+    }
+
+    .contact-area {
+        padding: 12px 8px;
+    }
+
+    .contact-group-letter {
+        padding-left: 8px;
+    }
+}
+
+.contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 12px 24px;
+    margin: 12px 0;
+}
+
+.contact-name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* Abstand zwischen Initialen und Name */
+}
+
+.contact-initials {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0;
+    /* Hintergrundfarbe wird per JS-Klasse gesetzt */
+}
+
+/* Beispielhafte Farben für Initialen-Kreise */
+.bg-blue {
+    background: #1E90FF;
+}
+
+.bg-green {
+    background: #27AE60;
+}
+
+.bg-purple {
+    background: #8E44AD;
+}
+
+.bg-orange {
+    background: #FFA500;
+}
+
+.bg-pink {
+    background: #E84393;
+}
+
+.bg-red {
+    background: #E74C3C;
+}
+
+.bg-teal {
+    background: #00BFAE;
+}
+
+.bg-brown {
+    background: #A0522D;
+}
+
+.contact-name-wrapper>div:last-child {
+    font-size: 18px;
+    font-weight: 500;
+    color: #2A3647;
+}
+
+.contact-email {
+    width: fit-content;
+    /* Erzwingt die Breite basierend auf dem Inhalt */
+    display: inline;
+    /* Verhindert block-Verhalten */
+    flex: 0 1 auto;
+    /* Verhindert flex-grow */
+}
+
+.title-msg {
+    font-size: 27px;
+    font-weight: 500;
+    color: #2A3647;
+}
+
+.contact-div-right {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 40px 0 0 40px;
+}
+
+.contact-maintitle-container {
+    display: flex;
+    align-items: center;
+    height: 100px;
+}
+.title-contacts {
+    font-size: 61px;
+    font-weight: 700;
+    color: #000000;
+    margin: 0;
+}
+
+.separator {
+    font-size: 64px;
+    font-weight: 400;
+    color: #29ABE2;
+    margin: 0 16px;
+}
+
+.subtitle {
+    font-size: 27px;
+    font-weight: 400;
+    color: #2A3647;
+}
+
+.contact-section-left {
+    height: 100%;
+}
+
+.contact-section-right {
+    display: flex;
+    padding: 0 16px 0 16px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(246, 247, 248);
+    justify-content: left;
+    flex-direction: column;
+}
+
+.contact-div {
+    display: flex;
+    /* Flexbox für saubere Ausrichtung */
+    align-items: baseline;
+    /* Elemente entlang der Textbasis ausrichten */
+    gap: 12px;
+    /* Abstand zwischen Elementen */
+    margin: 0;
+    /* Standardmargin entfernt */
+    padding-top: 16px;
+    /* Abstand nach oben hinzugefügt */
+}
+
+.contact-section-left {
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+hr {
+    color: #d1d1d1d2;
+}
+
+.contact-initials-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #FFA500;
+    /* Standardfarbe, kann per JS überschrieben werden */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 47px;
+    color: #fff;
+    margin-right: 16px;
+    /* Optional: weitere Styles nach Bedarf */
+}
+
+.contact-header-large {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+}
+
+.contact-info p {
+    margin-block-start: 0 !important;
+    margin-block-end: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.edit-svg-path {
+  fill: #2A3647;
+  transition: fill 0.15s ease;
+}
+
+.edit-svg-path:hover {
+  fill: #29ABE2;
+}
+
+/* === Contact Actions (Details View) === */
+.contact-actions {
+    display: flex;
+    gap: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #000;
+    height: 24px;
+    min-width: auto;
+    width: 326.734px;
+    box-sizing: border-box;
+    transition: all;
+    align-items: center;
+    /* No transform, no background-position needed */
+}
+
+.contact-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: #000;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 0 8px;
+    height: 24px;
+    min-width: auto;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s;
+}
+
+.contact-action-btn svg {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.contact-action-btn:focus {
+    outline: 1px dashed #29ABE2;
+    outline-offset: 2px;
+}
+
+.contact-action-btn:hover .edit-svg-path {
+    fill: #29ABE2;
+}
+
+.contact-action-btn:hover .edit-label,
+.contact-action-btn:focus .edit-label {
+    color: #29ABE2;
+    font-weight: 700;
+}
+
+/* Delete Hover (neu) */
+.contact-action-btn:hover .delete-svg-path {
+    fill: #29ABE2;
+}
+.contact-action-btn:hover .delete-label,
+.contact-action-btn:focus .delete-label {
+    color: #29ABE2;
+    font-weight: 700;
+}
+
+.contact-info-details {
+    font-size: 16px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.contact-name-large {
+    font-size: 47px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.contact-main-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }

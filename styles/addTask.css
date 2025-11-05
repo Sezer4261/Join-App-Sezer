@@ -173,6 +173,61 @@ textarea {
   fill: white;
 }
 
+/* Contacts */
+.custom-select {
+  border: 1px solid #ccc;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  position: relative;
+  width: 250px;
+  background: white;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background: #fff;
+  z-index: 10;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+}
+
+.avatar-container {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0038ff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 
 
 /* Subtasks */
@@ -187,6 +242,60 @@ textarea {
   background: var(--panel-bg);
   border-radius: 6px;
   cursor: pointer;
+}
+
+.subtask-list li::before {
+  content: "•";
+  margin-right: 20px;
+  color: black;
+}
+
+.subtask {
+  height: 40px;
+  width: auto;
+  margin-left: 10px;
+  margin-bottom: 4px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+}
+
+.subtask-actions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.subtask-actions img {
+  width: 20px;
+  height: 20px;
+}
+
+.subtask-actions img:hover {
+  width: 22px;
+  height: 22px;
+}
+
+.subtask:hover {
+  cursor: pointer;
+  background-color: #eaeaea;
+}
+
+.subtask:hover .subtask-actions {
+  opacity: 1;
+}
+
+.action-separator {
+  height: 25px;
+  width: 2px;
+  background-color: #b5b5b5;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* Actions */
