@@ -2,7 +2,7 @@
 //     { id: 1, name: "Alex Johnson", email: "alex@example.com", phone: "+49 123 456789", avatar: "assets/avatar1.jpg" },
 //     { id: 2, name: "Maria Gomez", email: "maria@example.com", phone: "+49 987 654321", avatar: "assets/avatar3.jpg" },
 //     { id: 3, name: "Chris Müller", email: "chris@example.com", phone: "+49 555 123456", avatar: "assets/avatar4.jpg" }
-// ];
+// };
 
 
 
@@ -18,15 +18,22 @@ function openAddContactDialog() {
     dialog = document.getElementById("add-contact-dialog");
 
     const closeBtn = dialog.querySelector(".ac__close");
-    const cancelBtn = dialog.querySelector("[data-ac-cancel]");
-    [closeBtn, cancelBtn].forEach(btn =>
-      btn.addEventListener("click", () => dialog.close())
-    );
+    closeBtn.addEventListener("click", () => dialog.close());
 
-    dialog.addEventListener("cancel", e => {
-      e.preventDefault();
-      dialog.close();
+    // Dialog schließen bei Klick außerhalb des Inhalts
+    dialog.addEventListener("click", function (e) {
+      if (e.target === dialog) {
+        dialog.close();
+      }
     });
+
+    // Verhindere Event-Bubbling im Dialog-Inhalt
+    const dialogContent = dialog.querySelector(".ac-dialog-content");
+    if (dialogContent) {
+      dialogContent.addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+    }
   }
 
   dialog.showModal();
@@ -39,6 +46,12 @@ function openAddContactDialog() {
 async function addContact(event) {
   event.preventDefault();
   const contact = generateObjFromContact();
+
+  // Validierung: Alle Felder müssen ausgefüllt sein
+  if (!contact.name || !contact.email || !contact.phone) {
+    alert("Bitte alle Felder ausfüllen!");
+    return;
+  }
 
   await saveContact(contact);
   alert("Task erfolgreich erstellt!");
@@ -79,9 +92,10 @@ async function loadContacts() {
     console.error("Fehler beim Laden der Kontakte:", error);
   }
 }
-
 function resetInputFieldsFromContactDialog() {
   document.getElementById('add-contact-form').reset();
+  const dialog = document.getElementById("add-contact-dialog");
+  dialog.close();
 }
 
 function generateObjFromContact() {
@@ -126,8 +140,9 @@ async function handleContactClick(event) {
   const name = contactData.name;
   const email = contactData.email;
   const phone = contactData.phone || 'N/A'; // Fallback für Telefonnummer
+  const id = contactId; // Die ID kommt aus dem Dataset
 
-  contactDetailsContainer.innerHTML = getContactDetailsTemplate(initials, name, email, phone);
+  contactDetailsContainer.innerHTML = getContactDetailsTemplate(initials, name, email, phone, id);
 }
 
 async function fetchContactDetails(contactId) {
@@ -201,6 +216,12 @@ async function loadContactsForContactGroup() {
 
 }
 
+function refreshContactDetails() {
+  const contactDetailsContainerRef = document.getElementById('contact-details');
+  contactDetailsContainerRef.innerHTML = '';
+
+}
+
 function colorizeContactInitials() {
   const initialsElements = document.querySelectorAll('.contact-initials');
   initialsElements.forEach(el => {
@@ -221,4 +242,94 @@ function getRandomInitialsColorClass() {
     'bg-brown'
   ];
   return colorClasses[Math.floor(Math.random() * colorClasses.length)];
+}
+
+// delete contact
+async function deleteContact(contactId) {
+  try {
+    const response = await fetch(`${BASE_URL}/contacts/${contactId}.json`, {
+      method: "DELETE"
+    });
+    if (response.ok) {
+      await renderContactGroup();
+    } else {
+      console.error("Fehler beim Löschen des Kontakts.");
+    }
+  } catch (error) {
+    console.error("Fehler beim Löschen des Kontakts:", error);
+  }
+  refreshContactDetails();
+}
+
+// update contact
+async function updateContact(event, contactId) {
+  event.preventDefault();
+  const name = document.getElementById('edit-name').value;
+  const email = document.getElementById('edit-email').value;
+  const phone = document.getElementById('edit-phone').value;
+
+  const updatedContact = { name, email, phone };
+
+  try {
+    const response = await fetch(`${BASE_URL}/contacts/${contactId}.json`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedContact),
+    });
+    if (response.ok) {
+      await renderContactGroup();
+      closeEditContactDialog();
+      refreshContactDetails();
+    } else {
+      console.error("Fehler beim Aktualisieren des Kontakts.");
+    }
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren des Kontakts:", error);
+  }
+}
+
+
+// Öffnet den Edit-Dialog mit vorausgefüllten Daten
+function openEditContactDialog(id, name, email, phone) {
+  const container = document.getElementById('edit-contact-dialog-container');
+  if (!container) return;
+
+  container.innerHTML = getEditContactDialog(id, name, email, phone);
+  const dialog = document.getElementById('edit-contact-dialog');
+  if (!dialog) return;
+
+  // Dialog schließen bei Klick außerhalb des Inhalts (Backdrop) und aus dem DOM entfernen
+  dialog.addEventListener('click', function (e) {
+    if (e.target === dialog) {
+      dialog.close();
+      dialog.remove();
+    }
+  });
+
+  // Event-Bubbling im Content verhindern
+  const dialogContent = dialog.querySelector('.ac-dialog-content');
+  if (dialogContent) {
+    dialogContent.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+  }
+
+
+  // Zeige Dialog modal an
+  if (typeof dialog.showModal === 'function') {
+    dialog.showModal();
+  } else {
+    dialog.setAttribute('open', '');
+  }
+}
+
+// Schließt den Edit-Dialog
+function closeEditContactDialog() {
+  const dialog = document.getElementById('edit-contact-dialog');
+  if (dialog) {
+    dialog.close();
+    dialog.remove();
+  }
 }

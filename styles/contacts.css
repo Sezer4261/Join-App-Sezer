@@ -15,7 +15,7 @@ main {
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
-    width: 456px;
+    /* width: 456px; */
     margin-left: 40px;
     margin-top: 24px;
 }
@@ -28,7 +28,7 @@ main {
     background-color: #2A3647;
     padding: 12px 0;
     text-align: center;
-    font-size: 18px;
+    font-size: 21px;
     font-weight: 600;
     border-radius: 10px;
     cursor: pointer;
@@ -39,9 +39,13 @@ main {
     margin-bottom: 16px;
 }
 
+.add-contact-btn:hover {
+    background-color: #29ABE2;
+}
+
 .add-contact-btn img {
-    width: 22px;
-    height: 22px;
+    width: 32px;
+    height: 32px;
     margin-left: 8px;
 }
 
@@ -52,7 +56,6 @@ main {
     gap: 0;
     max-height: calc(100vh - 400px);
     /* Höhe abzüglich Header/Buttons */
-    overflow-y: auto;
     padding-right: 8px;
     /* Platz für Scrollbalken */
 }
@@ -80,7 +83,7 @@ main {
     font-size: 20px;
     font-weight: 400;
     color: #2A3647;
-    margin: 0 0 8px 0;
+    margin: 12px 0;
     padding-left: 24px;
     letter-spacing: 2px;
 }
@@ -103,7 +106,7 @@ main {
 
 .contact-area:hover,
 .contact-item:hover {
-    background: #a7a7a796;
+    background: rgba(224, 224, 224, 0.9);
     border-radius: 8px;
     box-shadow: 0 4px 16px 0 rgba(44, 62, 80, 0.08);
     cursor: pointer;
@@ -222,7 +225,8 @@ main {
     align-items: flex-start;
     gap: 2px;
     padding: 12px 24px;
-    margin: 12px 0;
+    margin-top: 12px;
+    width: 310px;
 }
 
 .contact-name-wrapper {
@@ -244,6 +248,8 @@ main {
     justify-content: center;
     margin-right: 0;
     /* Hintergrundfarbe wird per JS-Klasse gesetzt */
+    border: 1px solid #fff;
+    /* weißer Rand hinzugefügt */
 }
 
 /* Beispielhafte Farben für Initialen-Kreise */
@@ -312,6 +318,7 @@ main {
     align-items: center;
     height: 100px;
 }
+
 .title-contacts {
     font-size: 61px;
     font-weight: 700;
@@ -334,6 +341,14 @@ main {
 
 .contact-section-left {
     height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Verhindert horizontales Überlaufen */
+    width: 456px;
+    min-width: 456px;
+    /* Verhindert Schrumpfen */
+    max-width: 456px;
+    /* Verhindert Wachsen */
 }
 
 .contact-section-right {
@@ -348,23 +363,19 @@ main {
 
 .contact-div {
     display: flex;
-    /* Flexbox für saubere Ausrichtung */
     align-items: baseline;
-    /* Elemente entlang der Textbasis ausrichten */
     gap: 12px;
-    /* Abstand zwischen Elementen */
     margin: 0;
-    /* Standardmargin entfernt */
     padding-top: 16px;
-    /* Abstand nach oben hinzugefügt */
 }
 
 .contact-section-left {
-    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
 }
 
 hr {
     color: #d1d1d1d2;
+    width: 352px;
 }
 
 .contact-initials-large {
@@ -372,7 +383,6 @@ hr {
     height: 120px;
     border-radius: 50%;
     background: #FFA500;
-    /* Standardfarbe, kann per JS überschrieben werden */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -380,7 +390,8 @@ hr {
     font-size: 47px;
     color: #fff;
     margin-right: 16px;
-    /* Optional: weitere Styles nach Bedarf */
+    border: 3px solid #fff;
+    /* weißer Rand hinzugefügt */
 }
 
 .contact-header-large {
@@ -399,18 +410,18 @@ hr {
 }
 
 .edit-svg-path {
-  fill: #2A3647;
-  transition: fill 0.15s ease;
+    fill: #2A3647;
+    transition: fill 0.15s ease;
 }
 
 .edit-svg-path:hover {
-  fill: #29ABE2;
+    fill: #29ABE2;
 }
 
 /* === Contact Actions (Details View) === */
 .contact-actions {
     display: flex;
-    gap: 16px;
+    gap: 8px;
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     color: #000;
@@ -436,7 +447,7 @@ hr {
     cursor: pointer;
     padding: 0 8px;
     height: 24px;
-    min-width: auto;
+    min-width: 77px;
     outline: none;
     box-sizing: border-box;
     transition: all 0.2s;
@@ -447,17 +458,11 @@ hr {
     vertical-align: middle;
 }
 
-.contact-action-btn:focus {
-    outline: 1px dashed #29ABE2;
-    outline-offset: 2px;
-}
-
 .contact-action-btn:hover .edit-svg-path {
     fill: #29ABE2;
 }
 
-.contact-action-btn:hover .edit-label,
-.contact-action-btn:focus .edit-label {
+.contact-action-btn:hover .edit-label {
     color: #29ABE2;
     font-weight: 700;
 }
@@ -466,8 +471,8 @@ hr {
 .contact-action-btn:hover .delete-svg-path {
     fill: #29ABE2;
 }
-.contact-action-btn:hover .delete-label,
-.contact-action-btn:focus .delete-label {
+
+.contact-action-btn:hover .delete-label {
     color: #29ABE2;
     font-weight: 700;
 }
@@ -477,7 +482,7 @@ hr {
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     margin-top: 16px;
 }
 
@@ -491,4 +496,283 @@ hr {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.contact-information-h3 {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 32px;
+}
+
+.contact-info-phone {
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+}
+
+.contact-info-email {
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === Add Contact Dialog Styles === */
+#ac-contact-dialog,
+.ac-dialog {
+    border: none;
+    border-radius: 24px;
+    padding: 0;
+    width: 900px;
+    max-width: 98vw;
+    background: transparent;
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    display: none;
+}
+
+.ac-dialog[open] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ac {
+    display: flex;
+    width: 900px;
+    min-height: 480px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+}
+
+.ac__hero {
+    background: #2A3647;
+    color: #fff;
+    width: 340px;
+    padding: 56px 40px 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    min-height: 100%;
+}
+
+.ac__brand {
+    margin-bottom: 32px;
+}
+
+.ac__logo {
+    width: 48px;
+    height: auto;
+    margin-top: 50px;
+}
+
+.ac__title {
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    letter-spacing: -1px;
+}
+
+.ac__subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 24px;
+}
+
+.ac__underline {
+    display: block;
+    width: 56px;
+    height: 3px;
+    background: #29ABE2;
+    border-radius: 2px;
+    margin-top: 8px;
+}
+
+.ac__close {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #2A3647;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.2s;
+    width: 32px;
+    /* Feste Größe für runden Hintergrund */
+    height: 32px;
+    display: flex;
+    /* Zentriert das Icon */
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    /* Immer rund, auch ohne Hover */
+}
+
+.ac__close:hover {
+    background: #f5f5f5;
+    border-radius: 50%;
+}
+
+.ac__formwrap {
+    flex: 1;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 56px 40px 40px 40px;
+    position: relative;
+}
+
+.ac__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.ac__avatar img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    opacity: 0.7;
+}
+
+.ac-form {
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ac-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #D1D1D1;
+    margin-bottom: 0;
+    height: 48px;
+    padding-right: 16px;
+}
+
+.ac-field:focus-within {
+    border-color: #29ABE2;
+}
+
+.ac-field input.input-focus {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 18px;
+    padding: 0 16px;
+    height: 48px;
+    border-radius: 8px;
+    color: #2A3647;
+    border-color: #29ABE2;
+
+}
+
+.ac-field img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.6;
+}
+
+.ac__actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    justify-content: flex-start;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0 24px;
+    height: 48px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn--ghost {
+    background: #fff;
+    color: #2A3647;
+    border: 1.5px solid #2A3647;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.btn--ghost:hover {
+    background: #fff;
+    color: #29ABE2;
+    border: 1.5px solid #29ABE2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn--primary {
+    background: #2A3647;
+    color: #fff;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.btn--primary:hover {
+    background: #29ABE2;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+.btn__x {
+    font-size: 22px;
+    margin-left: 4px;
+}
+
+.btn__check {
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .ac {
+        flex-direction: column;
+        width: 98vw;
+        min-width: 0;
+    }
+
+    .ac__hero,
+    .ac__formwrap {
+        width: 100%;
+        padding: 32px 16px;
+    }
+
+    .ac-form {
+        max-width: 100%;
+    }
 }
