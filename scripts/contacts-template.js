@@ -102,7 +102,7 @@ function getContactDetailsTemplate(initials, name, email, phone, id) {
                 <h2 class="contact-name-large">${name}</h2>
 
                 <div class="contact-actions">
-                    <button class="contact-action-btn" onclick="openEditContactDialog('${id}', '${name}', '${email}', '${phone}')">
+                    <button class="contact-action-btn" onclick="openEditContactDialog('${id}', '${name}', '${email}', '${phone}', '${initials}')">
                         <svg width="24" height="24" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_357207_6165" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="33" height="32">
                                 <rect x="0.5" width="32" height="32" fill="#D9D9D9" />
@@ -145,7 +145,7 @@ function getContactDetailsTemplate(initials, name, email, phone, id) {
 }
 
 // Extra: Dialog-Template für Edit
-function getEditContactDialog(id, name, email, phone) {
+function getEditContactDialog(id, name, email, phone, initials) {
     return `
     <dialog id="edit-contact-dialog" class="ac-dialog">
         <div class="ac ac-dialog-content">
@@ -159,7 +159,9 @@ function getEditContactDialog(id, name, email, phone) {
             <button type="button" class="ac__close" aria-label="Close" onclick="closeEditContactDialog()">×</button>
             <div class="ac__formwrap">
                 <div class="ac__avatar" aria-label="Avatar placeholder">
-                    <img src="./assets/img/person.png" alt="Person Icon">
+                    <div class="contact-avatar-large">
+                        <div class="contact-initials-large">${initials}</div>
+                    </div>
                 </div>
                 <form onsubmit="updateContact(event, '${id}')" id="edit-contact-form" class="ac-form" novalidate>
                     <div class="ac-field">

@@ -68,7 +68,7 @@ function generateAddTask() {
               </div>
             </div>
             
-            <label>
+            <div class="assigned-to-label">
               Assigned to
               <div id="selectContacts" class="custom-select">
                 <span onclick="toggleDropdown(event)">Select contacts to assign</span>
@@ -76,7 +76,7 @@ function generateAddTask() {
               </div>
 
               <div id="selectedAvatars" class="avatar-container"></div>
-            </label>
+            </div>
 
             <label>
               <span>
@@ -101,8 +101,8 @@ function generateAddTask() {
             </label>
 
             <div class="actions">
-              <button type="reset" class="clear">Clear ✕</button>
-              <button type="submit" class="create">Create Task ▾</button>
+              <button type="reset" class="clear" onclick="clearForm()">Clear ✕</button>
+              <button type="submit" class="create" onclick="clearForm()">Create Task ▾</button>
             </div>
           </div>
         </form>
@@ -125,20 +125,48 @@ function generateSubtasks(i) {
 }
 
 /** Kontakte für Dropdown generieren */
+// function generateAssignedContacts(contacts) {
+//   let content = "";
+//   for (let i = 0; i < contacts.length; i++) {
+//     const isChecked = selectedContacts.includes(contacts[i].name);
+//     content += /*html*/ `
+//       <div class="dropdown-item">
+//         <input 
+//           type="checkbox" 
+//           value="${contacts[i].name}" 
+//           onchange="toggleContactSelection('${contacts[i].name}', this)"
+//           ${isChecked ? "checked" : ""}
+//         >
+//         <span>${contacts[i].name}</span>
+//       </div>
+//     `;
+//   }
+//   return content;
+// }
+
 function generateAssignedContacts(contacts) {
   let content = "";
   for (let i = 0; i < contacts.length; i++) {
-    const isChecked = selectedContacts.includes(contacts[i].name);
+    const contact = contacts[i];
+    const isChecked = selectedContacts.includes(contact.name);
+    // eindeutige ID für jede Checkbox
+    const checkboxId = `contact_${i}`;
+    // Initialen erzeugen (z. B. "Max Mustermann" → "MM")
+    const initials = contact.name.split(" ").map(part => part.charAt(0)).join("").toUpperCase();
+
+
     content += /*html*/ `
-      <label class="dropdown-item">
+      <div class="dropdown-item">
+        <div class="dropdown-avatar">${initials}</div>
+        <label for="${checkboxId}" class="dropdown-name">${contact.name}</label>
         <input 
           type="checkbox" 
-          value="${contacts[i].name}" 
-          onchange="toggleContactSelection('${contacts[i].name}', this)"
+          id="${checkboxId}"
+          value="${contact.name}" 
+          onchange="toggleContactSelection('${contact.name}', this)"
           ${isChecked ? "checked" : ""}
         >
-        <span>${contacts[i].name}</span>
-      </label>
+      </div>
     `;
   }
   return content;

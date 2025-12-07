@@ -14,9 +14,8 @@ main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
-    /* width: 456px; */
-    margin-left: 40px;
+    width: 420px;
+    margin-left: 16px;
     margin-top: 24px;
 }
 
@@ -37,6 +36,7 @@ main {
     justify-content: center;
     gap: 12px;
     margin-bottom: 16px;
+    margin-left: 24px;
 }
 
 .add-contact-btn:hover {
@@ -54,10 +54,8 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0;
-    max-height: calc(100vh - 400px);
-    /* Höhe abzüglich Header/Buttons */
+    max-height: calc(100vh - 275px);
     padding-right: 8px;
-    /* Platz für Scrollbalken */
 }
 
 /* Optionaler Webkit Scrollbar Style für Chrome/Safari/Edge */
@@ -341,14 +339,19 @@ main {
 
 .contact-section-left {
     height: 100%;
+    /* width: 456px; */
+    /* min-width: 456px; */
+    /* max-width: 456px; */
+}
+
+.scroll {
+    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
     /* Verhindert horizontales Überlaufen */
-    width: 456px;
-    min-width: 456px;
-    /* Verhindert Schrumpfen */
-    max-width: 456px;
-    /* Verhindert Wachsen */
+    width: 400px !important;
+    /* min-width: 456px; */
+    /* max-width: 456px; */
 }
 
 .contact-section-right {
@@ -624,7 +627,7 @@ hr {
 
 .ac__formwrap {
     flex: 1;
-    background: #fff;
+    background: rgb(246, 247, 248);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -664,6 +667,7 @@ hr {
     display: flex;
     align-items: center;
     background: #fff;
+    background-color: rgb(246, 247, 248);
     border-radius: 8px;
     border: 1px solid #D1D1D1;
     margin-bottom: 0;
@@ -717,7 +721,7 @@ hr {
 }
 
 .btn--ghost {
-    background: #fff;
+    background: rgb(246, 247, 248);
     color: #2A3647;
     border: 1.5px solid #2A3647;
     transition: border-color 0.2s, color 0.2s;
@@ -775,4 +779,21 @@ hr {
     .ac-form {
         max-width: 100%;
     }
+}
+
+/* Contact Details Animation */
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.contact-details-container {
+    animation: slideInFromRight 0.3s ease-out;
 }

@@ -292,11 +292,11 @@ async function updateContact(event, contactId) {
 
 
 // Öffnet den Edit-Dialog mit vorausgefüllten Daten
-function openEditContactDialog(id, name, email, phone) {
+function openEditContactDialog(id, name, email, phone, initials) {
   const container = document.getElementById('edit-contact-dialog-container');
   if (!container) return;
 
-  container.innerHTML = getEditContactDialog(id, name, email, phone);
+  container.innerHTML = getEditContactDialog(id, name, email, phone, initials);
   const dialog = document.getElementById('edit-contact-dialog');
   if (!dialog) return;
 

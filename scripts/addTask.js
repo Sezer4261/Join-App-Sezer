@@ -111,10 +111,14 @@ function showSubtasks() {
 
 function addSubtask() {
   let subtask = document.getElementById('subtask').value;
-
-  subtasks.push(subtask);
-  showSubtasks();
-  document.getElementById('subtask').value = '';
+  if (subtask) {
+    subtasks.push(subtask);
+    showSubtasks();
+    document.getElementById('subtask').value = '';
+  } else {
+    alert("Bitte eine Subtask beschreiben!")
+  }
+  
 }
 
 function editSubtask(i) {
@@ -124,6 +128,14 @@ function editSubtask(i) {
 function deleteSubtask(i) {
   subtasks.splice(i, 1);
   showSubtasks();
+}
+
+function clearForm() {
+  // Auswahl-Feld leeren
+  selectedContacts = [];
+
+  // Avatare neu rendern → leer
+  renderSelectedAvatars();
 }
 
 
