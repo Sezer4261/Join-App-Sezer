@@ -22,5 +22,5 @@ function addUser() {
 }
 
 function navigateToLogin() {
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 }

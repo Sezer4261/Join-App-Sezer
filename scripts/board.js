@@ -214,8 +214,8 @@ function openModal(id) {
           <span>Delete</span>
         </div>
         <div class="action-separator"></div>
-        <div class="modal-edit">
-          <img src="./assets/icons/edit.svg" alt="Edit" onclick="editSubtask(${id})">
+        <div class="modal-edit" onclick="editSubtask(${id})">
+          <img src="./assets/icons/edit.svg" alt="Edit">
           <span>Edit</span>
         </div>
       </div>
@@ -229,6 +229,104 @@ function openModal(id) {
   modalContent.style.transform = "translateX(0)";
 }, 10);
 }
+
+function editSubtask(id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+
+  const modal = document.getElementById("taskModal");
+  if (!modal) return;
+
+  const modalContent = modal.querySelector(".modal-content");
+
+  modalContent.innerHTML = /*html*/`
+    <form class="task-form" id="editTaskForm" onsubmit="saveEditedTask(event, ${id})">
+
+      <div class="form-left">
+
+        <label>
+          <span>
+            Title<span class="req">*</span>
+          </span>
+          <input type="text" id="title" placeholder="Enter a title" value="${task.title}" required>
+        </label>
+
+        <label>
+          Description
+          <textarea id="description" placeholder="Enter a Description">${task.description}</textarea>
+        </label>
+
+        <label>
+          <span>
+            Due date<span class="req">*</span>
+          </span>
+          <input type="date" id="date" value="${task.dueDate}" required>
+        </label>
+
+      </div>
+
+      <div class="form-right">
+
+        <div class="priority">
+          <span>Priority</span>
+          <div class="priority-options">
+
+            <input type="radio" id="urgent" name="priority" value="urgent" ${task.priority === "urgent" ? "checked" : ""}>
+            <label for="urgent" class="urgent priority-btn">Urgent
+              <img src="./assets/img/Category_Urgent.svg">
+            </label>
+
+            <input type="radio" id="medium" name="priority" value="medium" ${task.priority === "medium" ? "checked" : ""}>
+            <label for="medium" class="medium priority-btn">Medium
+              <img src="./assets/icons/medium_orange.svg">
+            </label>
+
+            <input type="radio" id="low" name="priority" value="low" ${task.priority === "low" ? "checked" : ""}>
+            <label for="low" class="low priority-btn">Low
+              <img src="./assets/img/Category_Low.svg">
+            </label>
+
+          </div>
+        </div>
+
+        <label>
+          <span>Assigned to</span>
+          <input type="text" id="contact" value="${task.contact}">
+        </label>
+
+        <label>
+          <span>
+            Category<span class="req">*</span>
+          </span>
+          <select id="category" required>
+            <option value="Technical Task" ${task.category === "Technical Task" ? "selected" : ""}>Technical task</option>
+            <option value="User Story" ${task.category === "User Story" ? "selected" : ""}>User Story</option>
+          </select>
+        </label>
+
+        <label>
+          Subtasks
+          <div class="subtasks">
+            <input type="text" id="subtask" placeholder="Add new subtask">
+            <button type="button" class="plus" onclick="addSubtaskToEdit()">+</button>
+          </div>
+
+          <ul id="subtaskArea" class="subtask-list">
+            ${task.subtasks.map(st => `<li>${st}</li>`).join("")}
+          </ul>
+        </label>
+
+        <div class="actions">
+          <button type="button" class="clear" onclick="closeModal()">Cancel ✕</button>
+          <button type="submit" class="create">Save Task ▾</button>
+        </div>
+
+      </div>
+
+    </form>
+  `;
+}
+
 
 /** Modal schließen */
 function closeModal() {

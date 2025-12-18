@@ -9,7 +9,7 @@ async function addUser() {
         users.push(newUser);
         try {
             await postData("users", newUser); // Nur den neuen User senden
-            window.location.href = 'login.html?msg=Du hast dich erfolgreich registriert!';
+            window.location.href = 'index.html?msg=Du hast dich erfolgreich registriert!';
         } catch (err) {
             console.error("Fehler beim Posten:", err);
             alert("Registrierung fehlgeschlagen.");
@@ -36,5 +36,5 @@ async function postData(path = "", user = {}) {
 }
 
 function navigateToLogin() {
-     window.location.href = "login.html";
+     window.location.href = "index.html";
 }

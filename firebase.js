@@ -14,7 +14,7 @@ function logout() {
   auth.signOut()
     .then(() => {
       localStorage.removeItem("user");
-      window.location.href = "login.html";
+      window.location.href = "index.html";
     })
     .catch((error) => {
       alert("Logout failed: " + error.message);
@@ -24,7 +24,7 @@ function logout() {
 function checkAuth() {
   auth.onAuthStateChanged((user) => {
     if (!user && !localStorage.getItem("user")) {
-      window.location.href = "login.html";
+      window.location.href = "index.html";
     } else {
       const userData = JSON.parse(localStorage.getItem("user"));
       if (userData && userData.email) {

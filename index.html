@@ -1,54 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join - Log In</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join - Login</title>
+  <link rel="stylesheet" href="./styles/login.css">
+  <script src="./scripts/login.js" defer></script>
+  <script src="./script.js" defer></script>
 </head>
+
 <body>
-
-<nav class="main-nav">
-    <ul>
-        <li><a href="board.html">Board</a></li>
-        <li><a href="contacts.html">Contacts</a></li>
-        <li><a href="add-task.html">Add Task</a></li>
-        <li><a href="help.html">Help</a></li>
-        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-        <li><a href="legal-notice.html">Legal Notice</a></li>
-    </ul>
-</nav>
-
-
-    <div class="top-right-link">
-        <span>Not a Join User?</span>
-        <button class="btn btn-primary" onclick="window.location.href='signup.html'">Sign Up</button>
+  <header class="header">
+    <div class="header-left">
+      <img src="./assets/img/Join Logo.svg" alt="Join Logo">
     </div>
+    <div class="header-right">
+      <span>Not a Join User?</span>
+      <button onclick="navigateToSignup()" class="btn-signup">Sign Up</button>
+    </div>
+  </header>
 
-    <main>
-        <div class="login-container">
-            <h2>Log In</h2>
-            <form onsubmit="handleLogin(event)">
-                <input type="email" id="email" placeholder="E-Mail" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <div style="display:flex; gap:10px; justify-content:center; margin-top: 10px;">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                    <button type="button" class="btn btn-secondary" onclick="guestLogin()">Guest Log in</button>
-                </div>
-            </form>
+  <div class="content">
+    <div class="login">
+      <h1>Log In</h1>
+      <div class="login-separater"></div>
+      <form class="login-input">
+        <input type="email" id="loginEmail" placeholder="E-Mail" required>
+        <input type="password" id="loginPassword" placeholder="Passwort" required>
+        <div class="login-buttons">
+          <button type="button" class="btn-login" onclick="login()">Log in</button>
+          <button type="button" class="btn-guestlogin" onclick="guestLogin()">Guest Log in</button>
         </div>
-    </main>
+      </form>
+    </div>
+  </div>
 
-    <script>
-        function handleLogin(e) {
-            e.preventDefault();
-            window.location.href = 'board.html';
-        }
-
-        function guestLogin() {
-            window.location.href = 'board.html';
-        }
-    </script>
-
+  <div id="msgBox"></div>
 </body>
+
 </html>

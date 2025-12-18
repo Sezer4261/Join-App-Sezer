@@ -15,6 +15,60 @@ function setText(id, value) {
     if (el) el.textContent = value;
 }
 
+// ---- NEW: Welcome + Username ----
+function getGreetingByTime(withComma) {
+    const hour = new Date().getHours();
+    const suffix = withComma ? "," : "!";
+
+    if (hour < 12) return `Good morning${suffix}`;
+    if (hour < 18) return `Good afternoon${suffix}`;
+    return `Good evening${suffix}`;
+}
+
+function getStoredSession() {
+    try {
+        const raw = localStorage.getItem("user");
+        return raw ? JSON.parse(raw) : null;
+    } catch {
+        return null;
+    }
+}
+
+async function fetchUserNameByEmail(email) {
+    if (!email) return "";
+    try {
+        const response = await fetch(`${BASE_URL}/users.json`);
+        if (!response.ok) return "";
+
+        const data = await response.json();
+        const user = Object.values(data || {}).find(u => u.email === email);
+        return (user && user.name) ? String(user.name) : "";
+    } catch (e) {
+        console.error("Fehler beim Laden des Usernamens:", e);
+        return "";
+    }
+}
+
+async function renderWelcome() {
+    const session = getStoredSession();
+    const isGuest = !session || session.mode === "guest";
+
+    // Guest: "Good ...!" + Username leer
+    if (isGuest) {
+        setText("welcome-msg", getGreetingByTime(false));
+        setText("username-field", "");
+        return;
+    }
+
+    // User: "Good ...," + Username aus DB
+    setText("welcome-msg", getGreetingByTime(true));
+
+    const nameFromDb = await fetchUserNameByEmail(session.email);
+    const name = nameFromDb || session.displayName || "User";
+    setText("username-field", name);
+}
+// ---- /NEW ----
+
 // Tasks aus Firebase holen
 async function fetchTasks() {
     const response = await fetch(`${BASE_URL}/tasks.json`);
@@ -45,13 +99,15 @@ async function updateDashboard() {
         setText("total-urgent", urgentCount);
         setText("total-tasks-board", totalTasks);
     } catch (error) {
-
         console.error("Fehler beim Abrufen der Dashboard-Daten:", error);
     }
 }
 
 // Beim Laden der Seite aufrufen
-document.addEventListener("DOMContentLoaded", updateDashboard);
+document.addEventListener("DOMContentLoaded", async () => {
+    await renderWelcome();
+    await updateDashboard();
+});
 
 // Delegate clicks, funktioniert auch bei dynamisch gerenderten Karten
 document.addEventListener("click", (e) => {

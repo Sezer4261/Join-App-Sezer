@@ -371,6 +371,157 @@ h1 {
     margin-right: 5px;
 }
 
+/*Edit*/
+#editTaskForm {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+#editTaskForm label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#editTaskForm input,
+#editTaskForm textarea,
+#editTaskForm select {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+#editTaskForm textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* ===========================================
+   PRIORITY BUTTONS (100% wie Original)
+   =========================================== */
+
+#editTaskForm .priority {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#editTaskForm .priority-options {
+  display: flex;
+  gap: 8px;
+}
+
+#editTaskForm .priority-options input {
+  display: none;
+}
+
+#editTaskForm .priority-options label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 100px;
+  padding: 8px 16px;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
+  color: #000;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+#editTaskForm .priority-btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Checked states */
+#editTaskForm input#urgent:checked + label.urgent {
+  background: var(--urgent);
+  color: white;
+  border-color: var(--urgent);
+}
+
+#editTaskForm input#medium:checked + label.medium {
+  background: var(--medium);
+  color: white;
+  border-color: var(--medium);
+}
+
+#editTaskForm input#low:checked + label.low {
+  background: var(--low);
+  color: white;
+  border-color: var(--low);
+}
+
+/* ===========================================
+   SUBTASKS
+   =========================================== */
+
+#editTaskForm .subtasks {
+  display: flex;
+  gap: 8px;
+}
+
+#editTaskForm .plus {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#editTaskForm #subtaskArea {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#editTaskForm #subtaskArea li {
+  list-style: none;
+  padding: 10px 12px;
+  background: #f1f1f1;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+
+#editTaskForm #subtaskArea li::before {
+  content: "•";
+  margin-right: 14px;
+  color: black;
+}
+
+/* ===========================================
+   ACTION BUTTONS (gleich wie Original)
+   =========================================== */
+
+#editTaskForm .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+#editTaskForm .actions .clear,
+#editTaskForm .actions .create {
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border);
+}
+
+#editTaskForm .actions .clear {
+  background: var(--panel-bg);
+}
+
+#editTaskForm .actions .create {
+  background: var(--sidebar-bg);
+  color: #fff;
+}
+
 /* Responsive */
 @media (max-width: 1000px) {
     .board {

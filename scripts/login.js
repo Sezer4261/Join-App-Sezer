@@ -5,11 +5,23 @@ async function login() {
         let response = await fetch(`${BASE_URL}/users.json`);
         if (!response.ok) throw new Error(`HTTP-Error! Status: ${response.status}`);
         let userAsJson = await response.json();
+
         let email = document.getElementById("loginEmail").value;
         let password = document.getElementById("loginPassword").value;
+
         let signedUpUser = Object.values(userAsJson || {}).find(
             u => u.email === email && u.password === password
         );
+
+        // Session speichern (wichtig für Summary)
+        if (signedUpUser) {
+            localStorage.setItem("user", JSON.stringify({
+                mode: "user",
+                email: email,
+                displayName: signedUpUser.name || ""
+            }));
+        }
+
         processLogin(signedUpUser);
     } catch (error) {
         alert("Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
@@ -29,6 +41,8 @@ function navigateToSignup() {
 }
 
 function guestLogin() {
-  // Beispiel für Gastlogin (optional)
+  // Guest-Session speichern (wichtig für Summary)
+  localStorage.setItem("user", JSON.stringify({ mode: "guest" }));
+
   window.location.href = "summary.html";
 }
