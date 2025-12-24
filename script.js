@@ -59,12 +59,82 @@ let users = [
 ];
 
 function showMessage(message, type = "success") {
-  const box = document.getElementById("msgBox");
-  box.textContent = message;
-  box.className = type;
-  box.style.display = "block";
+  let box = document.getElementById("msgBox");
+  if (!box) {
+    box = document.createElement("div");
+    box.id = "msgBox";
+    box.setAttribute("role", "status");
+    box.setAttribute("aria-live", "polite");
+    document.body.appendChild(box);
+  }
 
-  setTimeout(() => {
+  // Content (text left, icon right)
+  box.innerHTML = "";
+  const textEl = document.createElement("span");
+  textEl.textContent = message;
+  box.appendChild(textEl);
+
+  const iconWrap = document.createElement("span");
+  const icon = document.createElement("img");
+  icon.alt = "";
+  icon.setAttribute("aria-hidden", "true");
+  icon.src = type === "success" ? "./assets/icons/vector_board.svg" : "./assets/icons/checkmark.svg";
+  iconWrap.appendChild(icon);
+  box.appendChild(iconWrap);
+
+  box.className = `msgBox ${type}`;
+
+  // Layout: centered pill like screenshot
+  box.style.position = "fixed";
+  box.style.left = "50%";
+  box.style.top = "50%";
+  box.style.transform = "translate(-50%, -50%)";
+  box.style.zIndex = "9999";
+
+  box.style.display = "flex";
+  box.style.alignItems = "center";
+  box.style.justifyContent = "space-between";
+  box.style.gap = "22px";
+
+  box.style.minWidth = "280px";
+  box.style.maxWidth = "min(520px, calc(100vw - 32px))";
+  box.style.padding = "18px 22px";
+  box.style.borderRadius = "18px";
+
+  box.style.color = "#fff";
+  box.style.fontSize = "18px";
+  box.style.fontWeight = "400";
+  box.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.22)";
+
+  // Don't block UI interactions beneath the toast
+  box.style.pointerEvents = "none";
+
+  // Background
+  if (type === "error") {
+    box.style.background = "var(--urgent, #ff3d00)";
+  } else {
+    box.style.background = "var(--sidebar-bg, #2a3647)";
+  }
+
+  // Icon: small rounded square with white border
+  iconWrap.style.width = "34px";
+  iconWrap.style.height = "34px";
+  iconWrap.style.border = "2px solid rgba(255, 255, 255, 0.9)";
+  iconWrap.style.borderRadius = "8px";
+  iconWrap.style.display = "flex";
+  iconWrap.style.alignItems = "center";
+  iconWrap.style.justifyContent = "center";
+  iconWrap.style.flexShrink = "0";
+
+  icon.style.width = "18px";
+  icon.style.height = "18px";
+  // Make SVGs appear white-ish regardless of original fill
+  icon.style.filter = "brightness(0) invert(1)";
+
+  box.style.display = "flex";
+
+  window.clearTimeout(box._hideTimeout);
+  box._hideTimeout = window.setTimeout(() => {
     box.style.display = "none";
   }, 3000);
 }
