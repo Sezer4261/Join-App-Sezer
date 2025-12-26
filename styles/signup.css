@@ -1,11 +1,12 @@
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
 }
 
-html, body {
+html,
+body {
     background-color: #f4f4f4;
     color: #333;
     height: 100%;
@@ -158,9 +159,9 @@ input::placeholder {
 }
 
 input.input-focus:focus {
-  outline: none;
-  border: 1.5px solid #29ABE2;
-  box-shadow: 0 0 1.5px #29ABE2;
+    outline: none;
+    border: 1.5px solid #29ABE2;
+    box-shadow: 0 0 1.5px #29ABE2;
 }
 
 .input-field {
@@ -217,4 +218,9 @@ input.input-focus:focus {
 .sign-up-footer a {
     text-decoration: none;
     color: grey;
+}
+
+
+button {
+    cursor: pointer;
 }
