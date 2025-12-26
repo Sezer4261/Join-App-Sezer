@@ -46,7 +46,7 @@ function getDialogAddContact() {
                         <img src="./assets/icons/mail.svg">
                     </div>
                     <div class="ac-field">
-                        <input class="input-focus" id="ac-phone" name="phone" type="tel" placeholder="Phone">
+                        <input class="input-focus" id="ac-phone" name="phone" type="tel" placeholder="Phone" required>
                         <img src="./assets/img/call.png">
                     </div>
                     <div class="ac__actions">

@@ -10,6 +10,58 @@ function closeOverlay() {
   document.getElementById("contact-overlay").classList.add("hidden");
 }
 
+function isNonEmptyString(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function updateAddContactSubmitState(dialog) {
+  if (!dialog) return;
+
+  const nameInput = dialog.querySelector('#ac-name');
+  const emailInput = dialog.querySelector('#ac-email');
+  const phoneInput = dialog.querySelector('#ac-phone');
+  const submitBtn = dialog.querySelector('[data-ac-submit]');
+
+  if (!submitBtn) return;
+
+  const isValid =
+    isNonEmptyString(nameInput?.value ?? '') &&
+    isNonEmptyString(emailInput?.value ?? '') &&
+    isNonEmptyString(phoneInput?.value ?? '');
+
+  submitBtn.disabled = !isValid;
+  submitBtn.setAttribute('aria-disabled', String(!isValid));
+}
+
+function initAddContactDialogValidation(dialog) {
+  if (!dialog || dialog.dataset.acValidationInit === '1') return;
+
+  const fields = [
+    dialog.querySelector('#ac-name'),
+    dialog.querySelector('#ac-email'),
+    dialog.querySelector('#ac-phone'),
+  ].filter(Boolean);
+
+  const form = dialog.querySelector('#add-contact-form');
+  const handler = () => updateAddContactSubmitState(dialog);
+
+  fields.forEach((field) => {
+    field.addEventListener('input', handler);
+    field.addEventListener('change', handler);
+    field.addEventListener('blur', handler);
+  });
+
+  if (form) {
+    form.addEventListener('reset', () => {
+      // Wait for the browser to clear values
+      setTimeout(handler, 0);
+    });
+  }
+
+  dialog.dataset.acValidationInit = '1';
+  handler();
+}
+
 function openAddContactDialog() {
   let dialog = document.getElementById("add-contact-dialog");
 
@@ -37,6 +89,9 @@ function openAddContactDialog() {
   }
 
   dialog.showModal();
+
+  initAddContactDialogValidation(dialog);
+  updateAddContactSubmitState(dialog);
 
   if (typeof openAddContact === "function") {
     openAddContact();

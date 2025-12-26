@@ -744,11 +744,26 @@ hr {
     white-space: nowrap;
 }
 
-.btn--primary:hover {
+/* NEU: Disabled-Zustand (visuell + kein Hover-Cursor) */
+.btn--primary:disabled,
+.btn--primary[aria-disabled="true"] {
+    background: #9aa3ad;      /* "disabled" grauton */
+    color: rgba(255, 255, 255, 0.9);
+    opacity: 0.7;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ÄNDERN: Hover nur wenn NICHT disabled */
+.btn--primary:not(:disabled):hover {
     background: #29ABE2;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
 
+/* Optional: verhindert Hover/Click-Feeling komplett, falls aria-disabled genutzt wird */
+.btn--primary[aria-disabled="true"] {
+    pointer-events: none;
 }
 
 .btn__x {
