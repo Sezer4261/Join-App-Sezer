@@ -5,6 +5,10 @@
     font-family: 'Arial', sans-serif;
 }
 
+input {
+    border: unset;
+}
+
 body {
     background-color: #f4f4f4;
     color: #333;
@@ -75,8 +79,9 @@ body {
 
 button {
     cursor: pointer;
-}
+    border: unset;
 
+}
 
 .login {
     display: flex;
