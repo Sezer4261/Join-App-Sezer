@@ -197,3 +197,18 @@ function getEditContactDialog(id, name, email, phone, initials) {
     </dialog>
     `;
 }
+
+/**
+ * Toast-Template (optisch wie im Screenshot: dunkle, runde Pill)
+ * @param {string} message
+ */
+function getContactsToastTemplate(message) {
+  return /*html*/ `
+    <div
+      id="contacts-toast"
+      class="contacts-toast"
+      role="status"
+      aria-live="polite"
+    >${message}</div>
+  `;
+}

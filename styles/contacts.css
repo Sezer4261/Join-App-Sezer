@@ -747,7 +747,8 @@ hr {
 /* NEU: Disabled-Zustand (visuell + kein Hover-Cursor) */
 .btn--primary:disabled,
 .btn--primary[aria-disabled="true"] {
-    background: #9aa3ad;      /* "disabled" grauton */
+    background: #9aa3ad;
+    /* "disabled" grauton */
     color: rgba(255, 255, 255, 0.9);
     opacity: 0.7;
     cursor: not-allowed;
@@ -811,4 +812,38 @@ hr {
 
 .contact-details-container {
     animation: slideInFromRight 0.3s ease-out;
+}
+
+.contacts-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 150px;              /* neu: unten */
+  top: auto;                 /* neu: sicherstellen, dass top nicht greift */
+  transform: translate(-50%, 8px); /* start leicht "unter" der Zielposition */
+  opacity: 0;
+
+  background: #2A3647;
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 14px;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  z-index: 9999;
+  pointer-events: none;
+
+  max-width: calc(100vw - 32px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transition: opacity 180ms ease, transform 180ms ease;
+  will-change: opacity, transform;
+}
+
+.contacts-toast--visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }

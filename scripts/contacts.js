@@ -108,9 +108,14 @@ async function addContact(event) {
     return;
   }
 
-  await saveContact(contact);
-  alert("Task erfolgreich erstellt!");
-  document.getElementById('add-contact-form').reset();
+  const saved = await saveContact(contact);
+  if (saved) {
+    await renderContactGroup(); // Liste direkt aktualisieren
+    const dialog = document.getElementById("add-contact-dialog");
+    dialog.close();
+    setTimeout(() => showContactsToast('Contact successfully created'), 0);
+
+  }
 }
 
 async function saveContact(contact) {
@@ -147,6 +152,27 @@ async function loadContacts() {
     console.error("Fehler beim Laden der Kontakte:", error);
   }
 }
+function showContactsToast(message, durationMs = 2200) {
+  const old = document.getElementById('contacts-toast');
+  if (old) old.remove();
+
+  document.body.insertAdjacentHTML('beforeend', getContactsToastTemplate(message));
+
+  const toast = document.getElementById('contacts-toast');
+  if (!toast) return;
+
+  // Animate in (CSS übernimmt Transition)
+  requestAnimationFrame(() => {
+    toast.classList.add('contacts-toast--visible');
+  });
+
+  // Auto-hide + remove
+  window.setTimeout(() => {
+    toast.classList.remove('contacts-toast--visible');
+    window.setTimeout(() => toast.remove(), 220);
+  }, durationMs);
+}
+
 function resetInputFieldsFromContactDialog() {
   document.getElementById('add-contact-form').reset();
   const dialog = document.getElementById("add-contact-dialog");
