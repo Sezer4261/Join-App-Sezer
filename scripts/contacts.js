@@ -112,9 +112,10 @@ async function addContact(event) {
   if (saved) {
     await renderContactGroup(); // Liste direkt aktualisieren
     const dialog = document.getElementById("add-contact-dialog");
+    const form = document.getElementById('add-contact-form');
     dialog.close();
+    form.reset();
     setTimeout(() => showContactsToast('Contact successfully created'), 0);
-
   }
 }
 
