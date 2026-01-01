@@ -816,10 +816,10 @@ hr {
 
 .contacts-toast {
   position: fixed;
-  left: 50%;
-  bottom: 150px;              /* neu: unten */
-  top: auto;                 /* neu: sicherstellen, dass top nicht greift */
-  transform: translate(-50%, 8px); /* start leicht "unter" der Zielposition */
+  right: -100%;              /* Start außerhalb des Bildschirms rechts */
+  bottom: 150px;
+  top: auto;
+  transform: translateX(0);
   opacity: 0;
 
   background: #2A3647;
@@ -839,11 +839,11 @@ hr {
   overflow: hidden;
   text-overflow: ellipsis;
 
-  transition: opacity 180ms ease, transform 180ms ease;
-  will-change: opacity, transform;
+  transition: opacity 180ms ease, right 180ms ease;
+  will-change: opacity, right;
 }
 
 .contacts-toast--visible {
   opacity: 1;
-  transform: translate(-50%, 0);
+  right: 50%;              /* Slide in zur finalen Position */
 }
