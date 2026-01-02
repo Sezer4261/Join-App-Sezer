@@ -32,6 +32,8 @@ async function saveToArray(event) {
     subtasks.length = 0;
     showSubtasks();
     document.getElementById('addTaskForm').reset();
+    // Neu: nach dem Toast zur Board-Seite weiterleiten
+    setTimeout(() => { window.location.href = "board.html"; }, 3000);
   } else {
     showMessage("Task could not be saved", "error");
   }

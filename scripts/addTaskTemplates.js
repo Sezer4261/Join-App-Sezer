@@ -83,9 +83,9 @@ function generateAddTask() {
                 Category<span class="req">*</span>
               </span>
               <select id="category" required>
-                <option value="" disabled selected hidden>Select task category</option>
-                <option value="Technical Task">Technical task</option>
-                <option value="User Story">User Story</option>
+                <option class="category-options" value="" disabled selected hidden>Select task category</option>
+                <option class="category-options" value="Technical Task">Technical task</option>
+                <option class="category-options" value="User Story">User Story</option>
               </select>
             </label>
 

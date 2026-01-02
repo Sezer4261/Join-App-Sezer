@@ -209,6 +209,11 @@ textarea {
   align-items: center;
   gap: 12px;
   padding: 6px 10px;
+  border-radius: 10px;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
 }
 
 .dropdown-item input {
@@ -297,7 +302,7 @@ textarea {
   display: flex;
   align-items: center;
   margin-left: auto;
-  gap: 4px;
+  gap: 8px;
   opacity: 0;
   transition: opacity 0.2s;
 }
@@ -308,8 +313,7 @@ textarea {
 }
 
 .subtask-actions img:hover {
-  width: 22px;
-  height: 22px;
+transform: scale(1.1);
 }
 
 .subtask:hover {
@@ -353,6 +357,10 @@ textarea {
 .create {
   background: var(--sidebar-bg);
   color: #fff;
+}
+
+.category-options:hover {
+  background-color: #f0f0f0 !important;
 }
 
 /* ================= RESPONSIVE ================= */
