@@ -814,6 +814,39 @@ hr {
     animation: slideInFromRight 0.3s ease-out;
 }
 
+/* Dialog Animation (von rechts nach links beim Öffnen) */
+@keyframes slideInDialogFromRight {
+    from {
+        transform: translate(calc(-50% + 100%), -50%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+/* NEU: Dialog Animation (von links nach rechts beim Schließen) */
+@keyframes slideOutDialogToRight {
+    from {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+    to {
+        transform: translate(calc(-50% + 100%), -50%);
+        opacity: 0;
+    }
+}
+
+.ac-dialog {
+    animation: slideInDialogFromRight 0.3s ease-out;
+}
+
+/* NEU: Closing-State für Schließ-Animation */
+.ac-dialog.closing {
+    animation: slideOutDialogToRight 0.3s ease-out forwards;
+}
+
 .contacts-toast {
   position: fixed;
   right: -100%;              /* Start außerhalb des Bildschirms rechts */

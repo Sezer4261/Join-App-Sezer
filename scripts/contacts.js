@@ -70,12 +70,12 @@ function openAddContactDialog() {
     dialog = document.getElementById("add-contact-dialog");
 
     const closeBtn = dialog.querySelector(".ac__close");
-    closeBtn.addEventListener("click", () => dialog.close());
+    closeBtn.addEventListener("click", () => closeAddContactDialogWithAnimation());
 
     // Dialog schließen bei Klick außerhalb des Inhalts
     dialog.addEventListener("click", function (e) {
       if (e.target === dialog) {
-        dialog.close();
+        closeAddContactDialogWithAnimation();
       }
     });
 
@@ -88,6 +88,8 @@ function openAddContactDialog() {
     }
   }
 
+  // Entferne closing-Klasse falls noch vorhanden
+  dialog.classList.remove('closing');
   dialog.showModal();
 
   initAddContactDialogValidation(dialog);
@@ -95,6 +97,18 @@ function openAddContactDialog() {
 
   if (typeof openAddContact === "function") {
     openAddContact();
+  }
+}
+
+// NEU: Schließt Add Contact Dialog mit Animation
+function closeAddContactDialogWithAnimation() {
+  const dialog = document.getElementById("add-contact-dialog");
+  if (dialog) {
+    dialog.classList.add('closing');
+    
+    setTimeout(() => {
+      dialog.close();
+    }, 300);
   }
 }
 
@@ -175,9 +189,7 @@ function showContactsToast(message, durationMs = 2200) {
 }
 
 function resetInputFieldsFromContactDialog() {
-  document.getElementById('add-contact-form').reset();
-  const dialog = document.getElementById("add-contact-dialog");
-  dialog.close();
+  closeAddContactDialogWithAnimation(); // Nutze die Animation statt sofort zu schließen
 }
 
 function generateObjFromContact() {
@@ -372,7 +384,6 @@ async function updateContact(event, contactId) {
   }
 }
 
-
 // Öffnet den Edit-Dialog mit vorausgefüllten Daten
 function openEditContactDialog(id, name, email, phone, initials) {
   const container = document.getElementById('edit-contact-dialog-container');
@@ -385,8 +396,7 @@ function openEditContactDialog(id, name, email, phone, initials) {
   // Dialog schließen bei Klick außerhalb des Inhalts (Backdrop) und aus dem DOM entfernen
   dialog.addEventListener('click', function (e) {
     if (e.target === dialog) {
-      dialog.close();
-      dialog.remove();
+      closeEditContactDialog();
     }
   });
 
@@ -398,8 +408,8 @@ function openEditContactDialog(id, name, email, phone, initials) {
     });
   }
 
-
-  // Zeige Dialog modal an
+  // Entferne closing-Klasse falls noch vorhanden
+  dialog.classList.remove('closing');
   if (typeof dialog.showModal === 'function') {
     dialog.showModal();
   } else {
@@ -407,11 +417,17 @@ function openEditContactDialog(id, name, email, phone, initials) {
   }
 }
 
-// Schließt den Edit-Dialog
+// NEU: Schließt den Edit-Dialog mit Animation
 function closeEditContactDialog() {
   const dialog = document.getElementById('edit-contact-dialog');
   if (dialog) {
-    dialog.close();
-    dialog.remove();
+    // Closing-Animation abspielen
+    dialog.classList.add('closing');
+    
+    // Nach der Animation Dialog schließen und aus DOM entfernen
+    setTimeout(() => {
+      dialog.close();
+      dialog.remove();
+    }, 300); // 300ms = Dauer der Animation
   }
 }
