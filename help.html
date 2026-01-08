@@ -8,20 +8,46 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="./styles/sidebar.css">
   <link rel="stylesheet" href="./styles/header.css">
+  <script src="./scripts/sidebar.js"></script>
 </head>
 
 <body>
   <nav class="sidebar">
     <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
     <ul>
-      <li><a href="summary.html">Summary</a></li>
-      <li><a href="addTask.html">Add Task</a></li>
-      <li><a href="board.html">Board</a></li>
-      <li><a href="contacts.html">Contacts</a></li>
+      <li onclick="sidebarHighlightingSummary()" class="sidebar-li-hover-effect" id="summary-li">
+        <div>
+          <img src="./assets/icons/vector_summ.svg" alt="Summary-Icon">
+          <a href="summary.html">Summary</a>
+        </div>
+      </li>
+      <li onclick="sidebarHighlightingAddTask()" class="sidebar-li-hover-effect" id="add-task-li">
+        <div>
+          <img src="./assets/icons/edit_square.svg" alt="Edit-Square-Icon">
+          <a href="addTask.html">Add Task</a>
+        </div>
+      </li>
+      <li onclick="sidebarHighlightingBoard()" class="sidebar-li-hover-effect" id="board-li">
+        <div>
+          <img src="./assets/icons/vector_board.svg" alt="Board-Icon">
+          <a href="board.html">Board</a>
+        </div>
+      </li>
+      <li onclick="sidebarHighlightingContacts()" class="sidebar-li-hover-effect" id="contacts-li">
+        <div>
+          <img src="./assets/icons/perm_contact_calendar.svg" alt="Contact-Calendar-Icon">
+          <a href="contacts.html">Contacts</a>
+        </div>
+      </li>
     </ul>
+
     <footer class="sidebar-footer">
-      <a href="privacy-policy.html">Privacy Policy</a>
-      <a href="legal-notice.html">Legal notice</a>
+      <div onclick="sidebarHighlightingPrivacyPolicy()" class="footer-link-container" id="privacy-policy-div">
+        <a href="./privacy-policy.html" class="sidebar-footer-link-hover-effect">Privacy Policy</a>
+      </div>
+      <div onclick="sidebarHighlightingLegalNotice()" class="footer-link-container" id="legal-notice-div">
+        <a href="./legal-notice.html" class="sidebar-footer-link-hover-effect">Legal notice</a>
+      </div>
     </footer>
   </nav>
 
@@ -41,7 +67,7 @@
       <h2>Welcome to Join</h2>
       <p>
         This is the help page for <strong>Join</strong>, your Kanban project management tool.
-        Here you’ll find all the information you need to navigate and use the application.
+        Here you'll find all the information you need to navigate and use the application.
       </p>
     </section>
 
@@ -65,4 +91,5 @@
     </section>
   </main>
 </body>
+
 </html>

@@ -3,7 +3,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -57,12 +56,6 @@ button {
 .sidebar li:hover {
   background: #091931;
   border-radius: 8px;
-}
-
-.sidebar-footer {
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  font-size: 14px;
 }
 
 .sidebar-footer a {
