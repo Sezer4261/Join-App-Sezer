@@ -15,12 +15,3 @@ function sidebarHighlightingContacts() {
 
 }
 
-function sidebarHighlightingPrivacyPolicy() {
-    window.location.href = "privacy-policy.html";
-
-}
-
-function sidebarHighlightingLegalNotice() {
-    window.location.href = "legal-notice.html";
-}
-
