@@ -136,5 +136,5 @@ function showMessage(message, type = "success") {
   window.clearTimeout(box._hideTimeout);
   box._hideTimeout = window.setTimeout(() => {
     box.style.display = "none";
-  }, 3000);
+  }, 1500);
 }
