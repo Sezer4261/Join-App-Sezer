@@ -131,6 +131,13 @@ button {
     border-radius: 8px;
 }
 
+.login-input input:focus {
+    outline: none;
+    border-color: #29ABE2;
+    border: 1px solid #29ABE2;
+    box-shadow: none;
+}
+
 .login-buttons {
     display: flex;
     justify-content: center;
