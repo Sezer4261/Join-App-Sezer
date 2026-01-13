@@ -13,27 +13,35 @@ async function login() {
             u => u.email === email && u.password === password
         );
 
-        // Session speichern (wichtig für Summary)
         if (signedUpUser) {
             localStorage.setItem("user", JSON.stringify({
                 mode: "user",
                 email: email,
                 displayName: signedUpUser.name || ""
             }));
+            window.location.href = "summary.html";
+        } else {
+            // Zeige benutzerdefinierte Fehlermeldung
+            showLoginError("Email or password is incorrect.");
         }
-
-        processLogin(signedUpUser);
     } catch (error) {
-        alert("Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
+        showLoginError("An error occurred. Please try again later.");
     }
 }
 
-function processLogin(signedUpUser) {
-    if (signedUpUser) {
-        window.location.href = "summary.html";
-    } else {
-        alert("E-Mail oder Passwort ist falsch!");
-    }
+function showLoginError(message) {
+    // Entferne alte Fehlermeldung falls vorhanden
+    const oldError = document.querySelector('.login-error');
+    if (oldError) oldError.remove();
+
+    // Erstelle neue Fehlermeldung
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'login-error';
+    errorDiv.textContent = message;
+    
+    // Füge Fehlermeldung in den permanenten Container ein
+    const errorContainer = document.getElementById('errorContainer');
+    errorContainer.appendChild(errorDiv);
 }
 
 function navigateToSignup() {

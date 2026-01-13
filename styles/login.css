@@ -147,3 +147,24 @@ button {
     gap: 35px;
     margin-top: 5px;
 }
+
+.login-error-container {
+    width: 422px;
+    min-height: 56px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-error {
+    color: #ff3d00;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    padding: 12px;
+    background-color: rgba(255, 61, 0, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 61, 0, 0.3);
+    width: 100%;
+}
