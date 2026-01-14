@@ -42,6 +42,22 @@ function showLoginError(message) {
     // Füge Fehlermeldung in den permanenten Container ein
     const errorContainer = document.getElementById('errorContainer');
     errorContainer.appendChild(errorDiv);
+    
+    // Markiere Input-Felder mit Fehler-Border
+    const emailInput = document.getElementById('loginEmail');
+    const passwordInput = document.getElementById('loginPassword');
+    emailInput.classList.add('input-error');
+    passwordInput.classList.add('input-error');
+    
+    // Entferne Fehler-Markierung beim Tippen
+    const removeError = () => {
+        emailInput.classList.remove('input-error');
+        passwordInput.classList.remove('input-error');
+        if (oldError) oldError.remove();
+    };
+    
+    emailInput.addEventListener('input', removeError, { once: true });
+    passwordInput.addEventListener('input', removeError, { once: true });
 }
 
 function navigateToSignup() {
