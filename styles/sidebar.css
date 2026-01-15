@@ -55,11 +55,6 @@
     background-color: #2A3D59;
 }
 
-/* .nav-item:hover,
-.nav-item.active {
-  background: rgba(255, 255, 255, 0.15);
-} */
-
 ul img {
     width: 30px;
     height: 30px;
@@ -85,14 +80,14 @@ ul img {
     font-weight: 400;
     cursor: pointer;
     text-align: left;
-    width: 95px;
+    width: 120px;
 
 }
 
 .sidebar-footer-link-hover-effect:hover {
     color: #29abe2;
     transform: scale(1.05);
-
+    font-weight: bold;
 }
 
 

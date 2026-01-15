@@ -194,3 +194,21 @@ button {
 .login-input input.input-error:focus {
     border-color: #ff3d00 !important;
 }
+
+footer {
+    margin-top: 100px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+footer a {
+    color: #a8a8a8;
+    text-decoration: none;
+    min-width: 120px;
+}
+footer a:hover {
+    color: #29ABE2;
+    font-weight: bold;
+}
