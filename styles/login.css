@@ -73,6 +73,11 @@ body {
     gap: 10px;
 }
 
+.btn-login:hover {
+    cursor: pointer;
+    background-color: #29ABE2;
+}
+
 .btn-guestlogin {
     background-color: white;
     width: 177px;
