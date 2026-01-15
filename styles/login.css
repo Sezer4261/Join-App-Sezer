@@ -120,6 +120,7 @@ button {
     width: 315px;
     height: 70px;
     gap: 16px;
+    font-size: 56px;
 }
 
 .login-separater {
@@ -137,7 +138,6 @@ button {
     width: 422px;
     height: 152px;
     margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .login-input input {
@@ -163,7 +163,7 @@ button {
     width: 322px;
     height: 48px;
     gap: 35px;
-    margin-top: 5px;
+    margin-top: 8px;
 }
 
 .login-error-container {
