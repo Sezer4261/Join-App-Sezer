@@ -4,26 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legal Notice</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./styles/legal-notice.css">
   <link rel="stylesheet" href="./styles/sidebar.css">
   <link rel="stylesheet" href="./styles/header.css">
-  <script src="./scripts/sidebar.js"></script>
+
+  <script src="./scripts/sidebar.js" defer></script>
+
+
+
+  <title>Legal Notice</title>
 </head>
 
 <body>
   <nav class="sidebar">
     <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
+
     <ul>
-      <li onclick="sidebarHighlightingSummary()" class="sidebar-li-hover-effect" id="summary-li">
+      <li onclick="sidebarHighlightingSummary()" id="summary-li">
         <div>
           <img src="./assets/icons/vector_summ.svg" alt="Summary-Icon">
-          <a href="summary.html">Summary</a>
+          <a href="summary.html" aria-current="page">Summary</a>
         </div>
       </li>
       <li onclick="sidebarHighlightingAddTask()" class="sidebar-li-hover-effect" id="add-task-li">
         <div>
-          <img src="./assets/icons/edit_square.svg" alt="Edit-Square-Icon">
+          <img src="./assets/icons/edit_square.svg" alt=" Edit-Square-Icon">
           <a href="addTask.html">Add Task</a>
         </div>
       </li>
@@ -41,6 +46,7 @@
       </li>
     </ul>
 
+
     <footer class="sidebar-footer">
       <div class="footer-link-container" id="privacy-policy-div">
         <a href="./privacy-policy.html" class="sidebar-footer-link-hover-effect">Privacy Policy</a>
@@ -50,27 +56,27 @@
       </div>
     </footer>
   </nav>
+  <main>
+    <header>
+      <div class="center">
+        <p class="app-tagline">Kanban Project Management Tool</p>
+      </div>
+      <div class="user-actions">
+        <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+        <div class="user-profile-container">
+          <span class="user-profile" id="user-profile">G</span>
+        </div>
+        <button class="btn-logout" onclick="logout()">Logout</button>
+      </div>
+    </header>
 
-  <header>
-    <div class="center">
-      <p class="app-tagline">Kanban Project Management Tool</p>
-    </div>
-    <div class="user-actions">
-      <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
-      <div class="user-profile-container"><span class="user-profile" id="user-profile">G</span></div>
-    </div>
-  </header>
 
-  <main class="info-container">
-    <h1>Legal Notice</h1>
-    <p>This is the legal notice for Join:</p>
-    <ul>
-      <li><strong>Provider:</strong> Join Team</li>
-      <li><strong>Address:</strong> Musterstraße 123, 12345 Musterstadt</li>
-      <li><strong>Email:</strong> contact@join-app.com</li>
-    </ul>
-    <p>All content provided in this application is for educational purposes only.</p>
+    <div class="wrapper">
+      <p>Text</p>
+    </div>
+
   </main>
+
 </body>
 
 </html>

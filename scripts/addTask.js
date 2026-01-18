@@ -89,7 +89,7 @@ function toggleDropdown(event) {
 /** Checkbox Umschalten */
 function toggleContactSelection(name, checkbox) {
   if (checkbox.checked) {
-    if (!selectedContacts.includes(name)) selectedContacts.push(name);
+    selectedContacts.push(name);
   } else {
     selectedContacts = selectedContacts.filter(c => c !== name);
   }
@@ -124,7 +124,7 @@ function addSubtask() {
   } else {
     alert("Bitte eine Subtask beschreiben!")
   }
-  
+
 }
 
 function editSubtask(i) {

@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+}
+
+html,
+body {
+    height: 100%;
+    background-color: #F6F7F8;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 auto;
+    gap: 75px;
+}
