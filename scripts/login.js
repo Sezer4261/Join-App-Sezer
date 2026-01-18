@@ -12,12 +12,23 @@ window.addEventListener('DOMContentLoaded', () => {
 
 async function login() {
     try {
+        // Validiere Input
+        let email = document.getElementById("loginEmail").value.trim();
+        let password = document.getElementById("loginPassword").value.trim();
+
+        if (!email || !password) {
+            showLoginError("Please fill in all fields.");
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            showLoginError("Please enter a valid email address.");
+            return;
+        }
+
         let response = await fetch(`${BASE_URL}/users.json`);
         if (!response.ok) throw new Error(`HTTP-Error! Status: ${response.status}`);
         let userAsJson = await response.json();
-
-        let email = document.getElementById("loginEmail").value;
-        let password = document.getElementById("loginPassword").value;
 
         let signedUpUser = Object.values(userAsJson || {}).find(
             u => u.email === email && u.password === password
@@ -68,6 +79,11 @@ function showLoginError(message) {
     
     emailInput.addEventListener('input', removeError, { once: true });
     passwordInput.addEventListener('input', removeError, { once: true });
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 }
 
 function navigateToSignup() {
