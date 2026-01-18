@@ -1,5 +1,15 @@
 //const BASE_URL = "https://deine-api-url-hier"; // Passe deine API-URL an
 
+// Entferne Intro-Overlay nach Animation
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        const introOverlay = document.getElementById('introOverlay');
+        if (introOverlay) {
+            introOverlay.remove();
+        }
+    }, 2000);
+});
+
 async function login() {
     try {
         let response = await fetch(`${BASE_URL}/users.json`);
