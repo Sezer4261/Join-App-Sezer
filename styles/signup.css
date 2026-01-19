@@ -135,6 +135,7 @@ main {
     width: 315px;
     height: 70px;
     gap: 16px;
+    font-size: 52px;
 }
 
 .login-separater {
