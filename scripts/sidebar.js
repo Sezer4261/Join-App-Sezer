@@ -15,3 +15,7 @@ function sidebarHighlightingContacts() {
 
 }
 
+function openLogInSide() {
+    window.location.href = "/index.html";
+}
+

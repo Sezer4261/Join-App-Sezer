@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/legal-notice.css">
+  <link rel="stylesheet" href="/styles/sidebar.css">
+  <link rel="stylesheet" href="/styles/header.css">
+
+  <script src="/scripts/sidebar.js" defer></script>
+
+
+
+  <title>Legal Notice</title>
+</head>
+
+<body>
+  <nav class="sidebar">
+    <img class="logo_sidebar" src="/assets/img/join_logo_white.svg" alt="Join Logo">
+
+    <ul>
+      <li onclick="openLogInSide()" class="sidebar-li-hover-effect">
+        <div>
+          <img src="/assets/icons/login-icon.svg" alt="Login-Icon">
+          <a href="/index.html" aria-current="page">Log In</a>
+        </div>
+      </li>
+    </ul>
+
+
+    <footer class="sidebar-footer">
+      <div class="footer-link-container" id="privacy-policy-div">
+        <a href="/public/privacy-policy.html" class="sidebar-footer-link-hover-effect">Privacy Policy</a>
+      </div>
+      <div class="footer-link-container highlighted" id="legal-notice-div">
+        <a href="/public/legal-notice.html" class="sidebar-footer-link-hover-effect">Legal notice</a>
+      </div>
+    </footer>
+  </nav>
+  <main>
+    <header>
+      <div class="center">
+        <p class="app-tagline">Kanban Project Management Tool</p>
+      </div>
+      <div class="user-actions">
+        <img class="help-icon" src="/assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+        <div class="user-profile-container">
+          <span class="user-profile" id="user-profile">G</span>
+        </div>
+        <button class="btn-logout" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+
+    <div class="wrapper">
+      <p>Text</p>
+    </div>
+
+  </main>
+
+</body>
+
+</html>
