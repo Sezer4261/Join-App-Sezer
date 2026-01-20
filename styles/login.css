@@ -46,6 +46,7 @@ body {
         height: 334px;
         transform: translate(0, 0);
     }
+
     100% {
         width: 100px;
         height: 122px;
@@ -251,6 +252,19 @@ button {
 
 .login-input input.input-error:focus {
     border-color: #ff3d00 !important;
+}
+
+.input-field {
+    position: relative;
+    display: flex;
+}
+
+.input-field img {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
 }
 
 footer {
