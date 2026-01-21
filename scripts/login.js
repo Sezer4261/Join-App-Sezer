@@ -8,6 +8,23 @@ window.addEventListener('DOMContentLoaded', () => {
             introOverlay.remove();
         }
     }, 2000);
+    
+    // Toggle Icons für Passwort-Feld
+    const passwordInput = document.getElementById('loginPassword');
+    const lockIcon = document.getElementById('lockIcon');
+    const visibilityIcon = document.getElementById('visibilityIcon');
+    
+    if (passwordInput && lockIcon && visibilityIcon) {
+        passwordInput.addEventListener('input', () => {
+            if (passwordInput.value.length > 0) {
+                lockIcon.style.display = 'none';
+                visibilityIcon.style.display = 'block';
+            } else {
+                lockIcon.style.display = 'block';
+                visibilityIcon.style.display = 'none';
+            }
+        });
+    }
 });
 
 async function login() {
