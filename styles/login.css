@@ -50,7 +50,10 @@ body {
     100% {
         width: 100px;
         height: 122px;
-        transform: translate(calc(-50vw + 100px), calc(-50vh + 106px));
+        transform: translate(
+            var(--logo-dx, calc(-50vw + 100px)),
+            var(--logo-dy, calc(-50vh + 106px))
+        );
     }
 }
 
@@ -279,7 +282,6 @@ button {
 .password-toggle {
     cursor: pointer;
 }
-
 
 footer {
     margin-top: 50px;

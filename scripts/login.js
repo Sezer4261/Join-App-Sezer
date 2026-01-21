@@ -2,6 +2,28 @@
 
 // Entferne Intro-Overlay nach Animation
 window.addEventListener('DOMContentLoaded', () => {
+    // Align intro animation logo with the real header logo position
+    requestAnimationFrame(() => {
+        const introLogo = document.getElementById('introLogo');
+        const headerLogo = document.querySelector('.header-left img');
+
+        if (!introLogo || !headerLogo) return;
+
+        const introRect = introLogo.getBoundingClientRect();
+        const headerRect = headerLogo.getBoundingClientRect();
+
+        const introCenterX = introRect.left + introRect.width / 2;
+        const introCenterY = introRect.top + introRect.height / 2;
+        const headerCenterX = headerRect.left + headerRect.width / 2;
+        const headerCenterY = headerRect.top + headerRect.height / 2;
+
+        const dx = headerCenterX - introCenterX;
+        const dy = headerCenterY - introCenterY;
+
+        introLogo.style.setProperty('--logo-dx', `${dx}px`);
+        introLogo.style.setProperty('--logo-dy', `${dy}px`);
+    });
+
     setTimeout(() => {
         const introOverlay = document.getElementById('introOverlay');
         if (introOverlay) {
@@ -14,44 +36,44 @@ window.addEventListener('DOMContentLoaded', () => {
     const lockIcon = document.getElementById('lockIcon');
     const visibilityOffIcon = document.getElementById('visibilityOffIcon');
     const visibilityIcon = document.getElementById('visibilityIcon');
-    
-    if (!passwordInput || !lockIcon || !visibilityOffIcon || !visibilityIcon) return;
 
-    const setPasswordVisibility = (isVisible) => {
-        passwordInput.type = isVisible ? 'text' : 'password';
-        visibilityIcon.classList.toggle('is-hidden', !isVisible);
-        visibilityOffIcon.classList.toggle('is-hidden', isVisible);
-    };
+    if (passwordInput && lockIcon && visibilityOffIcon && visibilityIcon) {
+        const setPasswordVisibility = (isVisible) => {
+            passwordInput.type = isVisible ? 'text' : 'password';
+            visibilityIcon.classList.toggle('is-hidden', !isVisible);
+            visibilityOffIcon.classList.toggle('is-hidden', isVisible);
+        };
 
-    const syncIconsWithInput = () => {
-        const hasValue = passwordInput.value.length > 0;
-        lockIcon.classList.toggle('is-hidden', hasValue);
+        const syncIconsWithInput = () => {
+            const hasValue = passwordInput.value.length > 0;
+            lockIcon.classList.toggle('is-hidden', hasValue);
 
-        if (!hasValue) {
-            visibilityOffIcon.classList.add('is-hidden');
-            visibilityIcon.classList.add('is-hidden');
-            passwordInput.type = 'password';
-            return;
-        }
+            if (!hasValue) {
+                visibilityOffIcon.classList.add('is-hidden');
+                visibilityIcon.classList.add('is-hidden');
+                passwordInput.type = 'password';
+                return;
+            }
 
-        const isVisible = passwordInput.type === 'text';
-        setPasswordVisibility(isVisible);
-    };
+            const isVisible = passwordInput.type === 'text';
+            setPasswordVisibility(isVisible);
+        };
 
-    passwordInput.addEventListener('input', syncIconsWithInput);
+        passwordInput.addEventListener('input', syncIconsWithInput);
 
-    visibilityOffIcon.addEventListener('click', () => {
-        if (passwordInput.value.length === 0) return;
-        setPasswordVisibility(true);
-    });
+        visibilityOffIcon.addEventListener('click', () => {
+            if (passwordInput.value.length === 0) return;
+            setPasswordVisibility(true);
+        });
 
-    visibilityIcon.addEventListener('click', () => {
-        if (passwordInput.value.length === 0) return;
-        setPasswordVisibility(false);
-    });
+        visibilityIcon.addEventListener('click', () => {
+            if (passwordInput.value.length === 0) return;
+            setPasswordVisibility(false);
+        });
 
-    // Initial state
-    syncIconsWithInput();
+        // Initial state
+        syncIconsWithInput();
+    }
 });
 
 async function login() {
