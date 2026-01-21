@@ -272,6 +272,14 @@ button {
     font-size: 16px;
 }
 
+.is-hidden {
+    display: none !important;
+}
+
+.password-toggle {
+    cursor: pointer;
+}
+
 
 footer {
     margin-top: 50px;

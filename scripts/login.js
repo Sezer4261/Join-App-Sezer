@@ -12,19 +12,46 @@ window.addEventListener('DOMContentLoaded', () => {
     // Toggle Icons für Passwort-Feld
     const passwordInput = document.getElementById('loginPassword');
     const lockIcon = document.getElementById('lockIcon');
+    const visibilityOffIcon = document.getElementById('visibilityOffIcon');
     const visibilityIcon = document.getElementById('visibilityIcon');
     
-    if (passwordInput && lockIcon && visibilityIcon) {
-        passwordInput.addEventListener('input', () => {
-            if (passwordInput.value.length > 0) {
-                lockIcon.style.display = 'none';
-                visibilityIcon.style.display = 'block';
-            } else {
-                lockIcon.style.display = 'block';
-                visibilityIcon.style.display = 'none';
-            }
-        });
-    }
+    if (!passwordInput || !lockIcon || !visibilityOffIcon || !visibilityIcon) return;
+
+    const setPasswordVisibility = (isVisible) => {
+        passwordInput.type = isVisible ? 'text' : 'password';
+        visibilityIcon.classList.toggle('is-hidden', !isVisible);
+        visibilityOffIcon.classList.toggle('is-hidden', isVisible);
+    };
+
+    const syncIconsWithInput = () => {
+        const hasValue = passwordInput.value.length > 0;
+        lockIcon.classList.toggle('is-hidden', hasValue);
+
+        if (!hasValue) {
+            visibilityOffIcon.classList.add('is-hidden');
+            visibilityIcon.classList.add('is-hidden');
+            passwordInput.type = 'password';
+            return;
+        }
+
+        const isVisible = passwordInput.type === 'text';
+        setPasswordVisibility(isVisible);
+    };
+
+    passwordInput.addEventListener('input', syncIconsWithInput);
+
+    visibilityOffIcon.addEventListener('click', () => {
+        if (passwordInput.value.length === 0) return;
+        setPasswordVisibility(true);
+    });
+
+    visibilityIcon.addEventListener('click', () => {
+        if (passwordInput.value.length === 0) return;
+        setPasswordVisibility(false);
+    });
+
+    // Initial state
+    syncIconsWithInput();
 });
 
 async function login() {
