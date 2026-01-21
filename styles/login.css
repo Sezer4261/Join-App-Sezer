@@ -172,7 +172,7 @@ button {
     height: 449px;
     background-color: white;
     border-radius: 30px;
-    box-shadow: 8px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
 }
 
 .login h1 {
