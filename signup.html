@@ -19,7 +19,8 @@
   <div class="content">
     <div class="login">
       <div class="signup-header">
-        <img src="./assets/img/arrow-left-line.svg" alt="Back to Login" class="back-to-login" onclick="navigateToLogin()">
+        <img src="./assets/img/arrow-left-line.svg" alt="Back to Login" class="back-to-login"
+          onclick="navigateToLogin()">
         <h1>Sign Up</h1>
       </div>
       <div class="login-separater"></div>
@@ -40,13 +41,15 @@
         </div>
 
         <div class="input-field">
-          <input class="input-focus" type="password" id="registerPasswordConfirm" placeholder="Confirm Password" required>
+          <input class="input-focus" type="password" id="registerPasswordConfirm" placeholder="Confirm Password"
+            required>
           <img src="./assets/icons/lock.svg">
         </div>
 
         <div class="accept-privacy-policy">
           <input type="checkbox" required>
-          <div>I accept the <a href="./public/privacy-policy.html">Privacy Policy</a></div>
+          <div><span class="checkbox-text">I accept the </span><a href="./public/privacy-policy.html">Privacy Policy</a>
+          </div>
         </div>
 
         <div class="login-buttons">
@@ -56,7 +59,14 @@
     </div>
   </div>
 
+
   <div id="msgBox"></div>
+  <footer>
+
+    <a href="./public/privacy-policy.html">Privacy Policy</a>
+    <a href="./public/legal-notice.html">Legal Notice</a>
+
+  </footer>
 </body>
 
 </html>
