@@ -78,6 +78,8 @@ main {
     color: black;
 }
 
+
+
 .btn-signup {
     color: white;
     background-color: #2A3647;
@@ -123,6 +125,12 @@ main {
     justify-self: flex-start;
     align-self: flex-start;
     cursor: pointer;
+    border-radius: 50%;
+}
+
+.back-to-login:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .login h1 {
