@@ -19,30 +19,48 @@ function validateSignupForm() {
 
     const errors = [];
 
+    // Alle Input-Fehler-Klassen entfernen
+    [nameInput, emailInput, passwordInput, confirmPasswordInput].forEach(input => {
+        input.classList.remove('input-error');
+    });
+    const policyContainer = document.querySelector('.accept-privacy-policy');
+    if (policyContainer) {
+        policyContainer.classList.remove('input-error');
+    }
+
     if (!nameInput.value.trim()) {
         errors.push({ field: nameInput, message: 'Please enter your name.' });
+        nameInput.classList.add('input-error');
     }
 
     if (!emailValue) {
         errors.push({ field: emailInput, message: 'Please enter an email address.' });
+        emailInput.classList.add('input-error');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
         errors.push({ field: emailInput, message: 'Please enter a valid email address.' });
+        emailInput.classList.add('input-error');
     }
 
     if (!passwordValue) {
         errors.push({ field: passwordInput, message: 'Please enter a password.' });
+        passwordInput.classList.add('input-error');
     }
 
     if (!confirmValue) {
         errors.push({ field: confirmPasswordInput, message: 'Please confirm your password.' });
+        confirmPasswordInput.classList.add('input-error');
     }
 
     if (passwordValue && confirmValue && passwordValue !== confirmValue) {
         errors.push({ field: confirmPasswordInput, message: 'Passwords do not match.' });
+        confirmPasswordInput.classList.add('input-error');
     }
 
     if (!policyCheckbox.checked) {
         errors.push({ field: policyCheckbox, message: 'Please accept the privacy policy.' });
+        if (policyContainer) {
+            policyContainer.classList.add('input-error');
+        }
     }
 
     if (errors.length > 0) {

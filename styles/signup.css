@@ -90,7 +90,6 @@ main {
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
-
 }
 
 .btn-guestlogin {
@@ -181,6 +180,17 @@ input.input-focus:focus {
     box-shadow: 0 0 1.5px #29ABE2;
 }
 
+/* NEU: Error-State für Inputs */
+input.input-error {
+    border: 1px solid #ff3d00 !important;
+    box-shadow: 0 0 1.5px #ff3d00 !important;
+}
+
+input.input-error:focus {
+    border-color: #ff3d00 !important;
+    box-shadow: 0 0 1.5px #ff3d00 !important;
+}
+
 .input-field {
     position: relative;
     display: flex;
@@ -198,6 +208,12 @@ input.input-focus:focus {
     display: flex;
     justify-content: center;
     margin-top: 30px;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.accept-privacy-policy.input-error {
+    border: 1px solid #ff3d00;
 }
 
 .accept-privacy-policy a {
@@ -211,6 +227,10 @@ input.input-focus:focus {
     cursor: pointer;
 }
 
+.accept-privacy {
+    margin-bottom: 0 !important;
+}
+
 .login-buttons {
     display: flex;
     justify-content: center;
@@ -218,7 +238,7 @@ input.input-focus:focus {
     width: 322px;
     height: 48px;
     gap: 35px;
-    margin-top: 8px;
+    margin-top: 30px;
 }
 
 .sign-up-footer {

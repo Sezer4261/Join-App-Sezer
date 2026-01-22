@@ -74,14 +74,6 @@ function showMessage(message, type = "success") {
   textEl.textContent = message;
   box.appendChild(textEl);
 
-  const iconWrap = document.createElement("span");
-  const icon = document.createElement("img");
-  icon.alt = "";
-  icon.setAttribute("aria-hidden", "true");
-  icon.src = type === "success" ? "./assets/icons/vector_board.svg" : "./assets/icons/checkmark.svg";
-  iconWrap.appendChild(icon);
-  box.appendChild(iconWrap);
-
   box.className = `msgBox ${type}`;
 
   // Layout: centered pill like screenshot
@@ -115,21 +107,6 @@ function showMessage(message, type = "success") {
   } else {
     box.style.background = "var(--sidebar-bg, #2a3647)";
   }
-
-  // Icon: small rounded square with white border
-  iconWrap.style.width = "34px";
-  iconWrap.style.height = "34px";
-  iconWrap.style.border = "2px solid rgba(255, 255, 255, 0.9)";
-  iconWrap.style.borderRadius = "8px";
-  iconWrap.style.display = "flex";
-  iconWrap.style.alignItems = "center";
-  iconWrap.style.justifyContent = "center";
-  iconWrap.style.flexShrink = "0";
-
-  icon.style.width = "18px";
-  icon.style.height = "18px";
-  // Make SVGs appear white-ish regardless of original fill
-  icon.style.filter = "brightness(0) invert(1)";
 
   box.style.display = "flex";
 
