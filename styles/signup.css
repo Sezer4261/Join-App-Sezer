@@ -161,11 +161,18 @@ main {
     margin-bottom: 10px;
 }
 
+.input-wrapper {
+    width: 422px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
 .login-input input {
     width: 422px;
     height: 40px;
     padding-left: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     border: 1px solid grey;
     border-radius: 8px;
 }
@@ -191,6 +198,15 @@ input.input-error:focus {
     box-shadow: 0 0 1.5px #ff3d00 !important;
 }
 
+.error-message {
+    color: #ff3d00;
+    font-size: 12px;
+    margin-top: 5px;
+    margin-left: 15px;
+    min-height: 16px;
+    display: block;
+}
+
 .input-field {
     position: relative;
     display: flex;
@@ -207,9 +223,9 @@ input.input-error:focus {
 .accept-privacy-policy {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
     padding: 12px;
     border-radius: 8px;
+    gap: 8px;
 }
 
 .accept-privacy-policy.input-error {
@@ -229,6 +245,8 @@ input.input-error:focus {
 
 .accept-privacy {
     margin-bottom: 0 !important;
+    width: 18px !important;
+    height: 18px !important;
 }
 
 .login-buttons {
@@ -238,7 +256,7 @@ input.input-error:focus {
     width: 322px;
     height: 48px;
     gap: 35px;
-    margin-top: 30px;
+    margin-top: 16px;
 }
 
 .sign-up-footer {

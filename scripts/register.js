@@ -13,64 +13,83 @@ function validateSignupForm() {
     const confirmPasswordInput = document.getElementById('registerPasswordConfirm');
     const policyCheckbox = document.getElementById('acceptPrivacy');
 
+    const nameValue = nameInput.value.trim();
     const emailValue = emailInput.value.trim();
     const passwordValue = passwordInput.value;
     const confirmValue = confirmPasswordInput.value;
 
-    const errors = [];
-
-    // Alle Input-Fehler-Klassen entfernen
+    // Alle Input-Fehler-Klassen und Error-Messages entfernen
     [nameInput, emailInput, passwordInput, confirmPasswordInput].forEach(input => {
         input.classList.remove('input-error');
     });
+    document.getElementById('registerNameError').textContent = '';
+    document.getElementById('registerEmailError').textContent = '';
+    document.getElementById('registerPasswordError').textContent = '';
+    document.getElementById('registerPasswordConfirmError').textContent = '';
+    document.getElementById('acceptPrivacyError').textContent = '';
+
     const policyContainer = document.querySelector('.accept-privacy-policy');
     if (policyContainer) {
         policyContainer.classList.remove('input-error');
     }
 
-    if (!nameInput.value.trim()) {
-        errors.push({ field: nameInput, message: 'Please enter your name.' });
+    // Validierung in Reihenfolge: Name -> Email -> Passwort -> Confirm -> Privacy
+    // Nur die erste leere Validierung wird angezeigt
+    
+    // 1. Name prüfen
+    if (!nameValue) {
         nameInput.classList.add('input-error');
+        document.getElementById('registerNameError').textContent = 'Please enter your name.';
+        nameInput.focus();
+        return false;
     }
 
+    // 2. Email prüfen
     if (!emailValue) {
-        errors.push({ field: emailInput, message: 'Please enter an email address.' });
         emailInput.classList.add('input-error');
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-        errors.push({ field: emailInput, message: 'Please enter a valid email address.' });
-        emailInput.classList.add('input-error');
+        document.getElementById('registerEmailError').textContent = 'Please enter an email address.';
+        emailInput.focus();
+        return false;
     }
 
+    // Email Validierung (wenn nicht leer)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+        emailInput.classList.add('input-error');
+        document.getElementById('registerEmailError').textContent = 'Please enter a valid email address.';
+        emailInput.focus();
+        return false;
+    }
+
+    // 3. Passwort prüfen
     if (!passwordValue) {
-        errors.push({ field: passwordInput, message: 'Please enter a password.' });
         passwordInput.classList.add('input-error');
+        document.getElementById('registerPasswordError').textContent = 'Please enter a password.';
+        passwordInput.focus();
+        return false;
     }
 
+    // 4. Confirm Password prüfen
     if (!confirmValue) {
-        errors.push({ field: confirmPasswordInput, message: 'Please confirm your password.' });
         confirmPasswordInput.classList.add('input-error');
+        document.getElementById('registerPasswordConfirmError').textContent = 'Please confirm your password.';
+        confirmPasswordInput.focus();
+        return false;
     }
 
-    if (passwordValue && confirmValue && passwordValue !== confirmValue) {
-        errors.push({ field: confirmPasswordInput, message: 'Passwords do not match.' });
+    // Passwörter müssen übereinstimmen (wenn beide gefüllt)
+    if (passwordValue !== confirmValue) {
         confirmPasswordInput.classList.add('input-error');
+        document.getElementById('registerPasswordConfirmError').textContent = 'Passwords do not match.';
+        confirmPasswordInput.focus();
+        return false;
     }
 
+    // 5. Privacy Policy prüfen
     if (!policyCheckbox.checked) {
-        errors.push({ field: policyCheckbox, message: 'Please accept the privacy policy.' });
         if (policyContainer) {
             policyContainer.classList.add('input-error');
         }
-    }
-
-    if (errors.length > 0) {
-        const message = errors.map((entry) => entry.message).join(' ');
-        if (typeof showMessage === 'function') {
-            showMessage(message, 'error');
-        } else {
-            alert(message);
-        }
-        errors[0].field?.focus();
+        document.getElementById('acceptPrivacyError').textContent = 'Please accept the privacy policy.';
         return false;
     }
 
