@@ -1,3 +1,5 @@
+let signupFieldErrors = {};
+
 function handleSignupSubmit(event) {
     event.preventDefault();
     if (!validateSignupForm()) {
@@ -19,6 +21,7 @@ function validateSignupForm() {
     const confirmValue = confirmPasswordInput.value;
 
     // Alle Input-Fehler-Klassen und Error-Messages entfernen
+    signupFieldErrors = {};
     [nameInput, emailInput, passwordInput, confirmPasswordInput].forEach(input => {
         input.classList.remove('input-error');
     });
@@ -34,67 +37,134 @@ function validateSignupForm() {
     }
 
     // Validierung in Reihenfolge: Name -> Email -> Passwort -> Confirm -> Privacy
-    // Nur die erste leere Validierung wird angezeigt
-    
+    // Erste Fehlermeldung anzeigen, aber alle fehlerhaften Felder markieren
+    let firstErrorShown = false;
+
     // 1. Name prüfen
     if (!nameValue) {
+        signupFieldErrors.registerName = 'Please enter your name.';
         nameInput.classList.add('input-error');
-        document.getElementById('registerNameError').textContent = 'Please enter your name.';
-        nameInput.focus();
-        return false;
+        if (!firstErrorShown) {
+            document.getElementById('registerNameError').textContent = signupFieldErrors.registerName;
+            nameInput.focus();
+            firstErrorShown = true;
+        }
     }
 
     // 2. Email prüfen
     if (!emailValue) {
+        signupFieldErrors.registerEmail = 'Please enter an email address.';
         emailInput.classList.add('input-error');
-        document.getElementById('registerEmailError').textContent = 'Please enter an email address.';
-        emailInput.focus();
-        return false;
-    }
-
-    // Email Validierung (wenn nicht leer)
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+        if (!firstErrorShown) {
+            document.getElementById('registerEmailError').textContent = signupFieldErrors.registerEmail;
+            emailInput.focus();
+            firstErrorShown = true;
+        }
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+        signupFieldErrors.registerEmail = 'Please enter a valid email address.';
         emailInput.classList.add('input-error');
-        document.getElementById('registerEmailError').textContent = 'Please enter a valid email address.';
-        emailInput.focus();
-        return false;
+        if (!firstErrorShown) {
+            document.getElementById('registerEmailError').textContent = signupFieldErrors.registerEmail;
+            emailInput.focus();
+            firstErrorShown = true;
+        }
     }
 
     // 3. Passwort prüfen
     if (!passwordValue) {
+        signupFieldErrors.registerPassword = 'Please enter a password.';
         passwordInput.classList.add('input-error');
-        document.getElementById('registerPasswordError').textContent = 'Please enter a password.';
-        passwordInput.focus();
-        return false;
+        if (!firstErrorShown) {
+            document.getElementById('registerPasswordError').textContent = signupFieldErrors.registerPassword;
+            passwordInput.focus();
+            firstErrorShown = true;
+        }
     }
 
     // 4. Confirm Password prüfen
     if (!confirmValue) {
+        signupFieldErrors.registerPasswordConfirm = 'Please confirm your password.';
         confirmPasswordInput.classList.add('input-error');
-        document.getElementById('registerPasswordConfirmError').textContent = 'Please confirm your password.';
-        confirmPasswordInput.focus();
-        return false;
-    }
-
-    // Passwörter müssen übereinstimmen (wenn beide gefüllt)
-    if (passwordValue !== confirmValue) {
+        if (!firstErrorShown) {
+            document.getElementById('registerPasswordConfirmError').textContent = signupFieldErrors.registerPasswordConfirm;
+            confirmPasswordInput.focus();
+            firstErrorShown = true;
+        }
+    } else if (passwordValue && passwordValue !== confirmValue) {
+        signupFieldErrors.registerPasswordConfirm = 'Passwords do not match.';
         confirmPasswordInput.classList.add('input-error');
-        document.getElementById('registerPasswordConfirmError').textContent = 'Passwords do not match.';
-        confirmPasswordInput.focus();
-        return false;
+        if (!firstErrorShown) {
+            document.getElementById('registerPasswordConfirmError').textContent = signupFieldErrors.registerPasswordConfirm;
+            confirmPasswordInput.focus();
+            firstErrorShown = true;
+        }
     }
 
     // 5. Privacy Policy prüfen
     if (!policyCheckbox.checked) {
+        signupFieldErrors.acceptPrivacy = 'Please accept the privacy policy.';
         if (policyContainer) {
             policyContainer.classList.add('input-error');
         }
-        document.getElementById('acceptPrivacyError').textContent = 'Please accept the privacy policy.';
+        if (!firstErrorShown) {
+            document.getElementById('acceptPrivacyError').textContent = signupFieldErrors.acceptPrivacy;
+            firstErrorShown = true;
+        }
+    }
+
+    if (firstErrorShown) {
         return false;
     }
 
     return true;
 }
+
+function showFieldErrorMessage(fieldId) {
+    const idMap = {
+        registerName: 'registerNameError',
+        registerEmail: 'registerEmailError',
+        registerPassword: 'registerPasswordError',
+        registerPasswordConfirm: 'registerPasswordConfirmError',
+        acceptPrivacy: 'acceptPrivacyError'
+    };
+
+    // Alle Meldungen ausblenden
+    Object.values(idMap).forEach(spanId => {
+        const span = document.getElementById(spanId);
+        if (span) {
+            span.textContent = '';
+        }
+    });
+
+    const message = signupFieldErrors[fieldId];
+    if (!message) return;
+
+    const spanId = idMap[fieldId];
+    const span = document.getElementById(spanId);
+    if (span) {
+        span.textContent = message;
+    }
+}
+
+function attachSignupErrorFocusHandlers() {
+    const pairs = [
+        { fieldId: 'registerName', event: 'focus' },
+        { fieldId: 'registerEmail', event: 'focus' },
+        { fieldId: 'registerPassword', event: 'focus' },
+        { fieldId: 'registerPasswordConfirm', event: 'focus' },
+        { fieldId: 'acceptPrivacy', event: 'focus' },
+        { fieldId: 'acceptPrivacy', event: 'click' }
+    ];
+
+    pairs.forEach(({ fieldId, event }) => {
+        const el = document.getElementById(fieldId);
+        if (el) {
+            el.addEventListener(event, () => showFieldErrorMessage(fieldId));
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', attachSignupErrorFocusHandlers);
 
 async function addUser() {
     let name = document.getElementById('registerName');
