@@ -152,8 +152,6 @@ function attachSignupErrorFocusHandlers() {
         { fieldId: 'registerEmail', event: 'focus' },
         { fieldId: 'registerPassword', event: 'focus' },
         { fieldId: 'registerPasswordConfirm', event: 'focus' },
-        { fieldId: 'acceptPrivacy', event: 'focus' },
-        { fieldId: 'acceptPrivacy', event: 'click' }
     ];
 
     pairs.forEach(({ fieldId, event }) => {
@@ -164,7 +162,46 @@ function attachSignupErrorFocusHandlers() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', attachSignupErrorFocusHandlers);
+function updateSignupButtonState() {
+    const nameValue = document.getElementById('registerName')?.value.trim();
+    const emailValue = document.getElementById('registerEmail')?.value.trim();
+    const passwordValue = document.getElementById('registerPassword')?.value;
+    const confirmValue = document.getElementById('registerPasswordConfirm')?.value;
+    const policyChecked = document.getElementById('acceptPrivacy')?.checked;
+    const signupButton = document.querySelector('.btn-signup');
+
+    const isComplete = Boolean(nameValue && emailValue && passwordValue && confirmValue && policyChecked);
+    if (signupButton) {
+        signupButton.disabled = !isComplete;
+    }
+}
+
+function attachSignupFormStateHandlers() {
+    const inputs = [
+        document.getElementById('registerName'),
+        document.getElementById('registerEmail'),
+        document.getElementById('registerPassword'),
+        document.getElementById('registerPasswordConfirm')
+    ];
+    const policyCheckbox = document.getElementById('acceptPrivacy');
+
+    inputs.forEach(input => {
+        if (input) {
+            input.addEventListener('input', updateSignupButtonState);
+            input.addEventListener('blur', updateSignupButtonState);
+        }
+    });
+
+    if (policyCheckbox) {
+        policyCheckbox.addEventListener('change', updateSignupButtonState);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    attachSignupErrorFocusHandlers();
+    attachSignupFormStateHandlers();
+    updateSignupButtonState();
+});
 
 async function addUser() {
     let name = document.getElementById('registerName');
