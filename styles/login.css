@@ -201,11 +201,14 @@ button {
     margin-top: 10px;
 }
 
+.login-input-email {
+    margin-bottom: 16px;
+}
+
 .login-input input {
     width: 422px;
     height: 48px;
     padding-left: 15px;
-    margin-bottom: 10px;
     border: 1px solid grey;
     border-radius: 8px;
 }
