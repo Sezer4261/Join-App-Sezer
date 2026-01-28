@@ -78,9 +78,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
 async function login() {
     try {
+        // Entferne Error-Border von vorherigen Versuchen
+        const emailInput = document.getElementById('loginEmail');
+        const passwordInput = document.getElementById('loginPassword');
+        emailInput.classList.remove('input-error');
+        passwordInput.classList.remove('input-error');
+
         // Validiere Input
-        let email = document.getElementById("loginEmail").value.trim();
-        let password = document.getElementById("loginPassword").value.trim();
+        let email = emailInput.value.trim();
+        let password = passwordInput.value.trim();
 
         if (!email || !password) {
             showLoginError("Please fill in all fields.");
@@ -109,7 +115,7 @@ async function login() {
             window.location.href = "summary.html";
         } else {
             // Zeige benutzerdefinierte Fehlermeldung
-            showLoginError("Email or password is incorrect.");
+            showLoginError("Check your email and password. Please try again.");
         }
     } catch (error) {
         showLoginError("An error occurred. Please try again later.");
@@ -135,16 +141,6 @@ function showLoginError(message) {
     const passwordInput = document.getElementById('loginPassword');
     emailInput.classList.add('input-error');
     passwordInput.classList.add('input-error');
-    
-    // Entferne Fehler-Markierung beim Tippen
-    const removeError = () => {
-        emailInput.classList.remove('input-error');
-        passwordInput.classList.remove('input-error');
-        if (oldError) oldError.remove();
-    };
-    
-    emailInput.addEventListener('input', removeError, { once: true });
-    passwordInput.addEventListener('input', removeError, { once: true });
 }
 
 function isValidEmail(email) {
