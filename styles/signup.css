@@ -231,6 +231,14 @@ input.input-error:focus {
     height: 20px;
 }
 
+.is-hidden {
+    display: none !important;
+}
+
+.password-toggle {
+    cursor: pointer;
+}
+
 .accept-privacy-policy {
     display: flex;
     justify-content: center;

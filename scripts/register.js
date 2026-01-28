@@ -197,9 +197,70 @@ function attachSignupFormStateHandlers() {
     }
 }
 
+function initPasswordVisibilityToggle({ inputId, lockIconId, visibilityOffIconId, visibilityIconId }) {
+    const passwordInput = document.getElementById(inputId);
+    const lockIcon = document.getElementById(lockIconId);
+    const visibilityOffIcon = document.getElementById(visibilityOffIconId);
+    const visibilityIcon = document.getElementById(visibilityIconId);
+
+    if (!passwordInput || !lockIcon || !visibilityOffIcon || !visibilityIcon) return;
+
+    const setPasswordVisibility = (isVisible) => {
+        passwordInput.type = isVisible ? 'text' : 'password';
+        visibilityIcon.classList.toggle('is-hidden', !isVisible);
+        visibilityOffIcon.classList.toggle('is-hidden', isVisible);
+    };
+
+    const syncIconsWithInput = () => {
+        const hasValue = passwordInput.value.length > 0;
+        lockIcon.classList.toggle('is-hidden', hasValue);
+
+        if (!hasValue) {
+            visibilityOffIcon.classList.add('is-hidden');
+            visibilityIcon.classList.add('is-hidden');
+            passwordInput.type = 'password';
+            return;
+        }
+
+        const isVisible = passwordInput.type === 'text';
+        setPasswordVisibility(isVisible);
+    };
+
+    passwordInput.addEventListener('input', syncIconsWithInput);
+
+    visibilityOffIcon.addEventListener('click', () => {
+        if (passwordInput.value.length === 0) return;
+        setPasswordVisibility(true);
+    });
+
+    visibilityIcon.addEventListener('click', () => {
+        if (passwordInput.value.length === 0) return;
+        setPasswordVisibility(false);
+    });
+
+    syncIconsWithInput();
+}
+
+function initSignupPasswordVisibilityToggles() {
+    initPasswordVisibilityToggle({
+        inputId: 'registerPassword',
+        lockIconId: 'registerLockIcon',
+        visibilityOffIconId: 'registerVisibilityOffIcon',
+        visibilityIconId: 'registerVisibilityIcon'
+    });
+
+    initPasswordVisibilityToggle({
+        inputId: 'registerPasswordConfirm',
+        lockIconId: 'registerConfirmLockIcon',
+        visibilityOffIconId: 'registerConfirmVisibilityOffIcon',
+        visibilityIconId: 'registerConfirmVisibilityIcon'
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     attachSignupErrorFocusHandlers();
     attachSignupFormStateHandlers();
+    initSignupPasswordVisibilityToggles();
     updateSignupButtonState();
 });
 
