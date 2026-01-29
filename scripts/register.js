@@ -283,7 +283,17 @@ async function addUser() {
     const newUser = { name: name.value.trim(), email: email.value.trim(), password: password.value };
     users.push(newUser);
     try {
+        // Benutzer in der users Collection speichern
         await postData("users", newUser);
+        
+        // Benutzer auch als Kontakt speichern (ohne Passwort!)
+        const newContact = {
+            name: newUser.name,
+            email: newUser.email,
+            phone: '' // Optional: Du könntest auch ein Telefon-Feld im Registrierungsformular hinzufügen
+        };
+        await postData("contacts", newContact);
+        
         window.location.href = 'index.html?msg=Du hast dich erfolgreich registriert!';
     } catch (err) {
         console.error("Fehler beim Posten:", err);

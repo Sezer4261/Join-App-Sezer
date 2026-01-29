@@ -2,7 +2,7 @@
 //     { id: 1, name: "Alex Johnson", email: "alex@example.com", phone: "+49 123 456789", avatar: "assets/avatar1.jpg" },
 //     { id: 2, name: "Maria Gomez", email: "maria@example.com", phone: "+49 987 654321", avatar: "assets/avatar3.jpg" },
 //     { id: 3, name: "Chris Müller", email: "chris@example.com", phone: "+49 555 123456", avatar: "assets/avatar4.jpg" }
-// };
+// ];
 
 
 
@@ -233,7 +233,7 @@ async function handleContactClick(event) {
   const initials = contactData.name.split(" ").map(n => n[0]).join("");
   const name = contactData.name;
   const email = contactData.email;
-  const phone = contactData.phone || 'N/A'; // Fallback für Telefonnummer
+  const phone = contactData.phone || ''; // kein "N/A" mehr
   const id = contactId; // Die ID kommt aus dem Dataset
 
   contactDetailsContainer.innerHTML = getContactDetailsTemplate(initials, name, email, phone, id);

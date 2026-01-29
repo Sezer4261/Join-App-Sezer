@@ -90,6 +90,15 @@ function getContactItem(contactDataName, contactDataMail, contactNameInitials) {
 }
 
 function getContactDetailsTemplate(initials, name, email, phone, id) {
+    const phoneSection = phone
+        ? `
+            <div class="contact-info-phone">
+                <p><strong>Phone</strong></p>
+                <p>${phone}</p>
+            </div>
+          `
+        : '';
+
     return `
         <div class="contact-details-container">
 
@@ -133,10 +142,7 @@ function getContactDetailsTemplate(initials, name, email, phone, id) {
                         <p><strong>Email</strong></p>
                         <a class="contact-email" href="mailto:${email}">${email}</a>
                     </div>
-                    <div class="contact-info-phone">
-                        <p><strong>Phone</strong></p>
-                        <p>${phone}</p>
-                    </div>
+                    ${phoneSection}
                 </div>
             </div>
         </div>
