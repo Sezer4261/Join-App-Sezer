@@ -1,123 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Privacy Policy</title>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="./styles/legal-notice.css">
   <link rel="stylesheet" href="./styles/sidebar.css">
   <link rel="stylesheet" href="./styles/header.css">
-  <link rel="stylesheet" href="./styles/privacy.css">
 
   <script src="./scripts/sidebar.js" defer></script>
+
+  <title>Privacy Policy</title>
 </head>
 
 <body>
-  <div class="app">
+  <nav class="sidebar">
+    <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
 
-    <nav class="sidebar">
-      <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
-
-      <ul>
-        <li onclick="location.href='summary.html'">Summary</li>
-        <li onclick="location.href='addTask.html'">Add Task</li>
-        <li onclick="location.href='board.html'">Board</li>
-        <li onclick="location.href='contacts.html'">Contacts</li>
-      </ul>
-
-      <footer class="sidebar-footer">
-        <a href="privacy-policy.html" class="active">Privacy Policy</a>
-        <a href="legal-notice.html">Legal Notice</a>
-      </footer>
-    </nav>
-
-    <main class="main">
-      <header>
-        <p class="app-tagline">Kanban Project Management Tool</p>
-        <div class="user-actions">
-          <img src="./assets/icons/help.svg" alt="Help">
-          <span class="user-profile">G</span>
+    <ul>
+      <li onclick="sidebarHighlightingSummary()" class="sidebar-li-hover-effect" id="summary-li">
+        <div>
+          <img src="./assets/icons/vector_summ.svg" alt="Summary-Icon">
+          <a href="summary.html">Summary</a>
         </div>
-      </header>
+      </li>
+      <li onclick="sidebarHighlightingAddTask()" class="sidebar-li-hover-effect" id="add-task-li">
+        <div>
+          <img src="./assets/icons/edit_square.svg" alt="Edit-Square-Icon">
+          <a href="addTask.html">Add Task</a>
+        </div>
+      </li>
+      <li onclick="sidebarHighlightingBoard()" class="sidebar-li-hover-effect" id="board-li">
+        <div>
+          <img src="./assets/icons/vector_board.svg" alt="Board-Icon">
+          <a href="board.html">Board</a>
+        </div>
+      </li>
+      <li onclick="sidebarHighlightingContacts()" class="sidebar-li-hover-effect" id="contacts-li">
+        <div>
+          <img src="./assets/icons/perm_contact_calendar.svg" alt="Contacts-Icon">
+          <a href="contacts.html">Contacts</a>
+        </div>
+      </li>
+    </ul>
 
-      <section class="content privacy-content">
+    <footer class="sidebar-footer">
+      <div class="footer-link-container highlighted" id="privacy-policy-div">
+        <a href="./privacy-policy.html" class="sidebar-footer-link-hover-effect">Privacy Policy</a>
+      </div>
+      <div class="footer-link-container" id="legal-notice-div">
+        <a href="./legal-notice.html" class="sidebar-footer-link-hover-effect">Legal notice</a>
+      </div>
+    </footer>
+  </nav>
 
-        <h1>Privacy Policy</h1>
+  <main>
+    <header>
+      <div class="center">
+        <p class="app-tagline">Kanban Project Management Tool</p>
+      </div>
+      <div class="user-actions">
+        <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+        <div class="user-profile-container">
+          <span class="user-profile" id="user-profile">G</span>
+        </div>
+        <button class="btn-logout" onclick="logout()">Logout</button>
+      </div>
+    </header>
 
-        <h2>1. General Information</h2>
-        <p>
-          The protection of your personal data is important to us. This Privacy Policy explains how
-          personal data is handled within this application.
-        </p>
-        <p>
-          This project is a non-commercial demonstration and learning project and does not pursue
-          any commercial purpose.
-        </p>
+    <div class="wrapper">
+      <h1>Privacy Policy</h1>
 
-        <h2>2. Responsible Entity</h2>
-        <p>
-          The responsible entity for data processing within this project is the project team.
-        </p>
-        <p>
-          As this is a training project, no official data protection officer has been appointed.
-        </p>
+      <p>
+        We take the protection of your personal data very seriously. This Privacy Policy explains how we collect,
+        use and protect your information when using the Join Kanban Project Management Tool.
+      </p>
 
-        <h2>3. Collection and Processing of Data</h2>
-        <p>
-          This application does not collect, store, or process personal data on external servers.
-        </p>
-        <p>
-          All data entered in the application, such as tasks or contacts, is stored exclusively in
-          the user’s local browser storage.
-        </p>
+      <h2>1. Data Collection</h2>
+      <p>
+        We only collect data that is necessary for the functionality of the application. This includes task data,
+        contact information and usage-related data stored locally in your browser.
+      </p>
 
-        <h2>4. Local Storage</h2>
-        <p>
-          The application uses the browser’s localStorage to store application data such as tasks,
-          contact information, and user-related data.
-        </p>
-        <p>
-          This data remains on the user’s device and can be deleted at any time by clearing the
-          browser data.
-        </p>
+      <h2>2. Data Storage</h2>
+      <p>
+        All data is stored locally using your browser’s local storage. No personal data is transmitted to external
+        servers.
+      </p>
 
-        <h2>5. Cookies</h2>
-        <p>
-          This application does not use cookies.
-        </p>
+      <h2>3. Purpose of Data Processing</h2>
+      <p>
+        The collected data is used solely to provide and improve the functionality of the application.
+      </p>
 
-        <h2>6. Third-Party Services</h2>
-        <p>
-          No third-party services, analytics tools, tracking tools, or external APIs are used.
-        </p>
+      <h2>4. Third-Party Services</h2>
+      <p>
+        This application does not use third-party tracking tools or external analytics services.
+      </p>
 
-        <h2>7. Data Security</h2>
-        <p>
-          Since all data is stored locally in the browser, users are responsible for protecting
-          their own devices.
-        </p>
+      <h2>5. User Rights</h2>
+      <p>
+        You have the right to access, modify or delete your data at any time by clearing your browser’s local storage.
+      </p>
 
-        <h2>8. User Rights</h2>
-        <p>
-          Users have the right to view, delete, or modify their stored data by managing their
-          browser storage.
-        </p>
-        <p>
-          Users may stop using the application at any time.
-        </p>
+      <h2>6. Changes to this Privacy Policy</h2>
+      <p>
+        We reserve the right to update this Privacy Policy if necessary to reflect changes in the application.
+      </p>
 
-        <h2>9. Changes to This Privacy Policy</h2>
-        <p>
-          This Privacy Policy may be updated if the project is extended or modified.
-        </p>
+      <h2>7. Contact</h2>
+      <p>
+        If you have any questions regarding data protection, please contact the project administrator.
+      </p>
+    </div>
 
-        <h2>10. Contact</h2>
-        <p>
-          For questions regarding this Privacy Policy, please contact the project team.
-        </p>
-
-      </section>
-    </main>
-  </div>
+  </main>
 </body>
+
 </html>
