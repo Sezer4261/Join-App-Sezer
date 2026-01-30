@@ -30,6 +30,7 @@ async function saveToArray(event) {
   if (result) {
     showMessage("Task added to board", "success");
     subtasks.length = 0;
+    selectedContacts.length = 0;
     showSubtasks();
     document.getElementById('addTaskForm').reset();
     // Neu: nach dem Toast zur Board-Seite weiterleiten
@@ -58,8 +59,7 @@ async function saveTask(task) {
 /** Dropdown mit Kontakten füllen */
 function selectContacts() {
   let select = document.getElementById('dropdownContacts');
-  select.innerHTML = '';
-  select.innerHTML += generateAssignedContacts(contacts);
+  select.innerHTML = generateAssignedContacts(contacts);
 }
 
 /** Dropdown öffnen/schließen */
@@ -118,7 +118,10 @@ function showSubtasks() {
 function addSubtask() {
   let subtask = document.getElementById('subtask').value;
   if (subtask) {
-    subtasks.push(subtask);
+    subtasks.push({
+      title: subtask,
+      done: false
+    });
     showSubtasks();
     document.getElementById('subtask').value = '';
   } else {
@@ -137,10 +140,7 @@ function deleteSubtask(i) {
 }
 
 function clearForm() {
-  // Auswahl-Feld leeren
   selectedContacts = [];
-
-  // Avatare neu rendern → leer
   renderSelectedAvatars();
 }
 

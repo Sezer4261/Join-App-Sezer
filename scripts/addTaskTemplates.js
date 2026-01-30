@@ -102,7 +102,7 @@ function generateAddTask() {
 
             <div class="actions">
               <button type="reset" class="clear" onclick="clearForm()">Clear ✕</button>
-              <button type="submit" class="create" onclick="clearForm()">Create Task ▾</button>
+              <button type="submit" class="create">Create Task ▾</button>
             </div>
           </div>
         </form>
@@ -114,7 +114,7 @@ function generateAddTask() {
 function generateSubtasks(i) {
   return /*html*/ `
       <li class="subtask">
-        <span>${subtasks[i]}</span>
+        <span>${subtasks[i].title}</span>
         <div class="subtask-actions">
           <img src="./assets/icons/delete.svg" alt="Delete" onclick="deleteSubtask(${i})">
           <div class="action-separator"></div>
@@ -178,7 +178,12 @@ function generateTaskFromForm() {
   const dueDate = document.getElementById('date').value.trim();
   const priority = document.querySelector('input[name="priority"]:checked').value;
   const category = document.getElementById('category').value;
-  const contact = document.getElementById('selectContacts').value;
+
+  // ALLE ausgewählten Kontakte übernehmen (Array)
+  const contacts = [...selectedContacts];
+
+  // subtasks auch als Kopie, damit Referenzen vermieden werden
+  const taskSubtasks = [...subtasks];
 
   return {
     id: Date.now(),
@@ -186,9 +191,9 @@ function generateTaskFromForm() {
     description,
     dueDate,
     priority,
-    contact,
+    contacts,          
     category,
-    subtasks,
-    status: "To Do", // Default
+    subtasks: taskSubtasks,
+    status: "To Do",
   };
 }

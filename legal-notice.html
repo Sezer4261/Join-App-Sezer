@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="./styles/sidebar.css">
   <link rel="stylesheet" href="./styles/header.css">
 
+  <script src="./script.js" defer></script>
   <script src="./scripts/sidebar.js" defer></script>
+
 
 
 
@@ -64,9 +66,13 @@
       <div class="user-actions">
         <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
         <div class="user-profile-container">
-          <span class="user-profile" id="user-profile">G</span>
+          <span class="user-profile" id="user-profile" onclick="toggleProfileMenu(event)">G</span>
+          <div class="profile-menu" id="profileMenu">
+            <a href="./legal-notice.html">Legal Notice</a>
+            <a href="./privacy-policy.html">Privacy Policy</a>
+            <button onclick="logout()">Log out</button>
+          </div>
         </div>
-        <button class="btn-logout" onclick="logout()">Logout</button>
       </div>
     </header>
 

@@ -115,3 +115,27 @@ function showMessage(message, type = "success") {
     box.style.display = "none";
   }, 1500);
 }
+
+function toggleProfileMenu(event) {
+    event.stopPropagation();
+    const menu = document.getElementById('profileMenu');
+    if (menu) {
+        menu.classList.toggle('active');
+    }
+}
+
+// Menü schließen wenn außerhalb geklickt wird
+document.addEventListener('click', (event) => {
+    const menu = document.getElementById('profileMenu');
+    const profileContainer = document.querySelector('.user-profile-container');
+    
+    // Nur schließen wenn außerhalb des Profil-Containers geklickt wurde
+    if (menu && profileContainer && !profileContainer.contains(event.target)) {
+        menu.classList.remove('active');
+    }
+});
+
+function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "index.html";
+}

@@ -218,19 +218,11 @@ h1 {
 }
 
 .subtask-card {
+    width: 150px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-
-}
-
-.subtask-progress {
-    height: 8px;
-    width: 120px;
-    background-color: rgb(209, 209, 209);
-    margin-right: 24px;
-    border-radius: 8px;
 
 }
 
@@ -502,6 +494,34 @@ h1 {
   color: black;
 }
 
+.subtask-progress-bar {
+  width: 100px;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.subtask-progress-fill {
+  height: 100%;
+  background: #4ade80;
+  transition: width 0.3s ease;
+}
+
+.modal-subtask {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.modal-progress-wrapper {
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 /* ===========================================
    ACTION BUTTONS (gleich wie Original)
    =========================================== */
@@ -530,6 +550,170 @@ h1 {
   background: var(--sidebar-bg);
   color: #fff;
 }
+
+/* ===== EDIT MODAL LAYOUT ===== */
+
+.edit-task-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.edit-form-scroll {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 6px;
+}
+
+/* Inputs */
+
+.edit-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.edit-input,
+.edit-textarea,
+.edit-select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.edit-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Priority */
+
+.edit-priority {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.edit-priority-options {
+  display: flex;
+  gap: 12px;
+}
+
+.edit-priority-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* Assigned */
+
+.edit-assigned {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-custom-select {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.edit-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 110%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 10;
+  display: none;
+}
+
+.edit-custom-select.open .edit-dropdown {
+  display: block;
+}
+
+.edit-avatar-container {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Subtasks */
+
+.edit-subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-subtask-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-subtask-input-row input {
+  flex: 1;
+  padding: 8px;
+}
+
+.edit-subtask-input-row button {
+  width: 36px;
+  border-radius: 8px;
+}
+
+.edit-subtask-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.edit-subtask-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-subtask-list input {
+  flex: 1;
+  padding: 6px;
+}
+
+/* Actions */
+
+.edit-actions {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.edit-cancel {
+  background: transparent;
+  border: none;
+  color: #555;
+}
+
+.edit-save {
+  background: #2a7cff;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+}
+
 
 /* Responsive */
 @media (max-width: 1000px) {
