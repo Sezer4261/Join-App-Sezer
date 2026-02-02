@@ -4,28 +4,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Help</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./styles/legal-notice.css">
   <link rel="stylesheet" href="./styles/sidebar.css">
   <link rel="stylesheet" href="./styles/header.css">
+
   <script src="./script.js" defer></script>
   <script src="./scripts/sidebar.js" defer></script>
 
+
+
+
+  <title>Help</title>
 </head>
 
 <body>
   <nav class="sidebar">
     <img class="logo_sidebar" src="./assets/img/join_logo_white.svg" alt="Join Logo">
+
     <ul>
       <li onclick="sidebarHighlightingSummary()" class="sidebar-li-hover-effect" id="summary-li">
         <div>
           <img src="./assets/icons/vector_summ.svg" alt="Summary-Icon">
-          <a href="summary.html">Summary</a>
+          <a href="summary.html" aria-current="page">Summary</a>
         </div>
       </li>
       <li onclick="sidebarHighlightingAddTask()" class="sidebar-li-hover-effect" id="add-task-li">
         <div>
-          <img src="./assets/icons/edit_square.svg" alt="Edit-Square-Icon">
+          <img src="./assets/icons/edit_square.svg" alt=" Edit-Square-Icon">
           <a href="addTask.html">Add Task</a>
         </div>
       </li>
@@ -43,6 +48,7 @@
       </li>
     </ul>
 
+
     <footer class="sidebar-footer">
       <div class="footer-link-container" id="privacy-policy-div">
         <a href="./privacy-policy.html" class="sidebar-footer-link-hover-effect">Privacy Policy</a>
@@ -52,53 +58,30 @@
       </div>
     </footer>
   </nav>
-
-  <header>
-    <div class="center">
-      <p class="app-tagline">Kanban Project Management Tool</p>
-    </div>
-    <div class="user-actions">
-      <img class="help-icon" src="./assets/icons/help.svg" alt="Help">
-      <div class="user-profile-container">
-        <span class="user-profile" id="user-profile" onclick="toggleProfileMenu(event)">G</span>
-        <div class="profile-menu" id="profileMenu">
-          <a href="./legal-notice.html">Legal Notice</a>
-          <a href="./privacy-policy.html">Privacy Policy</a>
-          <button onclick="logout()">Log out</button>
+  <main>
+    <header>
+      <div class="center">
+        <p class="app-tagline">Kanban Project Management Tool</p>
+      </div>
+      <div class="user-actions">
+        <div class="user-profile-container">
+          <span class="user-profile" id="user-profile" onclick="toggleProfileMenu(event)">G</span>
+          <div class="profile-menu" id="profileMenu">
+            <a href="./legal-notice.html">Legal Notice</a>
+            <a href="./privacy-policy.html">Privacy Policy</a>
+            <button onclick="logout()">Log out</button>
+          </div>
         </div>
       </div>
+    </header>
+
+
+    <div class="wrapper">
+      <p>Text</p>
     </div>
-  </header>
 
-  <main class="help-container">
-    <h1>Help</h1>
-    <section>
-      <h2>Welcome to Join</h2>
-      <p>
-        This is the help page for <strong>Join</strong>, your Kanban project management tool.
-        Here you'll find all the information you need to navigate and use the application.
-      </p>
-    </section>
-
-    <section>
-      <h2>How to use Join</h2>
-      <ol>
-        <li><strong>Summary:</strong> Get an overview of your tasks and progress.</li>
-        <li><strong>Add Task:</strong> Create new tasks with subtasks and assign them to contacts.</li>
-        <li><strong>Board:</strong> Manage tasks with drag & drop across columns (To do, In Progress, Done).</li>
-        <li><strong>Contacts:</strong> Add and manage your project contacts with edit and delete options.</li>
-      </ol>
-    </section>
-
-    <section>
-      <h2>Need more help?</h2>
-      <p>
-        If you encounter issues or have questions, please check the
-        <a href="privacy-policy.html">Privacy Policy</a> or
-        <a href="legal-notice.html">Legal Notice</a> for more details.
-      </p>
-    </section>
   </main>
+
 </body>
 
 </html>
