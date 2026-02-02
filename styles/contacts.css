@@ -224,7 +224,7 @@ main {
     gap: 2px;
     padding: 12px 24px;
     margin-top: 12px;
-    width: 310px;
+    width: 352px;
 }
 
 .contact-name-wrapper {
@@ -450,7 +450,7 @@ hr {
     cursor: pointer;
     padding: 0 8px;
     height: 24px;
-    min-width: 77px;
+    min-width: 90px;
     outline: none;
     box-sizing: border-box;
     transition: all 0.2s;

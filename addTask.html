@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="./styles/sidebar.css">
   <link rel="stylesheet" href="./styles/header.css">
 
-
-  <script src="./scripts/sidebar.js"></script>
-  <script src="./script.js"></script>
+  <script src="./firebase.js" defer></script>
+  <script src="./script.js" defer></script>
+  <script src="./scripts/sidebar.js" defer></script>
   <script src="./scripts/addTask.js" defer></script>
   <script src="./scripts/addTaskTemplates.js" defer></script>
   <script src="./scripts/contacts.js" defer></script>
@@ -68,7 +68,9 @@
         </div>
 
         <div class="user-actions">
-          <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+          <a href="./help.html">
+            <img class="help-icon" src="./assets/icons/help.svg" alt="Help" onclick="navigateToHelp()">
+          </a>
           <div class="user-profile-container">
             <span class="user-profile" id="user-profile" onclick="toggleProfileMenu(event)">G</span>
             <div class="profile-menu" id="profileMenu">

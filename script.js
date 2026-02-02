@@ -53,10 +53,28 @@ let tasks = [
 ];
 let columns = ["To Do", "In Progress", "Await Feedback", "Done"];
 let draggedTaskId = null;
-let activeTask = null; // Aktives Modal-Task
+let activeTask = null;
 let users = [
     {'email': 'erik@test.de', 'password': 'test1234'}
 ];
+
+// Seite sofort schützen (BEVOR irgendwas anderes passiert)
+// ABER NUR auf geschützten Seiten (nicht auf index.html / signup.html)
+function protectThisPage() {
+  const currentPage = window.location.pathname;
+  
+  // Login/Signup Seiten ausnehmen
+  if (currentPage.includes('index.html') || currentPage.includes('signup.html')) {
+    return;
+  }
+  
+  if (!localStorage.getItem("user")) {
+    window.location.replace("index.html");
+  }
+}
+
+// Sofort aufrufen
+protectThisPage();
 
 function showMessage(message, type = "success") {
   let box = document.getElementById("msgBox");
@@ -129,13 +147,29 @@ document.addEventListener('click', (event) => {
     const menu = document.getElementById('profileMenu');
     const profileContainer = document.querySelector('.user-profile-container');
     
-    // Nur schließen wenn außerhalb des Profil-Containers geklickt wurde
     if (menu && profileContainer && !profileContainer.contains(event.target)) {
         menu.classList.remove('active');
     }
 });
 
 function logout() {
-    localStorage.removeItem("user");
-    window.location.href = "index.html";
+  localStorage.removeItem("user");
+
+  if (typeof window.firebaseLogout === "function") {
+    window.firebaseLogout();
+  }
+
+  window.location.replace("index.html");
 }
+
+// Verhindere Seiten-Cache
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted && !localStorage.getItem("user")) {
+    window.location.replace("index.html");
+  }
+});
+
+// Cache deaktivieren
+window.addEventListener("beforeunload", () => {
+  // Keine Aktion nötig, aber wichtig für manche Browser
+});

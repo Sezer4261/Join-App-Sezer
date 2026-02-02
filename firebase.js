@@ -10,29 +10,28 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-function logout() {
-  auth.signOut()
-    .then(() => {
-      localStorage.removeItem("user");
-      window.location.href = "index.html";
-    })
-    .catch((error) => {
-      alert("Logout failed: " + error.message);
+// Firebase Logout (optional)
+function firebaseLogout() {
+  if (auth && typeof auth.signOut === "function") {
+    auth.signOut().catch((error) => {
+      console.warn("Logout failed:", error);
     });
+  }
 }
 
-function checkAuth() {
-  auth.onAuthStateChanged((user) => {
-    if (!user && !localStorage.getItem("user")) {
-      window.location.href = "index.html";
-    } else {
-      const userData = JSON.parse(localStorage.getItem("user"));
-      if (userData && userData.email) {
-        const profile = document.getElementById("user-profile");
-        if (profile) profile.innerText = userData.displayName ? userData.displayName[0] : userData.email[0].toUpperCase();
-      }
+window.firebaseLogout = firebaseLogout;
+
+// Optional: User-Profil aktualisieren
+function updateUserProfile() {
+  const userData = JSON.parse(localStorage.getItem("user") || "null");
+  if (userData && userData.email) {
+    const profile = document.getElementById("user-profile");
+    if (profile) {
+      profile.innerText = userData.displayName
+        ? userData.displayName[0]
+        : userData.email[0].toUpperCase();
     }
-  });
+  }
 }
 
-document.addEventListener("DOMContentLoaded", checkAuth);
+document.addEventListener("DOMContentLoaded", updateUserProfile);
