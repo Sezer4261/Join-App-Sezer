@@ -1,5 +1,3 @@
-//const BASE_URL = "https://deine-api-url-hier"; // Passe deine API-URL an
-
 // Entferne Intro-Overlay nach Animation
 window.addEventListener('DOMContentLoaded', () => {
     // Align intro animation logo with the real header logo position

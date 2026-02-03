@@ -1,73 +1,45 @@
 let BASE_URL = "https://join-app-firebase-default-rtdb.europe-west1.firebasedatabase.app";
-let tasks = [
-    {
-    id: 1,
-    type: "User Story",
-    title: "Kochwelt Page & Recipe Recommender",
-    description: "Build start page with recipe recommendation.",
-    dueDate: "10/05/2023",
-    priority: "Medium =",
-    status: "In Progress",
-    assigned: [
-      { name: "Emmanuel Mauer", initials: "EM", color: "#00bfa5" },
-      { name: "Marcel Bauer", initials: "MB", color: "#673ab7" },
-      { name: "Anton Mayer", initials: "AM", color: "#1e88e5" }
-    ],
-    subtasks: [
-      { text: "Implement Recipe Recommendation", done: true },
-      { text: "Start Page Layout", done: false }
-    ]
-  },
-  {
-    id: 2,
-    type: "Task",
-    title: "Backend API Setup",
-    description: "Initialize project and build authentication routes.",
-    dueDate: "15/05/2023",
-    priority: "Urgent ⬆",
-    status: "To Do",
-    assigned: [
-      { name: "Lisa Schmidt", initials: "LS", color: "#ef6c00" }
-    ],
-    subtasks: [
-      { text: "Setup Express", done: false },
-      { text: "Create User Model", done: false }
-    ]
-  },
-  {
-    id: 3,
-    type: "Bug",
-    title: "Fix Login Issue",
-    description: "Resolve bug where users cannot log in with Safari.",
-    dueDate: "12/05/2023",
-    priority: "Low ⬇",
-    status: "Done",
-    assigned: [
-      { name: "Tom Becker", initials: "TB", color: "#c2185b" }
-    ],
-    subtasks: [
-      { text: "Reproduce issue", done: true },
-      { text: "Fix session handling", done: true }
-    ]
-  }
-];
+
 let columns = ["To Do", "In Progress", "Await Feedback", "Done"];
 let draggedTaskId = null;
 let activeTask = null;
 let users = [
-    {'email': 'erik@test.de', 'password': 'test1234'}
+  { 'email': 'erik@test.de', 'password': 'test1234' }
 ];
+let contacts = [];
+let selectedContacts = [];
+let subtasks = [];
+
+async function loadContacts() {
+  try {
+    const response = await fetch(`${BASE_URL}/contacts.json`);
+    const data = await response.json();
+
+    if (!data) {
+      contacts = [];
+      return;
+    }
+
+    contacts = Object.entries(data).map(([key, value]) => ({
+      id: key,
+      ...value
+    }));
+
+  } catch (error) {
+    console.error("Fehler beim Laden der Kontakte:", error);
+  }
+}
 
 // Seite sofort schützen (BEVOR irgendwas anderes passiert)
 // ABER NUR auf geschützten Seiten (nicht auf index.html / signup.html)
 function protectThisPage() {
   const currentPage = window.location.pathname;
-  
+
   // Login/Signup Seiten ausnehmen
   if (currentPage.includes('index.html') || currentPage.includes('signup.html')) {
     return;
   }
-  
+
   if (!localStorage.getItem("user")) {
     window.location.replace("index.html");
   }
@@ -135,30 +107,41 @@ function showMessage(message, type = "success") {
 }
 
 function toggleProfileMenu(event) {
-    event.stopPropagation();
-    const menu = document.getElementById('profileMenu');
-    if (menu) {
-        menu.classList.toggle('active');
-    }
+  event.stopPropagation();
+  const menu = document.getElementById('profileMenu');
+  if (menu) {
+    menu.classList.toggle('active');
+  }
 }
 
 // Menü schließen wenn außerhalb geklickt wird
 document.addEventListener('click', (event) => {
-    const menu = document.getElementById('profileMenu');
-    const profileContainer = document.querySelector('.user-profile-container');
-    
-    if (menu && profileContainer && !profileContainer.contains(event.target)) {
-        menu.classList.remove('active');
-    }
+  const menu = document.getElementById('profileMenu');
+  const profileContainer = document.querySelector('.user-profile-container');
+
+  if (menu && profileContainer && !profileContainer.contains(event.target)) {
+    menu.classList.remove('active');
+  }
 });
 
-function logout() {
-  localStorage.removeItem("user");
-
-  if (typeof window.firebaseLogout === "function") {
-    window.firebaseLogout();
+function logout(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
   }
 
+  localStorage.removeItem("user");
+
+  // Firebase Logout: nur wenn verfügbar, Fehler werden abgefangen
+  try {
+    if (typeof window.firebaseLogout === "function") {
+      window.firebaseLogout();
+    }
+  } catch (e) {
+    console.warn("Firebase logout failed (not critical):", e);
+  }
+
+  // Redirect IMMER ausführen
   window.location.replace("index.html");
 }
 

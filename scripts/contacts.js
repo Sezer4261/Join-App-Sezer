@@ -1,11 +1,3 @@
-// let contacts = [
-//     { id: 1, name: "Alex Johnson", email: "alex@example.com", phone: "+49 123 456789", avatar: "assets/avatar1.jpg" },
-//     { id: 2, name: "Maria Gomez", email: "maria@example.com", phone: "+49 987 654321", avatar: "assets/avatar3.jpg" },
-//     { id: 3, name: "Chris Müller", email: "chris@example.com", phone: "+49 555 123456", avatar: "assets/avatar4.jpg" }
-// ];
-
-
-
 function closeOverlay() {
   document.getElementById("contact-overlay").classList.add("hidden");
 }
@@ -148,25 +140,6 @@ async function saveContact(contact) {
   }
 }
 
-async function loadContacts() {
-  try {
-    const response = await fetch(`${BASE_URL}/contacts.json`);
-    const data = await response.json();
-
-    if (!data) {
-      contacts = [];
-      return;
-    }
-
-    contacts = Object.entries(data).map(([key, value]) => ({
-      id: key,
-      ...value
-    }));
-
-  } catch (error) {
-    console.error("Fehler beim Laden der Kontakte:", error);
-  }
-}
 function showContactsToast(message, durationMs = 2200) {
   const old = document.getElementById('contacts-toast');
   if (old) old.remove();

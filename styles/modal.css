@@ -39,7 +39,7 @@ body {
 }
 
 .add-task-header img {
-  display: none;
+  cursor: pointer;
 }
 
 .avatar {
@@ -59,7 +59,7 @@ body {
 }
 
 h1 {
-  font-size: 60px;
+  font-size: 40px;
   margin-bottom: 20px;
 }
 
@@ -76,7 +76,13 @@ h1 {
   gap: 16px;
 }
 
-label {
+.form-left label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.category {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -238,7 +244,7 @@ textarea {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #03e3f8; /* oder deine Kontaktfarbe */
+  background-color: #2A3647; /* oder deine Kontaktfarbe */
   color: white;
   display: flex;
   align-items: center;
@@ -264,19 +270,13 @@ textarea {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #03e3f8;
+  background: #0038ff;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
   font-weight: bold;
-}
-
-.category {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
 }
 
 
@@ -296,7 +296,7 @@ textarea {
 }
 
 .subtask-list {
-  height: 130px;
+  height: 100px;
   overflow-y: auto;
 }
 
@@ -381,83 +381,4 @@ transform: scale(1.1);
 
 .category-options:hover {
   background-color: #f0f0f0 !important;
-}
-
-/* ================= RESPONSIVE ================= */
-
-/* Tablet: Sidebar schmal, 1-spaltiges Formular */
-@media (max-width: 900px) {
-  .sidebar {
-    width: 70px;
-    align-items: center;
-    padding: 20px 8px;
-  }
-
-  .logo-text {
-    display: none;
-  }
-
-  .nav-item {
-    text-align: center;
-    font-size: 13px;
-    padding: 8px 4px;
-  }
-
-  .sidebar-footer {
-    display: none;
-  }
-
-  .task-form {
-    flex-direction: column;
-    gap: 20px;
-  }
-}
-
-/* Smartphone: Sidebar wird Bottom-Navigation */
-@media (max-width: 600px) {
-  .app {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: 60px;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-  }
-
-  .side-nav {
-    flex-direction: row;
-    gap: 16px;
-    margin: 0;
-  }
-
-  .nav-item {
-    font-size: 13px;
-    padding: 6px 10px;
-  }
-
-  .logo,
-  .sidebar-footer {
-    display: none;
-  }
-
-  .main {
-    margin-bottom: 60px;
-    /* Platz für Bottom-Bar */
-  }
-
-  .content {
-    padding: 16px;
-  }
-
-  h1 {
-    font-size: 22px;
-  }
 }

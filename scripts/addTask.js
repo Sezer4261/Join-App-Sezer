@@ -1,14 +1,3 @@
-// let contacts = [
-//   { id: 1, name: "Alex Johnson", email: "alex@example.com", phone: "+49 123 456789", avatar: "assets/avatar1.jpg" },
-//   { id: 2, name: "Maria Gomez", email: "maria@example.com", phone: "+49 987 654321", avatar: "assets/avatar3.jpg" },
-//   { id: 3, name: "Chris Müller", email: "chris@example.com", phone: "+49 555 123456", avatar: "assets/avatar4.jpg" }
-// ];
-
-let contacts = [];
-let selectedContacts = [];
-
-let subtasks = [];
-
 /** Task rendern */
 async function renderAddTask() {
   let content = document.getElementById('addTaskContent');

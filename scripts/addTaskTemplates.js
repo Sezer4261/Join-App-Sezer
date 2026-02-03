@@ -1,6 +1,9 @@
 function generateAddTask() {
   return /*html*/ `
-     <h1>Add Task</h1>
+     <div class="add-task-header">
+        <h1>Add Task</h1>
+        <img src="./assets/icons/close.svg" alt="Close-Button" width="20" height="20" onclick="closeAddTaskDialog()">
+     </div>
 
         <form class="task-form" id="addTaskForm" onsubmit="saveToArray(event)">
           <!-- Left side -->
@@ -78,7 +81,7 @@ function generateAddTask() {
               <div id="selectedAvatars" class="avatar-container"></div>
             </div>
 
-            <label>
+            <label class="category">
               <span>
                 Category<span class="req">*</span>
               </span>

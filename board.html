@@ -8,16 +8,17 @@
     <link rel="stylesheet" href="./styles/board.css">
     <link rel="stylesheet" href="./styles/sidebar.css">
     <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/modal.css">
 
     <!-- Auth Guard - MUSS VOR anderen Scripts laden -->
     <script src="./firebase.js" defer></script>
     <script src="./script.js" defer></script>
     <script src="./scripts/sidebar.js"></script>
-    <script src="./script.js"></script>
     <script src="./scripts/board.js"></script>
     <script src="./scripts/boardTemplate.js"></script>
     <script src="./scripts/addTask.js"></script>
     <script src="./scripts/addTaskTemplates.js"></script>
+    <script src="./scripts/modal.js"></script>
 </head>
 
 <body onload="loadTasks()">
@@ -79,7 +80,7 @@
                         <div class="profile-menu" id="profileMenu">
                             <a href="./legal-notice.html">Legal Notice</a>
                             <a href="./privacy-policy.html">Privacy Policy</a>
-                            <button onclick="logout()">Log out</button>
+                            <button type="button" onclick="logout(event)">Log out</button>
                         </div>
                     </div>
                 </div>
@@ -98,6 +99,11 @@
             </div>
 
         </main>
+    </div>
+    <div id="addTask-dialog" class="addTask-dialog-bg d-none">
+        <div id="addTask-dialog-message" class="addTask-dialog">
+
+        </div>
     </div>
 </body>
 

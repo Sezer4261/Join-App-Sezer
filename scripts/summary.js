@@ -1,6 +1,3 @@
-const BASE_URL =
-    "https://join-app-firebase-default-rtdb.europe-west1.firebasedatabase.app";
-
 function navigateToHelp() {
     window.location.href = "help.html";
 }
