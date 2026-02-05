@@ -19,3 +19,11 @@ function openLogInSide() {
     window.location.href = "/index.html";
 }
 
+function navigateToLegalNotice() {
+    window.location.href = "legal-notice.html";
+}
+
+function navigateToPrivacyPolicy() {
+    window.location.href = "privacy-policy.html";
+}
+

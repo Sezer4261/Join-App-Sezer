@@ -78,9 +78,23 @@
                     <div class="user-profile-container">
                         <span class="user-profile" id="user-profile" onclick="toggleProfileMenu(event)">G</span>
                         <div class="profile-menu" id="profileMenu">
-                            <a href="./legal-notice.html">Legal Notice</a>
-                            <a href="./privacy-policy.html">Privacy Policy</a>
-                            <button type="button" onclick="logout(event)">Log out</button>
+                            <div onclick="navigateToLegalNotice()" class="profile-menu-item-container">
+                                <div class="profile-menu-center">
+                                    <a href="./legal-notice.html">Legal Notice</a>
+                                </div>
+                            </div>
+
+                            <div onclick="navigateToPrivacyPolicy()" class="profile-menu-item-container">
+                                <div class="profile-menu-center">
+                                    <a href="./privacy-policy.html">Privacy Policy</a>
+                                </div>
+                            </div>
+
+                            <div onclick="logout(event)" class="profile-menu-item-container">
+                                <div class="profile-menu-center">
+                                    <button type="button" onclick="logout(event)">Log out</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
