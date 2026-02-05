@@ -7,30 +7,50 @@ const firebaseConfig = {
   appId: "DEIN_APP_ID"
 };
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+if (typeof firebase !== "undefined") {
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
 
-// Firebase Logout (optional)
-function firebaseLogout() {
-  if (auth && typeof auth.signOut === "function") {
-    auth.signOut().catch((error) => {
-      console.warn("Logout failed:", error);
-    });
+  // Firebase Logout (optional)
+  function firebaseLogout() {
+    if (auth && typeof auth.signOut === "function") {
+      auth.signOut().catch((error) => {
+        console.warn("Logout failed:", error);
+      });
+    }
   }
+  window.firebaseLogout = firebaseLogout;
+} else {
+  console.warn("Firebase SDK not loaded — skipping init.");
 }
-
-window.firebaseLogout = firebaseLogout;
 
 // Optional: User-Profil aktualisieren
 function updateUserProfile() {
   const userData = JSON.parse(localStorage.getItem("user") || "null");
-  if (userData && userData.email) {
-    const profile = document.getElementById("user-profile");
-    if (profile) {
-      profile.innerText = userData.displayName
-        ? userData.displayName[0]
-        : userData.email[0].toUpperCase();
-    }
+  const profile = document.getElementById("user-profile");
+  if (!profile) return;
+
+  // Default leer
+  profile.textContent = "";
+
+  if (!userData) return;
+
+  // Guest: immer "G"
+  if (userData.mode === "guest") {
+    profile.textContent = "G";
+    return;
+  }
+
+  // Eingeloggt: Initialen wie bei Contacts
+  const name = (userData.displayName || userData.name || "").trim();
+  if (name) {
+    const initials = name.split(" ").map(n => n[0]).join("");
+    profile.textContent = initials;
+    return;
+  }
+
+  if (userData.email) {
+    profile.textContent = userData.email[0].toUpperCase();
   }
 }
 

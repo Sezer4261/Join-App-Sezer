@@ -32,6 +32,10 @@ header {
     width: 20px;
     height: 20px;
     cursor: pointer;
+    vertical-align: middle;
+}
+.help-icon:hover {
+  transform: scale(1.1);
 }
 
 .user-profile-container {
@@ -65,8 +69,7 @@ header {
 }
 
 .user-profile:hover {
-    background-color: #29abe2;
-    color: white;
+    background-color: rgba(224, 224, 224, 0.9);
 }
 
 .profile-menu {
@@ -98,6 +101,7 @@ header {
 .profile-menu-item-container {
     width: 100%;
 }
+
 .profile-menu-item-container:hover {
     background-color: #2A3D59;
     cursor: pointer;
