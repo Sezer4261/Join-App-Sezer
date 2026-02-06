@@ -187,7 +187,7 @@ function getEditContactDialog(id, name, email, phone, initials) {
                             <span>Delete</span>
                             <span class="btn__x"></span>
                         </button>
-                        <button type="submit" class="btn btn--primary" aria-label="Save contact">
+                        <button type="submit" class="btn btn--primary" data-edit-submit aria-label="Save contact">
                             <span>Save</span>
                             <span class="btn__check" aria-hidden="true">
                                 <svg width="18" height="14" viewBox="0 0 18 14">

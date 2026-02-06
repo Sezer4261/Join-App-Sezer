@@ -357,6 +357,54 @@ async function updateContact(event, contactId) {
   }
 }
 
+// NEU: Validierung für Edit Contact Dialog
+function updateEditContactSubmitState(dialog) {
+  if (!dialog) return;
+
+  const nameInput = dialog.querySelector('#edit-name');
+  const emailInput = dialog.querySelector('#edit-email');
+  const phoneInput = dialog.querySelector('#edit-phone');
+  const submitBtn = dialog.querySelector('[data-edit-submit]');
+
+  if (!submitBtn) return;
+
+  const isValid =
+    isNonEmptyString(nameInput?.value ?? '') &&
+    isNonEmptyString(emailInput?.value ?? '') &&
+    isNonEmptyString(phoneInput?.value ?? '');
+
+  submitBtn.disabled = !isValid;
+  submitBtn.setAttribute('aria-disabled', String(!isValid));
+}
+
+function initEditContactDialogValidation(dialog) {
+  if (!dialog || dialog.dataset.editValidationInit === '1') return;
+
+  const fields = [
+    dialog.querySelector('#edit-name'),
+    dialog.querySelector('#edit-email'),
+    dialog.querySelector('#edit-phone'),
+  ].filter(Boolean);
+
+  const form = dialog.querySelector('#edit-contact-form');
+  const handler = () => updateEditContactSubmitState(dialog);
+
+  fields.forEach((field) => {
+    field.addEventListener('input', handler);
+    field.addEventListener('change', handler);
+    field.addEventListener('blur', handler);
+  });
+
+  if (form) {
+    form.addEventListener('reset', () => {
+      setTimeout(handler, 0);
+    });
+  }
+
+  dialog.dataset.editValidationInit = '1';
+  handler();
+}
+
 // Öffnet den Edit-Dialog mit vorausgefüllten Daten
 function openEditContactDialog(id, name, email, phone, initials) {
   const container = document.getElementById('edit-contact-dialog-container');
@@ -388,6 +436,10 @@ function openEditContactDialog(id, name, email, phone, initials) {
   } else {
     dialog.setAttribute('open', '');
   }
+
+  // NEU: Validierung initialisieren
+  initEditContactDialogValidation(dialog);
+  updateEditContactSubmitState(dialog);
 }
 
 // NEU: Schließt den Edit-Dialog mit Animation
