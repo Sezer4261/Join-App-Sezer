@@ -9,11 +9,19 @@ header {
     background-color: white;
 }
 
+.header-logo {
+    display: none;
+    width: 56px;
+    height: auto;
+    margin-right: 12px;
+}
+
 .center {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 668px;
+    justify-content: flex-start;
+    flex: 1;
+    min-width: 0;
 }
 
 .app-tagline {
@@ -26,6 +34,7 @@ header {
     align-items: center;
     justify-content: flex-end;
     gap: 16px;
+    margin-left: auto;
 }
 
 .help-icon {
@@ -34,8 +43,9 @@ header {
     cursor: pointer;
     vertical-align: middle;
 }
+
 .help-icon:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .user-profile-container {
@@ -125,13 +135,13 @@ header {
     text-align: left;
 }
 
-@media (max-width: 900px) {
-    header {
-        padding: 20px;
-        flex-wrap: wrap;
-        row-gap: 12px;
+@media (max-width: 1250px) {
+    .center {
+        justify-content: flex-start;
     }
+}
 
+@media (max-width: 900px) {
     .center {
         width: auto;
         flex: 1 1 100%;
@@ -145,11 +155,39 @@ header {
 }
 
 @media (max-width: 480px) {
+    .app-tagline {
+        display: none;
+    }
+}
+
+@media (max-width: 620px) {
     header {
+        justify-content: space-between;
         padding: 16px;
+    }
+
+    .header-logo {
+        display: block;
+        width: 36px;
+        margin-right: 8px;
     }
 
     .app-tagline {
         display: none;
+    }
+
+    .help-icon {
+        display: none;
+    }
+}
+
+@media (max-width: 320px) {
+    header {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .user-actions {
+        gap: 12px;
     }
 }

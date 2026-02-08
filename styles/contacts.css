@@ -880,3 +880,180 @@ hr {
   opacity: 1;
   right: 50%;              /* Slide in zur finalen Position */
 }
+
+/* === Mobile Layout Fixes (bis 320px) ===
+   WICHTIG: Einige Elemente haben feste Breiten weiter oben (z.B. .scroll 400px !important,
+   .contact-item 352px, hr 352px). Diese Overrides müssen am Ende der Datei stehen. */
+
+@media (max-width: 600px) {
+    main {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+    }
+
+    .contact-section-left,
+    .contact-section-right {
+        width: 100%;
+        height: auto;
+    }
+
+    .contact-section-right {
+        padding: 0;
+    }
+
+    .contact-div-right {
+        margin: 24px 16px 0 16px;
+        gap: 16px;
+    }
+
+    .contact-maintitle-container {
+        height: auto;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .separator {
+        display: none;
+    }
+
+    .add-contact-btn {
+        width: 56px;
+        height: 56px;
+        max-width: none;
+        padding: 0;
+        border-radius: 50%;
+        margin: 0;
+        gap: 0;
+        justify-content: center;
+        position: fixed;
+        right: 16px;
+        bottom: 96px;
+        z-index: 200;
+    }
+
+    .add-contact-btn__label {
+        display: none;
+    }
+
+    .add-contact-btn img {
+        margin-left: 0;
+        width: 28px;
+        height: 28px;
+    }
+
+    .scroll {
+        width: 100% !important;
+    }
+
+    .contact-list {
+        max-height: none;
+        padding-right: 0;
+    }
+
+    .contact-item {
+        width: 100%;
+        box-sizing: border-box;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    hr {
+        width: 100%;
+    }
+
+    .contact-actions {
+        width: auto;
+        height: auto;
+        flex-wrap: wrap;
+    }
+
+    .contact-action-btn {
+        min-width: 0;
+    }
+
+    /* Toast auf kleinen Screens nicht "off-center" */
+    .contacts-toast--visible {
+        right: 16px;
+    }
+    .contacts-toast {
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+@media (max-width: 320px) {
+    .contact-section {
+        padding: 0 12px;
+    }
+
+    .add-contact-btn {
+        width: 52px;
+        height: 52px;
+        right: 12px;
+        bottom: 92px;
+    }
+
+    .add-contact-btn img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .title-contacts {
+        font-size: 40px;
+    }
+
+    .subtitle {
+        font-size: 18px;
+    }
+
+    .contact-header-large {
+        gap: 16px;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        flex-wrap: wrap;
+    }
+
+    .contact-initials-large {
+        width: 80px;
+        height: 80px;
+        font-size: 32px;
+        margin-right: 12px;
+    }
+
+    .contact-name-large {
+        font-size: 32px;
+    }
+
+    .contact-action-btn {
+        font-size: 14px;
+        padding: 0 6px;
+    }
+
+    .contact-action-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Dialog (Add/Edit) auf sehr schmalen Geräten kompakter */
+    .ac__title {
+        font-size: 30px;
+    }
+
+    .ac__subtitle {
+        font-size: 16px;
+    }
+
+    .btn {
+        font-size: 16px;
+        padding: 0 16px;
+    }
+}
