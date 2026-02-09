@@ -337,6 +337,11 @@ main {
     color: #2A3647;
 }
 
+/* Back-Button: Auf Desktop versteckt, auf Mobile sichtbar */
+.contact-back-btn {
+    display: none;
+}
+
 .contact-section-left {
     height: 100%;
     /* width: 456px; */
@@ -905,6 +910,7 @@ hr {
 
     .contact-section-right {
         padding: 0;
+        display: none;
     }
 
     .contact-div-right {
@@ -987,6 +993,40 @@ hr {
         max-width: none;
         white-space: normal;
         text-align: center;
+    }
+
+    /* Mobile View: Kontaktdetails anzeigen, Kontaktliste verstecken */
+    .wrapper.show-contact-details .contact-section-left {
+        display: none;
+    }
+
+    .wrapper.show-contact-details .contact-section-right {
+        display: block;
+    }
+
+    /* Back-Button auf Mobile sichtbar */
+    .contact-back-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: none;
+        color: #2A3647;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 8px 0;
+        margin-bottom: 16px;
+        transition: color 0.2s;
+    }
+
+    .contact-back-btn:hover {
+        color: #29ABE2;
+    }
+
+    .contact-back-btn svg {
+        width: 24px;
+        height: 24px;
     }
 }
 

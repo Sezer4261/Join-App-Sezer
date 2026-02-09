@@ -210,6 +210,11 @@ async function handleContactClick(event) {
   const id = contactId; // Die ID kommt aus dem Dataset
 
   contactDetailsContainer.innerHTML = getContactDetailsTemplate(initials, name, email, phone, id);
+
+  // Mobile: Verstecke Kontaktliste und zeige Details
+  if (window.innerWidth <= 600) {
+    document.querySelector('.wrapper').classList.add('show-contact-details');
+  }
 }
 
 async function fetchContactDetails(contactId) {
@@ -287,6 +292,10 @@ function refreshContactDetails() {
   const contactDetailsContainerRef = document.getElementById('contact-details');
   contactDetailsContainerRef.innerHTML = '';
 
+  // Mobile: Zeige Kontaktliste wieder und verstecke Details
+  if (window.innerWidth <= 600) {
+    document.querySelector('.wrapper').classList.remove('show-contact-details');
+  }
 }
 
 function colorizeContactInitials() {
