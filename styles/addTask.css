@@ -42,17 +42,6 @@ body {
   display: none;
 }
 
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
 /* Content */
 .content {
   padding: 24px 40px;
@@ -101,6 +90,18 @@ textarea {
 
 .note {
   font-size: 20px;
+}
+
+/* Validierung - Fehler */
+.input-error {
+  border-color: #ff6b6b !important;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 14px;
+  display: block;
+  min-height: 16px;
 }
 
 /* Priority */
@@ -261,10 +262,10 @@ textarea {
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: #03e3f8;
+  background-color: #03e3f8;
   color: white;
   display: flex;
   align-items: center;

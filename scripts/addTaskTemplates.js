@@ -12,7 +12,8 @@ function generateAddTask() {
               <span>
                 Title<span class="req">*</span>
               </span>
-              <input type="text" placeholder="Enter a title" id="title" required>
+              <input type="text" placeholder="Enter a title" id="title">
+              <div class="error-message" id="titleError"></div>
             </label>
 
             <label>
@@ -24,7 +25,8 @@ function generateAddTask() {
               <span>
                 Due date<span class="req">*</span>
               </span>
-              <input type="date" id="date" required>
+              <input type="date" id="date">
+              <div class="error-message" id="dateError"></div>
             </label>
           </div>
 
@@ -85,11 +87,12 @@ function generateAddTask() {
               <span>
                 Category<span class="req">*</span>
               </span>
-              <select id="category" required>
+              <select id="category">
                 <option class="category-options" value="" disabled selected hidden>Select task category</option>
                 <option class="category-options" value="Technical Task">Technical task</option>
                 <option class="category-options" value="User Story">User Story</option>
               </select>
+              <div class="error-message" id="categoryError"></div>
             </label>
 
             <label>

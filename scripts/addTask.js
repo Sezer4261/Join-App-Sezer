@@ -11,8 +11,56 @@ async function renderAddTask() {
   renderSelectedAvatars(); // Avatare leer beim Laden
 }
 
+/** Validierung des Formulars durchführen */
+function validateForm() {
+  // Error Container leeren
+  document.getElementById('titleError').textContent = '';
+  document.getElementById('dateError').textContent = '';
+  document.getElementById('categoryError').textContent = '';
+
+  let isValid = true;
+
+  // Titel validieren
+  const titleInput = document.getElementById('title');
+  if (!titleInput.value.trim()) {
+    document.getElementById('titleError').textContent = 'This field is required';
+    titleInput.classList.add('input-error');
+    isValid = false;
+  } else {
+    titleInput.classList.remove('input-error');
+  }
+
+  // Datum validieren
+  const dateInput = document.getElementById('date');
+  if (!dateInput.value.trim()) {
+    document.getElementById('dateError').textContent = 'This field is required';
+    dateInput.classList.add('input-error');
+    isValid = false;
+  } else {
+    dateInput.classList.remove('input-error');
+  }
+
+  // Kategorie validieren
+  const categorySelect = document.getElementById('category');
+  if (!categorySelect.value.trim()) {
+    document.getElementById('categoryError').textContent = 'This field is required';
+    categorySelect.classList.add('input-error');
+    isValid = false;
+  } else {
+    categorySelect.classList.remove('input-error');
+  }
+
+  return isValid;
+}
+
 async function saveToArray(event) {
   event.preventDefault();
+
+  // Validierung durchführen
+  if (!validateForm()) {
+    return; // Formulareintrag stoppen, wenn Validierung fehlschlägt
+  }
+
   const task = generateTaskFromForm();
 
   const result = await saveTask(task);
