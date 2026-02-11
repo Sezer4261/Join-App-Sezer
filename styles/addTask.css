@@ -104,6 +104,17 @@ textarea {
   min-height: 16px;
 }
 
+/* Focus-Zustand für Inputfelder */
+input:focus,
+textarea:focus,
+select:focus,
+.custom-select:focus {
+  outline: none;
+  border-color: #29ABE2;
+  border: 1px solid #29ABE2;
+  box-shadow: none;
+}
+
 /* Priority */
 
 .priority {

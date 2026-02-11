@@ -75,7 +75,7 @@ function generateAddTask() {
             
             <div class="assigned-to-label">
               Assigned to
-              <div id="selectContacts" class="custom-select">
+              <div id="selectContacts" class="custom-select" tabindex="0">
                 <span onclick="toggleDropdown(event)">Select contacts to assign</span>
                 <div id="dropdownContacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
               </div>
