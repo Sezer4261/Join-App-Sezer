@@ -83,9 +83,12 @@ function getContactItem(contactDataName, contactDataMail, contactNameInitials) {
     return `
     <div class="contact-name-wrapper">
         <div class="contact-initials">${contactNameInitials}</div>
-        <div>${contactDataName}</div>
+        <div>
+            <div>${contactDataName}</div>
+            <a href="mailto:${contactDataMail}">${contactDataMail}</a>
+        </div>
+
     </div>
-    <a href="mailto:${contactDataMail}">${contactDataMail}</a>
     `
 }
 
@@ -216,7 +219,7 @@ function getEditContactDialog(id, name, email, phone, initials) {
  * @param {string} message
  */
 function getContactsToastTemplate(message) {
-  return /*html*/ `
+    return /*html*/ `
     <div
       id="contacts-toast"
       class="contacts-toast"

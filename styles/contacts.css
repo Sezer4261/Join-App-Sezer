@@ -1,7 +1,7 @@
 main {
     gap: 0px;
     height: 100vh;
-    background-color: white
+    background-color: white;
 }
 
 .wrapper {
@@ -82,8 +82,10 @@ main {
     font-weight: 400;
     color: #2A3647;
     margin: 12px 0;
-    padding-left: 24px;
     letter-spacing: 2px;
+    text-align: center;
+    width: 32px;
+    margin-left: 24px;
 }
 
 .dividing-line {
@@ -212,11 +214,10 @@ main {
         padding: 12px 8px;
     }
 
-    .contact-group-letter {
-        padding-left: 8px;
-    }
+.contact-group-letter {
+    margin-left: 16px;
 }
-
+}
 .contact-item {
     display: flex;
     flex-direction: column;
@@ -783,6 +784,7 @@ hr {
     margin-left: 4px;
 }
 
+
 /* Responsive */
 @media (max-width: 900px) {
     .ac {
@@ -825,6 +827,7 @@ hr {
         transform: translate(calc(-50% + 100%), -50%);
         opacity: 0;
     }
+
     to {
         transform: translate(-50%, -50%);
         opacity: 1;
@@ -837,6 +840,7 @@ hr {
         transform: translate(-50%, -50%);
         opacity: 1;
     }
+
     to {
         transform: translate(calc(-50% + 100%), -50%);
         opacity: 0;
@@ -853,37 +857,47 @@ hr {
 }
 
 .contacts-toast {
-  position: fixed;
-  right: -100%;              /* Start außerhalb des Bildschirms rechts */
-  bottom: 150px;
-  top: auto;
-  transform: translateX(0);
-  opacity: 0;
+    position: fixed;
+    right: -100%;
+    /* Start außerhalb des Bildschirms rechts */
+    bottom: 150px;
+    top: auto;
+    transform: translateX(0);
+    opacity: 0;
 
-  background: #2A3647;
-  color: #fff;
-  padding: 14px 22px;
-  border-radius: 14px;
+    background: #2A3647;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 14px;
 
-  font-size: 16px;
-  font-weight: 500;
+    font-size: 16px;
+    font-weight: 500;
 
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-  z-index: 9999;
-  pointer-events: none;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    z-index: 9999;
+    pointer-events: none;
 
-  max-width: calc(100vw - 32px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    max-width: calc(100vw - 32px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-  transition: opacity 180ms ease, right 180ms ease;
-  will-change: opacity, right;
+    transition: opacity 180ms ease, right 180ms ease;
+    will-change: opacity, right;
 }
 
 .contacts-toast--visible {
-  opacity: 1;
-  right: 50%;              /* Slide in zur finalen Position */
+    opacity: 1;
+    right: 50%;
+    /* Slide in zur finalen Position */
+}
+
+/* === Help Menu Item Responsive ===
+   Auf Desktop: Help im Menü versteckt, nur Help-Icon sichtbar
+   Auf Mobile: Help-Icon versteckt, Help im Menü sichtbar */
+
+.profile-menu-item-help {
+    display: none;
 }
 
 /* === Mobile Layout Fixes (bis 320px) ===
@@ -891,6 +905,17 @@ hr {
    .contact-item 352px, hr 352px). Diese Overrides müssen am Ende der Datei stehen. */
 
 @media (max-width: 600px) {
+
+    /* Help-Icon auf Mobile ausblenden */
+    .help-icon {
+        display: none !important;
+    }
+
+    /* Help im Profil-Menü auf Mobile anzeigen */
+    .profile-menu-item-help {
+        display: block;
+    }
+
     main {
         height: auto;
         min-height: 100vh;
@@ -987,6 +1012,7 @@ hr {
     .contacts-toast--visible {
         right: 16px;
     }
+
     .contacts-toast {
         right: 16px;
         left: 16px;
