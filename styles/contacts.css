@@ -1061,6 +1061,10 @@ hr {
         font-size: 16px;
     }
 
+    main {
+        background-color: rgb(246, 247, 248);
+    }
+
     .contact-section {
         padding: 0 12px;
         margin-top: 0px;
