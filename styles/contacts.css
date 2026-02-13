@@ -1057,15 +1057,24 @@ hr {
 }
 
 @media (max-width: 320px) {
+    * {
+        font-size: 16px;
+    }
+
     .contact-section {
         padding: 0 12px;
+        margin-top: 0px;
+    }
+
+    .contact-section-left {
+        box-shadow: none;
     }
 
     .add-contact-btn {
         width: 52px;
         height: 52px;
-        right: 12px;
-        bottom: 92px;
+        right: 8px;
+        bottom: 116px;
     }
 
     .add-contact-btn img {
