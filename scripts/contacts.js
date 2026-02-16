@@ -97,7 +97,7 @@ function closeAddContactDialogWithAnimation() {
   const dialog = document.getElementById("add-contact-dialog");
   if (dialog) {
     dialog.classList.add('closing');
-    
+
     setTimeout(() => {
       dialog.close();
     }, 300);
@@ -165,6 +165,42 @@ function resetInputFieldsFromContactDialog() {
   closeAddContactDialogWithAnimation(); // Nutze die Animation statt sofort zu schließen
 }
 
+function toggleContactMoreMenu(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  const menu = document.getElementById('contact-more-menu');
+  if (!menu) return;
+  menu.classList.toggle('is-open');
+  initContactMoreMenuAutoClose();
+}
+
+function closeContactMoreMenu() {
+  const menu = document.getElementById('contact-more-menu');
+  if (menu) {
+    menu.classList.remove('is-open');
+  }
+}
+
+function initContactMoreMenuAutoClose() {
+  if (document.body.dataset.contactMoreInit === '1') return;
+
+  document.addEventListener('click', (event) => {
+    const menu = document.getElementById('contact-more-menu');
+    const button = document.querySelector('.contact-more-btn');
+    if (!menu || !button) return;
+
+    if (menu.classList.contains('is-open')) {
+      const target = event.target;
+      if (!menu.contains(target) && !button.contains(target)) {
+        menu.classList.remove('is-open');
+      }
+    }
+  });
+
+  document.body.dataset.contactMoreInit = '1';
+}
+
 function generateObjFromContact() {
   const name = document.getElementById('ac-name').value;
   const email = document.getElementById('ac-email').value;
@@ -210,6 +246,7 @@ async function handleContactClick(event) {
   const id = contactId; // Die ID kommt aus dem Dataset
 
   contactDetailsContainer.innerHTML = getContactDetailsTemplate(initials, name, email, phone, id);
+  initContactMoreMenuAutoClose();
 
   // Mobile: Verstecke Kontaktliste und zeige Details
   if (window.innerWidth <= 600) {
@@ -457,7 +494,7 @@ function closeEditContactDialog() {
   if (dialog) {
     // Closing-Animation abspielen
     dialog.classList.add('closing');
-    
+
     // Nach der Animation Dialog schließen und aus DOM entfernen
     setTimeout(() => {
       dialog.close();
