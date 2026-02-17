@@ -619,7 +619,7 @@ hr {
     color: #2A3647;
     cursor: pointer;
     z-index: 2;
-    transition: background 0.2s;
+    transition: color 0.2s, background 0.2s;
     width: 32px;
     /* Feste Größe für runden Hintergrund */
     height: 32px;
@@ -632,7 +632,8 @@ hr {
 }
 
 .ac__close:hover {
-    background: rgb(228, 228, 228);
+    color: #29ABE2;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
 }
 
@@ -1121,11 +1122,11 @@ hr {
     .contact-more-menu {
         display: none;
         position: absolute;
-        top: -90px;
+        top: -100px;
         right: 0;
-        min-width: 140px;
+        min-width: 120px;
         background: #fff;
-        border-radius: 10px;
+        border-radius: 16px 16px 0px 16px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
         overflow: hidden;
         z-index: 3;
@@ -1164,6 +1165,9 @@ hr {
 
     .contact-more-menu button:hover {
         background: #f4f6f8;
+        color: #29ABE2;
+        font-weight: 700;
+
     }
 
     .contact-more-menu button:hover .edit-svg-path,
@@ -1173,7 +1177,7 @@ hr {
 
 }
 
-@media (max-width: 320px) {
+@media (max-width: 440px) {
     * {
         font-size: 16px;
     }
@@ -1181,6 +1185,11 @@ hr {
     main {
         background-color: rgb(246, 247, 248);
     }
+
+    .contact-div-right {
+        margin: 0px 24px 0px 8px;
+    }
+
 
     .contact-section {
         padding: 0 12px;
@@ -1275,5 +1284,25 @@ hr {
     .btn {
         font-size: 16px;
         padding: 0 16px;
+    }
+
+    .ac__close {
+        top: 16px;
+        right: 16px;
+        font-size: 24px;
+        color: rgb(246, 247, 248);
+    }
+
+    .ac__brand {
+        display: none;
+    }
+
+    .ac__title {
+        margin: 0;
+    }
+
+    .ac__formwrap {
+        flex-direction: column;
+        padding: 0;
     }
 }
