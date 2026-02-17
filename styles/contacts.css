@@ -808,6 +808,10 @@ hr {
     .ac-form {
         max-width: 100%;
     }
+
+    .ac__formwrap {
+        padding-top: 80px;
+    }
 }
 
 /* Contact Details Animation */
@@ -1235,7 +1239,7 @@ hr {
         height: 70px;
         font-size: 24px;
         font-weight: 500;
-        margin-right: 12px;
+        margin-right: 0px;
     }
 
     .contact-name-large {
@@ -1304,5 +1308,50 @@ hr {
     .ac__formwrap {
         flex-direction: column;
         padding: 0;
+    }
+
+    .ac__avatar {
+        margin-bottom: 0px;
+        position: absolute;
+        bottom: 79%;
+        z-index: 5;
+    }
+
+    .ac-form {
+        gap: 16px;
+        align-items: center;
+        margin-top: 32px;
+    }
+
+    .ac__formwrap {
+        gap: 0px;
+    }
+
+    .ac-field {
+        width: 280px;
+        padding-right: 8px;
+        height: 40px;
+    }
+
+    .ac-field input.input-focus {
+        padding: 0 8px;
+        font-size: 16px;
+    }
+
+    .ac__actions {
+        margin-top: 8px;
+    }
+
+    .ac__hero {
+        height: 192px;
+        justify-content: center;
+    }
+
+    .btn--primary {
+        min-width: 0px;
+    }
+
+    .btn {
+        height: 40px;
     }
 }
