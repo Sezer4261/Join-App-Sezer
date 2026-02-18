@@ -282,6 +282,50 @@ header {
   width: 400px;
 }
 
+/* ================== PRIVACY & LEGAL TEXT ================== */
+
+/* ================== PRIVACY LAYOUT ================== */
+
+.wrapper {
+  margin-left: 260px;
+  padding: 40px;
+  max-width: 1000px;
+}
+
+.wrapper h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.wrapper h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #29abe2;
+  margin-top: 12px;
+  border-radius: 4px;
+}
+
+.wrapper h2 {
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 12px;
+  color: #2a3647;
+}
+
+.wrapper p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 18px;
+  max-width: 850px;
+  color: #444;
+}
+
+
+
 /* ================== HELP ================== */
 .help-container {
   margin-left: 260px;
