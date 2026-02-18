@@ -50,7 +50,7 @@ function getDialogAddContact() {
                         <img src="./assets/img/call.png">
                     </div>
                     <div class="ac__actions">
-                        <button onclick="closeAddContactDialogWithAnimation()" type="button" class="btn btn--ghost" data-ac-cancel aria-label="Cancel">
+                        <button onclick="closeAddContactDialogWithAnimation()" type="button" class="btn btn--ghost responsiveCloseBtn" data-ac-cancel aria-label="Cancel">
                             <span>Cancel</span>
                             <span class="btn__x">×</span>
                         </button>
