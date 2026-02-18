@@ -1225,7 +1225,7 @@ hr {
     }
 
     .contact-header-large {
-        gap: 0px;
+        gap: 16px;
         margin-bottom: 16px;
         padding-bottom: 0px;
     }
@@ -1235,9 +1235,9 @@ hr {
     }
 
     .contact-initials-large {
-        width: 70px;
-        height: 70px;
-        font-size: 24px;
+        width: 80px;
+        height: 80px;
+        font-size: 32px;
         font-weight: 500;
         margin-right: 0px;
     }
@@ -1353,5 +1353,10 @@ hr {
 
     .btn {
         height: 40px;
+    }
+
+    #ac-contact-dialog,
+    .ac-dialog {
+        width: 305px;
     }
 }

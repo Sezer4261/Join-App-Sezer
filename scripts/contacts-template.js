@@ -217,7 +217,6 @@ function getEditContactDialog(id, name, email, phone, initials) {
                     <div class="ac__actions">
                         <button type="button" class="btn btn--ghost" onclick="closeEditContactDialog(); deleteContact('${id}')" aria-label="Delete contact">
                             <span>Delete</span>
-                            <span class="btn__x"></span>
                         </button>
                         <button type="submit" class="btn btn--primary" data-edit-submit aria-label="Save contact">
                             <span>Save</span>
