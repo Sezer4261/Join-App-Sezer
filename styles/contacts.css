@@ -8,6 +8,8 @@ main {
     display: flex;
     align-items: flex-start;
     height: 100%;
+    padding: 0px 0px;
+    gap: 0px !important;
 }
 
 .contact-section {
@@ -196,27 +198,6 @@ main {
 /* Kontaktgruppenabstand */
 .contact-card {
     margin-bottom: 24px;
-}
-
-/* Responsive Anpassung */
-@media (max-width: 600px) {
-    .contact-section {
-        width: 100%;
-        margin-left: 0;
-        padding: 0 8px;
-    }
-
-    .add-contact-btn {
-        max-width: 100%;
-    }
-
-    .contact-area {
-        padding: 12px 8px;
-    }
-
-    .contact-group-letter {
-        margin-left: 16px;
-    }
 }
 
 .contact-item {
@@ -913,8 +894,33 @@ hr {
 /* === Mobile Layout Fixes (bis 320px) ===
    WICHTIG: Einige Elemente haben feste Breiten weiter oben (z.B. .scroll 400px !important,
    .contact-item 352px, hr 352px). Diese Overrides müssen am Ende der Datei stehen. */
+/* Responsive Anpassung */
+
+@media (min-width: 601px) and (max-width: 621px) {
+    main {
+        padding-top: 77px;
+    }
+}
 
 @media (max-width: 600px) {
+    .contact-section {
+        width: 100%;
+        margin-left: 0;
+        padding: 0 8px;
+    }
+
+    .add-contact-btn {
+        max-width: 100%;
+    }
+
+    .contact-area {
+        padding: 12px 8px;
+    }
+
+    .contact-group-letter {
+        margin-left: 16px;
+    }
+
 
     /* Help-Icon auf Mobile ausblenden */
     .help-icon {
@@ -929,13 +935,13 @@ hr {
     main {
         height: auto;
         min-height: 100vh;
+        padding-top: 70px;
     }
 
     .wrapper {
         flex-direction: column;
         align-items: stretch;
         height: auto;
-        padding: 0px 8px;
     }
 
     .contact-section-left,
@@ -1188,6 +1194,15 @@ hr {
 
     main {
         background-color: rgb(246, 247, 248);
+    }
+
+    .contact-maintitle-container {
+        margin-top: 24px;
+    }
+
+    .contact-back-btn {
+        top: 16px;
+        right: -16px;
     }
 
     .contact-div-right {
