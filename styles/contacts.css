@@ -953,6 +953,7 @@ hr {
     .contact-section-right {
         padding: 0;
         display: none;
+        height: calc(100vh - 145px);
     }
 
     .contact-div-right {
@@ -1036,6 +1037,7 @@ hr {
         width: auto;
         height: auto;
         flex-wrap: wrap;
+        display: none;
     }
 
     .contact-action-btn {
@@ -1082,8 +1084,8 @@ hr {
         margin: 0;
         transition: color 0.2s;
         position: absolute;
-        top: -16px;
-        right: -24px;
+        top: 0px;
+        right: 0px;
     }
 
     .contact-back-btn:hover {
@@ -1187,7 +1189,9 @@ hr {
 
 }
 
-@media (max-width: 440px) {
+/* testweise, danach 440px */
+
+@media (max-width: 600px) {
     * {
         font-size: 16px;
     }

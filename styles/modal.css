@@ -42,17 +42,6 @@ body {
   cursor: pointer;
 }
 
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
 /* Content */
 .content {
   padding: 24px 40px;
@@ -199,6 +188,10 @@ textarea {
   background: white;
 }
 
+#selectContacts {
+  margin-top: 8px;
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -244,7 +237,7 @@ textarea {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #2A3647; /* oder deine Kontaktfarbe */
+  background-color: #03e3f8; /* oder deine Kontaktfarbe */
   color: white;
   display: flex;
   align-items: center;
@@ -267,10 +260,10 @@ textarea {
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: #0038ff;
+  background-color: #03e3f8;
   color: white;
   display: flex;
   align-items: center;
@@ -278,8 +271,6 @@ textarea {
   font-size: 14px;
   font-weight: bold;
 }
-
-
 
 /* Subtasks */
 .subtasks {

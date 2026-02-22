@@ -10,7 +10,10 @@ body {
   color: #333;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-weight: 600;
 }
 
@@ -130,9 +133,17 @@ header {
   cursor: grab;
 }
 
-.priority-urgent { border-left: 5px solid #ff3d00; }
-.priority-medium { border-left: 5px solid #ffa000; }
-.priority-low { border-left: 5px solid #4caf50; }
+.priority-urgent {
+  border-left: 5px solid #ff3d00;
+}
+
+.priority-medium {
+  border-left: 5px solid #ffa000;
+}
+
+.priority-low {
+  border-left: 5px solid #4caf50;
+}
 
 /* ================== CONTACTS ================== */
 .contacts-container {
@@ -337,6 +348,7 @@ header {
   .sidebar {
     width: 200px;
   }
+
   .board {
     grid-template-columns: 1fr 1fr;
   }
@@ -346,9 +358,11 @@ header {
   .sidebar {
     display: none;
   }
+
   header {
     margin-left: 0;
   }
+
   .board,
   .wrapper,
   .add-task-section,

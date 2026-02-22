@@ -16,6 +16,7 @@
     background-color: #2a3647;
     padding: 64px 0 64px 0;
     width: 232px;
+    position: relative;
 }
 
 .sidebar ul {
@@ -101,4 +102,131 @@ ul img {
 
 .highlighted {
     background-color: #091931;
+}
+
+@media (max-width: 1250px) {
+    .app {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .main {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 10px 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        top: auto;
+        z-index: 100;
+        order: 2;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+        height: 80px;
+        min-height: 80px;
+        max-height: 80px;
+    }
+
+    .logo_sidebar {
+        display: block;
+        width: 56px;
+        margin: 0 0 0 16px;
+        align-self: center;
+    }
+
+    .sidebar ul {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 0 16px;
+    }
+
+    .sidebar li {
+        width: auto;
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+    .sidebar ul div {
+        width: auto;
+        gap: 6px;
+        justify-content: center;
+    }
+
+    .sidebar ul a {
+        width: auto;
+        text-align: left;
+    }
+
+    .sidebar-footer {
+        display: none;
+    }
+
+    .footer-link-container {
+        width: auto;
+        height: auto;
+    }
+
+    .sidebar-footer a {
+        width: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        padding: 8px 0;
+    }
+
+    .sidebar ul {
+        justify-content: space-around;
+        gap: 6px;
+        padding: 0 8px;
+    }
+
+    .sidebar li {
+        flex: 1;
+        padding: 6px 4px;
+    }
+
+    .sidebar ul div {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .sidebar ul a {
+        font-size: 12px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    ul img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar ul a {
+        font-size: 14px;
+    }
+
+    ul img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 620px) {
+    .logo_sidebar {
+        display: none;
+    }
 }

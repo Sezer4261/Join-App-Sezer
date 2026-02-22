@@ -97,7 +97,7 @@ function closeAddContactDialogWithAnimation() {
   const dialog = document.getElementById("add-contact-dialog");
   if (dialog) {
     dialog.classList.add('closing');
-
+    
     setTimeout(() => {
       dialog.close();
     }, 300);
@@ -494,7 +494,7 @@ function closeEditContactDialog() {
   if (dialog) {
     // Closing-Animation abspielen
     dialog.classList.add('closing');
-
+    
     // Nach der Animation Dialog schließen und aus DOM entfernen
     setTimeout(() => {
       dialog.close();

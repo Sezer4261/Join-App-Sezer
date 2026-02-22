@@ -9,6 +9,8 @@ async function renderAddTask() {
   selectedContacts = []; // sicherstellen, dass keine Auswahl beim Laden existiert
   selectContacts();
   renderSelectedAvatars(); // Avatare leer beim Laden
+
+  initAddDropdownClose();
 }
 
 /** Validierung des Formulars durchführen */
@@ -105,6 +107,40 @@ function toggleDropdown(event) {
   document.getElementById("dropdownContacts").classList.toggle("show");
 }
 
+function toggleAddCategoryDropdown(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById("categoryDropdown");
+  if (!dropdown) return;
+  dropdown.classList.toggle("show");
+}
+
+function setAddCategory(value) {
+  const input = document.getElementById("category");
+  const select = document.getElementById("categorySelect");
+  if (!input || !select) return;
+
+  input.value = value;
+  const label = select.querySelector("span");
+  if (label) {
+    label.childNodes[0].textContent = value + " ";
+  }
+
+  const dropdown = document.getElementById("categoryDropdown");
+  if (dropdown) dropdown.classList.remove("show");
+}
+
+function initAddDropdownClose() {
+  if (window.addDropdownHandlerAdded) return;
+  window.addDropdownHandlerAdded = true;
+
+  document.addEventListener("click", () => {
+    const contactsDropdown = document.getElementById("dropdownContacts");
+    if (contactsDropdown) contactsDropdown.classList.remove("show");
+    const categoryDropdown = document.getElementById("categoryDropdown");
+    if (categoryDropdown) categoryDropdown.classList.remove("show");
+  });
+}
+
 // function generateAssignedContacts(contacts) {
 //   let content = "";
 //   for (let i = 0; i < contacts.length; i++) {
@@ -180,7 +216,6 @@ function clearForm() {
   selectedContacts = [];
   renderSelectedAvatars();
 }
-
 
 
 
