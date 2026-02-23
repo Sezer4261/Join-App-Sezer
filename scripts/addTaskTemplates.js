@@ -76,7 +76,10 @@ function generateAddTask() {
             <div class="assigned-to-label">
               Assigned to
               <div id="selectContacts" class="custom-select" tabindex="0">
-                <span onclick="toggleDropdown(event)">Select contacts to assign</span>
+                <span onclick="toggleDropdown(event)">
+                  Select contacts to assign
+                  <img src="./assets/icons/arrow_drop_down.svg" alt="" class="dropdown-arrow">
+                </span>
                 <div id="dropdownContacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
               </div>
 
@@ -87,11 +90,16 @@ function generateAddTask() {
               <span>
                 Category<span class="req">*</span>
               </span>
-              <select id="category">
-                <option class="category-options" value="" disabled selected hidden>Select task category</option>
-                <option class="category-options" value="Technical Task">Technical task</option>
-                <option class="category-options" value="User Story">User Story</option>
-              </select>
+              <div id="categorySelect" class="custom-select">
+                <span onclick="toggleAddCategoryDropdown(event)">
+                  Select task category
+                  <img src="./assets/icons/arrow_drop_down.svg" alt="" class="dropdown-arrow">
+                </span>
+                <div id="categoryDropdown" class="dropdown-content" onclick="event.stopPropagation()">
+                  ${generateAddCategoryOptions()}
+                </div>
+              </div>
+              <input type="hidden" id="category" required>
               <div class="error-message" id="categoryError"></div>
             </label>
 
@@ -106,15 +114,24 @@ function generateAddTask() {
               </ul>
             </label>
 
+            <p class="note note-inline"><span class="req">*</span>This field is required</p>
             <div class="actions">
               <button type="reset" class="clear" onclick="clearForm()">Clear ✕</button>
               <button type="submit" class="create">Create Task ▾</button>
             </div>
           </div>
         </form>
-
-        <p class="note"><span class="req">*</span>This field is required</p>
+        <p class="note note-outside"><span class="req">*</span>This field is required</p>
   `;
+}
+
+function generateAddCategoryOptions() {
+  const categories = ["Technical Task", "User Story"];
+  return categories.map((cat) => `
+    <div class="dropdown-item" onclick="setAddCategory('${cat}')">
+      <span class="dropdown-name">${cat}</span>
+    </div>
+  `).join("");
 }
 
 function generateSubtasks(i) {

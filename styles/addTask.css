@@ -33,6 +33,16 @@ body {
   flex-direction: column;
 }
 
+.main header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.content {
+  padding: 24px 40px;
+}
+
 .add-task-header {
   display: flex;
   justify-content: space-between;
@@ -92,6 +102,10 @@ textarea {
   font-size: 20px;
 }
 
+.note-inline {
+  display: none;
+}
+
 /* Validierung - Fehler */
 .input-error {
   border-color: #ff6b6b !important;
@@ -138,8 +152,8 @@ select:focus,
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-width: 100px;
-  padding: 8px 16px;
+  min-width: 110px;
+  padding: 10px 18px;
   border: 1px solid #d1d1d1;
   border-radius: 8px;
   cursor: pointer;
@@ -197,12 +211,33 @@ select:focus,
 /* Contacts */
 .custom-select {
   border: 1px solid #ccc;
-  padding: 8px;
+  padding: 0 10px;
   cursor: pointer;
   border-radius: 6px;
   position: relative;
   width: 320px;
   background: white;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+#selectContacts {
+  margin-top: 8px;
+}
+
+.custom-select span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.custom-select .dropdown-arrow {
+  width: 8px;
+  height: 8px;
+  margin-left: 8px;
 }
 
 .dropdown-content {
@@ -218,6 +253,11 @@ select:focus,
   z-index: 10;
   border-radius: 6px;
   box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+
+.dropdown-content,
+.dropdown-name {
+  font-size: 20px;
 }
 
 .dropdown-content.show {
@@ -418,11 +458,6 @@ transform: scale(1.1);
   .sidebar-footer {
     display: none;
   }
-
-  .task-form {
-    flex-direction: column;
-    gap: 20px;
-  }
 }
 
 /* Smartphone: Sidebar wird Bottom-Navigation */
@@ -460,16 +495,131 @@ transform: scale(1.1);
     display: none;
   }
 
-  .main {
-    margin-bottom: 60px;
-    /* Platz für Bottom-Bar */
-  }
-
   .content {
     padding: 16px;
   }
 
   h1 {
     font-size: 22px;
+  }
+}
+
+/* ================= ADD TASK RESPONSIVE (BOARD LAYOUT) ================= */
+@media (max-width: 1250px) {
+  .content {
+    padding-bottom: 120px;
+  }
+}
+
+@media (max-width: 800px) {
+  .form-left,
+  .form-right {
+    width: 100%;
+  }
+}
+
+@media (max-width: 750px) {
+  .task-form {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    padding: 16px;
+    padding-bottom: 120px;
+  }
+
+  .custom-select {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .priority-options {
+    flex-wrap: nowrap;
+  }
+
+  .actions {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (max-width: 550px) {
+  .clear,
+  .create {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 500px) {
+  .note-inline {
+    display: block;
+    margin-bottom: 24px;
+    font-size: 16px;
+  }
+
+  .note-outside {
+    display: none;
+  }
+
+  .subtask-list {
+  height: 70px;
+}
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 24px;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 14px;
+  }
+
+  .priority-options label {
+    min-width: 90px;
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .custom-select {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  .priority-options {
+    gap: 6px;
+  }
+
+  .priority-options label {
+    min-width: 80px;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .custom-select {
+    font-size: 13px;
+  }
+
+  .priority-options label {
+    min-width: 74px;
+    padding: 4px 8px;
+    font-size: 11px;
   }
 }
