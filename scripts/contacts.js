@@ -97,7 +97,7 @@ function closeAddContactDialogWithAnimation() {
   const dialog = document.getElementById("add-contact-dialog");
   if (dialog) {
     dialog.classList.add('closing');
-
+    
     setTimeout(() => {
       dialog.close();
     }, 300);
@@ -249,7 +249,7 @@ async function handleContactClick(event) {
   initContactMoreMenuAutoClose();
 
   // Mobile: Verstecke Kontaktliste und zeige Details
-  if (window.innerWidth <= 600) {
+  if (window.innerWidth <= 780) {
     document.querySelector('.wrapper').classList.add('show-contact-details');
   }
 }
@@ -330,7 +330,7 @@ function refreshContactDetails() {
   contactDetailsContainerRef.innerHTML = '';
 
   // Mobile: Zeige Kontaktliste wieder und verstecke Details
-  if (window.innerWidth <= 600) {
+  if (window.innerWidth <= 780) {
     document.querySelector('.wrapper').classList.remove('show-contact-details');
   }
 }
@@ -494,7 +494,7 @@ function closeEditContactDialog() {
   if (dialog) {
     // Closing-Animation abspielen
     dialog.classList.add('closing');
-
+    
     // Nach der Animation Dialog schließen und aus DOM entfernen
     setTimeout(() => {
       dialog.close();
