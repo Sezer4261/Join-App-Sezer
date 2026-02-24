@@ -281,11 +281,7 @@ main {
     /* Verhindert flex-grow */
 }
 
-.title-msg {
-    font-size: 27px;
-    font-weight: 500;
-    color: #2A3647;
-}
+
 
 .contact-div-right {
     display: flex;
@@ -356,13 +352,7 @@ main {
     flex-direction: column;
 }
 
-.contact-div {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin: 0;
-    padding-top: 16px;
-}
+
 
 .contact-section-left {
     box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
@@ -513,7 +503,6 @@ hr {
 }
 
 /* === Add Contact Dialog Styles === */
-#ac-contact-dialog,
 .ac-dialog {
     border: none;
     border-radius: 24px;
@@ -1430,7 +1419,6 @@ hr {
         height: 40px;
     }
 
-    #ac-contact-dialog,
     .ac-dialog {
         width: 305px;
     }
@@ -1633,7 +1621,6 @@ hr {
         height: 40px;
     }
 
-    #ac-contact-dialog,
     .ac-dialog {
         width: 305px;
     }
@@ -1648,4 +1635,27 @@ hr {
         display: none;
     }
 
+}
+
+@media (min-width: 781px) and (max-width: 900px) {
+    .ac-dialog {
+        width: 600px;
+    }
+
+    .ac {
+        width: 600px;
+    }
+
+    .ac__formwrap {
+        flex-direction: column;
+        gap: 0px;
+    }
+
+    .ac__avatar {
+        margin-top: -92px;
+    }
+
+    .ac__avatar img {
+        opacity: 1;
+    }
 }
