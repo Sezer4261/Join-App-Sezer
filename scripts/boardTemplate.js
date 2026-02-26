@@ -8,7 +8,7 @@ function getBoardTemplate() {
       <h1>Board</h1>
       <img src="./assets/icons/plus add task mobile.svg" alt="Add Task Button" class="add-task-mobile-btn" onclick="showAddTaskDialog()">
       <div class="board-actions">
-        <div class="board-search">
+        <div tabindex="0" class="board-search">
           <input id="search-task" type="text" placeholder="Find Task">
           <button id="search-clear" class="search-clear" type="button" aria-label="Clear search">×</button>
           <div class="search-divider"></div>

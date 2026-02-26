@@ -74,6 +74,12 @@ body {
   gap: 8px;
 }
 
+.board-search:focus-within {
+  outline: none;
+  border: 1px solid #29ABE2;
+
+}
+
 .board-search input {
   height: 20px !important;
   border: none;
