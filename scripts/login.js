@@ -1,155 +1,328 @@
 // Entferne Intro-Overlay nach Animation
 window.addEventListener('DOMContentLoaded', () => {
-    // Align intro animation logo with the real header logo position
-    requestAnimationFrame(() => {
-        const introLogo = document.getElementById('introLogo');
-        const headerLogo = document.querySelector('.header-left img');
+    initIntroAlignment();
+    scheduleIntroOverlayRemoval();
+    initLoginPasswordToggle();
+});
 
-        if (!introLogo || !headerLogo) return;
+/**
+ * Initializes intro alignment.
+ * @returns {void} Result.
+ */
+function initIntroAlignment() {
+    requestAnimationFrame(() => alignIntroLogo());
+}
 
-        const introRect = introLogo.getBoundingClientRect();
-        const headerRect = headerLogo.getBoundingClientRect();
+/**
+ * Executes align intro logo logic.
+ * @returns {void} Result.
+ */
+function alignIntroLogo() {
+    const introLogo = document.getElementById('introLogo');
+    const headerLogo = document.querySelector('.header-left img');
+    if (!introLogo || !headerLogo) return;
+    const introRect = introLogo.getBoundingClientRect();
+    const headerRect = headerLogo.getBoundingClientRect();
+    const dx = getCenterDeltaX(introRect, headerRect);
+    const dy = getCenterDeltaY(introRect, headerRect);
+    introLogo.style.setProperty('--logo-dx', `${dx}px`);
+    introLogo.style.setProperty('--logo-dy', `${dy}px`);
+}
 
-        const introCenterX = introRect.left + introRect.width / 2;
-        const introCenterY = introRect.top + introRect.height / 2;
-        const headerCenterX = headerRect.left + headerRect.width / 2;
-        const headerCenterY = headerRect.top + headerRect.height / 2;
+/**
+ * Returns center delta x.
+ * @param {*} introRect - Parameter.
+ * @param {*} headerRect - Parameter.
+ * @returns {*} Result.
+ */
+function getCenterDeltaX(introRect, headerRect) {
+    const introCenterX = introRect.left + introRect.width / 2;
+    const headerCenterX = headerRect.left + headerRect.width / 2;
+    return headerCenterX - introCenterX;
+}
 
-        const dx = headerCenterX - introCenterX;
-        const dy = headerCenterY - introCenterY;
+/**
+ * Returns center delta y.
+ * @param {*} introRect - Parameter.
+ * @param {*} headerRect - Parameter.
+ * @returns {*} Result.
+ */
+function getCenterDeltaY(introRect, headerRect) {
+    const introCenterY = introRect.top + introRect.height / 2;
+    const headerCenterY = headerRect.top + headerRect.height / 2;
+    return headerCenterY - introCenterY;
+}
 
-        introLogo.style.setProperty('--logo-dx', `${dx}px`);
-        introLogo.style.setProperty('--logo-dy', `${dy}px`);
-    });
+/**
+ * Executes schedule intro overlay removal logic.
+ * @returns {void} Result.
+ */
+function scheduleIntroOverlayRemoval() {
+    setTimeout(() => removeIntroOverlay(), 2000);
+}
 
-    setTimeout(() => {
-        const introOverlay = document.getElementById('introOverlay');
-        if (introOverlay) {
-            introOverlay.remove();
-        }
-    }, 2000);
-    
-    // Toggle Icons für Passwort-Feld
+/**
+ * Executes remove intro overlay logic.
+ * @returns {void} Result.
+ */
+function removeIntroOverlay() {
+    const introOverlay = document.getElementById('introOverlay');
+    if (introOverlay) {
+        introOverlay.remove();
+    }
+}
+
+/**
+ * Initializes login password toggle.
+ * @returns {void} Result.
+ */
+function initLoginPasswordToggle() {
+    const elements = getLoginPasswordElements();
+    if (!elements) return;
+    initLoginPasswordHandlers(elements);
+    syncLoginPasswordIcons(elements);
+}
+
+/**
+ * Returns login password elements.
+ * @returns {*} Result.
+ */
+function getLoginPasswordElements() {
     const passwordInput = document.getElementById('loginPassword');
     const lockIcon = document.getElementById('lockIcon');
     const visibilityOffIcon = document.getElementById('visibilityOffIcon');
     const visibilityIcon = document.getElementById('visibilityIcon');
+    if (!passwordInput || !lockIcon || !visibilityOffIcon || !visibilityIcon) return null;
+    return { passwordInput, lockIcon, visibilityOffIcon, visibilityIcon };
+}
 
-    if (passwordInput && lockIcon && visibilityOffIcon && visibilityIcon) {
-        const setPasswordVisibility = (isVisible) => {
-            passwordInput.type = isVisible ? 'text' : 'password';
-            visibilityIcon.classList.toggle('is-hidden', !isVisible);
-            visibilityOffIcon.classList.toggle('is-hidden', isVisible);
-        };
+/**
+ * Initializes login password handlers.
+ * @param {*} elements - Parameter.
+ * @returns {void} Result.
+ */
+function initLoginPasswordHandlers(elements) {
+    elements.passwordInput.addEventListener('input', () => syncLoginPasswordIcons(elements));
+    elements.visibilityOffIcon.addEventListener('click', () => showLoginPassword(elements));
+    elements.visibilityIcon.addEventListener('click', () => hideLoginPassword(elements));
+}
 
-        const syncIconsWithInput = () => {
-            const hasValue = passwordInput.value.length > 0;
-            lockIcon.classList.toggle('is-hidden', hasValue);
+/**
+ * Shows login password.
+ * @param {*} elements - Parameter.
+ * @returns {void} Result.
+ */
+function showLoginPassword(elements) {
+    if (elements.passwordInput.value.length === 0) return;
+    setLoginPasswordVisibility(elements, true);
+}
 
-            if (!hasValue) {
-                visibilityOffIcon.classList.add('is-hidden');
-                visibilityIcon.classList.add('is-hidden');
-                passwordInput.type = 'password';
-                return;
-            }
+/**
+ * Hides login password.
+ * @param {*} elements - Parameter.
+ * @returns {void} Result.
+ */
+function hideLoginPassword(elements) {
+    if (elements.passwordInput.value.length === 0) return;
+    setLoginPasswordVisibility(elements, false);
+}
 
-            const isVisible = passwordInput.type === 'text';
-            setPasswordVisibility(isVisible);
-        };
+/**
+ * Sets login password visibility.
+ * @param {*} elements - Parameter.
+ * @param {*} isVisible - Parameter.
+ * @returns {void} Result.
+ */
+function setLoginPasswordVisibility(elements, isVisible) {
+    elements.passwordInput.type = isVisible ? 'text' : 'password';
+    elements.visibilityIcon.classList.toggle('is-hidden', !isVisible);
+    elements.visibilityOffIcon.classList.toggle('is-hidden', isVisible);
+}
 
-        passwordInput.addEventListener('input', syncIconsWithInput);
-
-        visibilityOffIcon.addEventListener('click', () => {
-            if (passwordInput.value.length === 0) return;
-            setPasswordVisibility(true);
-        });
-
-        visibilityIcon.addEventListener('click', () => {
-            if (passwordInput.value.length === 0) return;
-            setPasswordVisibility(false);
-        });
-
-        // Initial state
-        syncIconsWithInput();
+/**
+ * Executes sync login password icons logic.
+ * @param {*} elements - Parameter.
+ * @returns {void} Result.
+ */
+function syncLoginPasswordIcons(elements) {
+    const hasValue = elements.passwordInput.value.length > 0;
+    elements.lockIcon.classList.toggle('is-hidden', hasValue);
+    if (!hasValue) {
+        elements.visibilityOffIcon.classList.add('is-hidden');
+        elements.visibilityIcon.classList.add('is-hidden');
+        elements.passwordInput.type = 'password';
+        return;
     }
-});
+    const isVisible = elements.passwordInput.type === 'text';
+    setLoginPasswordVisibility(elements, isVisible);
+}
 
+/**
+ * Executes login logic.
+ * @returns {Promise<*>} Result.
+ */
 async function login() {
     try {
-        // Entferne Error-Border von vorherigen Versuchen
-        const emailInput = document.getElementById('loginEmail');
-        const passwordInput = document.getElementById('loginPassword');
-        emailInput.classList.remove('input-error');
-        passwordInput.classList.remove('input-error');
-
-        // Validiere Input
-        let email = emailInput.value.trim();
-        let password = passwordInput.value.trim();
-
-        if (!email || !password) {
-            showLoginError("Please fill in all fields.");
-            return;
-        }
-
-        if (!isValidEmail(email)) {
-            showLoginError("Please enter a valid email address.");
-            return;
-        }
-
-        let response = await fetch(`${BASE_URL}/users.json`);
-        if (!response.ok) throw new Error(`HTTP-Error! Status: ${response.status}`);
-        let userAsJson = await response.json();
-
-        let signedUpUser = Object.values(userAsJson || {}).find(
-            u => u.email === email && u.password === password
-        );
-
-        if (signedUpUser) {
-            localStorage.setItem("user", JSON.stringify({
-                mode: "user",
-                email: email,
-                displayName: signedUpUser.name || ""
-            }));
-            window.location.href = "summary.html";
-        } else {
-            // Zeige benutzerdefinierte Fehlermeldung
-            showLoginError("Check your email and password. Please try again.");
-        }
+        clearLoginErrors();
+        const credentials = getLoginCredentials();
+        if (!validateLoginCredentials(credentials)) return;
+        const signedUpUser = await findSignedUpUser(credentials.email, credentials.password);
+        handleLoginResult(credentials, signedUpUser);
     } catch (error) {
         showLoginError("An error occurred. Please try again later.");
     }
 }
 
+/**
+ * Validates login credentials.
+ * @param {*} param - Parameter.
+ * @param {*} password } - Parameter.
+ * @returns {void} Result.
+ */
+function validateLoginCredentials({ email, password }) {
+    if (!email || !password) {
+        showLoginError("Please fill in all fields.");
+        return false;
+    }
+    if (!isValidEmail(email)) {
+        showLoginError("Please enter a valid email address.");
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Executes handle login result logic.
+ * @param {*} credentials - Parameter.
+ * @param {*} signedUpUser - Parameter.
+ * @returns {void} Result.
+ */
+function handleLoginResult(credentials, signedUpUser) {
+    if (signedUpUser) {
+        storeUserSession(credentials.email, signedUpUser);
+        window.location.href = "summary.html";
+        return;
+    }
+    showLoginError("Check your email and password. Please try again.");
+}
+
+/**
+ * Clears login errors.
+ * @returns {void} Result.
+ */
+function clearLoginErrors() {
+    const emailInput = document.getElementById('loginEmail');
+    const passwordInput = document.getElementById('loginPassword');
+    emailInput.classList.remove('input-error');
+    passwordInput.classList.remove('input-error');
+}
+
+/**
+ * Returns login credentials.
+ * @returns {*} Result.
+ */
+function getLoginCredentials() {
+    const emailInput = document.getElementById('loginEmail');
+    const passwordInput = document.getElementById('loginPassword');
+    return {
+        email: emailInput.value.trim(),
+        password: passwordInput.value.trim()
+    };
+}
+
+/**
+ * Executes find signed up user logic.
+ * @param {string} email - Email address.
+ * @param {*} password - Parameter.
+ * @returns {Promise<*>} Result.
+ */
+async function findSignedUpUser(email, password) {
+    const response = await fetch(`${BASE_URL}/users.json`);
+    if (!response.ok) throw new Error(`HTTP-Error! Status: ${response.status}`);
+    const userAsJson = await response.json();
+    return Object.values(userAsJson || {}).find(u => u.email === email && u.password === password);
+}
+
+/**
+ * Executes store user session logic.
+ * @param {string} email - Email address.
+ * @param {*} signedUpUser - Parameter.
+ * @returns {void} Result.
+ */
+function storeUserSession(email, signedUpUser) {
+    localStorage.setItem("user", JSON.stringify({
+        mode: "user",
+        email: email,
+        displayName: signedUpUser.name || ""
+    }));
+}
+
+/**
+ * Shows login error.
+ * @param {string} message - Message text.
+ * @returns {void} Result.
+ */
 function showLoginError(message) {
-    // Entferne alte Fehlermeldung falls vorhanden
+    removeLoginError();
+    appendLoginError(message);
+    markLoginInputsError();
+}
+
+/**
+ * Executes remove login error logic.
+ * @returns {void} Result.
+ */
+function removeLoginError() {
     const oldError = document.querySelector('.login-error');
     if (oldError) oldError.remove();
+}
 
-    // Erstelle neue Fehlermeldung
+/**
+ * Executes append login error logic.
+ * @param {string} message - Message text.
+ * @returns {void} Result.
+ */
+function appendLoginError(message) {
     const errorDiv = document.createElement('div');
     errorDiv.className = 'login-error';
     errorDiv.textContent = message;
-    
-    // Füge Fehlermeldung in den permanenten Container ein
     const errorContainer = document.getElementById('errorContainer');
     errorContainer.appendChild(errorDiv);
-    
-    // Markiere Input-Felder mit Fehler-Border
+}
+
+/**
+ * Executes mark login inputs error logic.
+ * @returns {void} Result.
+ */
+function markLoginInputsError() {
     const emailInput = document.getElementById('loginEmail');
     const passwordInput = document.getElementById('loginPassword');
     emailInput.classList.add('input-error');
     passwordInput.classList.add('input-error');
 }
 
+/**
+ * Checks whether valid email.
+ * @param {string} email - Email address.
+ * @returns {boolean} Result.
+ */
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
+/**
+ * Executes navigate to signup logic.
+ * @returns {void} Result.
+ */
 function navigateToSignup() {
      window.location.href = "signup.html";
 }
 
+/**
+ * Executes guest login logic.
+ * @returns {void} Result.
+ */
 function guestLogin() {
   // Guest-Session speichern (wichtig für Summary)
   localStorage.setItem("user", JSON.stringify({ mode: "guest" }));

@@ -585,14 +585,14 @@ hr {
     right: 32px;
     background: none;
     border: none;
-    font-size: 28px;
+    font-size: 24px;
     color: #2A3647;
     cursor: pointer;
     z-index: 2;
     transition: color 0.2s, background 0.2s;
-    width: 32px;
+    width: 24px;
     /* Feste Größe für runden Hintergrund */
-    height: 32px;
+    height: 24px;
     display: flex;
     /* Zentriert das Icon */
     align-items: center;
@@ -602,8 +602,7 @@ hr {
 }
 
 .ac__close:hover {
-    color: #29ABE2;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 50%;
 }
 

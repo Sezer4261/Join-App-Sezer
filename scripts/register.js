@@ -1,5 +1,10 @@
 let signupFieldErrors = {};
 
+/**
+ * Executes handle signup submit logic.
+ * @param {Event} event - Browser event.
+ * @returns {void} Result.
+ */
 function handleSignupSubmit(event) {
     event.preventDefault();
     if (!validateSignupForm()) {
@@ -8,118 +13,188 @@ function handleSignupSubmit(event) {
     addUser();
 }
 
+/**
+ * Validates signup form.
+ * @returns {void} Result.
+ */
 function validateSignupForm() {
-    const nameInput = document.getElementById('registerName');
-    const emailInput = document.getElementById('registerEmail');
-    const passwordInput = document.getElementById('registerPassword');
-    const confirmPasswordInput = document.getElementById('registerPasswordConfirm');
-    const policyCheckbox = document.getElementById('acceptPrivacy');
+    const fields = getSignupFields();
+    resetSignupErrors(fields);
+    const state = { firstErrorShown: false };
+    validateNameField(fields, state);
+    validateEmailField(fields, state);
+    validatePasswordField(fields, state);
+    validateConfirmPasswordField(fields, state);
+    validatePolicyField(fields, state);
+    return !state.firstErrorShown;
+}
 
-    const nameValue = nameInput.value.trim();
-    const emailValue = emailInput.value.trim();
-    const passwordValue = passwordInput.value;
-    const confirmValue = confirmPasswordInput.value;
+/**
+ * Returns signup fields.
+ * @returns {*} Result.
+ */
+function getSignupFields() {
+    return {
+        nameInput: document.getElementById('registerName'),
+        emailInput: document.getElementById('registerEmail'),
+        passwordInput: document.getElementById('registerPassword'),
+        confirmPasswordInput: document.getElementById('registerPasswordConfirm'),
+        policyCheckbox: document.getElementById('acceptPrivacy')
+    };
+}
 
-    // Alle Input-Fehler-Klassen und Error-Messages entfernen
+/**
+ * Executes reset signup errors logic.
+ * @param {*} fields - Parameter.
+ * @returns {void} Result.
+ */
+function resetSignupErrors(fields) {
     signupFieldErrors = {};
-    [nameInput, emailInput, passwordInput, confirmPasswordInput].forEach(input => {
+    [fields.nameInput, fields.emailInput, fields.passwordInput, fields.confirmPasswordInput].forEach(input => {
         input.classList.remove('input-error');
     });
-    document.getElementById('registerNameError').textContent = '';
-    document.getElementById('registerEmailError').textContent = '';
-    document.getElementById('registerPasswordError').textContent = '';
-    document.getElementById('registerPasswordConfirmError').textContent = '';
-    document.getElementById('acceptPrivacyError').textContent = '';
+    clearSignupErrorTexts();
+    clearPolicyError();
+}
 
+/**
+ * Clears signup error texts.
+ * @returns {void} Result.
+ */
+function clearSignupErrorTexts() {
+    setSignupErrorText('registerNameError', '');
+    setSignupErrorText('registerEmailError', '');
+    setSignupErrorText('registerPasswordError', '');
+    setSignupErrorText('registerPasswordConfirmError', '');
+    setSignupErrorText('acceptPrivacyError', '');
+}
+
+/**
+ * Sets signup error text.
+ * @param {string} id - Identifier.
+ * @param {string} value - Value.
+ * @returns {void} Result.
+ */
+function setSignupErrorText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+}
+
+/**
+ * Clears policy error.
+ * @returns {void} Result.
+ */
+function clearPolicyError() {
     const policyContainer = document.querySelector('.accept-privacy-policy');
     if (policyContainer) {
         policyContainer.classList.remove('input-error');
     }
-
-    // Validierung in Reihenfolge: Name -> Email -> Passwort -> Confirm -> Privacy
-    // Erste Fehlermeldung anzeigen, aber alle fehlerhaften Felder markieren
-    let firstErrorShown = false;
-
-    // 1. Name prüfen
-    if (!nameValue) {
-        signupFieldErrors.registerName = 'Please enter your name.';
-        nameInput.classList.add('input-error');
-        if (!firstErrorShown) {
-            document.getElementById('registerNameError').textContent = signupFieldErrors.registerName;
-            nameInput.focus();
-            firstErrorShown = true;
-        }
-    }
-
-    // 2. Email prüfen
-    if (!emailValue) {
-        signupFieldErrors.registerEmail = 'Please enter an email address.';
-        emailInput.classList.add('input-error');
-        if (!firstErrorShown) {
-            document.getElementById('registerEmailError').textContent = signupFieldErrors.registerEmail;
-            emailInput.focus();
-            firstErrorShown = true;
-        }
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-        signupFieldErrors.registerEmail = 'Please enter a valid email address.';
-        emailInput.classList.add('input-error');
-        if (!firstErrorShown) {
-            document.getElementById('registerEmailError').textContent = signupFieldErrors.registerEmail;
-            emailInput.focus();
-            firstErrorShown = true;
-        }
-    }
-
-    // 3. Passwort prüfen
-    if (!passwordValue) {
-        signupFieldErrors.registerPassword = 'Please enter a password.';
-        passwordInput.classList.add('input-error');
-        if (!firstErrorShown) {
-            document.getElementById('registerPasswordError').textContent = signupFieldErrors.registerPassword;
-            passwordInput.focus();
-            firstErrorShown = true;
-        }
-    }
-
-    // 4. Confirm Password prüfen
-    if (!confirmValue) {
-        signupFieldErrors.registerPasswordConfirm = 'Please confirm your password.';
-        confirmPasswordInput.classList.add('input-error');
-        if (!firstErrorShown) {
-            document.getElementById('registerPasswordConfirmError').textContent = signupFieldErrors.registerPasswordConfirm;
-            confirmPasswordInput.focus();
-            firstErrorShown = true;
-        }
-    } else if (passwordValue && passwordValue !== confirmValue) {
-        signupFieldErrors.registerPasswordConfirm = 'Passwords do not match.';
-        confirmPasswordInput.classList.add('input-error');
-        if (!firstErrorShown) {
-            document.getElementById('registerPasswordConfirmError').textContent = signupFieldErrors.registerPasswordConfirm;
-            confirmPasswordInput.focus();
-            firstErrorShown = true;
-        }
-    }
-
-    // 5. Privacy Policy prüfen
-    if (!policyCheckbox.checked) {
-        signupFieldErrors.acceptPrivacy = 'Please accept the privacy policy.';
-        if (policyContainer) {
-            policyContainer.classList.add('input-error');
-        }
-        if (!firstErrorShown) {
-            document.getElementById('acceptPrivacyError').textContent = signupFieldErrors.acceptPrivacy;
-            firstErrorShown = true;
-        }
-    }
-
-    if (firstErrorShown) {
-        return false;
-    }
-
-    return true;
 }
 
-function showFieldErrorMessage(fieldId) {
+/**
+ * Validates name field.
+ * @param {*} fields - Parameter.
+ * @param {*} state - Parameter.
+ * @returns {void} Result.
+ */
+function validateNameField(fields, state) {
+    const nameValue = fields.nameInput.value.trim();
+    if (!nameValue) {
+        setSignupFieldError('registerName', 'Please enter your name.', fields.nameInput, state);
+    }
+}
+
+/**
+ * Validates email field.
+ * @param {*} fields - Parameter.
+ * @param {*} state - Parameter.
+ * @returns {void} Result.
+ */
+function validateEmailField(fields, state) {
+    const emailValue = fields.emailInput.value.trim();
+    if (!emailValue) {
+        setSignupFieldError('registerEmail', 'Please enter an email address.', fields.emailInput, state);
+        return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+        setSignupFieldError('registerEmail', 'Please enter a valid email address.', fields.emailInput, state);
+    }
+}
+
+/**
+ * Validates password field.
+ * @param {*} fields - Parameter.
+ * @param {*} state - Parameter.
+ * @returns {void} Result.
+ */
+function validatePasswordField(fields, state) {
+    const passwordValue = fields.passwordInput.value;
+    if (!passwordValue) {
+        setSignupFieldError('registerPassword', 'Please enter a password.', fields.passwordInput, state);
+    }
+}
+
+/**
+ * Validates confirm password field.
+ * @param {*} fields - Parameter.
+ * @param {*} state - Parameter.
+ * @returns {void} Result.
+ */
+function validateConfirmPasswordField(fields, state) {
+    const passwordValue = fields.passwordInput.value;
+    const confirmValue = fields.confirmPasswordInput.value;
+    if (!confirmValue) {
+        setSignupFieldError('registerPasswordConfirm', 'Please confirm your password.', fields.confirmPasswordInput, state);
+        return;
+    }
+    if (passwordValue && passwordValue !== confirmValue) {
+        setSignupFieldError('registerPasswordConfirm', 'Passwords do not match.', fields.confirmPasswordInput, state);
+    }
+}
+
+/**
+ * Validates policy field.
+ * @param {*} fields - Parameter.
+ * @param {*} state - Parameter.
+ * @returns {void} Result.
+ */
+function validatePolicyField(fields, state) {
+    if (fields.policyCheckbox.checked) return;
+    signupFieldErrors.acceptPrivacy = 'Please accept the privacy policy.';
+    const policyContainer = document.querySelector('.accept-privacy-policy');
+    if (policyContainer) {
+        policyContainer.classList.add('input-error');
+    }
+    if (!state.firstErrorShown) {
+        setSignupErrorText('acceptPrivacyError', signupFieldErrors.acceptPrivacy);
+        state.firstErrorShown = true;
+    }
+}
+
+/**
+ * Sets signup field error.
+ * @param {*} fieldId - Parameter.
+ * @param {string} message - Message text.
+ * @param {HTMLElement} input - Input element.
+ * @param {*} state - Parameter.
+ * @returns {void} Result.
+ */
+function setSignupFieldError(fieldId, message, input, state) {
+    signupFieldErrors[fieldId] = message;
+    input.classList.add('input-error');
+    if (!state.firstErrorShown) {
+        setSignupErrorText(getSignupErrorId(fieldId), message);
+        input.focus();
+        state.firstErrorShown = true;
+    }
+}
+
+/**
+ * Returns signup error id.
+ * @param {*} fieldId - Parameter.
+ * @returns {*} Result.
+ */
+function getSignupErrorId(fieldId) {
     const idMap = {
         registerName: 'registerNameError',
         registerEmail: 'registerEmailError',
@@ -127,25 +202,49 @@ function showFieldErrorMessage(fieldId) {
         registerPasswordConfirm: 'registerPasswordConfirmError',
         acceptPrivacy: 'acceptPrivacyError'
     };
+    return idMap[fieldId];
+}
 
-    // Alle Meldungen ausblenden
-    Object.values(idMap).forEach(spanId => {
-        const span = document.getElementById(spanId);
-        if (span) {
-            span.textContent = '';
-        }
-    });
-
+/**
+ * Shows field error message.
+ * @param {*} fieldId - Parameter.
+ * @returns {void} Result.
+ */
+function showFieldErrorMessage(fieldId) {
+    clearAllSignupErrorMessages();
     const message = signupFieldErrors[fieldId];
     if (!message) return;
-
-    const spanId = idMap[fieldId];
+    const spanId = getSignupErrorId(fieldId);
     const span = document.getElementById(spanId);
     if (span) {
         span.textContent = message;
     }
 }
 
+/**
+ * Clears all signup error messages.
+ * @returns {void} Result.
+ */
+function clearAllSignupErrorMessages() {
+    const ids = Object.values({
+        registerName: 'registerNameError',
+        registerEmail: 'registerEmailError',
+        registerPassword: 'registerPasswordError',
+        registerPasswordConfirm: 'registerPasswordConfirmError',
+        acceptPrivacy: 'acceptPrivacyError'
+    });
+    ids.forEach(spanId => {
+        const span = document.getElementById(spanId);
+        if (span) {
+            span.textContent = '';
+        }
+    });
+}
+
+/**
+ * Executes attach signup error focus handlers logic.
+ * @returns {void} Result.
+ */
 function attachSignupErrorFocusHandlers() {
     const pairs = [
         { fieldId: 'registerName', event: 'focus' },
@@ -162,6 +261,10 @@ function attachSignupErrorFocusHandlers() {
     });
 }
 
+/**
+ * Updates signup button state.
+ * @returns {void} Result.
+ */
 function updateSignupButtonState() {
     const nameValue = document.getElementById('registerName')?.value.trim();
     const emailValue = document.getElementById('registerEmail')?.value.trim();
@@ -176,71 +279,141 @@ function updateSignupButtonState() {
     }
 }
 
+/**
+ * Executes attach signup form state handlers logic.
+ * @returns {void} Result.
+ */
 function attachSignupFormStateHandlers() {
-    const inputs = [
-        document.getElementById('registerName'),
-        document.getElementById('registerEmail'),
-        document.getElementById('registerPassword'),
-        document.getElementById('registerPasswordConfirm')
-    ];
+    const inputs = getSignupInputElements();
     const policyCheckbox = document.getElementById('acceptPrivacy');
-
-    inputs.forEach(input => {
-        if (input) {
-            input.addEventListener('input', updateSignupButtonState);
-            input.addEventListener('blur', updateSignupButtonState);
-        }
-    });
-
+    inputs.forEach(input => bindSignupInputHandlers(input));
     if (policyCheckbox) {
         policyCheckbox.addEventListener('change', updateSignupButtonState);
     }
 }
 
+/**
+ * Returns signup input elements.
+ * @returns {*} Result.
+ */
+function getSignupInputElements() {
+    return [
+        document.getElementById('registerName'),
+        document.getElementById('registerEmail'),
+        document.getElementById('registerPassword'),
+        document.getElementById('registerPasswordConfirm')
+    ].filter(Boolean);
+}
+
+/**
+ * Executes bind signup input handlers logic.
+ * @param {HTMLElement} input - Input element.
+ * @returns {void} Result.
+ */
+function bindSignupInputHandlers(input) {
+    input.addEventListener('input', updateSignupButtonState);
+    input.addEventListener('blur', updateSignupButtonState);
+}
+
+/**
+ * Initializes password visibility toggle.
+ * @param {*} param - Parameter.
+ * @param {*} lockIconId - Parameter.
+ * @param {*} visibilityOffIconId - Parameter.
+ * @param {*} visibilityIconId } - Parameter.
+ * @returns {void} Result.
+ */
 function initPasswordVisibilityToggle({ inputId, lockIconId, visibilityOffIconId, visibilityIconId }) {
+    const elements = getPasswordVisibilityElements(inputId, lockIconId, visibilityOffIconId, visibilityIconId);
+    if (!elements) return;
+    bindPasswordVisibilityHandlers(elements);
+    syncPasswordVisibilityIcons(elements);
+}
+
+/**
+ * Returns password visibility elements.
+ * @param {*} inputId - Parameter.
+ * @param {*} lockIconId - Parameter.
+ * @param {*} visibilityOffIconId - Parameter.
+ * @param {*} visibilityIconId - Parameter.
+ * @returns {*} Result.
+ */
+function getPasswordVisibilityElements(inputId, lockIconId, visibilityOffIconId, visibilityIconId) {
     const passwordInput = document.getElementById(inputId);
     const lockIcon = document.getElementById(lockIconId);
     const visibilityOffIcon = document.getElementById(visibilityOffIconId);
     const visibilityIcon = document.getElementById(visibilityIconId);
-
-    if (!passwordInput || !lockIcon || !visibilityOffIcon || !visibilityIcon) return;
-
-    const setPasswordVisibility = (isVisible) => {
-        passwordInput.type = isVisible ? 'text' : 'password';
-        visibilityIcon.classList.toggle('is-hidden', !isVisible);
-        visibilityOffIcon.classList.toggle('is-hidden', isVisible);
-    };
-
-    const syncIconsWithInput = () => {
-        const hasValue = passwordInput.value.length > 0;
-        lockIcon.classList.toggle('is-hidden', hasValue);
-
-        if (!hasValue) {
-            visibilityOffIcon.classList.add('is-hidden');
-            visibilityIcon.classList.add('is-hidden');
-            passwordInput.type = 'password';
-            return;
-        }
-
-        const isVisible = passwordInput.type === 'text';
-        setPasswordVisibility(isVisible);
-    };
-
-    passwordInput.addEventListener('input', syncIconsWithInput);
-
-    visibilityOffIcon.addEventListener('click', () => {
-        if (passwordInput.value.length === 0) return;
-        setPasswordVisibility(true);
-    });
-
-    visibilityIcon.addEventListener('click', () => {
-        if (passwordInput.value.length === 0) return;
-        setPasswordVisibility(false);
-    });
-
-    syncIconsWithInput();
+    if (!passwordInput || !lockIcon || !visibilityOffIcon || !visibilityIcon) return null;
+    return { passwordInput, lockIcon, visibilityOffIcon, visibilityIcon };
 }
 
+/**
+ * Executes bind password visibility handlers logic.
+ * @param {*} elements - Parameter.
+ * @returns {void} Result.
+ */
+function bindPasswordVisibilityHandlers(elements) {
+    elements.passwordInput.addEventListener('input', () => syncPasswordVisibilityIcons(elements));
+    elements.visibilityOffIcon.addEventListener('click', () => showPassword(elements));
+    elements.visibilityIcon.addEventListener('click', () => hidePassword(elements));
+}
+
+/**
+ * Shows password.
+ * @param {*} elements - Parameter.
+ * @returns {void} Result.
+ */
+function showPassword(elements) {
+    if (elements.passwordInput.value.length === 0) return;
+    setPasswordVisibility(elements, true);
+}
+
+/**
+ * Hides password.
+ * @param {*} elements - Parameter.
+ * @returns {void} Result.
+ */
+function hidePassword(elements) {
+    if (elements.passwordInput.value.length === 0) return;
+    setPasswordVisibility(elements, false);
+}
+
+/**
+ * Sets password visibility.
+ * @param {*} elements - Parameter.
+ * @param {*} isVisible - Parameter.
+ * @returns {void} Result.
+ */
+function setPasswordVisibility(elements, isVisible) {
+    elements.passwordInput.type = isVisible ? 'text' : 'password';
+    elements.visibilityIcon.classList.toggle('is-hidden', !isVisible);
+    elements.visibilityOffIcon.classList.toggle('is-hidden', isVisible);
+}
+
+/**
+ * Executes sync password visibility icons logic.
+ * @param {*} elements - Parameter.
+ * @returns {void} Result.
+ */
+function syncPasswordVisibilityIcons(elements) {
+    const hasValue = elements.passwordInput.value.length > 0;
+    elements.lockIcon.classList.toggle('is-hidden', hasValue);
+
+    if (!hasValue) {
+        elements.visibilityOffIcon.classList.add('is-hidden');
+        elements.visibilityIcon.classList.add('is-hidden');
+        elements.passwordInput.type = 'password';
+        return;
+    }
+
+    const isVisible = elements.passwordInput.type === 'text';
+    setPasswordVisibility(elements, isVisible);
+}
+
+/**
+ * Initializes signup password visibility toggles.
+ * @returns {void} Result.
+ */
 function initSignupPasswordVisibilityToggles() {
     initPasswordVisibilityToggle({
         inputId: 'registerPassword',
@@ -264,47 +437,114 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSignupButtonState();
 });
 
+/**
+ * Adds user.
+ * @returns {Promise<*>} Result.
+ */
 async function addUser() {
-    let name = document.getElementById('registerName');
-    let email = document.getElementById('registerEmail');
-    let password = document.getElementById('registerPassword');
-    let confirmPassword = document.getElementById('registerPasswordConfirm');
-
-    if (password.value !== confirmPassword.value) {
-        if (typeof showMessage === 'function') {
-            showMessage('Passwords do not match.', 'error');
-        } else {
-            alert('Passwords do not match.');
-        }
-        confirmPassword.focus();
-        return;
-    }
-
-    const newUser = { name: name.value.trim(), email: email.value.trim(), password: password.value };
-    users.push(newUser);
+    const values = getSignupValues();
+    if (!isPasswordMatch(values)) { showPasswordMismatch(values.confirmPassword); return; }
+    const newUser = buildNewUser(values); users.push(newUser);
     try {
-        // Benutzer in der users Collection speichern
-        await postData("users", newUser);
-        
-        // Benutzer auch als Kontakt speichern (ohne Passwort!)
-        const newContact = {
-            name: newUser.name,
-            email: newUser.email,
-            phone: '' // Optional: Du könntest auch ein Telefon-Feld im Registrierungsformular hinzufügen
-        };
-        await postData("contacts", newContact);
-        
+        await saveNewUser(newUser);
+        await saveNewContact(newUser);
         window.location.href = 'index.html?msg=Du hast dich erfolgreich registriert!';
     } catch (err) {
         console.error("Fehler beim Posten:", err);
-        if (typeof showMessage === 'function') {
-            showMessage('Registration failed. Please try again.', 'error');
-        } else {
-            alert('Registration failed. Please try again.');
-        }
+        showRegistrationFailed();
     }
 }
 
+/**
+ * Returns signup values.
+ * @returns {*} Result.
+ */
+function getSignupValues() {
+    return {
+        name: document.getElementById('registerName'),
+        email: document.getElementById('registerEmail'),
+        password: document.getElementById('registerPassword'),
+        confirmPassword: document.getElementById('registerPasswordConfirm')
+    };
+}
+
+/**
+ * Checks whether password match.
+ * @param {*} values - Parameter.
+ * @returns {boolean} Result.
+ */
+function isPasswordMatch(values) {
+    return values.password.value === values.confirmPassword.value;
+}
+
+/**
+ * Shows password mismatch.
+ * @param {*} confirmPassword - Parameter.
+ * @returns {void} Result.
+ */
+function showPasswordMismatch(confirmPassword) {
+    if (typeof showMessage === 'function') {
+        showMessage('Passwords do not match.', 'error');
+    } else {
+        alert('Passwords do not match.');
+    }
+    confirmPassword.focus();
+}
+
+/**
+ * Builds new user.
+ * @param {*} values - Parameter.
+ * @returns {*} Result.
+ */
+function buildNewUser(values) {
+    return {
+        name: values.name.value.trim(),
+        email: values.email.value.trim(),
+        password: values.password.value
+    };
+}
+
+/**
+ * Saves new user.
+ * @param {*} newUser - Parameter.
+ * @returns {Promise<*>} Result.
+ */
+async function saveNewUser(newUser) {
+    await postData("users", newUser);
+}
+
+/**
+ * Saves new contact.
+ * @param {*} newUser - Parameter.
+ * @returns {Promise<*>} Result.
+ */
+async function saveNewContact(newUser) {
+    const newContact = {
+        name: newUser.name,
+        email: newUser.email,
+        phone: ''
+    };
+    await postData("contacts", newContact);
+}
+
+/**
+ * Shows registration failed.
+ * @returns {void} Result.
+ */
+function showRegistrationFailed() {
+    if (typeof showMessage === 'function') {
+        showMessage('Registration failed. Please try again.', 'error');
+    } else {
+        alert('Registration failed. Please try again.');
+    }
+}
+
+/**
+ * Executes post data logic.
+ * @param {string} path - API path.
+ * @param {Object} user - User payload.
+ * @returns {Promise<*>} Result.
+ */
 async function postData(path = "", user = {}) {
     let response = await fetch(`${BASE_URL}/${path}.json`, {
         method: "POST",
@@ -321,6 +561,10 @@ async function postData(path = "", user = {}) {
     return await response.json();
 }
 
+/**
+ * Executes navigate to login logic.
+ * @returns {void} Result.
+ */
 function navigateToLogin() {
      window.location.href = "index.html";
 }

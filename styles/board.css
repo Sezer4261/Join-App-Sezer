@@ -55,7 +55,6 @@ body {
   font-weight: 700;
   margin: 0;
   margin-left: 35px;
-
 }
 
 .board-actions {
@@ -352,7 +351,20 @@ h1 {
 
 .close {
   cursor: pointer;
-  margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.close:hover {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .close-btn {
@@ -442,6 +454,11 @@ h1 {
 .modal-edit:hover {
   cursor: pointer;
   font-weight: bold;
+}
+
+.edit-svg-path {
+  fill: #2A3647;
+  transition: fill 0.15s ease;
 }
 
 .action-separator {
@@ -873,8 +890,14 @@ h1 {
   align-items: center;
   gap: 8px;
   margin: 6px 0;
+  padding: 0px 8px;
 }
 
+.modal-subtask:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  border-radius: 8px;
+}
 
 
 /* ===========================================
