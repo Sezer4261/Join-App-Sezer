@@ -34,11 +34,14 @@ const LOW_ICON = `
  * Generates add task.
  * @returns {string} Result.
  */
-function generateAddTask() {
+function generateAddTask(options = {}) {
+  const isDialog = options && options.variant === 'dialog';
+  const clearLabel = isDialog ? 'Cancel x' : 'Clear x';
+  const clearOnClick = isDialog ? 'clearForm(); closeAddTaskDialog()' : 'clearForm()';
   return /*html*/ `
     <div class="add-task-header">
       <h1>Add Task</h1>
-      <img src="./assets/icons/close.svg" alt="Close-Button" width="20" height="20" onclick="closeAddTaskDialog()">
+      <span class="close-btn" onclick="closeAddTaskDialog()">x</span>
     </div>
     <form class="task-form" id="addTaskForm" onsubmit="saveToArray(event)">
       <div class="form-left">
@@ -110,10 +113,9 @@ function generateAddTask() {
           </div>
           <ul id="subtaskArea" class="subtask-list"></ul>
         </label>
-        <p class="note note-inline"><span class="req">*</span>This field is required</p>
         <div class="actions">
-          <button type="reset" class="clear" onclick="clearForm()">Clear ✕</button>
-          <button type="submit" class="create">Create Task ▾</button>
+          <button type="reset" class="clear" onclick="${clearOnClick}">${clearLabel}</button>
+          <button type="submit" class="create">Create Task <img src="assets/icons/Vector (5).svg" alt=""></button>
         </div>
       </div>
     </form>

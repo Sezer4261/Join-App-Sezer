@@ -370,13 +370,19 @@ h1 {
 
 .close-btn {
   float: right;
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 24px;
   cursor: pointer;
+  color: #2A3647;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .close-btn:hover {
-  color: red;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .modal-title h2 {
@@ -656,6 +662,7 @@ h1 {
 .edit-task-form textarea {
   min-height: 80px;
   resize: vertical;
+  font: message-box;
 }
 
 /* ===========================================
@@ -934,6 +941,20 @@ textarea:focus-within,
   justify-content: flex-end;
   gap: 12px;
   margin-top: 8px;
+}
+
+.clear:hover {
+  border-color: #29ABE2;
+  color: #29ABE2;
+}
+
+.create:hover {
+  background-color: #29ABE2;
+}
+
+.create img {
+  width: 16px;
+  height: 16px;
 }
 
 #editTaskForm .actions .clear,
@@ -1251,20 +1272,29 @@ textarea:focus-within,
 
 .addTask-dialog {
   background-color: white;
-  width: 1200px;
+  width: 1050px;
   height: 700px;
   border: 1px solid white;
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 36px;
   margin-top: 0;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.3s ease-out, opacity 0.15s ease-out;
+  will-change: transform, opacity;
+}
+
+.addTask-dialog.is-open {
+  transform: translateX(0);
+  opacity: 1;
 }
 
 .addTask-dialog .custom-select {
   border: 1px solid #ccc;
   padding: 0 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   position: relative;
-  width: 320px;
+  width: 100%;
   background: white;
   min-height: 40px;
   display: flex;

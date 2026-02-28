@@ -86,16 +86,26 @@ textarea,
 select {
   padding: 10px;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 textarea {
   resize: vertical;
   min-height: 80px;
+  font: message-box;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.custom-select:focus-within {
+  outline: none;
+  border-color: #29abe2;
 }
 
 .note {
   font-size: 20px;
+  margin-bottom: -32px;
 }
 
 /* Priority */
@@ -277,10 +287,11 @@ textarea {
   position: relative;
   width: fit-content;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .subtasks input {
-  width: 320px;
+  width: 100%;
   height: 40px;
   padding-right: 72px;
 }
