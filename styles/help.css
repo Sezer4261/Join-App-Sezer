@@ -1,0 +1,68 @@
+.help-page-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.help-back-btn {
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	border-radius: 50%;
+	flex: 0 0 auto;
+}
+
+.help-back-btn:hover {
+	transform: scale(1.1);
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.blue-text {
+    color: #29ABE2;
+}
+
+h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+
+.help-steps-intro {
+	margin-bottom: 24px;
+}
+
+.help-steps {
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+	margin-bottom: 22px;
+}
+
+.help-step {
+	display: flex;
+	align-items: flex-start;
+	gap: 22px;
+}
+
+.help-step-number {
+	min-width: 34px;
+	font-weight: 700;
+	font-size: 28px;
+	line-height: 1;
+	color: #000;
+}
+
+.help-step-title {
+	font-weight: 700;
+	font-size: 20px;
+	margin-bottom: 6px;
+}
+
+.help-step-content p {
+	margin: 0;
+	line-height: 1.35;
+}
+
+.help-steps-footer {
+	margin-top: 18px;
+}
