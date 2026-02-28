@@ -332,11 +332,13 @@ async function openEditTaskModal(id) {
   const task = tasks.find(t => t.id === id);
   if (!task) return;
   activeTask = task;
-  editSubtasks = task.subtasks.map(st => ({ ...st }));
-  selectedContacts = [...task.contacts];
+  editSubtasks = Array.isArray(task.subtasks) ? task.subtasks.map(st => ({ ...st })) : [];
+  selectedContacts = Array.isArray(task.contacts) ? [...task.contacts] : [];
   window.editingEditSubtaskIndex = null;
   const modal = document.getElementById("taskModal");
+  if (!modal) return;
   const modalContent = modal.querySelector(".modal-content");
+  if (!modalContent) return;
   modalContent.innerHTML = generateEditTaskTemplate(task);
   await loadContacts();
   renderEditAssignedContacts();
@@ -377,12 +379,119 @@ function setEditCategory(value) {
   const select = document.getElementById("editCategorySelect");
   if (!input || !select) return;
   input.value = value;
+  input.classList.remove('input-error');
+  select.classList.remove('input-error');
+  setEditErrorText('editCategoryError', '');
   const label = select.querySelector("span");
   if (label) {
     label.childNodes[0].textContent = value + " ";
   }
   const dropdown = document.getElementById("editCategoryDropdown");
   if (dropdown) dropdown.classList.remove("show");
+}
+
+/**
+ * Sets edit error text.
+ * @param {string} id - Identifier.
+ * @param {string} value - Value.
+ * @returns {void} Result.
+ */
+function setEditErrorText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+/**
+ * Clears edit validation errors.
+ * @returns {void} Result.
+ */
+function clearEditValidationErrors() {
+  setEditErrorText('editTitleError', '');
+  setEditErrorText('editDateError', '');
+  setEditErrorText('editCategoryError', '');
+}
+
+/**
+ * Validates required input in edit form.
+ * @param {HTMLElement} input - Input element.
+ * @param {string} errorId - Error element id.
+ * @param {HTMLElement} highlightElement - Element to highlight (defaults to input).
+ * @returns {boolean} Result.
+ */
+function validateEditRequiredInput(input, errorId, highlightElement = input) {
+  const value = input ? String(input.value ?? '').trim() : '';
+  if (!input || !value) {
+    setEditErrorText(errorId, 'This field is required');
+    input?.classList.add('input-error');
+    if (highlightElement && highlightElement !== input) {
+      highlightElement.classList.add('input-error');
+    }
+    return false;
+  }
+  input.classList.remove('input-error');
+  if (highlightElement && highlightElement !== input) {
+    highlightElement.classList.remove('input-error');
+  }
+  return true;
+}
+
+/**
+ * Scrolls edit form to the given element (inside overflow container).
+ * @param {HTMLElement|null} target - Target element.
+ * @returns {void} Result.
+ */
+function scrollEditFormTo(target) {
+  if (!target) return;
+  const scrollContainer = document.querySelector('#editTaskForm .edit-form-scroll');
+  if (!scrollContainer) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  const containerRect = scrollContainer.getBoundingClientRect();
+  const targetRect = target.getBoundingClientRect();
+  const offsetTop = targetRect.top - containerRect.top + scrollContainer.scrollTop - 16;
+  scrollContainer.scrollTo({ top: offsetTop, behavior: 'smooth' });
+}
+
+/**
+ * Validates edit form.
+ * @returns {boolean} Result.
+ */
+function validateEditForm() {
+  clearEditValidationErrors();
+  const titleInput = document.getElementById('edit-title');
+  const dateInput = document.getElementById('edit-date');
+  const categoryInput = document.getElementById('edit-category');
+  const categorySelect = document.getElementById('editCategorySelect');
+
+  const invalid = [];
+
+  if (!validateEditRequiredInput(titleInput, 'editTitleError')) {
+    invalid.push({ errorId: 'editTitleError', focusEl: titleInput });
+  }
+
+  if (!validateEditRequiredInput(dateInput, 'editDateError')) {
+    invalid.push({ errorId: 'editDateError', focusEl: dateInput });
+  }
+
+  if (!validateEditRequiredInput(categoryInput, 'editCategoryError', categorySelect)) {
+    invalid.push({ errorId: 'editCategoryError', focusEl: categorySelect });
+  }
+
+  if (invalid.length > 0) {
+    const first = invalid[0];
+    const errorEl = document.getElementById(first.errorId);
+    scrollEditFormTo(errorEl || first.focusEl);
+    try {
+      first.focusEl?.focus?.();
+    } catch (e) {
+      // ignore focus errors
+    }
+    return false;
+  }
+
+  return true;
 }
 
 /**
@@ -507,6 +616,7 @@ function saveEditedEditSubtask(i) {
  */
 async function saveEditedTask(event, id) {
   event.preventDefault();
+  if (!validateEditForm()) return;
   const task = tasks.find(t => t.id === id);
   if (!task) return;
   updateTaskFromEditForm(task);

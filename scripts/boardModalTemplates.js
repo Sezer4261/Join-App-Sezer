@@ -106,11 +106,12 @@ function generateModalSubtasks(task) {
  */
 function generateEditTaskTemplate(task) {
   return /*html*/ `
-    <form class="edit-task-form" id="editTaskForm" onsubmit="saveEditedTask(event, ${task.id})">
+    <form class="edit-task-form" id="editTaskForm" novalidate onsubmit="saveEditedTask(event, ${task.id})">
       <div class="edit-form-scroll">
         <label class="edit-label">
           <span>Title<span class="req">*</span></span>
-          <input class="edit-input" type="text" id="edit-title" value="${task.title}" required>
+          <input class="edit-input" type="text" id="edit-title" value="${task.title}">
+          <div class="error-message" id="editTitleError"></div>
         </label>
         <label class="edit-label">
           <span>Description</span>
@@ -118,7 +119,8 @@ function generateEditTaskTemplate(task) {
         </label>
         <label class="edit-label">
           <span>Due date<span class="req">*</span></span>
-          <input class="edit-input" type="date" id="edit-date" value="${task.dueDate}" required>
+          <input class="edit-input" type="date" id="edit-date" value="${task.dueDate}">
+          <div class="error-message" id="editDateError"></div>
         </label>
         <div class="priority">
           <span>Priority</span>
@@ -133,7 +135,7 @@ function generateEditTaskTemplate(task) {
         </div>
         <div class="edit-assigned">
           <span>Assigned to</span>
-          <div id="selectContacts" class="custom-select">
+          <div id="selectContacts" tabindex="0" class="custom-select">
             <span onclick="toggleDropdown(event)">Select contacts
               <img src="./assets/icons/arrow_drop_down.svg" alt="" class="dropdown-arrow">
             </span>
@@ -143,7 +145,7 @@ function generateEditTaskTemplate(task) {
         </div>
         <div class="edit-label">
           <span>Category<span class="req">*</span></span>
-          <div id="editCategorySelect" class="custom-select">
+          <div id="editCategorySelect" tabindex="0" class="custom-select">
             <span onclick="toggleEditCategoryDropdown(event)">
               ${task.category ? task.category + " " : "Select task category "}
               <img src="./assets/icons/arrow_drop_down.svg" alt="" class="dropdown-arrow">
@@ -153,6 +155,7 @@ function generateEditTaskTemplate(task) {
             </div>
           </div>
           <input type="hidden" id="edit-category" value="${task.category || ''}">
+          <div class="error-message" id="editCategoryError"></div>
         </div>
         <div class="edit-subtasks">
           <span>Subtasks</span>
@@ -170,10 +173,14 @@ function generateEditTaskTemplate(task) {
           </div>
           <ul id="editSubtaskArea" class="subtask-list"></ul>
         </div>
-      </div>
-      <div class="edit-actions">
-        <button type="button" class="edit-cancel" onclick="openModal(${task.id})">Cancel</button>
-        <button type="submit" class="edit-save">OK</button>
+        <div class="edit-actions">
+          <div class="edit-x-close" onclick="closeModal()">
+            <button type="button" class="edit-cancel">x</button>
+          </div>
+
+
+          <button type="submit" class="edit-save">Ok <img src="assets/icons/Vector (5).svg"></button>
+        </div>
       </div>
     </form>
   `;

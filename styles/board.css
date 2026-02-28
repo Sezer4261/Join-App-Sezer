@@ -340,7 +340,7 @@ h1 {
   height: auto;
   max-width: 560px;
   max-height: 85vh;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   /* font-family: Arial, sans-serif; */
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   transform: translateX(100%);
@@ -448,11 +448,12 @@ h1 {
   gap: 8px;
 }
 
-.modal-action-delete-text, .modal-action-edit-text {
+.modal-action-delete-text,
+.modal-action-edit-text {
   min-width: 55px;
 }
 
-.modal-delete:hover .modal-action-delete-text{
+.modal-delete:hover .modal-action-delete-text {
   cursor: pointer;
   font-weight: bold;
   color: #29ABE2;
@@ -782,6 +783,15 @@ h1 {
   background: transparent;
 }
 
+.edit-input:focus-within,
+textarea:focus-within,
+.custom-select:focus-within,
+.subtask-edit-input:focus-within,
+.subtasks input:focus-within {
+  outline: none;
+  border: 1px solid #29ABE2;
+}
+
 .edit-task-form .subtask-edit-input {
   width: 100%;
   height: 40px;
@@ -950,6 +960,7 @@ h1 {
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
 }
 
 .edit-form-scroll {
@@ -959,15 +970,27 @@ h1 {
   flex-direction: column;
   gap: 16px;
   padding-right: 6px;
+  padding-top: 16px;
+  max-width: 560px;
+  min-width: 360px;
+  max-height: 80vh;
+
 }
 
 /* Inputs */
+
+.edit-form-scroll input,
+.edit-form-scroll label {
+  width: 320px;
+
+}
 
 .edit-label {
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-size: 14px;
+  margin-top: 24px;
 }
 
 .edit-input,
@@ -1046,6 +1069,7 @@ h1 {
   flex-direction: column;
   gap: 8px;
 }
+
 
 /* ===== EDIT MODAL RESPONSIVE ===== */
 @media (max-width: 600px) {
@@ -1152,30 +1176,61 @@ h1 {
 
 
 
-
 /* Actions */
 
 .edit-actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding-top: 12px;
   border-top: 1px solid #eee;
+  margin-right: 8px;
 }
 
 .edit-cancel {
   cursor: pointer;
   background: transparent;
   border: none;
-  color: #555;
+  width: 24px;
+  height: 24px;
+  color: #2A3647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border-radius: 50%;
+}
+
+.edit-cancel:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.edit-x-close {
+  position: absolute;
+  top: 0px;
+  right: 8px;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 8px;
 }
 
 .edit-save {
   cursor: pointer;
-  background: #2a7cff;
+  background: #2a3647;
   color: white;
   border: none;
   padding: 10px 18px;
   border-radius: 8px;
+}
+
+.edit-save:hover {
+  background: #29abe2;
+}
+
+.edit-save img {
+  width: 16px;
+  height: 16px;
 }
 
 .addTask-dialog-bg {
@@ -1230,8 +1285,25 @@ h1 {
   margin-left: auto;
 }
 
+/* Validation - error highlight (used by Add Task form) */
+.input-error {
+  border-color: #ff6b6b !important;
+}
+
+.custom-select.input-error {
+  border: 1px solid #ff6b6b !important;
+}
+
 .d-none {
   display: none;
+}
+
+/* Validation messages (used in Edit Task modal & Add Task dialog) */
+.error-message {
+  color: #ff6b6b;
+  font-size: 14px;
+  display: block;
+  min-height: 16px;
 }
 
 

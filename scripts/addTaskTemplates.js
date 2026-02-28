@@ -82,7 +82,7 @@ function generateAddTask() {
         </div>
         <label class="category">
           <span>Category<span class="req">*</span></span>
-          <div id="categorySelect" class="custom-select">
+          <div id="categorySelect" tabindex="0" class="custom-select">
             <span onclick="toggleAddCategoryDropdown(event)">
               Select task category
               <img src="./assets/icons/arrow_drop_down.svg" alt="" class="dropdown-arrow">
