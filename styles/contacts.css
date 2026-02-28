@@ -281,11 +281,7 @@ main {
     /* Verhindert flex-grow */
 }
 
-.title-msg {
-    font-size: 27px;
-    font-weight: 500;
-    color: #2A3647;
-}
+
 
 .contact-div-right {
     display: flex;
@@ -356,13 +352,7 @@ main {
     flex-direction: column;
 }
 
-.contact-div {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin: 0;
-    padding-top: 16px;
-}
+
 
 .contact-section-left {
     box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
@@ -513,7 +503,6 @@ hr {
 }
 
 /* === Add Contact Dialog Styles === */
-#ac-contact-dialog,
 .ac-dialog {
     border: none;
     border-radius: 24px;
@@ -596,14 +585,14 @@ hr {
     right: 32px;
     background: none;
     border: none;
-    font-size: 28px;
+    font-size: 24px;
     color: #2A3647;
     cursor: pointer;
     z-index: 2;
     transition: color 0.2s, background 0.2s;
-    width: 32px;
+    width: 24px;
     /* Feste Größe für runden Hintergrund */
-    height: 32px;
+    height: 24px;
     display: flex;
     /* Zentriert das Icon */
     align-items: center;
@@ -613,8 +602,7 @@ hr {
 }
 
 .ac__close:hover {
-    color: #29ABE2;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 50%;
 }
 
@@ -773,6 +761,58 @@ hr {
 
 
 /* Responsive */
+
+@media (max-width: 1000px) {
+    .title-contacts {
+        font-size: 48px;
+    }
+
+    .subtitle {
+        font-size: 24px;
+    }
+
+    .contact-name-large {
+        font-size: 24px;
+    }
+
+    .contact-header-large {
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .contact-div-right {
+        margin: 40px 24px 0px 16px;
+        gap: 8px;
+    }
+
+
+    .contact-maintitle-container {
+        height: auto;
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-start;
+        margin-bottom: 16px;
+    }
+
+    .separator {
+        order: 3;
+        display: block;
+        width: 64px;
+        height: 2px;
+        margin: 0;
+        background: #29ABE2;
+        font-size: 0;
+        color: transparent;
+    }
+
+    .contact-initials-large {
+        width: 90px;
+        height: 90px;
+        font-size: 32px;
+        margin-right: 0px;
+    }
+}
+
 @media (max-width: 900px) {
     .ac {
         flex-direction: column;
@@ -787,11 +827,22 @@ hr {
     }
 
     .ac-form {
-        max-width: 100%;
+        max-width: 75%;
+        gap: 16px;
     }
 
     .ac__formwrap {
-        padding-top: 80px;
+        padding-top: 40px;
+    }
+
+    .ac__close {
+        top: 16px;
+        right: 16px;
+        color: rgb(246, 247, 248)
+    }
+
+    .ac__actions {
+        justify-content: center;
     }
 }
 
@@ -896,13 +947,14 @@ hr {
    .contact-item 352px, hr 352px). Diese Overrides müssen am Ende der Datei stehen. */
 /* Responsive Anpassung */
 
+
 @media (min-width: 601px) and (max-width: 621px) {
     main {
         padding-top: 77px;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
     .contact-section {
         width: 100%;
         margin-left: 0;
@@ -1187,6 +1239,199 @@ hr {
         fill: #29ABE2;
     }
 
+    /*  */
+
+
+
+    .contact-maintitle-container {
+        margin-top: 40px;
+    }
+
+    .contact-back-btn {
+        top: 32px;
+        right: 0px;
+    }
+
+    .contact-div-right {
+        margin: 0px 24px 0px 24px;
+    }
+
+
+    .contact-section {
+        padding: 0 12px;
+        margin-top: 0px;
+    }
+
+    .contact-section-left {
+        box-shadow: none;
+    }
+
+    .add-contact-btn {
+        width: 52px;
+        height: 52px;
+        right: 8px;
+        bottom: 116px;
+    }
+
+    .add-contact-btn img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .title-contacts {
+        font-size: 40px;
+    }
+
+    .subtitle {
+        font-size: 18px;
+    }
+
+    .contact-header-large {
+        gap: 16px;
+        margin-bottom: 16px;
+        padding-bottom: 0px;
+    }
+
+    .contact-avatar-large {
+        margin-bottom: 0px;
+    }
+
+    .contact-initials-large {
+        width: 80px;
+        height: 80px;
+        font-size: 32px;
+        font-weight: 500;
+        margin-right: 0px;
+    }
+
+    .contact-name-large {
+        font-size: 24px;
+    }
+
+    .contact-actions {
+        display: none;
+    }
+
+    .contact-action-btn {
+        font-size: 14px;
+        padding: 0 6px;
+    }
+
+    .contact-action-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .contact-information-h3 {
+        margin-bottom: 24px;
+    }
+
+    .contact-info-email {
+        gap: 8px;
+    }
+
+    .contact-info-details {
+        gap: 0px;
+    }
+
+    .contact-info-phone {
+        gap: 10px;
+    }
+
+    /* Dialog (Add/Edit) auf sehr schmalen Geräten kompakter */
+    .ac__title {
+        font-size: 30px;
+    }
+
+    .ac__subtitle {
+        font-size: 16px;
+        margin-bottom: 0px;
+    }
+
+    .btn {
+        font-size: 16px;
+        padding: 0 16px;
+    }
+
+    .ac__close {
+        top: 16px;
+        right: 16px;
+        font-size: 24px;
+        color: rgb(246, 247, 248);
+    }
+
+    .ac__brand {
+        display: none;
+    }
+
+    .ac__title {
+        margin: 0;
+    }
+
+    .ac__formwrap {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .ac__avatar {
+        margin-bottom: 0px;
+        position: absolute;
+        bottom: 79%;
+        z-index: 5;
+    }
+
+    .ac-form {
+        gap: 16px;
+        align-items: center;
+        margin-top: 32px;
+    }
+
+    .ac__formwrap {
+        gap: 0px;
+    }
+
+    .ac-field {
+        width: 280px;
+        padding-right: 8px;
+        height: 40px;
+    }
+
+    .ac-field input.input-focus {
+        padding: 0 8px;
+        font-size: 16px;
+    }
+
+    .ac__actions {
+        margin-top: 0px;
+    }
+
+    .ac__hero {
+        height: 192px;
+        justify-content: center;
+    }
+
+    .btn--primary {
+        min-width: 0px;
+    }
+
+    .btn {
+        height: 40px;
+    }
+
+    .ac-dialog {
+        width: 305px;
+    }
+
+    .ac__avatar img {
+        width: 80px;
+        height: 80px;
+        opacity: 1;
+    }
+
+    .responsiveCloseBtn {
+        display: none;
+    }
+
 }
 
 /* testweise, danach 440px */
@@ -1375,7 +1620,6 @@ hr {
         height: 40px;
     }
 
-    #ac-contact-dialog,
     .ac-dialog {
         width: 305px;
     }
@@ -1390,4 +1634,27 @@ hr {
         display: none;
     }
 
+}
+
+@media (min-width: 781px) and (max-width: 900px) {
+    .ac-dialog {
+        width: 600px;
+    }
+
+    .ac {
+        width: 600px;
+    }
+
+    .ac__formwrap {
+        flex-direction: column;
+        gap: 0px;
+    }
+
+    .ac__avatar {
+        margin-top: -92px;
+    }
+
+    .ac__avatar img {
+        opacity: 1;
+    }
 }

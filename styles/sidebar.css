@@ -1,15 +1,15 @@
-.sidebar a {
+.sidebar a{
     text-decoration: none;
     font-size: 16px;
 }
 
-.logo_sidebar {
+.logo_sidebar{
     width: 100px;
     height: auto;
     margin-bottom: 110px;
 }
 
-.sidebar {
+.sidebar{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,7 +19,7 @@
     position: relative;
 }
 
-.sidebar ul {
+.sidebar ul{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,7 +30,7 @@
     margin: 0;
 }
 
-.sidebar ul div {
+.sidebar ul div{
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -41,7 +41,7 @@
     cursor: pointer;
 }
 
-.sidebar li {
+.sidebar li{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,16 +52,16 @@
     padding: 8px 0;
 }
 
-.sidebar-li-hover-effect:hover {
+.sidebar-li-hover-effect:hover{
     background-color: #2A3D59;
 }
 
-ul img {
+ul img{
     width: 30px;
     height: 30px;
 }
 
-.sidebar ul a {
+.sidebar ul a{
     width: 63px;
     text-align: left;
     color: #cdcdcd;
@@ -69,13 +69,13 @@ ul img {
     font-size: 16px;
 }
 
-.sidebar-footer {
+.sidebar-footer{
     margin-top: auto;
     display: flex;
     flex-direction: column;
 }
 
-.sidebar-footer a {
+.sidebar-footer a{
     color: #cdcdcd;
     font-size: 16px;
     font-weight: 400;
@@ -85,14 +85,14 @@ ul img {
 
 }
 
-.sidebar-footer-link-hover-effect:hover {
+.sidebar-footer-link-hover-effect:hover{
     color: #29abe2;
     transform: scale(1.05);
     font-weight: bold;
 }
 
 
-.footer-link-container {
+.footer-link-container{
     width: 232px;
     height: 46px;
     display: flex;
@@ -100,22 +100,22 @@ ul img {
     align-items: center;
 }
 
-.highlighted {
+.highlighted{
     background-color: #091931;
 }
 
 @media (max-width: 1250px) {
-    .app {
+    .app{
         flex-direction: column;
         width: 100%;
     }
 
-    .main {
+    .main{
         width: 100%;
         margin-left: 0;
     }
 
-    .sidebar {
+    .sidebar{
         width: 100%;
         padding: 10px 0;
         position: fixed;
@@ -133,14 +133,14 @@ ul img {
         max-height: 80px;
     }
 
-    .logo_sidebar {
+    .logo_sidebar{
         display: block;
         width: 56px;
         margin: 0 0 0 16px;
         align-self: center;
     }
 
-    .sidebar ul {
+    .sidebar ul{
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: center;
@@ -150,83 +150,83 @@ ul img {
         padding: 0 16px;
     }
 
-    .sidebar li {
+    .sidebar li{
         width: auto;
         padding: 8px 12px;
         border-radius: 8px;
     }
 
-    .sidebar ul div {
+    .sidebar ul div{
         width: auto;
         gap: 6px;
         justify-content: center;
     }
 
-    .sidebar ul a {
+    .sidebar ul a{
         width: auto;
         text-align: left;
     }
 
-    .sidebar-footer {
+    .sidebar-footer{
         display: none;
     }
 
-    .footer-link-container {
+    .footer-link-container{
         width: auto;
         height: auto;
     }
 
-    .sidebar-footer a {
+    .sidebar-footer a{
         width: auto;
     }
 }
 
 @media (max-width: 600px) {
-    .sidebar {
+    .sidebar{
         padding: 8px 0;
     }
 
-    .sidebar ul {
+    .sidebar ul{
         justify-content: space-around;
         gap: 6px;
         padding: 0 8px;
     }
 
-    .sidebar li {
+    .sidebar li{
         flex: 1;
         padding: 6px 4px;
     }
 
-    .sidebar ul div {
+    .sidebar ul div{
         flex-direction: column;
         gap: 4px;
     }
 
-    .sidebar ul a {
+    .sidebar ul a{
         font-size: 12px;
         text-align: center;
         white-space: nowrap;
     }
 
-    ul img {
+    ul img{
         width: 24px;
         height: 24px;
     }
 }
 
 @media (max-width: 480px) {
-    .sidebar ul a {
+    .sidebar ul a{
         font-size: 14px;
     }
 
-    ul img {
+    ul img{
         width: 24px;
         height: 24px;
     }
 }
 
 @media (max-width: 620px) {
-    .logo_sidebar {
+    .logo_sidebar{
         display: none;
     }
 }
