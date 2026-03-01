@@ -7,15 +7,14 @@ const firebaseConfig = {
   appId: "DEIN_APP_ID"
 };
 
-if (typeof firebase !== "undefined") {
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
+function isPlaceholderFirebaseConfig(config) {
+  if (!config || typeof config !== "object") return true;
+  return Object.values(config).some((value) =>
+    typeof value === "string" && value.toUpperCase().includes("DEIN_")
+  );
+}
 
-  // Firebase Logout (optional)
-  /**
-   * Executes firebase logout logic.
-   * @returns {void} Result.
-   */
+function exposeFirebaseLogout(auth) {
   function firebaseLogout() {
     if (auth && typeof auth.signOut === "function") {
       auth.signOut().catch((error) => {
@@ -24,9 +23,50 @@ if (typeof firebase !== "undefined") {
     }
   }
   window.firebaseLogout = firebaseLogout;
-} else {
-  console.warn("Firebase SDK not loaded — skipping init.");
 }
+
+function initFirebaseIfAvailable() {
+  if (typeof firebase === "undefined") return false;
+  if (isPlaceholderFirebaseConfig(firebaseConfig)) return false;
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  exposeFirebaseLogout(auth);
+  return true;
+}
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.defer = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+    document.head.appendChild(script);
+  });
+}
+
+async function ensureFirebaseSdkAndInit() {
+  if (isPlaceholderFirebaseConfig(firebaseConfig)) {
+    return;
+  }
+  if (initFirebaseIfAvailable()) {
+    return;
+  }
+
+  try {
+    // Load Firebase global (compat) SDK on demand.
+    // Using compat because this project uses the namespaced v8-style API (firebase.initializeApp, firebase.auth()).
+    const version = "9.23.0";
+    await loadScript(`https://www.gstatic.com/firebasejs/${version}/firebase-app-compat.js`);
+    await loadScript(`https://www.gstatic.com/firebasejs/${version}/firebase-auth-compat.js`);
+    initFirebaseIfAvailable();
+  } catch (error) {
+    console.warn("Firebase SDK not loaded — skipping init.", error);
+  }
+}
+
+ensureFirebaseSdkAndInit();
 
 // Optional: User-Profil aktualisieren
 /**
