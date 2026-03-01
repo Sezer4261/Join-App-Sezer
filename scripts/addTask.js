@@ -127,7 +127,10 @@ async function saveToArray(event) {
  * @returns {void} Result.
  */
 function handleSaveSuccess() {
-  showMessage("Task added to board", "success");
+    showMessage("Task added to board", "success", {
+      iconSrc: "./assets/icons/vector_board.svg",
+      iconAlt: "Board"
+    });
   subtasks.length = 0;
   selectedContacts.length = 0;
   showSubtasks();

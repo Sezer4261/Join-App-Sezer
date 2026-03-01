@@ -118,6 +118,75 @@ async function resolveUserName(session) {
 
 // ---- /NEW ----
 
+/**
+ * Shows the mobile welcome overlay (<900px) for 1.5s,
+ * then fades it out and removes it from the layout.
+ * @returns {void} Result.
+ */
+function showMobileWelcomeOverlay() {
+    const mq = window.matchMedia("(max-width: 900px)");
+
+    const welcomeBox = document.getElementById("welcome-msg-box");
+    if (!welcomeBox) return;
+
+    const aside = welcomeBox.closest("aside");
+    if (!aside) return;
+
+    const resetToDefault = () => {
+        aside.classList.remove("is-visible");
+        aside.classList.remove("mobile-welcome-overlay");
+        aside.style.display = "";
+        welcomeBox.style.display = "";
+    };
+
+    // If we switch back to desktop width, the welcome box must remain visible.
+    if (!window.mobileWelcomeOverlayMqListenerAdded) {
+        window.mobileWelcomeOverlayMqListenerAdded = true;
+        mq.addEventListener("change", (event) => {
+            if (!event.matches) resetToDefault();
+        });
+    }
+
+    if (!mq.matches) {
+        resetToDefault();
+        return;
+    }
+
+    aside.classList.add("mobile-welcome-overlay");
+    aside.style.display = "flex";
+
+    // Ensure the welcome content is available even though it's hidden by default on mobile.
+    welcomeBox.style.display = "flex";
+
+    // Start hidden, then fade in.
+    aside.classList.remove("is-visible");
+    requestAnimationFrame(() => aside.classList.add("is-visible"));
+
+    const hide = () => {
+        aside.classList.remove("is-visible");
+    };
+
+    const cleanup = () => {
+        // Only cleanup after fade-out.
+        if (aside.classList.contains("is-visible")) return;
+        aside.style.display = "none";
+        welcomeBox.style.display = "";
+        aside.classList.remove("mobile-welcome-overlay");
+        aside.removeEventListener("transitionend", onTransitionEnd);
+    };
+
+    const onTransitionEnd = (event) => {
+        if (event.propertyName !== "opacity") return;
+        cleanup();
+    };
+
+    aside.addEventListener("transitionend", onTransitionEnd);
+
+    setTimeout(hide, 1500);
+    // Fallback in case transitionend doesn't fire.
+    setTimeout(cleanup, 2300);
+}
+
 // Tasks aus Firebase holen
 /**
  * Fetches tasks.
@@ -181,6 +250,7 @@ function getDashboardStats(tasks) {
 // Beim Laden der Seite aufrufen
 document.addEventListener("DOMContentLoaded", async () => {
     await renderWelcome();
+    showMobileWelcomeOverlay();
     await updateDashboard();
 });
 

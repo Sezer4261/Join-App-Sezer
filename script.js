@@ -73,11 +73,12 @@ protectThisPage();
  * Shows message.
  * @param {string} message - Message text.
  * @param {string} type - Message type.
+ * @param {{ iconSrc?: string, iconAlt?: string }} [options] - Optional options.
  * @returns {void} Result.
  */
-function showMessage(message, type = "success") {
+function showMessage(message, type = "success", options = {}) {
   const box = getOrCreateMessageBox();
-  setMessageBoxContent(box, message);
+  setMessageBoxContent(box, message, options);
   setMessageBoxType(box, type);
   setMessageBoxBaseStyles(box);
   setMessageBoxLayoutStyles(box);
@@ -105,13 +106,24 @@ function getOrCreateMessageBox() {
  * Sets message box content.
  * @param {*} box - Parameter.
  * @param {string} message - Message text.
+ * @param {{ iconSrc?: string, iconAlt?: string }} [options] - Optional options.
  * @returns {void} Result.
  */
-function setMessageBoxContent(box, message) {
+function setMessageBoxContent(box, message, options = {}) {
   box.innerHTML = "";
   const textEl = document.createElement("span");
   textEl.textContent = message;
   box.appendChild(textEl);
+
+  if (options && options.iconSrc) {
+    const iconEl = document.createElement("img");
+    iconEl.src = options.iconSrc;
+    iconEl.alt = options.iconAlt || "";
+    iconEl.style.width = "24px";
+    iconEl.style.height = "24px";
+    iconEl.style.flex = "0 0 auto";
+    box.appendChild(iconEl);
+  }
 }
 
 /**
@@ -145,8 +157,8 @@ function setMessageBoxBaseStyles(box) {
 function setMessageBoxLayoutStyles(box) {
   box.style.display = "flex";
   box.style.alignItems = "center";
-  box.style.justifyContent = "space-between";
-  box.style.gap = "22px";
+  box.style.justifyContent = "center";
+  box.style.gap = "10px";
   box.style.minWidth = "280px";
   box.style.maxWidth = "min(520px, calc(100vw - 32px))";
   box.style.padding = "18px 22px";
