@@ -258,6 +258,40 @@ button {
     border-color: #ff3d00 !important;
 }
 
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) {
+    body {
+        overflow: hidden;
+    }
+
+    body > * {
+        pointer-events: none;
+        user-select: none;
+        visibility: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: var(--sidebar-bg, #2a3647);
+        z-index: 100000;
+    }
+
+    body::after {
+        content: "Bitte Gerät drehen";
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        text-align: center;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        z-index: 100001;
+    }
+}
+
 .input-field {
     position: relative;
     display: flex;
