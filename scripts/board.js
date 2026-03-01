@@ -269,10 +269,10 @@ function openModal(id) {
   const task = tasks.find(t => t.id === id);
   if (!task) return;
   activeTask = task;
-  const oldModal = document.getElementById("taskModal");
+  const oldModal = document.getElementById("task-modal");
   if (oldModal) oldModal.remove();
   const modal = document.createElement("div");
-  modal.id = "taskModal"; modal.className = "modal";
+  modal.id="task-modal"; modal.className = "modal";
   modal.innerHTML = getTaskModalTemplate(task);
   document.body.appendChild(modal); modal.style.display = "flex";
 
@@ -316,7 +316,7 @@ async function toggleSubtaskDone(taskId, subIndex, checkbox) {
  * @returns {void} Result.
  */
 function updateModalSubtasks(task) {
-  const modal = document.getElementById("taskModal");
+  const modal = document.getElementById("task-modal");
   if (!modal) return;
   const subtaskContainer = modal.querySelector(".modal-subtasks");
   if (!subtaskContainer) return;
@@ -335,7 +335,7 @@ async function openEditTaskModal(id) {
   editSubtasks = Array.isArray(task.subtasks) ? task.subtasks.map(st => ({ ...st })) : [];
   selectedContacts = Array.isArray(task.contacts) ? [...task.contacts] : [];
   window.editingEditSubtaskIndex = null;
-  const modal = document.getElementById("taskModal");
+  const modal = document.getElementById("task-modal");
   if (!modal) return;
   const modalContent = modal.querySelector(".modal-content");
   if (!modalContent) return;
@@ -351,7 +351,7 @@ async function openEditTaskModal(id) {
  * @returns {void} Result.
  */
 function renderEditAssignedContacts() {
-  const dropdown = document.getElementById("dropdownContacts");
+  const dropdown = document.getElementById("dropdown-contacts");
   if (!dropdown) return;
   dropdown.innerHTML = generateAssignedContacts(contacts);
   renderSelectedAvatars();
@@ -364,7 +364,7 @@ function renderEditAssignedContacts() {
  */
 function toggleEditCategoryDropdown(event) {
   event.stopPropagation();
-  const dropdown = document.getElementById("editCategoryDropdown");
+  const dropdown = document.getElementById("edit-category-dropdown");
   if (!dropdown) return;
   dropdown.classList.toggle("show");
 }
@@ -376,17 +376,17 @@ function toggleEditCategoryDropdown(event) {
  */
 function setEditCategory(value) {
   const input = document.getElementById("edit-category");
-  const select = document.getElementById("editCategorySelect");
+  const select = document.getElementById("edit-category-select");
   if (!input || !select) return;
   input.value = value;
   input.classList.remove('input-error');
   select.classList.remove('input-error');
-  setEditErrorText('editCategoryError', '');
+  setEditErrorText('edit-category-error', '');
   const label = select.querySelector("span");
   if (label) {
     label.childNodes[0].textContent = value + " ";
   }
-  const dropdown = document.getElementById("editCategoryDropdown");
+  const dropdown = document.getElementById("edit-category-dropdown");
   if (dropdown) dropdown.classList.remove("show");
 }
 
@@ -406,9 +406,9 @@ function setEditErrorText(id, value) {
  * @returns {void} Result.
  */
 function clearEditValidationErrors() {
-  setEditErrorText('editTitleError', '');
-  setEditErrorText('editDateError', '');
-  setEditErrorText('editCategoryError', '');
+  setEditErrorText('edit-title-error', '');
+  setEditErrorText('edit-date-error', '');
+  setEditErrorText('edit-category-error', '');
 }
 
 /**
@@ -442,7 +442,7 @@ function validateEditRequiredInput(input, errorId, highlightElement = input) {
  */
 function scrollEditFormTo(target) {
   if (!target) return;
-  const scrollContainer = document.querySelector('#editTaskForm .edit-form-scroll');
+  const scrollContainer = document.querySelector('#edit-task-form .edit-form-scroll');
   if (!scrollContainer) {
     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
@@ -463,20 +463,20 @@ function validateEditForm() {
   const titleInput = document.getElementById('edit-title');
   const dateInput = document.getElementById('edit-date');
   const categoryInput = document.getElementById('edit-category');
-  const categorySelect = document.getElementById('editCategorySelect');
+  const categorySelect = document.getElementById('edit-category-select');
 
   const invalid = [];
 
-  if (!validateEditRequiredInput(titleInput, 'editTitleError')) {
-    invalid.push({ errorId: 'editTitleError', focusEl: titleInput });
+  if (!validateEditRequiredInput(titleInput, 'edit-title-error')) {
+    invalid.push({ errorId: 'edit-title-error', focusEl: titleInput });
   }
 
-  if (!validateEditRequiredInput(dateInput, 'editDateError')) {
-    invalid.push({ errorId: 'editDateError', focusEl: dateInput });
+  if (!validateEditRequiredInput(dateInput, 'edit-date-error')) {
+    invalid.push({ errorId: 'edit-date-error', focusEl: dateInput });
   }
 
-  if (!validateEditRequiredInput(categoryInput, 'editCategoryError', categorySelect)) {
-    invalid.push({ errorId: 'editCategoryError', focusEl: categorySelect });
+  if (!validateEditRequiredInput(categoryInput, 'edit-category-error', categorySelect)) {
+    invalid.push({ errorId: 'edit-category-error', focusEl: categorySelect });
   }
 
   if (invalid.length > 0) {
@@ -502,9 +502,9 @@ function initEditDropdownClose() {
   if (window.editDropdownHandlerAdded) return;
   window.editDropdownHandlerAdded = true;
   document.addEventListener("click", () => {
-    const contactsDropdown = document.getElementById("dropdownContacts");
+    const contactsDropdown = document.getElementById("dropdown-contacts");
     if (contactsDropdown) contactsDropdown.classList.remove("show");
-    const categoryDropdown = document.getElementById("editCategoryDropdown");
+    const categoryDropdown = document.getElementById("edit-category-dropdown");
     if (categoryDropdown) categoryDropdown.classList.remove("show");
   });
 }
@@ -514,7 +514,7 @@ function initEditDropdownClose() {
  * @returns {void} Result.
  */
 function renderEditSubtasks() {
-  const area = document.getElementById("editSubtaskArea");
+  const area = document.getElementById("edit-subtask-area");
   if (!area) return;
   area.innerHTML = "";
   editSubtasks.forEach((st, i) => appendEditSubtask(area, st, i));
@@ -647,8 +647,8 @@ function updateTaskFromEditForm(task) {
  * @returns {Promise<*>} Result.
  */
 async function showAddTaskDialog() {
-  const modalContent = document.getElementById("addTask-dialog-message");
-  const dialogOverlay = document.getElementById("addTask-dialog");
+  const modalContent = document.getElementById("add-task-dialog-message");
+  const dialogOverlay = document.getElementById("add-task-dialog");
   if (!dialogOverlay || !modalContent) return;
 
   dialogOverlay.dataset.closing = "false";
@@ -683,8 +683,8 @@ async function showAddTaskDialog() {
  * @returns {void} Result.
  */
 function closeAddTaskDialog() {
-  const dialogOverlay = document.getElementById("addTask-dialog");
-  const modalContent = document.getElementById("addTask-dialog-message");
+  const dialogOverlay = document.getElementById("add-task-dialog");
+  const modalContent = document.getElementById("add-task-dialog-message");
   if (!dialogOverlay) return;
 
   if (dialogOverlay.dataset.closing === "true") return;
@@ -744,7 +744,7 @@ function updateNoTaskPlaceholders() {
  * @returns {void} Result.
  */
 function closeModal() {
-  const modal = document.getElementById("taskModal");
+  const modal = document.getElementById("task-modal");
   if (!modal) {
     activeTask = null;
     return;

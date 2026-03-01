@@ -35,11 +35,11 @@ function validateSignupForm() {
  */
 function getSignupFields() {
     return {
-        nameInput: document.getElementById('registerName'),
-        emailInput: document.getElementById('registerEmail'),
-        passwordInput: document.getElementById('registerPassword'),
-        confirmPasswordInput: document.getElementById('registerPasswordConfirm'),
-        policyCheckbox: document.getElementById('acceptPrivacy')
+        nameInput: document.getElementById('register-name'),
+        emailInput: document.getElementById('register-email'),
+        passwordInput: document.getElementById('register-password'),
+        confirmPasswordInput: document.getElementById('register-password-confirm'),
+        policyCheckbox: document.getElementById('accept-privacy')
     };
 }
 
@@ -62,11 +62,11 @@ function resetSignupErrors(fields) {
  * @returns {void} Result.
  */
 function clearSignupErrorTexts() {
-    setSignupErrorText('registerNameError', '');
-    setSignupErrorText('registerEmailError', '');
-    setSignupErrorText('registerPasswordError', '');
-    setSignupErrorText('registerPasswordConfirmError', '');
-    setSignupErrorText('acceptPrivacyError', '');
+    setSignupErrorText('register-name-error', '');
+    setSignupErrorText('register-email-error', '');
+    setSignupErrorText('register-password-error', '');
+    setSignupErrorText('register-password-confirm-error', '');
+    setSignupErrorText('accept-privacy-error', '');
 }
 
 /**
@@ -100,7 +100,7 @@ function clearPolicyError() {
 function validateNameField(fields, state) {
     const nameValue = fields.nameInput.value.trim();
     if (!nameValue) {
-        setSignupFieldError('registerName', 'Please enter your name.', fields.nameInput, state);
+        setSignupFieldError('register-name', 'Please enter your name.', fields.nameInput, state);
     }
 }
 
@@ -113,11 +113,11 @@ function validateNameField(fields, state) {
 function validateEmailField(fields, state) {
     const emailValue = fields.emailInput.value.trim();
     if (!emailValue) {
-        setSignupFieldError('registerEmail', 'Please enter an email address.', fields.emailInput, state);
+        setSignupFieldError('register-email', 'Please enter an email address.', fields.emailInput, state);
         return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-        setSignupFieldError('registerEmail', 'Please enter a valid email address.', fields.emailInput, state);
+        setSignupFieldError('register-email', 'Please enter a valid email address.', fields.emailInput, state);
     }
 }
 
@@ -130,7 +130,7 @@ function validateEmailField(fields, state) {
 function validatePasswordField(fields, state) {
     const passwordValue = fields.passwordInput.value;
     if (!passwordValue) {
-        setSignupFieldError('registerPassword', 'Please enter a password.', fields.passwordInput, state);
+        setSignupFieldError('register-password', 'Please enter a password.', fields.passwordInput, state);
     }
 }
 
@@ -144,11 +144,11 @@ function validateConfirmPasswordField(fields, state) {
     const passwordValue = fields.passwordInput.value;
     const confirmValue = fields.confirmPasswordInput.value;
     if (!confirmValue) {
-        setSignupFieldError('registerPasswordConfirm', 'Please confirm your password.', fields.confirmPasswordInput, state);
+        setSignupFieldError('register-password-confirm', 'Please confirm your password.', fields.confirmPasswordInput, state);
         return;
     }
     if (passwordValue && passwordValue !== confirmValue) {
-        setSignupFieldError('registerPasswordConfirm', 'Passwords do not match.', fields.confirmPasswordInput, state);
+        setSignupFieldError('register-password-confirm', 'Passwords do not match.', fields.confirmPasswordInput, state);
     }
 }
 
@@ -166,7 +166,7 @@ function validatePolicyField(fields, state) {
         policyContainer.classList.add('input-error');
     }
     if (!state.firstErrorShown) {
-        setSignupErrorText('acceptPrivacyError', signupFieldErrors.acceptPrivacy);
+        setSignupErrorText('accept-privacy-error', signupFieldErrors.acceptPrivacy);
         state.firstErrorShown = true;
     }
 }
@@ -196,11 +196,11 @@ function setSignupFieldError(fieldId, message, input, state) {
  */
 function getSignupErrorId(fieldId) {
     const idMap = {
-        registerName: 'registerNameError',
-        registerEmail: 'registerEmailError',
-        registerPassword: 'registerPasswordError',
-        registerPasswordConfirm: 'registerPasswordConfirmError',
-        acceptPrivacy: 'acceptPrivacyError'
+        registerName: 'register-name-error',
+        registerEmail: 'register-email-error',
+        registerPassword: 'register-password-error',
+        registerPasswordConfirm: 'register-password-confirm-error',
+        acceptPrivacy: 'accept-privacy-error'
     };
     return idMap[fieldId];
 }
@@ -227,11 +227,11 @@ function showFieldErrorMessage(fieldId) {
  */
 function clearAllSignupErrorMessages() {
     const ids = Object.values({
-        registerName: 'registerNameError',
-        registerEmail: 'registerEmailError',
-        registerPassword: 'registerPasswordError',
-        registerPasswordConfirm: 'registerPasswordConfirmError',
-        acceptPrivacy: 'acceptPrivacyError'
+        registerName: 'register-name-error',
+        registerEmail: 'register-email-error',
+        registerPassword: 'register-password-error',
+        registerPasswordConfirm: 'register-password-confirm-error',
+        acceptPrivacy: 'accept-privacy-error'
     });
     ids.forEach(spanId => {
         const span = document.getElementById(spanId);
@@ -247,10 +247,10 @@ function clearAllSignupErrorMessages() {
  */
 function attachSignupErrorFocusHandlers() {
     const pairs = [
-        { fieldId: 'registerName', event: 'focus' },
-        { fieldId: 'registerEmail', event: 'focus' },
-        { fieldId: 'registerPassword', event: 'focus' },
-        { fieldId: 'registerPasswordConfirm', event: 'focus' },
+        { fieldId: 'register-name', event: 'focus' },
+        { fieldId: 'register-email', event: 'focus' },
+        { fieldId: 'register-password', event: 'focus' },
+        { fieldId: 'register-password-confirm', event: 'focus' },
     ];
 
     pairs.forEach(({ fieldId, event }) => {
@@ -266,11 +266,11 @@ function attachSignupErrorFocusHandlers() {
  * @returns {void} Result.
  */
 function updateSignupButtonState() {
-    const nameValue = document.getElementById('registerName')?.value.trim();
-    const emailValue = document.getElementById('registerEmail')?.value.trim();
-    const passwordValue = document.getElementById('registerPassword')?.value;
-    const confirmValue = document.getElementById('registerPasswordConfirm')?.value;
-    const policyChecked = document.getElementById('acceptPrivacy')?.checked;
+    const nameValue = document.getElementById('register-name')?.value.trim();
+    const emailValue = document.getElementById('register-email')?.value.trim();
+    const passwordValue = document.getElementById('register-password')?.value;
+    const confirmValue = document.getElementById('register-password-confirm')?.value;
+    const policyChecked = document.getElementById('accept-privacy')?.checked;
     const signupButton = document.querySelector('.btn-signup');
 
     const isComplete = Boolean(nameValue && emailValue && passwordValue && confirmValue && policyChecked);
@@ -285,7 +285,7 @@ function updateSignupButtonState() {
  */
 function attachSignupFormStateHandlers() {
     const inputs = getSignupInputElements();
-    const policyCheckbox = document.getElementById('acceptPrivacy');
+    const policyCheckbox = document.getElementById('accept-privacy');
     inputs.forEach(input => bindSignupInputHandlers(input));
     if (policyCheckbox) {
         policyCheckbox.addEventListener('change', updateSignupButtonState);
@@ -298,10 +298,10 @@ function attachSignupFormStateHandlers() {
  */
 function getSignupInputElements() {
     return [
-        document.getElementById('registerName'),
-        document.getElementById('registerEmail'),
-        document.getElementById('registerPassword'),
-        document.getElementById('registerPasswordConfirm')
+        document.getElementById('register-name'),
+        document.getElementById('register-email'),
+        document.getElementById('register-password'),
+        document.getElementById('register-password-confirm')
     ].filter(Boolean);
 }
 
@@ -416,17 +416,17 @@ function syncPasswordVisibilityIcons(elements) {
  */
 function initSignupPasswordVisibilityToggles() {
     initPasswordVisibilityToggle({
-        inputId: 'registerPassword',
-        lockIconId: 'registerLockIcon',
-        visibilityOffIconId: 'registerVisibilityOffIcon',
-        visibilityIconId: 'registerVisibilityIcon'
+        inputId: 'register-password',
+        lockIconId: 'register-lock-icon',
+        visibilityOffIconId: 'register-visibility-off-icon',
+        visibilityIconId: 'register-visibility-icon'
     });
 
     initPasswordVisibilityToggle({
-        inputId: 'registerPasswordConfirm',
-        lockIconId: 'registerConfirmLockIcon',
-        visibilityOffIconId: 'registerConfirmVisibilityOffIcon',
-        visibilityIconId: 'registerConfirmVisibilityIcon'
+        inputId: 'register-password-confirm',
+        lockIconId: 'register-confirm-lock-icon',
+        visibilityOffIconId: 'register-confirm-visibility-off-icon',
+        visibilityIconId: 'register-confirm-visibility-icon'
     });
 }
 
@@ -461,10 +461,10 @@ async function addUser() {
  */
 function getSignupValues() {
     return {
-        name: document.getElementById('registerName'),
-        email: document.getElementById('registerEmail'),
-        password: document.getElementById('registerPassword'),
-        confirmPassword: document.getElementById('registerPasswordConfirm')
+        name: document.getElementById('register-name'),
+        email: document.getElementById('register-email'),
+        password: document.getElementById('register-password'),
+        confirmPassword: document.getElementById('register-password-confirm')
     };
 }
 

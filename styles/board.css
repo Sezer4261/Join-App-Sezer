@@ -936,7 +936,7 @@ textarea:focus-within,
    ACTION BUTTONS (gleich wie Original)
    =========================================== */
 
-#editTaskForm .actions {
+#edit-task-form .actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
@@ -957,8 +957,8 @@ textarea:focus-within,
   height: 16px;
 }
 
-#editTaskForm .actions .clear,
-#editTaskForm .actions .create {
+#edit-task-form .actions .clear,
+#edit-task-form .actions .create {
   padding: 10px 18px;
   border-radius: 6px;
   font-weight: 600;
@@ -966,11 +966,11 @@ textarea:focus-within,
   border: 1px solid var(--border);
 }
 
-#editTaskForm .actions .clear {
+#edit-task-form .actions .clear {
   background: var(--panel-bg);
 }
 
-#editTaskForm .actions .create {
+#edit-task-form .actions .create {
   background: var(--sidebar-bg);
   color: #fff;
 }

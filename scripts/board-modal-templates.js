@@ -44,10 +44,10 @@ function getTaskModalTemplate(task) {
 <div class="action-separator"></div>
 <div class="modal-edit" onclick="openEditTaskModal(${task.id})">
   <svg width="24" height="24" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_357207_6165" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="33" height="32">
+    <mask id="mask0-357207-6165" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="33" height="32">
       <rect x="0.5" width="32" height="32" fill="#D9D9D9"></rect>
     </mask>
-    <g mask="url(#mask0_357207_6165)">
+    <g mask="url(#mask0-357207-6165)">
       <path class="edit-svg-path"
         d="M7.16667 25.3332H9.03333L20.5333 13.8332L18.6667 11.9665L7.16667 23.4665V25.3332ZM26.2333 11.8998L20.5667 6.29984L22.4333 4.43317C22.9444 3.92206 23.5722 3.6665 24.3167 3.6665C25.0611 3.6665 25.6889 3.92206 26.2 4.43317L28.0667 6.29984C28.5778 6.81095 28.8444 7.42761 28.8667 8.14984C28.8889 8.87206 28.6444 9.48873 28.1333 9.99984L26.2333 11.8998ZM24.3 13.8665L10.1667 27.9998H4.5V22.3332L18.6333 8.19984L24.3 13.8665Z">
       </path>
@@ -106,12 +106,12 @@ function generateModalSubtasks(task) {
  */
 function generateEditTaskTemplate(task) {
   return /*html*/ `
-    <form class="edit-task-form" id="editTaskForm" novalidate onsubmit="saveEditedTask(event, ${task.id})">
+    <form class="edit-task-form" id="edit-task-form" novalidate onsubmit="saveEditedTask(event, ${task.id})">
       <div class="edit-form-scroll">
         <label class="edit-label">
           <span>Title<span class="req">*</span></span>
           <input class="edit-input" type="text" id="edit-title" value="${task.title}">
-          <div class="error-message" id="editTitleError"></div>
+          <div class="error-message" id="edit-title-error"></div>
         </label>
         <label class="edit-label">
           <span>Description</span>
@@ -120,7 +120,7 @@ function generateEditTaskTemplate(task) {
         <label class="edit-label">
           <span>Due date<span class="req">*</span></span>
           <input class="edit-input" type="date" id="edit-date" value="${task.dueDate}">
-          <div class="error-message" id="editDateError"></div>
+          <div class="error-message" id="edit-date-error"></div>
         </label>
         <div class="priority">
           <span>Priority</span>
@@ -135,27 +135,27 @@ function generateEditTaskTemplate(task) {
         </div>
         <div class="edit-assigned">
           <span>Assigned to</span>
-          <div id="selectContacts" tabindex="0" class="custom-select">
+          <div id="select-contacts" tabindex="0" class="custom-select">
             <span onclick="toggleDropdown(event)">Select contacts
               <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow">
             </span>
-            <div id="dropdownContacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
+            <div id="dropdown-contacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
           </div>
-          <div id="selectedAvatars" class="edit-avatar-container"></div>
+          <div id="selected-avatars" class="edit-avatar-container"></div>
         </div>
         <div class="edit-label">
           <span>Category<span class="req">*</span></span>
-          <div id="editCategorySelect" tabindex="0" class="custom-select">
+          <div id="edit-category-select" tabindex="0" class="custom-select">
             <span onclick="toggleEditCategoryDropdown(event)">
               ${task.category ? task.category + " " : "Select task category "}
               <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow">
             </span>
-            <div id="editCategoryDropdown" class="dropdown-content" onclick="event.stopPropagation()">
+            <div id="edit-category-dropdown" class="dropdown-content" onclick="event.stopPropagation()">
               ${generateEditCategoryOptions(task.category)}
             </div>
           </div>
           <input type="hidden" id="edit-category" value="${task.category || ''}">
-          <div class="error-message" id="editCategoryError"></div>
+          <div class="error-message" id="edit-category-error"></div>
         </div>
         <div class="edit-subtasks">
           <span>Subtasks</span>
@@ -171,7 +171,7 @@ function generateEditTaskTemplate(task) {
               </button>
             </div>
           </div>
-          <ul id="editSubtaskArea" class="subtask-list"></ul>
+          <ul id="edit-subtask-area" class="subtask-list"></ul>
         </div>
         <div class="edit-actions">
           <div class="edit-x-close" onclick="closeModal()">

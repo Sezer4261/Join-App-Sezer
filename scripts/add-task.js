@@ -3,7 +3,7 @@
  * @returns {Promise<*>} Result.
  */
 async function renderAddTask() {
-  let content = document.getElementById('addTaskContent');
+  let content = document.getElementById('add-task-content');
   content.innerHTML = '';
   content.innerHTML += generateAddTask();
   await loadContacts();
@@ -39,9 +39,9 @@ function validateForm() {
  * @returns {void} Result.
  */
 function clearValidationErrors() {
-  setErrorText('titleError', '');
-  setErrorText('dateError', '');
-  setErrorText('categoryError', '');
+  setErrorText('title-error', '');
+  setErrorText('date-error', '');
+  setErrorText('category-error', '');
 }
 
 /**
@@ -61,7 +61,7 @@ function setErrorText(id, value) {
  */
 function validateTitleField() {
   const input = document.getElementById('title');
-  return validateRequiredInput(input, 'titleError');
+  return validateRequiredInput(input, 'title-error');
 }
 
 /**
@@ -70,7 +70,7 @@ function validateTitleField() {
  */
 function validateDateField() {
   const input = document.getElementById('date');
-  return validateRequiredInput(input, 'dateError');
+  return validateRequiredInput(input, 'date-error');
 }
 
 /**
@@ -79,8 +79,8 @@ function validateDateField() {
  */
 function validateCategoryField() {
   const input = document.getElementById('category');
-  const highlightEl = document.getElementById('categorySelect');
-  return validateRequiredInput(input, 'categoryError', highlightEl);
+  const highlightEl = document.getElementById('category-select');
+  return validateRequiredInput(input, 'category-error', highlightEl);
 }
 
 /**
@@ -134,7 +134,7 @@ function handleSaveSuccess() {
   subtasks.length = 0;
   selectedContacts.length = 0;
   showSubtasks();
-  document.getElementById('addTaskForm').reset();
+  document.getElementById('add-task-form').reset();
   setTimeout(() => { window.location.href = "board.html"; }, 1500);
 }
 
@@ -171,7 +171,7 @@ async function saveTask(task) {
  * @returns {void} Result.
  */
 function selectContacts() {
-  let select = document.getElementById('dropdownContacts');
+  let select = document.getElementById('dropdown-contacts');
   select.innerHTML = generateAssignedContacts(contacts);
 }
 
@@ -182,7 +182,7 @@ function selectContacts() {
  */
 function toggleDropdown(event) {
   event.stopPropagation();
-  document.getElementById("dropdownContacts").classList.toggle("show");
+  document.getElementById("dropdown-contacts").classList.toggle("show");
 }
 
 /**
@@ -192,7 +192,7 @@ function toggleDropdown(event) {
  */
 function toggleAddCategoryDropdown(event) {
   event.stopPropagation();
-  const dropdown = document.getElementById("categoryDropdown");
+  const dropdown = document.getElementById("category-dropdown");
   if (!dropdown) return;
   dropdown.classList.toggle("show");
 }
@@ -204,12 +204,12 @@ function toggleAddCategoryDropdown(event) {
  */
 function setAddCategory(value) {
   const input = document.getElementById("category");
-  const select = document.getElementById("categorySelect");
+  const select = document.getElementById("category-select");
   if (!input || !select) return;
   input.value = value;
   input.classList.remove('input-error');
   select.classList.remove('input-error');
-  setErrorText('categoryError', '');
+  setErrorText('category-error', '');
   updateAddCategoryLabel(select, value);
   closeAddCategoryDropdown();
 }
@@ -232,7 +232,7 @@ function updateAddCategoryLabel(select, value) {
  * @returns {void} Result.
  */
 function closeAddCategoryDropdown() {
-  const dropdown = document.getElementById("categoryDropdown");
+  const dropdown = document.getElementById("category-dropdown");
   if (dropdown) dropdown.classList.remove("show");
 }
 
@@ -251,9 +251,9 @@ function initAddDropdownClose() {
  * @returns {void} Result.
  */
 function closeAddDropdowns() {
-  const contactsDropdown = document.getElementById("dropdownContacts");
+  const contactsDropdown = document.getElementById("dropdown-contacts");
   if (contactsDropdown) contactsDropdown.classList.remove("show");
-  const categoryDropdown = document.getElementById("categoryDropdown");
+  const categoryDropdown = document.getElementById("category-dropdown");
   if (categoryDropdown) categoryDropdown.classList.remove("show");
 }
 
@@ -277,7 +277,7 @@ function toggleContactSelection(name, checkbox) {
  * @returns {void} Result.
  */
 function renderSelectedAvatars() {
-  const container = document.getElementById("selectedAvatars");
+  const container = document.getElementById("selected-avatars");
   container.innerHTML = "";
   selectedContacts.forEach(name => appendSelectedAvatar(container, name));
 }
@@ -298,7 +298,7 @@ function appendSelectedAvatar(container, name) {
  * @returns {void} Result.
  */
 function showSubtasks() {
-  let subtaskArea = document.getElementById('subtaskArea');
+  let subtaskArea = document.getElementById('subtask-area');
   subtaskArea.innerHTML = '';
   for (let i = 0; i < subtasks.length; i++) {
     subtaskArea.innerHTML += generateSubtasks(i);

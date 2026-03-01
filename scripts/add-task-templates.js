@@ -43,12 +43,12 @@ function generateAddTask(options = {}) {
       <h1>Add Task</h1>
       <span class="close-btn" onclick="closeAddTaskDialog()">x</span>
     </div>
-    <form class="task-form" id="addTaskForm" onsubmit="saveToArray(event)">
+    <form class="task-form" id="add-task-form" onsubmit="saveToArray(event)">
       <div class="form-left">
         <label>
           <span>Title<span class="req">*</span></span>
           <input type="text" placeholder="Enter a title" id="title">
-          <div class="error-message" id="titleError"></div>
+          <div class="error-message" id="title-error"></div>
         </label>
         <label>
           Description
@@ -57,7 +57,7 @@ function generateAddTask(options = {}) {
         <label>
           <span>Due date<span class="req">*</span></span>
           <input type="date" id="date">
-          <div class="error-message" id="dateError"></div>
+          <div class="error-message" id="date-error"></div>
         </label>
       </div>
       <div class="form-right">
@@ -74,28 +74,28 @@ function generateAddTask(options = {}) {
         </div>
         <div class="assigned-to-label">
           Assigned to
-          <div id="selectContacts" class="custom-select" tabindex="0">
+          <div id="select-contacts" class="custom-select" tabindex="0">
             <span onclick="toggleDropdown(event)">
               Select contacts to assign
               <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow">
             </span>
-            <div id="dropdownContacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
+            <div id="dropdown-contacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
           </div>
-          <div id="selectedAvatars" class="avatar-container"></div>
+          <div id="selected-avatars" class="avatar-container"></div>
         </div>
         <label class="category">
           <span>Category<span class="req">*</span></span>
-          <div id="categorySelect" tabindex="0" class="custom-select">
+          <div id="category-select" tabindex="0" class="custom-select">
             <span onclick="toggleAddCategoryDropdown(event)">
               Select task category
               <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow">
             </span>
-            <div id="categoryDropdown" class="dropdown-content" onclick="event.stopPropagation()">
+            <div id="category-dropdown" class="dropdown-content" onclick="event.stopPropagation()">
               ${generateAddCategoryOptions()}
             </div>
           </div>
           <input type="hidden" id="category" required>
-          <div class="error-message" id="categoryError"></div>
+          <div class="error-message" id="category-error"></div>
         </label>
         <label>
           Subtasks
@@ -111,7 +111,7 @@ function generateAddTask(options = {}) {
               </button>
             </div>
           </div>
-          <ul id="subtaskArea" class="subtask-list"></ul>
+          <ul id="subtask-area" class="subtask-list"></ul>
         </label>
         <div class="actions">
           <button type="reset" class="clear" onclick="${clearOnClick}">${clearLabel}</button>
@@ -202,7 +202,7 @@ function getSubtaskItem(i) {
 function generateAssignedContacts(contacts) {
   return contacts.map((contact, i) => {
     const isChecked = selectedContacts.includes(contact.name);
-    const checkboxId = `contact_${i}`;
+    const checkboxId = `contact-${i}`;
     const initials = contact.name.split(" ").map(part => part.charAt(0)).join("").toUpperCase();
     return /*html*/ `
       <div class="dropdown-item">

@@ -91,10 +91,10 @@ function showMessage(message, type = "success", options = {}) {
  * @returns {*} Result.
  */
 function getOrCreateMessageBox() {
-  let box = document.getElementById("msgBox");
+  let box = document.getElementById("msg-box");
   if (!box) {
     box = document.createElement("div");
-    box.id = "msgBox";
+    box.id="msg-box";
     box.setAttribute("role", "status");
     box.setAttribute("aria-live", "polite");
     document.body.appendChild(box);
@@ -203,7 +203,7 @@ function scheduleMessageHide(box) {
  */
 function toggleProfileMenu(event) {
   event.stopPropagation();
-  const menu = document.getElementById('profileMenu');
+  const menu = document.getElementById('profile-menu');
   if (menu) {
     menu.classList.toggle('active');
   }
@@ -211,7 +211,7 @@ function toggleProfileMenu(event) {
 
 // Menü schließen wenn außerhalb geklickt wird
 document.addEventListener('click', (event) => {
-  const menu = document.getElementById('profileMenu');
+  const menu = document.getElementById('profile-menu');
   const profileContainer = document.querySelector('.user-profile-container');
   if (menu && profileContainer && !profileContainer.contains(event.target)) {
     menu.classList.remove('active');

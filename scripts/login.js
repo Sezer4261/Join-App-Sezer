@@ -18,7 +18,7 @@ function initIntroAlignment() {
  * @returns {void} Result.
  */
 function alignIntroLogo() {
-    const introLogo = document.getElementById('introLogo');
+    const introLogo = document.getElementById('intro-logo');
     const headerLogo = document.querySelector('.header-left img');
     if (!introLogo || !headerLogo) return;
     const introRect = introLogo.getBoundingClientRect();
@@ -66,7 +66,7 @@ function scheduleIntroOverlayRemoval() {
  * @returns {void} Result.
  */
 function removeIntroOverlay() {
-    const introOverlay = document.getElementById('introOverlay');
+    const introOverlay = document.getElementById('intro-overlay');
     if (introOverlay) {
         introOverlay.remove();
     }
@@ -88,10 +88,10 @@ function initLoginPasswordToggle() {
  * @returns {*} Result.
  */
 function getLoginPasswordElements() {
-    const passwordInput = document.getElementById('loginPassword');
-    const lockIcon = document.getElementById('lockIcon');
-    const visibilityOffIcon = document.getElementById('visibilityOffIcon');
-    const visibilityIcon = document.getElementById('visibilityIcon');
+    const passwordInput = document.getElementById('login-password');
+    const lockIcon = document.getElementById('lock-icon');
+    const visibilityOffIcon = document.getElementById('visibility-off-icon');
+    const visibilityIcon = document.getElementById('visibility-icon');
     if (!passwordInput || !lockIcon || !visibilityOffIcon || !visibilityIcon) return null;
     return { passwordInput, lockIcon, visibilityOffIcon, visibilityIcon };
 }
@@ -211,8 +211,8 @@ function handleLoginResult(credentials, signedUpUser) {
  * @returns {void} Result.
  */
 function clearLoginErrors() {
-    const emailInput = document.getElementById('loginEmail');
-    const passwordInput = document.getElementById('loginPassword');
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
     emailInput.classList.remove('input-error');
     passwordInput.classList.remove('input-error');
 }
@@ -222,8 +222,8 @@ function clearLoginErrors() {
  * @returns {*} Result.
  */
 function getLoginCredentials() {
-    const emailInput = document.getElementById('loginEmail');
-    const passwordInput = document.getElementById('loginPassword');
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
     return {
         email: emailInput.value.trim(),
         password: passwordInput.value.trim()
@@ -286,7 +286,7 @@ function appendLoginError(message) {
     const errorDiv = document.createElement('div');
     errorDiv.className = 'login-error';
     errorDiv.textContent = message;
-    const errorContainer = document.getElementById('errorContainer');
+    const errorContainer = document.getElementById('error-container');
     errorContainer.appendChild(errorDiv);
 }
 
@@ -295,8 +295,8 @@ function appendLoginError(message) {
  * @returns {void} Result.
  */
 function markLoginInputsError() {
-    const emailInput = document.getElementById('loginEmail');
-    const passwordInput = document.getElementById('loginPassword');
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
     emailInput.classList.add('input-error');
     passwordInput.classList.add('input-error');
 }
