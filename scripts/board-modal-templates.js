@@ -14,9 +14,9 @@ function getTaskModalTemplate(task) {
       <div class="modal-priority">
         <span class="modal-titles-task">Priority:</span>
         <div>${task.priority}</div>
-        ${task.priority === "urgent" ? '<img src="./assets/img/Category_Urgent.svg" alt="Urgent">'
-      : task.priority === "medium" ? '<img src="./assets/icons/medium_orange.svg" alt="Medium">'
-        : '<img src="./assets/img/Category_Low.svg" alt="Low">'}
+        ${task.priority === "urgent" ? '<img src="./assets/img/category-urgent.svg" alt="Urgent">'
+      : task.priority === "medium" ? '<img src="./assets/icons/medium-orange.svg" alt="Medium">'
+        : '<img src="./assets/img/category-low.svg" alt="Low">'}
       </div>
       <div class="modal-contacts">
         <span class="modal-titles-task">Assigned To:</span>
@@ -137,7 +137,7 @@ function generateEditTaskTemplate(task) {
           <span>Assigned to</span>
           <div id="selectContacts" tabindex="0" class="custom-select">
             <span onclick="toggleDropdown(event)">Select contacts
-              <img src="./assets/icons/arrow_drop_down.svg" alt="" class="dropdown-arrow">
+              <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow">
             </span>
             <div id="dropdownContacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
           </div>
@@ -148,7 +148,7 @@ function generateEditTaskTemplate(task) {
           <div id="editCategorySelect" tabindex="0" class="custom-select">
             <span onclick="toggleEditCategoryDropdown(event)">
               ${task.category ? task.category + " " : "Select task category "}
-              <img src="./assets/icons/arrow_drop_down.svg" alt="" class="dropdown-arrow">
+              <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow">
             </span>
             <div id="editCategoryDropdown" class="dropdown-content" onclick="event.stopPropagation()">
               ${generateEditCategoryOptions(task.category)}
@@ -163,7 +163,7 @@ function generateEditTaskTemplate(task) {
             <input type="text" id="edit-subtask-input" placeholder="Add new subtask">
             <div class="subtask-input-actions">
               <button type="button" class="subtask-icon-btn" onclick="clearEditSubtaskInput()" aria-label="Clear subtask">
-                <img src="./assets/icons/iconoir_cancel.svg" alt="">
+                <img src="./assets/icons/iconoir-cancel.svg" alt="">
               </button>
               <div class="subtask-input-separator"></div>
               <button type="button" class="subtask-icon-btn" onclick="addEditSubtask()" aria-label="Add subtask">
@@ -179,7 +179,7 @@ function generateEditTaskTemplate(task) {
           </div>
 
 
-          <button type="submit" class="edit-save">Ok <img src="assets/icons/Vector (5).svg"></button>
+          <button type="submit" class="edit-save">Ok <img src="assets/icons/vector-5.svg"></button>
         </div>
       </div>
     </form>

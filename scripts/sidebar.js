@@ -11,7 +11,7 @@ function sidebarHighlightingSummary() {
  * @returns {void} Result.
  */
 function sidebarHighlightingAddTask() {
-    window.location.href = "addTask.html";
+    window.location.href = "add-task.html";
 }
 
 /**

@@ -6,7 +6,7 @@ function getBoardTemplate() {
   return /*html*/ `
     <div class="board-header">
       <h1>Board</h1>
-      <img src="./assets/icons/plus add task mobile.svg" alt="Add Task Button" class="add-task-mobile-btn" onclick="showAddTaskDialog()">
+      <img src="./assets/icons/plus-add-task-mobile.svg" alt="Add Task Button" class="add-task-mobile-btn" onclick="showAddTaskDialog()">
       <div class="board-actions">
         <div tabindex="0" class="board-search">
           <input id="search-task" type="text" placeholder="Find Task">
@@ -59,7 +59,7 @@ function getBoardColumn(config) {
       ondrop="dropTask(event, '${config.status}')">
       <div class="column-header">
         <h2 class="column-title">${config.title}</h2>
-        ${config.showAdd ? `<img src="./assets/icons/plus button.svg" alt="Add Task Button" width="30" height="30" onclick="showAddTaskDialog()">` : ""}
+        ${config.showAdd ? `<img src="./assets/icons/plus-button.svg" alt="Add Task Button" width="30" height="30" onclick="showAddTaskDialog()">` : ""}
       </div>
       <div class="no-tasks">
         <span>No tasks To do</span>
@@ -97,9 +97,9 @@ function createTaskCard(task) {
  * @returns {string} Result.
  */
 function getPriorityIcon(priority) {
-  if (priority === "urgent") return '<img src="./assets/img/Category_Urgent.svg">';
-  if (priority === "medium") return '<img src="./assets/icons/medium_orange.svg">';
-  return '<img src="./assets/img/Category_Low.svg">';
+  if (priority === "urgent") return '<img src="./assets/img/category-urgent.svg">';
+  if (priority === "medium") return '<img src="./assets/icons/medium-orange.svg">';
+  return '<img src="./assets/img/category-low.svg">';
 }
 /**
  * Renders subtask progress.

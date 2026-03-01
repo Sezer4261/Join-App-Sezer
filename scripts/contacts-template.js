@@ -33,7 +33,7 @@ function getDialogAddContact() {
         <div class="ac">
             <div class="ac__hero">
                 <div class="ac__brand">
-                    <img class="ac__logo" src="./assets/img/join_logo_white.svg" alt="Join Logo">
+                    <img class="ac__logo" src="./assets/img/join-logo-white.svg" alt="Join Logo">
                 </div>
                 <h2 id="ac-title" class="ac__title">Add contact</h2>
                 <p class="ac__subtitle">Tasks are better with a team!</p>
@@ -144,7 +144,7 @@ function getContactDetailsTemplate(initials, name, email, phone, id) {
             <img src="./assets/img/arrow-left-line.svg" alt="Back to contacts" class="contact-back-btn" onclick="document.querySelector('.wrapper').classList.remove('show-contact-details'); return false;">
             <div class="contact-more">
                 <button class="contact-more-btn" onclick="toggleContactMoreMenu(event)" aria-label="More actions">
-                    <img src="./assets/icons/more_vert.svg" alt="More">
+                    <img src="./assets/icons/more-vert.svg" alt="More">
                 </button>
                 <div class="contact-more-menu" id="contact-more-menu">
                     <button type="button" onclick="closeContactMoreMenu(); openEditContactDialog('${id}', '${name}', '${email}', '${phone}', '${initials}')">
@@ -227,7 +227,7 @@ function getEditContactDialog(id, name, email, phone, initials) {
         <div class="ac ac-dialog-content">
             <div class="ac__hero">
                 <div class="ac__brand">
-                    <img class="ac__logo" src="./assets/img/join_logo_white.svg" alt="Join Logo">
+                    <img class="ac__logo" src="./assets/img/join-logo-white.svg" alt="Join Logo">
                 </div>
                 <h2 class="ac__title">Edit contact</h2>
                 <span class="ac__underline" aria-hidden="true"></span>

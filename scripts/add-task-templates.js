@@ -77,7 +77,7 @@ function generateAddTask(options = {}) {
           <div id="selectContacts" class="custom-select" tabindex="0">
             <span onclick="toggleDropdown(event)">
               Select contacts to assign
-              <img src="./assets/icons/arrow_drop_down.svg" alt="" class="dropdown-arrow">
+              <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow">
             </span>
             <div id="dropdownContacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
           </div>
@@ -88,7 +88,7 @@ function generateAddTask(options = {}) {
           <div id="categorySelect" tabindex="0" class="custom-select">
             <span onclick="toggleAddCategoryDropdown(event)">
               Select task category
-              <img src="./assets/icons/arrow_drop_down.svg" alt="" class="dropdown-arrow">
+              <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow">
             </span>
             <div id="categoryDropdown" class="dropdown-content" onclick="event.stopPropagation()">
               ${generateAddCategoryOptions()}
@@ -103,7 +103,7 @@ function generateAddTask(options = {}) {
             <input type="text" id="subtask" placeholder="Add new subtask">
             <div class="subtask-input-actions">
               <button type="button" class="subtask-icon-btn" onclick="clearSubtaskInput()" aria-label="Clear subtask">
-                <img src="./assets/icons/iconoir_cancel.svg" alt="">
+                <img src="./assets/icons/iconoir-cancel.svg" alt="">
               </button>
               <div class="subtask-input-separator"></div>
               <button type="button" class="subtask-icon-btn" onclick="addSubtask()" aria-label="Add subtask">
@@ -115,7 +115,7 @@ function generateAddTask(options = {}) {
         </label>
         <div class="actions">
           <button type="reset" class="clear" onclick="${clearOnClick}">${clearLabel}</button>
-          <button type="submit" class="create">Create Task <img src="assets/icons/Vector (5).svg" alt=""></button>
+          <button type="submit" class="create">Create Task <img src="assets/icons/vector-5.svg" alt=""></button>
         </div>
       </div>
     </form>

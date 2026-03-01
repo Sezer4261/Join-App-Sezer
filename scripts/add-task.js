@@ -128,7 +128,7 @@ async function saveToArray(event) {
  */
 function handleSaveSuccess() {
     showMessage("Task added to board", "success", {
-      iconSrc: "./assets/icons/vector_board.svg",
+      iconSrc: "./assets/icons/vector-board.svg",
       iconAlt: "Board"
     });
   subtasks.length = 0;
