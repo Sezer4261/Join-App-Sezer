@@ -11,6 +11,33 @@ async function renderAddTask() {
   selectContacts();
   renderSelectedAvatars();
   initAddDropdownClose();
+  initAddSubtaskEnter();
+}
+
+/**
+ * Enables creating a subtask via Enter key.
+ * Prevents submitting the main task form.
+ * @returns {void} Result.
+ */
+function initAddSubtaskEnter() {
+  const input = document.getElementById('subtask');
+  if (!input) return;
+  if (input.dataset && input.dataset.enterHandlerAdded === 'true') return;
+  if (input.dataset) input.dataset.enterHandlerAdded = 'true';
+
+  input.addEventListener('keydown', (event) => {
+    if (event.isComposing) return;
+    if (event.key !== 'Enter') return;
+    if (event.shiftKey) return;
+    event.preventDefault();
+    event.stopPropagation();
+
+    const value = String(input.value || '').trim();
+    if (!value) return;
+    subtasks.push({ title: value, done: false });
+    showSubtasks();
+    input.value = '';
+  });
 }
 
 /**

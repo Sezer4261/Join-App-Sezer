@@ -344,6 +344,28 @@ async function openEditTaskModal(id) {
   renderEditAssignedContacts();
   renderEditSubtasks();
   initEditDropdownClose();
+  initEditSubtaskEnter();
+}
+
+/**
+ * Enables creating an edit-subtask via Enter key.
+ * Prevents submitting the edit form.
+ * @returns {void} Result.
+ */
+function initEditSubtaskEnter() {
+  const input = document.getElementById('edit-subtask-input');
+  if (!input) return;
+  if (input.dataset && input.dataset.enterHandlerAdded === 'true') return;
+  if (input.dataset) input.dataset.enterHandlerAdded = 'true';
+
+  input.addEventListener('keydown', (event) => {
+    if (event.isComposing) return;
+    if (event.key !== 'Enter') return;
+    if (event.shiftKey) return;
+    event.preventDefault();
+    event.stopPropagation();
+    addEditSubtask();
+  });
 }
 
 /**
@@ -692,6 +714,7 @@ async function showAddTaskDialog() {
   selectContacts();
   renderSelectedAvatars();
   if (typeof initAddDropdownClose === "function") initAddDropdownClose();
+  if (typeof initAddSubtaskEnter === "function") initAddSubtaskEnter();
 }
 
 /**
