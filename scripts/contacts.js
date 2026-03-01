@@ -111,7 +111,7 @@ function ensureAddContactDialog() {
  * @returns {void} Result.
  */
 function bindAddContactDialogEvents(dialog) {
-  const closeBtn = dialog.querySelector(".ac__close");
+  const closeBtn = dialog.querySelector(".ac-close");
   closeBtn.addEventListener("click", () => closeAddContactDialogWithAnimation());
   dialog.addEventListener("click", (e) => {
     if (e.target === dialog) {
@@ -202,9 +202,9 @@ function showContactsToast(message, durationMs = 2200) {
   document.body.insertAdjacentHTML('beforeend', getContactsToastTemplate(message));
   const toast = document.getElementById('contacts-toast');
   if (!toast) return;
-  requestAnimationFrame(() => toast.classList.add('contacts-toast--visible'));
+  requestAnimationFrame(() => toast.classList.add('contacts-toast-visible'));
   window.setTimeout(() => {
-    toast.classList.remove('contacts-toast--visible');
+    toast.classList.remove('contacts-toast-visible');
     window.setTimeout(() => toast.remove(), 220);
   }, durationMs);
 }

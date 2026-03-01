@@ -51,8 +51,6 @@ header{
 .user-profile-container{
     position: relative;
     display: flex;
-    /* align-items: center;
-    justify-content: center; */
 }
 
 .profile-menu-center{

@@ -590,7 +590,7 @@ h1 {
     width: 100%;
   }
 
-  .addTask-dialog .note {
+  .add-task-dialog .note {
     display: none;
   }
 }
@@ -1254,7 +1254,7 @@ textarea:focus-within,
   height: 16px;
 }
 
-.addTask-dialog-bg {
+.add-task-dialog-bg {
   background-color: rgba(0, 0, 0, 0.2);
   height: 100vh;
   width: 100vw;
@@ -1270,7 +1270,7 @@ textarea:focus-within,
   padding-top: 60px;
 }
 
-.addTask-dialog {
+.add-task-dialog {
   background-color: white;
   width: 1050px;
   height: 700px;
@@ -1284,12 +1284,12 @@ textarea:focus-within,
   will-change: transform, opacity;
 }
 
-.addTask-dialog.is-open {
+.add-task-dialog.is-open {
   transform: translateX(0);
   opacity: 1;
 }
 
-.addTask-dialog .custom-select {
+.add-task-dialog .custom-select {
   border: 1px solid #ccc;
   padding: 0 10px;
   border-radius: 8px;
@@ -1302,14 +1302,14 @@ textarea:focus-within,
   font-size: 16px;
 }
 
-.addTask-dialog .custom-select span {
+.add-task-dialog .custom-select span {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
 
-.addTask-dialog .dropdown-arrow {
+.add-task-dialog .dropdown-arrow {
   width: 8px;
   height: 8px;
   margin-left: auto;
@@ -1342,7 +1342,7 @@ textarea:focus-within,
 @media (max-width: 1000px) {
 
 
-  .addTask-dialog {
+  .add-task-dialog {
     width: 95vw;
     height: 90vh;
     max-width: 95vw;
@@ -1350,67 +1350,67 @@ textarea:focus-within,
     overflow-y: auto;
   }
 
-  .addTask-dialog .task-form {
+  .add-task-dialog .task-form {
     flex-direction: column;
     gap: 24px;
   }
 
-  .addTask-dialog .form-left,
-  .addTask-dialog .form-right {
+  .add-task-dialog .form-left,
+  .add-task-dialog .form-right {
     width: 100%;
   }
 }
 
 @media (max-width: 1240px) {
-  .addTask-dialog {
+  .add-task-dialog {
     width: 1000px;
     height: 640px;
     padding: 28px;
   }
 
-  .addTask-dialog h1 {
+  .add-task-dialog h1 {
     font-size: 28px;
   }
 
-  .addTask-dialog .task-form {
+  .add-task-dialog .task-form {
     gap: 24px;
   }
 }
 
 @media (max-width: 650px) {
-  .addTask-dialog {
+  .add-task-dialog {
     padding: 20px;
   }
 
-  .addTask-dialog h1 {
+  .add-task-dialog h1 {
     font-size: 24px;
   }
 
-  .addTask-dialog input,
-  .addTask-dialog textarea,
-  .addTask-dialog select {
+  .add-task-dialog input,
+  .add-task-dialog textarea,
+  .add-task-dialog select {
     padding: 8px;
     font-size: 14px;
   }
 
-  .addTask-dialog .priority-options label {
+  .add-task-dialog .priority-options label {
     min-width: 90px;
     padding: 6px 12px;
     font-size: 13px;
   }
 
-  .addTask-dialog .actions button {
+  .add-task-dialog .actions button {
     padding: 8px 12px;
     font-size: 14px;
   }
 
-  .addTask-dialog .note {
+  .add-task-dialog .note {
     font-size: 16px;
   }
 }
 
 @media (max-width: 335px) {
-  .addTask-dialog .priority-options label {
+  .add-task-dialog .priority-options label {
     min-width: 84px;
     padding: 5px 10px;
     font-size: 12px;

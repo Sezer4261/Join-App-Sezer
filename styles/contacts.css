@@ -535,7 +535,7 @@ hr {
     position: relative;
 }
 
-.ac__hero {
+.ac-hero {
     background: #2A3647;
     color: #fff;
     width: 340px;
@@ -547,30 +547,30 @@ hr {
     min-height: 100%;
 }
 
-.ac__brand {
+.ac-brand {
     margin-bottom: 32px;
 }
 
-.ac__logo {
+.ac-logo {
     width: 48px;
     height: auto;
     margin-top: 50px;
 }
 
-.ac__title {
+.ac-title {
     font-size: 40px;
     font-weight: 700;
     margin: 0 0 16px 0;
     letter-spacing: -1px;
 }
 
-.ac__subtitle {
+.ac-subtitle {
     font-size: 20px;
     font-weight: 400;
     margin-bottom: 24px;
 }
 
-.ac__underline {
+.ac-underline {
     display: block;
     width: 56px;
     height: 3px;
@@ -579,7 +579,7 @@ hr {
     margin-top: 8px;
 }
 
-.ac__close {
+.ac-close {
     position: absolute;
     top: 32px;
     right: 32px;
@@ -601,12 +601,12 @@ hr {
     /* Immer rund, auch ohne Hover */
 }
 
-.ac__close:hover {
+.ac-close:hover {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 50%;
 }
 
-.ac__formwrap {
+.ac-formwrap {
     flex: 1;
     background: rgb(246, 247, 248);
     display: flex;
@@ -618,7 +618,7 @@ hr {
     position: relative;
 }
 
-.ac__avatar {
+.ac-avatar {
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -628,7 +628,7 @@ hr {
     margin-bottom: 32px;
 }
 
-.ac__avatar img {
+.ac-avatar img {
     width: 120px;
     height: 120px;
     object-fit: contain;
@@ -680,7 +680,7 @@ hr {
     opacity: 0.6;
 }
 
-.ac__actions {
+.ac-actions {
     display: flex;
     gap: 16px;
     margin-top: 24px;
@@ -701,21 +701,21 @@ hr {
     transition: background 120ms, color 120ms;
 }
 
-.btn--ghost {
+.btn-ghost {
     background: rgb(246, 247, 248);
     color: #2A3647;
     border: 1.5px solid #2A3647;
     transition: border-color 120ms, color 120ms;
 }
 
-.btn--ghost:hover {
+.btn-ghost:hover {
     background: #fff;
     color: #29ABE2;
     border: 1.5px solid #29ABE2;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.btn--primary {
+.btn-primary {
     background: #2A3647;
     color: #fff;
     min-width: 200px;
@@ -726,8 +726,8 @@ hr {
 }
 
 /* NEU: Disabled-Zustand (visuell + kein Hover-Cursor) */
-.btn--primary:disabled,
-.btn--primary[aria-disabled="true"] {
+.btn-primary:disabled,
+.btn-primary[aria-disabled="true"] {
     background: #9aa3ad;
     /* "disabled" grauton */
     color: rgba(255, 255, 255, 0.9);
@@ -737,23 +737,23 @@ hr {
 }
 
 /* ÄNDERN: Hover nur wenn NICHT disabled */
-.btn--primary:not(:disabled):hover {
+.btn-primary:not(:disabled):hover {
     background: #29ABE2;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Optional: verhindert Hover/Click-Feeling komplett, falls aria-disabled genutzt wird */
-.btn--primary[aria-disabled="true"] {
+.btn-primary[aria-disabled="true"] {
     pointer-events: none;
 }
 
-.btn__x {
+.btn-x {
     font-size: 22px;
     margin-left: 4px;
 }
 
-.btn__check {
+.btn-check {
     display: flex;
     align-items: center;
     margin-left: 4px;
@@ -820,8 +820,8 @@ hr {
         min-width: 0;
     }
 
-    .ac__hero,
-    .ac__formwrap {
+    .ac-hero,
+    .ac-formwrap {
         width: 100%;
         padding: 32px 16px;
     }
@@ -831,17 +831,17 @@ hr {
         gap: 16px;
     }
 
-    .ac__formwrap {
+    .ac-formwrap {
         padding-top: 40px;
     }
 
-    .ac__close {
+    .ac-close {
         top: 16px;
         right: 16px;
         color: rgb(246, 247, 248)
     }
 
-    .ac__actions {
+    .ac-actions {
         justify-content: center;
     }
 }
@@ -928,7 +928,7 @@ hr {
     will-change: opacity, right;
 }
 
-.contacts-toast--visible {
+.contacts-toast-visible {
     opacity: 1;
     right: 50%;
     /* Slide in zur finalen Position */
@@ -1055,7 +1055,7 @@ hr {
         z-index: 200;
     }
 
-    .add-contact-btn__label {
+    .add-contact-btn-label {
         display: none;
     }
 
@@ -1101,7 +1101,7 @@ hr {
     }
 
     /* Toast auf kleinen Screens nicht "off-center" */
-    .contacts-toast--visible {
+    .contacts-toast-visible {
         right: 16px;
     }
 
@@ -1339,11 +1339,11 @@ hr {
     }
 
     /* Dialog (Add/Edit) auf sehr schmalen Geräten kompakter */
-    .ac__title {
+    .ac-title {
         font-size: 30px;
     }
 
-    .ac__subtitle {
+    .ac-subtitle {
         font-size: 16px;
         margin-bottom: 0px;
     }
@@ -1353,27 +1353,27 @@ hr {
         padding: 0 16px;
     }
 
-    .ac__close {
+    .ac-close {
         top: 16px;
         right: 16px;
         font-size: 24px;
         color: rgb(246, 247, 248);
     }
 
-    .ac__brand {
+    .ac-brand {
         display: none;
     }
 
-    .ac__title {
+    .ac-title {
         margin: 0;
     }
 
-    .ac__formwrap {
+    .ac-formwrap {
         flex-direction: column;
         padding: 0;
     }
 
-    .ac__avatar {
+    .ac-avatar {
         margin-bottom: 0px;
         position: absolute;
         bottom: 79%;
@@ -1386,7 +1386,7 @@ hr {
         margin-top: 32px;
     }
 
-    .ac__formwrap {
+    .ac-formwrap {
         gap: 0px;
     }
 
@@ -1401,16 +1401,16 @@ hr {
         font-size: 16px;
     }
 
-    .ac__actions {
+    .ac-actions {
         margin-top: 0px;
     }
 
-    .ac__hero {
+    .ac-hero {
         height: 192px;
         justify-content: center;
     }
 
-    .btn--primary {
+    .btn-primary {
         min-width: 0px;
     }
 
@@ -1422,13 +1422,13 @@ hr {
         width: 305px;
     }
 
-    .ac__avatar img {
+    .ac-avatar img {
         width: 80px;
         height: 80px;
         opacity: 1;
     }
 
-    .responsiveCloseBtn {
+    .responsive-close-btn {
         display: none;
     }
 
@@ -1541,11 +1541,11 @@ hr {
     }
 
     /* Dialog (Add/Edit) auf sehr schmalen Geräten kompakter */
-    .ac__title {
+    .ac-title {
         font-size: 30px;
     }
 
-    .ac__subtitle {
+    .ac-subtitle {
         font-size: 16px;
         margin-bottom: 0px;
     }
@@ -1555,27 +1555,27 @@ hr {
         padding: 0 16px;
     }
 
-    .ac__close {
+    .ac-close {
         top: 16px;
         right: 16px;
         font-size: 24px;
         color: rgb(246, 247, 248);
     }
 
-    .ac__brand {
+    .ac-brand {
         display: none;
     }
 
-    .ac__title {
+    .ac-title {
         margin: 0;
     }
 
-    .ac__formwrap {
+    .ac-formwrap {
         flex-direction: column;
         padding: 0;
     }
 
-    .ac__avatar {
+    .ac-avatar {
         margin-bottom: 0px;
         position: absolute;
         bottom: 79%;
@@ -1588,7 +1588,7 @@ hr {
         margin-top: 32px;
     }
 
-    .ac__formwrap {
+    .ac-formwrap {
         gap: 0px;
     }
 
@@ -1603,16 +1603,16 @@ hr {
         font-size: 16px;
     }
 
-    .ac__actions {
+    .ac-actions {
         margin-top: 0px;
     }
 
-    .ac__hero {
+    .ac-hero {
         height: 192px;
         justify-content: center;
     }
 
-    .btn--primary {
+    .btn-primary {
         min-width: 0px;
     }
 
@@ -1624,13 +1624,13 @@ hr {
         width: 305px;
     }
 
-    .ac__avatar img {
+    .ac-avatar img {
         width: 80px;
         height: 80px;
         opacity: 1;
     }
 
-    .responsiveCloseBtn {
+    .responsive-close-btn {
         display: none;
     }
 
@@ -1645,16 +1645,16 @@ hr {
         width: 600px;
     }
 
-    .ac__formwrap {
+    .ac-formwrap {
         flex-direction: column;
         gap: 0px;
     }
 
-    .ac__avatar {
+    .ac-avatar {
         margin-top: -92px;
     }
 
-    .ac__avatar img {
+    .ac-avatar img {
         opacity: 1;
     }
 }
