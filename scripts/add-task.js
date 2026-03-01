@@ -243,7 +243,26 @@ function closeAddCategoryDropdown() {
 function initAddDropdownClose() {
   if (window.addDropdownHandlerAdded) return;
   window.addDropdownHandlerAdded = true;
-  document.addEventListener("click", () => closeAddDropdowns());
+  document.addEventListener(
+    "click",
+    (event) => {
+      const selectContacts = document.getElementById("select-contacts");
+      const contactsDropdown = document.getElementById("dropdown-contacts");
+      const categorySelect = document.getElementById("category-select");
+      const categoryDropdown = document.getElementById("category-dropdown");
+
+      const target = event.target;
+      const clickedInside =
+        (selectContacts && selectContacts.contains(target)) ||
+        (contactsDropdown && contactsDropdown.contains(target)) ||
+        (categorySelect && categorySelect.contains(target)) ||
+        (categoryDropdown && categoryDropdown.contains(target));
+
+      if (clickedInside) return;
+      closeAddDropdowns();
+    },
+    true
+  );
 }
 
 /**

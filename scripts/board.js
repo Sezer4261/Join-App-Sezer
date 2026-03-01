@@ -501,12 +501,28 @@ function validateEditForm() {
 function initEditDropdownClose() {
   if (window.editDropdownHandlerAdded) return;
   window.editDropdownHandlerAdded = true;
-  document.addEventListener("click", () => {
-    const contactsDropdown = document.getElementById("dropdown-contacts");
-    if (contactsDropdown) contactsDropdown.classList.remove("show");
-    const categoryDropdown = document.getElementById("edit-category-dropdown");
-    if (categoryDropdown) categoryDropdown.classList.remove("show");
-  });
+  document.addEventListener(
+    "click",
+    (event) => {
+      const selectContacts = document.getElementById("select-contacts");
+      const contactsDropdown = document.getElementById("dropdown-contacts");
+      const categorySelect = document.getElementById("edit-category-select");
+      const categoryDropdown = document.getElementById("edit-category-dropdown");
+
+      const target = event.target;
+      const clickedInside =
+        (selectContacts && selectContacts.contains(target)) ||
+        (contactsDropdown && contactsDropdown.contains(target)) ||
+        (categorySelect && categorySelect.contains(target)) ||
+        (categoryDropdown && categoryDropdown.contains(target));
+
+      if (clickedInside) return;
+
+      if (contactsDropdown) contactsDropdown.classList.remove("show");
+      if (categoryDropdown) categoryDropdown.classList.remove("show");
+    },
+    true
+  );
 }
 
 /**
