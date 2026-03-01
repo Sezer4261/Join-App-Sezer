@@ -103,7 +103,7 @@ main {
     gap: 18px;
     padding: 12px 24px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 120ms ease;
 }
 
 .contact-area:hover,
@@ -184,7 +184,7 @@ main {
     text-decoration: none;
     color: #007CEE;
     margin-top: 2px;
-    transition: text-decoration 0.2s;
+    transition: text-decoration 120ms;
     background: none;
     box-sizing: border-box;
     padding: 0;
@@ -396,7 +396,7 @@ hr {
 
 .edit-svg-path {
     fill: #2A3647;
-    transition: fill 0.15s ease;
+    transition: fill 120ms ease;
 }
 
 .edit-svg-path:hover {
@@ -435,7 +435,7 @@ hr {
     min-width: 90px;
     outline: none;
     box-sizing: border-box;
-    transition: all 0.2s;
+    transition: all 120ms;
 }
 
 .contact-action-btn svg {
@@ -589,7 +589,7 @@ hr {
     color: #2A3647;
     cursor: pointer;
     z-index: 2;
-    transition: color 0.2s, background 0.2s;
+    transition: color 120ms, background 120ms;
     width: 24px;
     /* Feste Größe für runden Hintergrund */
     height: 24px;
@@ -698,14 +698,14 @@ hr {
     height: 48px;
     cursor: pointer;
     border: none;
-    transition: background 0.2s, color 0.2s;
+    transition: background 120ms, color 120ms;
 }
 
 .btn--ghost {
     background: rgb(246, 247, 248);
     color: #2A3647;
     border: 1.5px solid #2A3647;
-    transition: border-color 0.2s, color 0.2s;
+    transition: border-color 120ms, color 120ms;
 }
 
 .btn--ghost:hover {
@@ -1134,7 +1134,7 @@ hr {
         font-weight: 500;
         cursor: pointer;
         margin: 0;
-        transition: color 0.2s;
+        transition: color 120ms;
         position: absolute;
         top: 0px;
         right: 0px;

@@ -136,7 +136,7 @@ header{
   border-radius: 8px;
   background: white;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 120ms;
 }
 
 .contact-card:hover{

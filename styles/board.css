@@ -147,7 +147,7 @@ body {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 120ms;
 }
 
 .add-task-btn:hover {
@@ -210,7 +210,7 @@ h1 {
 
 .column-header img {
   cursor: pointer;
-  transition: filter 0.2s, opacity 0.2s;
+  transition: filter 120ms, opacity 120ms;
 }
 
 .column-header img:hover {
@@ -243,7 +243,7 @@ h1 {
   margin-bottom: 15px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 120ms;
 }
 
 .task-card:hover {
@@ -698,7 +698,7 @@ h1 {
   color: #000;
   font-weight: 500;
   font-size: 14px;
-  transition: all 0.2s;
+  transition: all 120ms;
 }
 
 .edit-task-form .priority-btn {
@@ -773,7 +773,7 @@ h1 {
   gap: 8px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.15s ease;
+  transition: opacity 120ms ease;
 }
 
 .edit-task-form .subtasks input:not(:placeholder-shown)~.subtask-input-actions {
@@ -877,7 +877,7 @@ textarea:focus-within,
   margin-left: auto;
   gap: 8px;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 120ms;
 }
 
 .edit-task-form .subtask-actions img {

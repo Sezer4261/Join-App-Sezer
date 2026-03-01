@@ -161,7 +161,7 @@ select:focus,
   background: white;
   color: #000;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: all 120ms;
 }
 
 
@@ -356,7 +356,7 @@ select:focus,
   gap: 8px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.15s ease;
+  transition: opacity 120ms ease;
 }
 
 .subtasks input:not(:placeholder-shown)~.subtask-input-actions {
@@ -455,7 +455,7 @@ select:focus,
   margin-left: auto;
   gap: 8px;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 120ms;
 }
 
 .subtask-actions img {

@@ -75,7 +75,7 @@ header{
     width: 32px;
     height: 32px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 120ms;
 }
 
 .user-profile:hover{
@@ -126,7 +126,7 @@ header{
     background: none;
     cursor: pointer;
     text-align: left;
-    transition: all 0.2s;
+    transition: all 120ms;
 }
 
 .profile-menu button{
