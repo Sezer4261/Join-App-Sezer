@@ -67,7 +67,6 @@ function getBoardColumn(config) {
     </div>
   `;
 }
-
 /**
  * Creates task card.
  * @param {Object} task - Task object.
@@ -92,7 +91,6 @@ function createTaskCard(task) {
     </div>
   `;
 }
-
 /**
  * Returns priority icon.
  * @param {*} priority - Parameter.
@@ -103,7 +101,6 @@ function getPriorityIcon(priority) {
   if (priority === "medium") return '<img src="./assets/icons/medium-orange.svg">';
   return '<img src="./assets/img/category-low.svg">';
 }
-
 /**
  * Renders subtask progress.
  * @param {Object} task - Task object.
@@ -123,7 +120,6 @@ function renderSubtaskProgress(task) {
     <div>${done}/${total}</div>
   `;
 }
-
 /**
  * Returns avatar markup.
  * @param {*} initials - Parameter.

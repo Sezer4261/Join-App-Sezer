@@ -59,7 +59,6 @@ function getTaskModalTemplate(task) {
     </div>
   `;
 }
-
 /**
  * Generates modal assigned contacts.
  * @param {Object} task - Task object.
@@ -82,7 +81,6 @@ function generateModalAssignedContacts(task) {
     `;
   }).join("");
 }
-
 /**
  * Generates modal subtasks.
  * @param {Object} task - Task object.
@@ -101,7 +99,6 @@ function generateModalSubtasks(task) {
     </label>
   `).join("");
 }
-
 /**
  * Generates edit task template.
  * @param {Object} task - Task object.
@@ -188,7 +185,6 @@ function generateEditTaskTemplate(task) {
     </form>
   `;
 }
-
 /**
  * Generates edit category options.
  * @param {*} current - Parameter.
@@ -202,7 +198,6 @@ function generateEditCategoryOptions(current) {
     </div>
   `).join("");
 }
-
 /**
  * Returns edit subtask item markup.
  * @param {Object} subtask - Subtask object.
@@ -221,7 +216,6 @@ function getEditSubtaskItemMarkup(subtask, index) {
     </li>
   `;
 }
-
 /**
  * Returns edit subtask edit markup.
  * @param {Object} subtask - Subtask object.

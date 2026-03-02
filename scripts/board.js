@@ -697,6 +697,8 @@ async function showAddTaskDialog() {
   if (!window.addTaskDialogBackdropHandlerAdded) {
     window.addTaskDialogBackdropHandlerAdded = true;
     dialogOverlay.addEventListener("click", (event) => {
+      // Close only on real backdrop clicks. Using contains(event.target) can break
+      // when inner click handlers re-render/remove the original target node.
       if (event.target !== dialogOverlay) return;
       event.stopPropagation();
       closeAddTaskDialog();
@@ -704,6 +706,7 @@ async function showAddTaskDialog() {
   }
 
   modalContent.innerHTML = generateAddTask({ variant: "dialog" });
+  // force reflow so the transition runs every time
   void modalContent.offsetWidth;
   requestAnimationFrame(() => modalContent.classList.add("is-open"));
   await loadContacts();

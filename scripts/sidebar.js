@@ -28,6 +28,7 @@ function sidebarHighlightingBoard() {
  */
 function sidebarHighlightingContacts() {
     window.location.href = "contacts.html";
+
 }
 
 /**

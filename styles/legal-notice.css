@@ -67,6 +67,7 @@ main{
     }
 }
 
+
 @media (max-width: 620px) {
     .wrapper h1 {
         font-size: 42px;

@@ -1,3 +1,4 @@
+// Entferne Intro-Overlay nach Animation
 window.addEventListener('DOMContentLoaded', () => {
     initIntroAlignment();
     scheduleIntroOverlayRemoval();
