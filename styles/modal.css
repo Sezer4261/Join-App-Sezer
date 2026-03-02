@@ -14,7 +14,6 @@
   margin: 0;
   padding: 0;
   font-size: 20px;
-  /* font-family: "Segoe UI", Arial, sans-serif; */
 }
 
 body {
@@ -26,7 +25,6 @@ body {
   min-height: 100vh;
 }
 
-/* Main */
 .main {
   flex: 1;
   display: flex;
@@ -42,7 +40,6 @@ body {
   cursor: pointer;
 }
 
-/* Content */
 .content {
   padding: 24px 40px;
 }
@@ -108,8 +105,6 @@ select:focus,
   margin-bottom: -32px;
 }
 
-/* Priority */
-
 .priority {
   display: flex;
   flex-direction: column;
@@ -123,7 +118,6 @@ select:focus,
 
 .priority-options input {
   display: none;
-  /* Radio Buttons ausblenden */
 }
 
 .priority-options label {
@@ -142,8 +136,6 @@ select:focus,
   transition: all 120ms;
 }
 
-
-
 .priority-btn {
   flex-direction: row;
 }
@@ -152,7 +144,6 @@ select:focus,
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Aktive Auswahl färben */
 .priority-options input#urgent:checked+label.urgent {
   background: #FF3D00;
   color: white;
@@ -184,7 +175,6 @@ select:focus,
   fill: white;
 }
 
-/* Contacts */
 .custom-select {
   border: 1px solid #ccc;
   padding: 8px;
@@ -193,7 +183,6 @@ select:focus,
   position: relative;
   width: 320px;
   background: white;
-
 }
 
 #select-contacts {
@@ -246,7 +235,6 @@ select:focus,
   height: 32px;
   border-radius: 50%;
   background-color: #03e3f8;
-  /* oder deine Kontaktfarbe */
   color: white;
   display: flex;
   align-items: center;
@@ -281,7 +269,6 @@ select:focus,
   font-weight: bold;
 }
 
-/* Subtasks */
 .subtasks {
   display: flex;
   position: relative;
@@ -434,7 +421,6 @@ select:focus,
   margin-right: 5px;
 }
 
-/* Actions */
 .actions {
   display: flex;
   justify-content: flex-end;

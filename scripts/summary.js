@@ -14,7 +14,6 @@ function navigateToBoard() {
     window.location.href = "board.html";
 }
 
-// kleines Hilfs-Utility, damit wir nicht dauernd getElementById + innerText schreiben
 /**
  * Sets text.
  * @param {string} id - Identifier.
@@ -26,7 +25,6 @@ function setText(id, value) {
     if (el) el.textContent = value;
 }
 
-// ---- NEW: Welcome + Username ----
 /**
  * Returns greeting by time.
  * @param {*} withComma - Parameter.
@@ -116,8 +114,6 @@ async function resolveUserName(session) {
     return nameFromDb || session.displayName || "User";
 }
 
-// ---- /NEW ----
-
 /**
  * Shows the mobile welcome overlay (<900px) for 1.5s,
  * then fades it out and removes it from the layout.
@@ -139,7 +135,6 @@ function showMobileWelcomeOverlay() {
         welcomeBox.style.display = "";
     };
 
-    // If we switch back to desktop width, the welcome box must remain visible.
     if (!window.mobileWelcomeOverlayMqListenerAdded) {
         window.mobileWelcomeOverlayMqListenerAdded = true;
         mq.addEventListener("change", (event) => {
@@ -155,10 +150,8 @@ function showMobileWelcomeOverlay() {
     aside.classList.add("mobile-welcome-overlay");
     aside.style.display = "flex";
 
-    // Ensure the welcome content is available even though it's hidden by default on mobile.
     welcomeBox.style.display = "flex";
 
-    // Start hidden, then fade in.
     aside.classList.remove("is-visible");
     requestAnimationFrame(() => aside.classList.add("is-visible"));
 
@@ -167,7 +160,6 @@ function showMobileWelcomeOverlay() {
     };
 
     const cleanup = () => {
-        // Only cleanup after fade-out.
         if (aside.classList.contains("is-visible")) return;
         aside.style.display = "none";
         welcomeBox.style.display = "";
@@ -183,11 +175,9 @@ function showMobileWelcomeOverlay() {
     aside.addEventListener("transitionend", onTransitionEnd);
 
     setTimeout(hide, 1500);
-    // Fallback in case transitionend doesn't fire.
     setTimeout(cleanup, 2300);
 }
 
-// Tasks aus Firebase holen
 /**
  * Fetches tasks.
  * @returns {Promise<*>} Result.
@@ -202,7 +192,6 @@ async function fetchTasks() {
     return Object.values(data || {});
 }
 
-// Dashboard-Werte aktualisieren
 /**
  * Updates dashboard.
  * @returns {Promise<*>} Result.
@@ -247,14 +236,12 @@ function getDashboardStats(tasks) {
     };
 }
 
-// Beim Laden der Seite aufrufen
 document.addEventListener("DOMContentLoaded", async () => {
     await renderWelcome();
     showMobileWelcomeOverlay();
     await updateDashboard();
 });
 
-// Delegate clicks, funktioniert auch bei dynamisch gerenderten Karten
 document.addEventListener("click", (e) => {
     const card = e.target.closest(".kpi-card, .deadline-card, .task-summary-card");
     if (card) navigateToBoard();

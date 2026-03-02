@@ -30,6 +30,7 @@ const LOW_ICON = `
       fill="#7AE229" />
   </svg>
 `;
+
 /**
  * Generates add task.
  * @returns {string} Result.
@@ -122,6 +123,7 @@ function generateAddTask(options = {}) {
     <p class="note note-outside"><span class="req">*</span>This field is required</p>
   `;
 }
+
 /**
  * Generates add category options.
  * @returns {string} Result.
@@ -134,6 +136,7 @@ function generateAddCategoryOptions() {
     </div>
   `).join("");
 }
+
 /**
  * Generates subtasks.
  * @param {number} i - Index.
@@ -142,6 +145,7 @@ function generateAddCategoryOptions() {
 function generateSubtasks(i) {
   return isEditingSubtask(i) ? getSubtaskEditItem(i) : getSubtaskItem(i);
 }
+
 /**
  * Checks whether editing subtask.
  * @param {number} i - Index.
@@ -150,6 +154,7 @@ function generateSubtasks(i) {
 function isEditingSubtask(i) {
   return window.editingSubtaskIndex === i;
 }
+
 /**
  * Returns subtask edit item.
  * @param {number} i - Index.
@@ -177,6 +182,7 @@ function getSubtaskEditItem(i) {
     </li>
   `;
 }
+
 /**
  * Returns subtask item.
  * @param {number} i - Index.
@@ -194,6 +200,7 @@ function getSubtaskItem(i) {
     </li>
   `;
 }
+
 /**
  * Generates assigned contacts.
  * @param {*} contacts - Parameter.
@@ -219,6 +226,7 @@ function generateAssignedContacts(contacts) {
     `;
   }).join("");
 }
+
 /**
  * Generates task from form.
  * @returns {string} Result.
@@ -241,6 +249,7 @@ function generateTaskFromForm() {
     status: "To Do",
   };
 }
+
 /**
  * Returns selected avatar markup.
  * @param {*} initials - Parameter.

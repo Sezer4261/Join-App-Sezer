@@ -60,7 +60,6 @@ main {
     padding-right: 8px;
 }
 
-/* Optionaler Webkit Scrollbar Style für Chrome/Safari/Edge */
 .contact-list::-webkit-scrollbar {
     width: 8px;
 }
@@ -114,7 +113,6 @@ main {
     cursor: pointer;
 }
 
-/* Selected state style */
 .contact-area.selected,
 .contact-item.selected {
     background: #2A3647;
@@ -137,7 +135,6 @@ main {
     height: 42px;
     border-radius: 50%;
     background: #FFA500;
-    /* Default orange, will be overwritten by inline style if needed */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -147,7 +144,6 @@ main {
     margin-right: 0;
 }
 
-/* Avatar-Bereich für großes Kontakt-Detail */
 .contact-avatar-large {
     display: flex;
     align-items: center;
@@ -175,7 +171,6 @@ main {
     margin: 0;
 }
 
-/* Stelle sicher, dass alle Kontakt-Links nur Textbreite haben */
 .contact-email,
 .contact-item a {
     display: inline-block;
@@ -195,7 +190,6 @@ main {
     text-decoration: underline;
 }
 
-/* Kontaktgruppenabstand */
 .contact-card {
     margin-bottom: 24px;
 }
@@ -214,7 +208,6 @@ main {
     display: flex;
     align-items: center;
     gap: 12px;
-    /* Abstand zwischen Initialen und Name */
 }
 
 .contact-initials {
@@ -228,12 +221,9 @@ main {
     align-items: center;
     justify-content: center;
     margin-right: 0;
-    /* Hintergrundfarbe wird per JS-Klasse gesetzt */
     border: 1px solid #fff;
-    /* weißer Rand hinzugefügt */
 }
 
-/* Beispielhafte Farben für Initialen-Kreise */
 .bg-blue {
     background: #1E90FF;
 }
@@ -274,14 +264,9 @@ main {
 
 .contact-email {
     width: fit-content;
-    /* Erzwingt die Breite basierend auf dem Inhalt */
     display: inline;
-    /* Verhindert block-Verhalten */
     flex: 0 1 auto;
-    /* Verhindert flex-grow */
 }
-
-
 
 .contact-div-right {
     display: flex;
@@ -316,7 +301,6 @@ main {
     color: #2A3647;
 }
 
-/* Back-Button: Auf Desktop versteckt, auf Mobile sichtbar */
 .contact-back-btn {
     display: none;
 }
@@ -327,19 +311,13 @@ main {
 
 .contact-section-left {
     height: 100%;
-    /* width: 456px; */
-    /* min-width: 456px; */
-    /* max-width: 456px; */
 }
 
 .scroll {
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    /* Verhindert horizontales Überlaufen */
     width: 400px !important;
-    /* min-width: 456px; */
-    /* max-width: 456px; */
 }
 
 .contact-section-right {
@@ -351,8 +329,6 @@ main {
     justify-content: left;
     flex-direction: column;
 }
-
-
 
 .contact-section-left {
     box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
@@ -376,7 +352,6 @@ hr {
     color: #fff;
     margin-right: 16px;
     border: 3px solid #fff;
-    /* weißer Rand hinzugefügt */
 }
 
 .contact-header-large {
@@ -403,7 +378,6 @@ hr {
     fill: #29ABE2;
 }
 
-/* === Contact Actions (Details View) === */
 .contact-actions {
     display: flex;
     gap: 8px;
@@ -416,7 +390,6 @@ hr {
     box-sizing: border-box;
     transition: all;
     align-items: center;
-    /* No transform, no background-position needed */
 }
 
 .contact-action-btn {
@@ -452,7 +425,6 @@ hr {
     font-weight: 700;
 }
 
-/* Delete Hover (neu) */
 .contact-action-btn:hover .delete-svg-path {
     fill: #29ABE2;
 }
@@ -502,7 +474,6 @@ hr {
     flex-direction: column;
 }
 
-/* === Add Contact Dialog Styles === */
 .ac-dialog {
     border: none;
     border-radius: 24px;
@@ -591,14 +562,11 @@ hr {
     z-index: 2;
     transition: color 120ms, background 120ms;
     width: 24px;
-    /* Feste Größe für runden Hintergrund */
     height: 24px;
     display: flex;
-    /* Zentriert das Icon */
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    /* Immer rund, auch ohne Hover */
 }
 
 .ac-close:hover {
@@ -725,25 +693,21 @@ hr {
     white-space: nowrap;
 }
 
-/* NEU: Disabled-Zustand (visuell + kein Hover-Cursor) */
 .btn-primary:disabled,
 .btn-primary[aria-disabled="true"] {
     background: #9aa3ad;
-    /* "disabled" grauton */
     color: rgba(255, 255, 255, 0.9);
     opacity: 0.7;
     cursor: not-allowed;
     box-shadow: none;
 }
 
-/* ÄNDERN: Hover nur wenn NICHT disabled */
 .btn-primary:not(:disabled):hover {
     background: #29ABE2;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Optional: verhindert Hover/Click-Feeling komplett, falls aria-disabled genutzt wird */
 .btn-primary[aria-disabled="true"] {
     pointer-events: none;
 }
@@ -758,9 +722,6 @@ hr {
     align-items: center;
     margin-left: 4px;
 }
-
-
-/* Responsive */
 
 @media (max-width: 1000px) {
     .title-contacts {
@@ -784,7 +745,6 @@ hr {
         margin: 40px 24px 0px 16px;
         gap: 8px;
     }
-
 
     .contact-maintitle-container {
         height: auto;
@@ -846,7 +806,6 @@ hr {
     }
 }
 
-/* Contact Details Animation */
 @keyframes slideInFromRight {
     from {
         transform: translateX(100%);
@@ -863,7 +822,6 @@ hr {
     animation: slideInFromRight 0.3s ease-out;
 }
 
-/* Dialog Animation (von rechts nach links beim Öffnen) */
 @keyframes slideInDialogFromRight {
     from {
         transform: translate(calc(-50% + 100%), -50%);
@@ -876,7 +834,6 @@ hr {
     }
 }
 
-/* NEU: Dialog Animation (von links nach rechts beim Schließen) */
 @keyframes slideOutDialogToRight {
     from {
         transform: translate(-50%, -50%);
@@ -893,7 +850,6 @@ hr {
     animation: slideInDialogFromRight 0.3s ease-out;
 }
 
-/* NEU: Closing-State für Schließ-Animation */
 .ac-dialog.closing {
     animation: slideOutDialogToRight 0.3s ease-out forwards;
 }
@@ -901,29 +857,23 @@ hr {
 .contacts-toast {
     position: fixed;
     right: -100%;
-    /* Start außerhalb des Bildschirms rechts */
     bottom: 150px;
     top: auto;
     transform: translateX(0);
     opacity: 0;
-
     background: #2A3647;
     color: #fff;
     padding: 14px 22px;
     border-radius: 14px;
-
     font-size: 16px;
     font-weight: 500;
-
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
     z-index: 100;
     pointer-events: none;
-
     max-width: calc(100vw - 32px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
     transition: opacity 180ms ease, right 180ms ease;
     will-change: opacity, right;
 }
@@ -931,22 +881,11 @@ hr {
 .contacts-toast-visible {
     opacity: 1;
     right: 50%;
-    /* Slide in zur finalen Position */
 }
-
-/* === Help Menu Item Responsive ===
-   Auf Desktop: Help im Menü versteckt, nur Help-Icon sichtbar
-   Auf Mobile: Help-Icon versteckt, Help im Menü sichtbar */
 
 .profile-menu-item-help {
     display: none;
 }
-
-/* === Mobile Layout Fixes (bis 320px) ===
-   WICHTIG: Einige Elemente haben feste Breiten weiter oben (z.B. .scroll 400px !important,
-   .contact-item 352px, hr 352px). Diese Overrides müssen am Ende der Datei stehen. */
-/* Responsive Anpassung */
-
 
 @media (min-width: 601px) and (max-width: 621px) {
     main {
@@ -973,13 +912,10 @@ hr {
         margin-left: 16px;
     }
 
-
-    /* Help-Icon auf Mobile ausblenden */
     .help-icon {
         display: none !important;
     }
 
-    /* Help im Profil-Menü auf Mobile anzeigen */
     .profile-menu-item-help {
         display: block;
     }
@@ -1100,7 +1036,6 @@ hr {
         animation: none;
     }
 
-    /* Toast auf kleinen Screens nicht "off-center" */
     .contacts-toast-visible {
         right: 16px;
     }
@@ -1113,7 +1048,6 @@ hr {
         text-align: center;
     }
 
-    /* Mobile View: Kontaktdetails anzeigen, Kontaktliste verstecken */
     .wrapper.show-contact-details .contact-section-left {
         display: none;
     }
@@ -1122,7 +1056,6 @@ hr {
         display: block;
     }
 
-    /* Back-Button auf Mobile sichtbar */
     .contact-back-btn {
         display: flex;
         align-items: center;
@@ -1334,7 +1267,6 @@ hr {
         gap: 10px;
     }
 
-    /* Dialog (Add/Edit) auf sehr schmalen Geräten kompakter */
     .ac-title {
         font-size: 30px;
     }
@@ -1429,8 +1361,6 @@ hr {
     }
 
 }
-
-/* testweise, danach 440px */
 
 @media (max-width: 600px) {
     * {
@@ -1536,7 +1466,6 @@ hr {
         gap: 10px;
     }
 
-    /* Dialog (Add/Edit) auf sehr schmalen Geräten kompakter */
     .ac-title {
         font-size: 30px;
     }

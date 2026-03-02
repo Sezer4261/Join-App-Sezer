@@ -267,7 +267,6 @@ aside {
     font-style: bold;
 }
 
-/* ================= RESPONSIVE ================= */
 @media (max-width: 1250px) {
     header {
         left: 0;

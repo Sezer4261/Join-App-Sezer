@@ -410,7 +410,6 @@ async function deleteContact(contactId) {
   refreshContactDetails();
 }
 
-// update contact
 /**
  * Updates contact.
  * @param {Event} event - Browser event.
@@ -432,7 +431,6 @@ async function updateContact(event, contactId) {
   }
 }
 
-// NEU: Validierung für Edit Contact Dialog
 /**
  * Updates edit contact submit state.
  * @param {HTMLElement} dialog - Dialog element.
@@ -473,7 +471,6 @@ function initEditContactDialogValidation(dialog) {
   handler();
 }
 
-// Öffnet den Edit-Dialog mit vorausgefüllten Daten
 /**
  * Opens edit contact dialog.
  * @param {string} id - Identifier.
@@ -534,7 +531,6 @@ function showEditContactDialog(dialog) {
   }
 }
 
-// NEU: Schließt den Edit-Dialog mit Animation
 /**
  * Closes edit contact dialog.
  * @returns {void} Result.

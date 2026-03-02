@@ -14,7 +14,6 @@
   margin: 0;
   padding: 0;
   font-size: 20px;
-  /* font-family: "Segoe UI", Arial, sans-serif; */
 }
 
 body {
@@ -26,7 +25,6 @@ body {
   min-height: 100vh;
 }
 
-/* Main */
 .main {
   flex: 1;
   display: flex;
@@ -52,7 +50,6 @@ body {
   display: none;
 }
 
-/* Content */
 .content {
   padding: 24px 40px;
 }
@@ -107,7 +104,6 @@ textarea {
   display: none;
 }
 
-/* Validierung - Fehler */
 .input-error {
   border-color: #ff6b6b !important;
 }
@@ -119,7 +115,6 @@ textarea {
   min-height: 16px;
 }
 
-/* Focus-Zustand für Inputfelder */
 input:focus,
 textarea:focus,
 select:focus,
@@ -129,8 +124,6 @@ select:focus,
   border: 1px solid #29ABE2;
   box-shadow: none;
 }
-
-/* Priority */
 
 .priority {
   display: flex;
@@ -145,7 +138,6 @@ select:focus,
 
 .priority-options input {
   display: none;
-  /* Radio Buttons ausblenden */
 }
 
 .priority-options label {
@@ -164,8 +156,6 @@ select:focus,
   transition: all 120ms;
 }
 
-
-
 .priority-btn {
   flex-direction: row;
 }
@@ -174,7 +164,6 @@ select:focus,
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Aktive Auswahl färben */
 .priority-options input#urgent:checked+label.urgent {
   background: #FF3D00;
   color: white;
@@ -206,7 +195,6 @@ select:focus,
   fill: white;
 }
 
-/* Contacts */
 .custom-select {
   border: 1px solid #ccc;
   padding: 0 10px;
@@ -289,7 +277,6 @@ select:focus,
   height: 32px;
   border-radius: 50%;
   background-color: #03e3f8;
-  /* oder deine Kontaktfarbe */
   color: white;
   display: flex;
   align-items: center;
@@ -330,9 +317,6 @@ select:focus,
   gap: 6px;
 }
 
-
-
-/* Subtasks */
 .subtasks {
   display: flex;
   position: relative;
@@ -484,7 +468,6 @@ select:focus,
   margin-right: 5px;
 }
 
-/* Actions */
 .actions {
   display: flex;
   justify-content: center;
@@ -532,9 +515,6 @@ select:focus,
   background-color: #f0f0f0 !important;
 }
 
-/* ================= RESPONSIVE ================= */
-
-/* Tablet: Sidebar schmal, 1-spaltiges Formular */
 @media (max-width: 900px) {
   .sidebar {
     width: 70px;
@@ -542,16 +522,11 @@ select:focus,
     padding: 20px 8px;
   }
 
-
-
-
-
   .sidebar-footer {
     display: none;
   }
 }
 
-/* Smartphone: Sidebar wird Bottom-Navigation */
 @media (max-width: 600px) {
   .app {
     flex-direction: column;
@@ -570,10 +545,6 @@ select:focus,
     z-index: 100;
   }
 
-
-
-
-
   .sidebar-footer {
     display: none;
   }
@@ -587,7 +558,6 @@ select:focus,
   }
 }
 
-/* ================= ADD TASK RESPONSIVE (BOARD LAYOUT) ================= */
 @media (max-width: 1250px) {
   .content {
     padding-bottom: 120px;
@@ -631,7 +601,6 @@ select:focus,
 }
 
 @media (max-width: 550px) {
-
   .clear,
   .create {
     padding: 8px 14px;

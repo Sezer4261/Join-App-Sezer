@@ -55,8 +55,6 @@ async function ensureFirebaseSdkAndInit() {
   }
 
   try {
-    // Load Firebase global (compat) SDK on demand.
-    // Using compat because this project uses the namespaced v8-style API (firebase.initializeApp, firebase.auth()).
     const version = "9.23.0";
     await loadScript(`https://www.gstatic.com/firebasejs/${version}/firebase-app-compat.js`);
     await loadScript(`https://www.gstatic.com/firebasejs/${version}/firebase-auth-compat.js`);
@@ -68,7 +66,6 @@ async function ensureFirebaseSdkAndInit() {
 
 ensureFirebaseSdkAndInit();
 
-// Optional: User-Profil aktualisieren
 /**
  * Updates user profile.
  * @returns {void} Result.
