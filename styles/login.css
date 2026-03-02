@@ -14,30 +14,46 @@ body {
     color: #333;
 }
 
-/* Intro Animation */
 .intro-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    animation: fadeOut 0.5s ease-in-out 1.5s forwards;
+    background-color: transparent;
+    --intro-bg: #f4f4f4;
+    display: grid;
+    place-items: center;
+    z-index: 120;
+    animation: unlockOverlay 0s linear 1.5s forwards;
+}
+
+.intro-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--intro-bg);
+    animation: fadeOut 1s linear 0.5s forwards;
+    z-index: 0;
 }
 
 .intro-logo {
     width: 274px;
     height: 334px;
     animation: moveLogo 1s ease-in-out 0.5s forwards;
+    position: relative;
+    z-index: 1;
+    grid-area: 1 / 1;
+}
+
+.intro-logo-white {
+    grid-area: 1 / 1;
+    display: none;
 }
 
 .main-content {
     opacity: 0;
-    animation: fadeIn 0.8s ease-in-out 1.3s forwards;
+    animation: fadeIn 1s linear 0.5s forwards;
 }
 
 @keyframes moveLogo {
@@ -48,8 +64,8 @@ body {
     }
 
     100% {
-        width: 100px;
-        height: 122px;
+        width: var(--logo-target-width, 100px);
+        height: var(--logo-target-height, 122px);
         transform: translate(var(--logo-dx, calc(-50vw + 100px)),
                 var(--logo-dy, calc(-50vh + 106px)));
     }
@@ -58,11 +74,22 @@ body {
 @keyframes fadeOut {
     to {
         opacity: 0;
-        visibility: hidden;
+    }
+}
+
+@keyframes unlockOverlay {
+    to {
+        pointer-events: none;
     }
 }
 
 @keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes revealHeaderLogo {
     to {
         opacity: 1;
     }
@@ -79,6 +106,8 @@ body {
 .header-left img {
     width: 100px;
     height: 122px;
+    opacity: 0;
+    animation: revealHeaderLogo 0s linear 1.5s forwards;
 }
 
 .header-left {
@@ -242,7 +271,6 @@ button {
     font-size: 13px;
     font-weight: 500;
     text-align: center;
-    /* padding: 6px 8px; */
     background-color: transparent;
     border-radius: 4px;
     border: none;
@@ -263,7 +291,7 @@ button {
         overflow: hidden;
     }
 
-    body > * {
+    body>* {
         pointer-events: none;
         user-select: none;
         visibility: hidden;
@@ -274,7 +302,7 @@ button {
         position: fixed;
         inset: 0;
         background: var(--sidebar-bg, #2a3647);
-        z-index: 100000;
+        z-index: 100;
     }
 
     body::after {
@@ -288,7 +316,7 @@ button {
         color: #fff;
         font-size: 18px;
         font-weight: 600;
-        z-index: 100001;
+        z-index: 105;
     }
 }
 
@@ -317,7 +345,6 @@ button {
     cursor: pointer;
 }
 
-
 footer {
     margin-top: 50px;
     text-align: center;
@@ -335,4 +362,132 @@ footer a {
 footer a:hover {
     color: #29ABE2;
     font-weight: bold;
+}
+
+@media (max-width: 700px) {
+    .content {
+        align-items: flex-start;
+    }
+
+
+    .header {
+        margin-bottom: 0px;
+    }
+    .header-left img {
+        width: 48px;
+        height: auto;
+    }
+
+
+    .login-error-container {
+        width: 100%;
+        padding: 0 16px;
+        margin-bottom: 8px;
+    }
+
+    .intro-overlay {
+        --intro-bg: #2a3647;
+    }
+
+    .intro-logo-white {
+        display: block;
+        opacity: 1;
+        animation: moveLogo 1s ease-in-out 0.5s forwards, swapToDarkLogo 1s linear 0.5s forwards;
+    }
+
+    #intro-logo {
+        opacity: 0;
+        animation: moveLogo 1s ease-in-out 0.5s forwards, swapToDarkLogoInverse 1s linear 0.5s forwards;
+    }
+
+    .header {
+        position: relative;
+    }
+
+    .header-right {
+        position: absolute;
+        left: 50%;
+        top: 360%;
+        transform: translateX(-50%);
+        margin: 0;
+        right: auto;
+        bottom: auto;
+    }
+
+    footer {
+        margin-top: -8px;
+    }
+
+    .login-buttons {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        gap: 16px;
+    }
+
+    .btn-login {
+        width: 177px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .btn-guestlogin {
+        width: 177px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .login {
+        width: 290px;
+        height: 360px;
+    }
+
+    .login-input input {
+        width: 260px;
+    }
+
+    .login h1 {
+        width: 100%;
+        font-size: 32px;
+        height: 50px;
+    }
+
+    .login-separater {
+        width: 70px;
+        margin-bottom: 16px;
+    }
+
+    .login-input {
+        width: 100%;
+    }
+}
+
+@keyframes swapToDarkLogo {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes swapToDarkLogoInverse {
+
+    0%,
+    49.999% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.1;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

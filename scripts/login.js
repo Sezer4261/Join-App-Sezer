@@ -5,6 +5,14 @@ window.addEventListener('DOMContentLoaded', () => {
     initLoginPasswordToggle();
 });
 
+window.addEventListener('load', () => {
+    alignIntroLogo();
+});
+
+window.addEventListener('resize', () => {
+    alignIntroLogo();
+});
+
 /**
  * Initializes intro alignment.
  * @returns {void} Result.
@@ -21,12 +29,18 @@ function alignIntroLogo() {
     const introLogo = document.getElementById('intro-logo');
     const headerLogo = document.querySelector('.header-left img');
     if (!introLogo || !headerLogo) return;
+    const introOverlay = document.getElementById('intro-overlay');
     const introRect = introLogo.getBoundingClientRect();
     const headerRect = headerLogo.getBoundingClientRect();
     const dx = getCenterDeltaX(introRect, headerRect);
     const dy = getCenterDeltaY(introRect, headerRect);
     introLogo.style.setProperty('--logo-dx', `${dx}px`);
     introLogo.style.setProperty('--logo-dy', `${dy}px`);
+
+    if (introOverlay) {
+        introOverlay.style.setProperty('--logo-target-width', `${headerRect.width}px`);
+        introOverlay.style.setProperty('--logo-target-height', `${headerRect.height}px`);
+    }
 }
 
 /**

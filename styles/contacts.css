@@ -515,7 +515,7 @@ hr {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 100;
+    z-index: 50;
     display: none;
 }
 
@@ -916,7 +916,7 @@ hr {
     font-weight: 500;
 
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-    z-index: 9999;
+    z-index: 100;
     pointer-events: none;
 
     max-width: calc(100vw - 32px);
@@ -1052,7 +1052,7 @@ hr {
         position: fixed;
         right: 16px;
         bottom: 96px;
-        z-index: 200;
+        z-index: 100;
     }
 
     .add-contact-btn-label {
@@ -1154,7 +1154,7 @@ hr {
         right: 8px;
         bottom: 116px;
         display: block;
-        z-index: 2;
+        z-index: 100;
     }
 
     .contact-more-btn {
@@ -1193,7 +1193,7 @@ hr {
         border-radius: 16px 16px 0px 16px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
         overflow: hidden;
-        z-index: 3;
+        z-index: 100;
     }
 
     .contact-more-menu.is-open {
@@ -1238,10 +1238,6 @@ hr {
     .contact-more-menu button:hover .delete-svg-path {
         fill: #29ABE2;
     }
-
-    /*  */
-
-
 
     .contact-maintitle-container {
         margin-top: 40px;
