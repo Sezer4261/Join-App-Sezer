@@ -1,4 +1,3 @@
-/* ================== GENERAL ================== */
 *{
   margin: 0;
   padding: 0;
@@ -20,7 +19,6 @@ button{
   border-radius: 8px;
 }
 
-/* ================== SIDEBAR ================== */
 .sidebar{
   width: 260px;
   background: #2a3647;
@@ -62,7 +60,6 @@ button{
   text-decoration: none;
 }
 
-/* ================== HEADER ================== */
 header{
   margin-left: 260px;
   height: 80px;
@@ -97,11 +94,6 @@ header{
   font-weight: bold;
 }
 
-
-
-/* ================== BOARD ================== */
-
-
 .board-column{
   background: #f9f9f9;
   border-radius: 12px;
@@ -117,15 +109,6 @@ header{
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: grab;
 }
-
-
-
-
-
-
-
-/* ================== CONTACTS ================== */
-
 
 .contact-card{
   display: flex;
@@ -155,18 +138,6 @@ header{
   font-weight: bold;
 }
 
-/* ================== ADD TASK ================== */
-
-
-
-
-
-
-
-
-
-
-/* ================== SUMMARY ================== */
 .wrapper{
   margin-left: 260px;
   padding: 40px;
@@ -194,7 +165,6 @@ header{
   font-weight: bold;
 }
 
-/* ================== LOGIN & SIGNUP ================== */
 .content{
   display: flex;
   justify-content: center;
@@ -224,15 +194,6 @@ header{
   padding: 12px;
   width: 100%;
 }
-
-/* ================== OVERLAY ================== */
-
-
-
-
-/* ================== PRIVACY & LEGAL TEXT ================== */
-
-/* ================== PRIVACY LAYOUT ================== */
 
 .wrapper{
   margin-left: 260px;
@@ -272,18 +233,10 @@ header{
   color: #444;
 }
 
-
-
-/* ================== HELP ================== */
-
-
-/* ================== RESPONSIVE ================== */
 @media (max-width: 900px) {
   .sidebar{
     width: 200px;
   }
-
-  
 }
 
 @media (max-width: 600px) {

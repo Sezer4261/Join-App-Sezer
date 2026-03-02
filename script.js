@@ -1,5 +1,4 @@
 let BASE_URL = "https://join-app-firebase-default-rtdb.europe-west1.firebasedatabase.app";
-
 let columns = ["To Do", "In Progress", "Await Feedback", "Done"];
 let draggedTaskId = null;
 let activeTask = null;
@@ -41,8 +40,6 @@ function mapContactsData(data) {
   return Object.entries(data).map(([key, value]) => ({ id: key, ...value }));
 }
 
-// Seite sofort schützen (BEVOR irgendwas anderes passiert)
-// ABER NUR auf geschützten Seiten (nicht auf index.html / signup.html)
 /**
  * Executes protect this page logic.
  * @returns {void} Result.
@@ -66,7 +63,6 @@ function isPublicPage(pathname) {
   return pathname.includes('index.html') || pathname.includes('signup.html');
 }
 
-// Sofort aufrufen
 protectThisPage();
 
 /**
@@ -94,7 +90,7 @@ function getOrCreateMessageBox() {
   let box = document.getElementById("msg-box");
   if (!box) {
     box = document.createElement("div");
-    box.id="msg-box";
+    box.id = "msg-box";
     box.setAttribute("role", "status");
     box.setAttribute("aria-live", "polite");
     document.body.appendChild(box);
@@ -263,14 +259,11 @@ function redirectToLogin() {
   window.location.replace("index.html");
 }
 
-// Verhindere Seiten-Cache
 window.addEventListener("pageshow", (event) => {
   if (event.persisted && !localStorage.getItem("user")) {
     window.location.replace("index.html");
   }
 });
 
-// Cache deaktivieren
 window.addEventListener("beforeunload", () => {
-  // Keine Aktion nötig, aber wichtig für manche Browser
 });

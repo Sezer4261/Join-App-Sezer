@@ -124,7 +124,6 @@ function bindAddContactDialogEvents(dialog) {
   }
 }
 
-// NEU: Schließt Add Contact Dialog mit Animation
 /**
  * Closes add contact dialog with animation.
  * @returns {void} Result.
@@ -388,7 +387,6 @@ function getRandomInitialsColorClass() {
   return colorClasses[Math.floor(Math.random() * colorClasses.length)];
 }
 
-// delete contact
 /**
  * Deletes contact.
  * @param {string} contactId - Contact identifier.
@@ -410,7 +408,6 @@ async function deleteContact(contactId) {
   refreshContactDetails();
 }
 
-// update contact
 /**
  * Updates contact.
  * @param {Event} event - Browser event.
@@ -432,7 +429,6 @@ async function updateContact(event, contactId) {
   }
 }
 
-// NEU: Validierung für Edit Contact Dialog
 /**
  * Updates edit contact submit state.
  * @param {HTMLElement} dialog - Dialog element.
@@ -473,7 +469,6 @@ function initEditContactDialogValidation(dialog) {
   handler();
 }
 
-// Öffnet den Edit-Dialog mit vorausgefüllten Daten
 /**
  * Opens edit contact dialog.
  * @param {string} id - Identifier.
@@ -534,7 +529,6 @@ function showEditContactDialog(dialog) {
   }
 }
 
-// NEU: Schließt den Edit-Dialog mit Animation
 /**
  * Closes edit contact dialog.
  * @returns {void} Result.
