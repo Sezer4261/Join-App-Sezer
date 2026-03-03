@@ -115,7 +115,7 @@ async function updateContact(event, contactId) {
   };
   try {
     const response = await fetch(`${BASE_URL}/contacts/${contactId}.json`, {
-      method: "PATCH",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedContact),
     });
