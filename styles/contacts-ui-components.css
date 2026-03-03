@@ -1,0 +1,237 @@
+.add-contact-btn {
+    border: none;
+    width: 100%;
+    max-width: 352px;
+    color: white;
+    background-color: #2A3647;
+    padding: 12px 0;
+    text-align: center;
+    font-size: 21px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    margin-left: 24px;
+}
+
+.add-contact-btn:hover {
+    background-color: #29ABE2;
+}
+
+.add-contact-btn img {
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+}
+
+.contact-back-btn {
+    display: none;
+}
+
+.contact-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: #000;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 0 8px;
+    height: 24px;
+    min-width: 90px;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 120ms;
+}
+
+.contact-action-btn svg {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.contact-action-btn:hover .edit-svg-path {
+    fill: #29ABE2;
+}
+
+.contact-action-btn:hover .edit-label {
+    color: #29ABE2;
+    font-weight: 700;
+}
+
+.contact-action-btn:hover .delete-svg-path {
+    fill: #29ABE2;
+}
+
+.contact-action-btn:hover .delete-label {
+    color: #29ABE2;
+    font-weight: 700;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0 24px;
+    height: 48px;
+    cursor: pointer;
+    border: none;
+    transition: background 120ms, color 120ms;
+}
+
+.btn-ghost {
+    background: rgb(246, 247, 248);
+    color: #2A3647;
+    border: 1.5px solid #2A3647;
+    transition: border-color 120ms, color 120ms;
+}
+
+.btn-ghost:hover {
+    background: #fff;
+    color: #29ABE2;
+    border: 1.5px solid #29ABE2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+    background: #2A3647;
+    color: #fff;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.btn-primary:disabled,
+.btn-primary[aria-disabled="true"] {
+    background: #9aa3ad;
+    color: rgba(255, 255, 255, 0.9);
+    opacity: 0.7;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.btn-primary:not(:disabled):hover {
+    background: #29ABE2;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary[aria-disabled="true"] {
+    pointer-events: none;
+}
+
+.btn-x {
+    font-size: 22px;
+    margin-left: 4px;
+}
+
+.btn-check {
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+}
+
+.contacts-toast {
+    position: fixed;
+    right: -100%;
+    bottom: 150px;
+    top: auto;
+    transform: translateX(0);
+    opacity: 0;
+    background: #2A3647;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    z-index: 100;
+    pointer-events: none;
+    max-width: calc(100vw - 32px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity 180ms ease, right 180ms ease;
+    will-change: opacity, right;
+}
+
+.contacts-toast-visible {
+    opacity: 1;
+    right: 50%;
+}
+
+.contact-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.contact-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.contact-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.contact-list::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+.scroll {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 400px !important;
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.contact-details-container {
+    animation: slideInFromRight 0.3s ease-out;
+}
+
+@keyframes slideInDialogFromRight {
+    from {
+        transform: translate(calc(-50% + 100%), -50%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutDialogToRight {
+    from {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translate(calc(-50% + 100%), -50%);
+        opacity: 0;
+    }
+}

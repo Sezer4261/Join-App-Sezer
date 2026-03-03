@@ -1,0 +1,167 @@
+.modal-action-delete-text,
+.modal-action-edit-text {
+    min-width: 55px;
+}
+
+.modal-edit:hover .modal-action-edit-text {
+    cursor: pointer;
+    font-weight: bold;
+    color: #29ABE2;
+}
+
+.modal-edit:hover .edit-svg-path {
+    fill: #29ABE2;
+}
+
+.edit-svg-path {
+    fill: #2A3647;
+}
+
+.edit-form-scroll {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-right: 6px;
+    padding-top: 16px;
+    max-width: 560px;
+    min-width: 360px;
+    max-height: 80vh;
+
+}
+
+.edit-form-scroll input,
+.edit-form-scroll label {
+    width: 320px;
+}
+
+.edit-label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    margin-top: 24px;
+}
+
+.edit-input,
+.edit-textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.edit-input,
+.edit-assigned .custom-select {
+    height: 40px;
+    padding: 0 10px;
+    line-height: 40px;
+}
+
+.edit-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.edit-assigned {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.edit-assigned .custom-select {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.edit-assigned .custom-select span,
+.edit-label .custom-select span,
+.edit-assigned .dropdown-content,
+.edit-assigned .dropdown-name,
+.edit-label .dropdown-content,
+.edit-label .dropdown-name {
+    font-size: 16px;
+}
+
+.edit-assigned .custom-select span,
+.edit-label .custom-select span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.edit-assigned .custom-select .dropdown-arrow {
+    width: 8px;
+    height: 8px;
+    margin-left: 8px;
+}
+
+.edit-avatar-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.edit-avatar-container .avatar {
+    margin-left: 0;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+    margin-right: 8px;
+}
+
+.edit-cancel {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    width: 24px;
+    height: 24px;
+    color: #2A3647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 50%;
+}
+
+.edit-cancel:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.edit-x-close {
+    position: absolute;
+    top: 0px;
+    right: 8px;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 8px;
+}
+
+.edit-save {
+    cursor: pointer;
+    background: #2a3647;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+}
+
+.edit-save:hover {
+    background: #29abe2;
+}
+
+.edit-save img {
+    width: 16px;
+    height: 16px;
+}

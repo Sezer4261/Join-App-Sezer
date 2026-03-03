@@ -6,19 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanban Board</title>
     <link rel="stylesheet" href="./styles/board.css">
+    <link rel="stylesheet" href="./styles/board-edit.css">
+    <link rel="stylesheet" href="./styles/board-task-form.css">
+    <link rel="stylesheet" href="./styles/board-tasks.css">
+    <link rel="stylesheet" href="./styles/board-responsive.css">
     <link rel="stylesheet" href="./styles/sidebar.css">
     <link rel="stylesheet" href="./styles/header.css">
     <link rel="stylesheet" href="./styles/modal.css">
+    <link rel="stylesheet" href="./styles/modal-subtask.css">
+
 
     <!-- Auth Guard - MUSS VOR anderen Scripts laden -->
     <script src="./firebase.js" defer></script>
     <script src="./script.js" defer></script>
-    <script src="./scripts/sidebar.js"></script>
-    <script src="./scripts/add-task.js"></script>
-    <script src="./scripts/add-task-templates.js"></script>
-    <script src="./scripts/board-modal-templates.js"></script>
-    <script src="./scripts/board-template.js"></script>
-    <script src="./scripts/board.js"></script>
+    <script src="./scripts/sidebar.js" defer></script>
+    <script src="./scripts/add-task.js" defer></script>
+    <script src="./scripts/add-task-subtasks.js" defer></script>
+    <script src="./scripts/add-task-templates.js" defer></script>
+    <script src="./scripts/board-modal-templates.js" defer></script>
+    <script src="./scripts/board-template.js" defer></script>
+    <script src="./scripts/board-state.js" defer></script>
+    <script src="./scripts/board-avatars.js" defer></script>
+    <script src="./scripts/board-render.js" defer></script>
+    <script src="./scripts/board-api.js" defer></script>
+    <script src="./scripts/board-dnd.js" defer></script>
+    <script src="./scripts/board-modal.js" defer></script>
+    <script src="./scripts/board-edit.js" defer></script>
+    <script src="./scripts/board-addtask-dialog.js" defer></script>
 </head>
 
 <body onload="loadTasks()">
@@ -100,13 +114,6 @@
 
             <div class="content" id="board-content">
 
-            </div>
-
-            <div id="task-modal" class="modal">
-                <div class="modal-content">
-                    <span class="close-btn" onclick="closeModal()">&times;</span>
-                    <div id="modal-body"></div>
-                </div>
             </div>
 
         </main>

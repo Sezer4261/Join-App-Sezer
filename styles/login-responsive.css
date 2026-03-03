@@ -1,0 +1,130 @@
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) {
+    body {
+        overflow: hidden;
+    }
+
+    body>* {
+        pointer-events: none;
+        user-select: none;
+        visibility: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: var(--sidebar-bg, #2a3647);
+        z-index: 100;
+    }
+
+    body::after {
+        content: "Bitte Gerät drehen";
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        text-align: center;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        z-index: 105;
+    }
+}
+
+@media (max-width: 700px) {
+    .content {
+        align-items: flex-start;
+    }
+
+    .header {
+        margin-bottom: 0px;
+    }
+
+    .header-left img {
+        width: 48px;
+        height: auto;
+    }
+
+    .login-error-container {
+        width: 100%;
+        padding: 0 16px;
+        margin-bottom: 8px;
+    }
+
+    .intro-overlay {
+        --intro-bg: #2a3647;
+    }
+
+    .intro-logo-white {
+        display: block;
+        opacity: 1;
+        animation: moveLogo 1s ease-in-out 0.5s forwards, swapToDarkLogo 1s linear 0.5s forwards;
+    }
+
+    #intro-logo {
+        opacity: 0;
+        animation: moveLogo 1s ease-in-out 0.5s forwards, swapToDarkLogoInverse 1s linear 0.5s forwards;
+    }
+
+    .header {
+        position: relative;
+    }
+
+    .header-right {
+        position: absolute;
+        left: 50%;
+        top: 360%;
+        transform: translateX(-50%);
+        margin: 0;
+        right: auto;
+        bottom: auto;
+    }
+
+    footer {
+        margin-top: -8px;
+    }
+
+    .login-buttons {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        gap: 16px;
+    }
+
+    .btn-login {
+        width: 177px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .btn-guestlogin {
+        width: 177px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .login {
+        width: 290px;
+        height: 360px;
+    }
+
+    .login-input input {
+        width: 260px;
+    }
+
+    .login h1 {
+        width: 100%;
+        font-size: 32px;
+        height: 50px;
+    }
+
+    .login-separater {
+        width: 70px;
+        margin-bottom: 16px;
+    }
+
+    .login-input {
+        width: 100%;
+    }
+}

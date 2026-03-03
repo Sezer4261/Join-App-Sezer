@@ -1,0 +1,278 @@
+.edit-task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.edit-task-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.edit-task-form input,
+.edit-task-form textarea,
+.edit-task-form select {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+.edit-task-form textarea {
+    min-height: 80px;
+    resize: vertical;
+    font: message-box;
+}
+
+.edit-task-form .priority {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.edit-task-form .priority-options {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-task-form .priority-options input {
+    display: none;
+}
+
+.edit-task-form .priority-options label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 100px;
+    padding: 8px 16px;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    color: #000;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 120ms;
+}
+
+.edit-task-form .priority-btn {
+    flex-direction: row;
+}
+
+.edit-task-form .priority-options label.urgent svg,
+.edit-task-form .priority-options label.medium svg {
+    width: 24px;
+    height: 18px;
+}
+
+.edit-task-form .priority-btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.edit-task-form input#edit-urgent:checked+label.urgent {
+    background: #FF3D00;
+    color: white;
+    border-color: #FF3D00;
+}
+
+.edit-task-form input#edit-urgent:checked+label.urgent path {
+    fill: white;
+}
+
+.edit-task-form input#edit-medium:checked+label.medium {
+    background: #FFA800;
+    color: white;
+    border-color: #FFA800;
+}
+
+.edit-task-form input#edit-medium:checked+label.medium path {
+    fill: white;
+}
+
+.edit-task-form input#edit-low:checked+label.low {
+    background: #7AE229;
+    color: white;
+    border-color: #7AE229;
+}
+
+.edit-task-form input#edit-low:checked+label.low path {
+    fill: white;
+}
+
+.edit-task-form .subtasks {
+    display: flex;
+    position: relative;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+
+.edit-task-form .subtasks input {
+    width: 320px;
+    height: 40px;
+    padding-right: 72px;
+}
+
+.edit-task-form .subtask-input-actions {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease;
+}
+
+.edit-task-form .subtasks input:not(:placeholder-shown)~.subtask-input-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.edit-task-form .subtask-edit {
+    position: relative;
+    width: fit-content;
+    min-width: 320px;
+    padding: 0;
+    margin-left: 0;
+    background: transparent;
+}
+
+
+.edit-task-form .subtask-edit-input {
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #29ABE2;
+}
+
+.edit-task-form .subtask-edit .subtask-input-actions {
+    right: 24px;
+}
+
+.edit-task-form .subtask-edit-input:not(:placeholder-shown)~.subtask-input-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.edit-task-form .subtask-icon-btn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+}
+
+.edit-task-form .subtask-icon-btn img {
+    width: 15px;
+    height: 15px;
+    filter: brightness(0) saturate(100%);
+}
+
+.edit-task-form .subtask-icon-btn:hover img {
+    transform: scale(1.1);
+}
+
+.edit-task-form .subtask-input-separator {
+    width: 1px;
+    height: 18px;
+    background-color: #b5b5b5;
+}
+
+.edit-task-form .subtask-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.edit-task-form .subtask-list li::before {
+    content: "•";
+    margin-right: 14px;
+    color: black;
+}
+
+.edit-task-form .subtask-list .subtask-edit::before {
+    content: "";
+    margin-right: 0;
+}
+
+.edit-task-form .subtask {
+    height: 40px;
+    width: fit-content;
+    min-width: 320px;
+    margin-left: 10px;
+    margin-bottom: 4px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+}
+
+.edit-task-form .subtask-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 120ms;
+}
+
+.edit-task-form .subtask-actions img {
+    width: 20px;
+    height: 20px;
+}
+
+.edit-task-form .subtask-actions img:hover {
+    transform: scale(1.1);
+}
+
+.edit-task-form .subtask:hover {
+    cursor: pointer;
+    background-color: #eaeaea;
+}
+
+.edit-task-form .subtask.subtask-edit:hover {
+    background-color: transparent !important;
+    cursor: default;
+}
+
+.edit-task-form .subtask:hover .subtask-actions {
+    opacity: 1;
+}
+
+#edit-task-form .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+#edit-task-form .actions .clear,
+#edit-task-form .actions .create {
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+}
+
+#edit-task-form .actions .clear {
+    background: var(--panel-bg);
+}
+
+#edit-task-form .actions .create {
+    background: var(--sidebar-bg);
+    color: #fff;
+}
+
+.edit-task-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}

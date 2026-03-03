@@ -1,0 +1,36 @@
+/**
+ * Renders all avatars.
+ * @returns {void} Result.
+ */
+function renderAllAvatars() {
+  const filteredTasks = getFilteredTasks();
+  for (let i = 0; i < filteredTasks.length; i++) {
+    renderAvatar(filteredTasks[i]);
+  }
+}
+
+/**
+ * Renders avatar.
+ * @param {Object} task - Task object.
+ * @returns {void} Result.
+ */
+function renderAvatar(task) {
+  let container = document.getElementById(`avatars-${task.id}`);
+  if (!container) return;
+  container.innerHTML = "";
+  let contacts = Array.isArray(task.contacts) ? task.contacts : [];
+  for (let i = 0; i < contacts.length; i++) {
+    const name = contacts[i];
+    if (!name) continue;
+    const initials = name.split(" ").map(n => n[0]).join("");
+    container.innerHTML += getAvatarMarkup(initials, getRandomColor());
+  }
+}
+
+/**
+ * Returns random color.
+ * @returns {*} Result.
+ */
+function getRandomColor() {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
