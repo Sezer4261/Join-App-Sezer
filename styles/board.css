@@ -64,7 +64,7 @@ body {
   border-radius: 8px;
   padding: 8px 12px;
   background: white;
-  gap: 8px;
+  height: 40px;
 }
 
 .board-search:focus-within {
@@ -222,6 +222,7 @@ h1 {
   height: auto;
   max-width: 560px;
   max-height: 85vh;
+  overflow-y: auto;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   transform: translateX(100%);
   opacity: 1;

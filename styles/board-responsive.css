@@ -270,6 +270,84 @@
     }
 }
 
+@media (max-width: 420px) {
+    .modal-content {
+        width: 96%;
+        padding: 12px 14px;
+    }
+
+    .modal-content .edit-task-form,
+    .modal-content .edit-form-scroll {
+        width: 100%;
+    }
+
+    .modal-content .edit-task-form label,
+    .modal-content .edit-input,
+    .modal-content .edit-textarea,
+    .modal-content .edit-assigned,
+    .modal-content .edit-assigned .custom-select,
+    .modal-content #editCategorySelect,
+    .modal-content .edit-subtasks,
+    .modal-content .edit-subtasks .subtasks,
+    .modal-content .edit-subtasks .subtasks input {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .modal-content .edit-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .modal-content .edit-actions button {
+        padding: 7px 10px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 400px) {
+    .modal-content {
+        width: 94vw;
+        max-width: 94vw;
+    }
+
+    .modal-content .edit-task-form label,
+    .modal-content .edit-input,
+    .modal-content .edit-textarea,
+    .modal-content .edit-task-form select,
+    .modal-content .custom-select,
+    .modal-content #editCategorySelect,
+    .modal-content #edit-category-select,
+    .modal-content .edit-task-form .priority-options,
+    .modal-content .edit-subtasks,
+    .modal-content .edit-subtasks .subtasks,
+    .modal-content .edit-subtasks .subtasks input,
+    .modal-content #editSubtaskArea {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    .modal-content .edit-task-form .priority-options {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .modal-content .edit-task-form .priority-options label {
+        min-width: 30%;
+        flex: 1 1 30%;
+        padding: 4px 6px;
+        font-size: 12px;
+    }
+
+    .modal-content .edit-actions {
+        justify-content: flex-end;
+    }
+}
+
 @media (max-width: 360px) {
     .modal-content .edit-task-form {
         gap: 14px;

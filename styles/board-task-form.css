@@ -16,6 +16,9 @@
     padding: 10px;
     border: 1px solid var(--border);
     border-radius: 6px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .edit-task-form textarea {
@@ -33,6 +36,7 @@
 .edit-task-form .priority-options {
     display: flex;
     gap: 8px;
+    flex-wrap: nowrap;
 }
 
 .edit-task-form .priority-options input {
@@ -103,12 +107,12 @@
 .edit-task-form .subtasks {
     display: flex;
     position: relative;
-    width: fit-content;
+    width: 100%;
     margin-bottom: 10px;
 }
 
 .edit-task-form .subtasks input {
-    width: 320px;
+    width: 100%;
     height: 40px;
     padding-right: 72px;
 }
@@ -133,8 +137,8 @@
 
 .edit-task-form .subtask-edit {
     position: relative;
-    width: fit-content;
-    min-width: 320px;
+    width: 100%;
+    min-width: 0;
     padding: 0;
     margin-left: 0;
     background: transparent;
@@ -202,8 +206,8 @@
 
 .edit-task-form .subtask {
     height: 40px;
-    width: fit-content;
-    min-width: 320px;
+    width: 100%;
+    min-width: 0;
     margin-left: 10px;
     margin-bottom: 4px;
     padding: 5px 10px;
@@ -275,4 +279,139 @@
     flex-direction: column;
     height: 100%;
     position: relative;
+}
+
+@media (max-width: 600px) {
+    .edit-task-form .subtasks,
+    .edit-task-form .subtask,
+    .edit-task-form .subtask-edit {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .edit-task-form .subtasks input,
+    .edit-task-form .subtask-edit-input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-task-form .subtasks input,
+    .edit-task-form .subtask-edit-input,
+    .edit-task-form .subtask {
+        height: 36px;
+    }
+
+    .edit-task-form .subtask-actions img {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 420px) {
+    .edit-task-form input,
+    .edit-task-form textarea,
+    .edit-task-form select {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .edit-task-form .subtasks input,
+    .edit-task-form .subtask-edit-input,
+    .edit-task-form .subtask {
+        height: 34px;
+    }
+
+    .edit-task-form .subtask-input-actions {
+        gap: 6px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .edit-task-form,
+    .edit-form-scroll,
+    .edit-task-form label,
+    .edit-task-form .edit-input,
+    .edit-task-form .edit-textarea,
+    .edit-task-form select,
+    .edit-task-form .priority-options,
+    .edit-task-form .custom-select,
+    .edit-task-form #editCategorySelect,
+    .edit-task-form .edit-subtasks,
+    .edit-task-form .subtasks,
+    .edit-task-form .subtasks input,
+    .edit-task-form #editSubtaskArea {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    .edit-task-form #editSubtaskArea,
+    .edit-task-form #editSubtaskArea li,
+    .edit-task-form #editSubtaskArea .subtask,
+    .edit-task-form #editSubtaskArea .subtask-edit {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box;
+    }
+
+    .edit-task-form .subtasks {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .edit-task-form .priority-options label {
+        flex: 1 1 30%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 360px) {
+    .edit-task-form #editSubtaskArea,
+    .edit-task-form #editSubtaskArea .subtask,
+    .edit-task-form #editSubtaskArea .subtask-edit,
+    .edit-task-form #editSubtaskArea span {
+        font-size: 13px;
+    }
+
+    .edit-task-form input,
+    .edit-task-form textarea,
+    .edit-task-form select {
+        padding: 7px;
+        font-size: 12px;
+    }
+
+    .edit-task-form .subtasks input,
+    .edit-task-form .subtask-edit-input {
+        padding-right: 64px;
+    }
+}
+
+@media (max-width: 320px) {
+    .edit-task-form #editSubtaskArea,
+    .edit-task-form #editSubtaskArea .subtask,
+    .edit-task-form #editSubtaskArea .subtask-edit,
+    .edit-task-form #editSubtaskArea span {
+        font-size: 12px;
+    }
+
+    .edit-task-form input,
+    .edit-task-form textarea,
+    .edit-task-form select {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .edit-task-form .subtasks input,
+    .edit-task-form .subtask-edit-input,
+    .edit-task-form .subtask {
+        height: 34px;
+    }
+
+    .edit-task-form .subtask-icon-btn img {
+        width: 13px;
+        height: 13px;
+    }
 }
