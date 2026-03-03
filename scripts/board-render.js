@@ -3,9 +3,8 @@
  * @returns {void} Result.
  */
 function renderBoard() {
-  const content = document.getElementById("board-content");
-  content.innerHTML = getBoardTemplate();
   initBoardSearch();
+  clearTaskCards();
   renderTasksIntoColumns();
   updateNoTaskPlaceholders();
   renderAllAvatars();

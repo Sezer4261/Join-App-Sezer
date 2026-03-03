@@ -1,12 +1,4 @@
 /**
- * Executes navigate to help logic.
- * @returns {void} Result.
- */
-function navigateToHelp() {
-    window.location.href = "help.html";
-}
-
-/**
  * Executes navigate to board logic.
  * @returns {void} Result.
  */

@@ -161,6 +161,10 @@ textarea:focus-within,
     display: none;
 }
 
+body.add-task-dialog-open {
+    overflow: hidden;
+}
+
 .add-task-dialog {
     background-color: white;
     width: 1050px;
@@ -169,6 +173,7 @@ textarea:focus-within,
     border-radius: 16px;
     padding: 36px;
     margin-top: 0;
+    overflow-y: auto;
     transform: translateX(100%);
     opacity: 0;
     transition: transform 0.3s ease-out, opacity 0.15s ease-out;

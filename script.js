@@ -258,6 +258,14 @@ function redirectToLogin() {
   window.location.replace("index.html");
 }
 
+/**
+ * Executes navigate to help logic.
+ * @returns {void} Result.
+ */
+function navigateToHelp() {
+  window.location.href = "help.html";
+}
+
 window.addEventListener("pageshow", (event) => {
   if (event.persisted && !localStorage.getItem("user")) {
     window.location.replace("index.html");

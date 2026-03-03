@@ -133,7 +133,15 @@ header {
     text-align: left;
 }
 
+.profile-menu-item-help {
+    display: none;
+}
+
 @media (max-width: 1250px) {
+    header {
+        left: 0;
+    }
+
     .center {
         justify-content: flex-start;
     }
@@ -176,6 +184,10 @@ header {
 
     .help-icon {
         display: none;
+    }
+
+    .profile-menu-item-help {
+        display: block;
     }
 }
 

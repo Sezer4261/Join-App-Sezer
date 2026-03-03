@@ -9,6 +9,7 @@ async function showAddTaskDialog() {
 
   dialogOverlay.dataset.closing = "false";
   dialogOverlay.classList.remove("d-none");
+  document.body.classList.add("add-task-dialog-open");
 
   modalContent.classList.remove("is-open");
 
@@ -50,6 +51,7 @@ function closeAddTaskDialog() {
   const cleanup = () => {
     dialogOverlay.classList.add("d-none");
     dialogOverlay.dataset.closing = "false";
+    document.body.classList.remove("add-task-dialog-open");
   };
 
   if (!modalContent) {

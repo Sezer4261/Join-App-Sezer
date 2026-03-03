@@ -3,15 +3,15 @@
  * @returns {Promise<*>} Result.
  */
 async function renderAddTask() {
-  let content = document.getElementById('add-task-content');
-  content.innerHTML = '';
-  content.innerHTML += generateAddTask();
+  const content = document.getElementById('add-task-content');
+  if (!content) return;
   await loadContacts();
   resetSelectedContacts();
   selectContacts();
   renderSelectedAvatars();
   initAddDropdownClose();
   initAddSubtaskEnter();
+  showSubtasks();
 }
 
 /**
