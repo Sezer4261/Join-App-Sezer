@@ -86,7 +86,7 @@
     .clear,
     .create {
         padding: 8px 14px;
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -114,17 +114,17 @@
     input,
     textarea,
     select {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .priority-options label {
         min-width: 90px;
         padding: 6px 12px;
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .custom-select {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -140,7 +140,7 @@
     .priority-options label {
         min-width: 80px;
         padding: 5px 10px;
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .subtasks input {
@@ -154,12 +154,12 @@
     }
 
     .custom-select {
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .priority-options label {
         min-width: 74px;
         padding: 4px 8px;
-        font-size: 11px;
+        font-size: 16px;
     }
 }

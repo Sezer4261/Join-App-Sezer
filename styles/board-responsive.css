@@ -32,7 +32,7 @@
 
 @media (max-width: 1030px) {
     .board-search input::placeholder {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .content {
@@ -100,18 +100,18 @@
     .add-task-dialog textarea,
     .add-task-dialog select {
         padding: 8px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .add-task-dialog .priority-options label {
         min-width: 90px;
         padding: 6px 12px;
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .add-task-dialog .actions button {
         padding: 8px 12px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .add-task-dialog .note {
@@ -142,7 +142,7 @@
 
     .modal-content .edit-input,
     .modal-content .edit-textarea {
-        font-size: 14px;
+        font-size: 16px;
         padding: 8px;
     }
 
@@ -154,12 +154,12 @@
     .modal-content .edit-task-form .priority-options label {
         min-width: 90px;
         padding: 6px 12px;
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .modal-content .edit-actions button {
         padding: 8px 12px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .modal-content .edit-assigned .custom-select {
@@ -259,14 +259,14 @@
 
     .modal-content .edit-input,
     .modal-content .edit-textarea {
-        font-size: 13px;
+        font-size: 16px;
         padding: 7px;
     }
 
     .modal-content .edit-task-form .priority-options label {
         min-width: 78px;
         padding: 5px 8px;
-        font-size: 12px;
+        font-size: 16px;
     }
 }
 
@@ -304,7 +304,7 @@
 
     .modal-content .edit-actions button {
         padding: 7px 10px;
-        font-size: 13px;
+        font-size: 16px;
     }
 }
 
@@ -340,7 +340,7 @@
         min-width: 30%;
         flex: 1 1 30%;
         padding: 4px 6px;
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .modal-content .edit-actions {
@@ -359,11 +359,11 @@
 
     .modal-content .edit-actions button {
         padding: 7px 10px;
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .board-search input {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .board-header h1 {
@@ -375,7 +375,7 @@
     .add-task-dialog .priority-options label {
         min-width: 84px;
         padding: 5px 10px;
-        font-size: 12px;
+        font-size: 16px;
     }
 }
 
@@ -383,7 +383,7 @@
     .modal-content .edit-task-form .priority-options label {
         min-width: 70px;
         padding: 4px 6px;
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .modal-content .edit-task-form .priority-options label svg {

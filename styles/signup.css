@@ -200,7 +200,7 @@ input.input-error:focus {
 
 .error-message {
     color: #ff3d00;
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 5px;
     margin-left: 15px;
     min-height: 16px;

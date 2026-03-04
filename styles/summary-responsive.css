@@ -219,7 +219,7 @@
     }
 
     .card-subtitle {
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .deadline-card {
@@ -237,7 +237,7 @@
     }
 
     .due-date {
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .task-summary-card {
@@ -252,7 +252,7 @@
     }
 
     .subheadline {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -262,6 +262,6 @@
     }
 
     .subheadline {
-        font-size: 13px;
+        font-size: 16px;
     }
 }

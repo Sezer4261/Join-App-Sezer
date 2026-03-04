@@ -110,7 +110,7 @@ textarea {
 
 .error-message {
   color: #ff6b6b;
-  font-size: 14px;
+  font-size: 16px;
   display: block;
   min-height: 16px;
 }
@@ -281,7 +281,7 @@ select:focus,
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   flex-shrink: 0;
 }
@@ -307,7 +307,7 @@ select:focus,
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
 }
 

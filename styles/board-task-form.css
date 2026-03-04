@@ -56,7 +56,7 @@
     background: white;
     color: #000;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
     transition: all 120ms;
 }
 
@@ -313,7 +313,7 @@
     .edit-task-form textarea,
     .edit-task-form select {
         padding: 8px;
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .edit-task-form .subtasks input,
@@ -373,14 +373,14 @@
     .edit-task-form #editSubtaskArea .subtask,
     .edit-task-form #editSubtaskArea .subtask-edit,
     .edit-task-form #editSubtaskArea span {
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .edit-task-form input,
     .edit-task-form textarea,
     .edit-task-form select {
         padding: 7px;
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .edit-task-form .subtasks input,
@@ -394,14 +394,14 @@
     .edit-task-form #editSubtaskArea .subtask,
     .edit-task-form #editSubtaskArea .subtask-edit,
     .edit-task-form #editSubtaskArea span {
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .edit-task-form input,
     .edit-task-form textarea,
     .edit-task-form select {
         padding: 6px;
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .edit-task-form .subtasks input,

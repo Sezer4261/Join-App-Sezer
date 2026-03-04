@@ -202,7 +202,7 @@ ul img {
     }
 
     .sidebar ul a {
-        font-size: 12px;
+        font-size: 16px;
         text-align: center;
         white-space: nowrap;
     }
@@ -215,7 +215,7 @@ ul img {
 
 @media (max-width: 480px) {
     .sidebar ul a {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     ul img {
