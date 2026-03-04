@@ -48,7 +48,7 @@
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 919px) {
     .ac {
         flex-direction: column;
         width: 98vw;
@@ -58,7 +58,7 @@
     .ac-hero,
     .ac-formwrap {
         width: 100%;
-        padding: 32px 16px;
+        padding: 32px 40px;
     }
 
     .ac-form {
@@ -73,7 +73,7 @@
     .ac-close {
         top: 16px;
         right: 16px;
-        color: rgb(246, 247, 248)
+        color: rgb(246, 247, 248);
     }
 
     .ac-actions {
@@ -364,6 +364,10 @@
 }
 
 @media (min-width: 781px) and (max-width: 900px) {
+    .ac-underline {
+        margin-bottom: 32px;
+    }
+
     .ac-dialog {
         width: 600px;
     }

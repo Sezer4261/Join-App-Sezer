@@ -34,7 +34,7 @@
     background: #2A3647;
     color: #fff;
     width: 340px;
-    padding: 56px 40px 0 40px;
+    padding: 56px 23px 0 23px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -43,7 +43,7 @@
 }
 
 .ac-brand {
-    margin-bottom: 32px;
+    margin-bottom: 8px;
 }
 
 .ac-logo {
@@ -53,16 +53,16 @@
 }
 
 .ac-title {
-    font-size: 40px;
+    font-size: 48px;
     font-weight: 700;
-    margin: 0 0 16px 0;
+    margin: 0 0 8px 0;
     letter-spacing: -1px;
 }
 
 .ac-subtitle {
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 400;
-    margin-bottom: 24px;
+    margin-bottom: 0px;
 }
 
 .ac-underline {
