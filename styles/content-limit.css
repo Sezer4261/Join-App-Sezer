@@ -1,0 +1,39 @@
+:root {
+  --content-max-width: 1440px;
+  --content-padding-x: 24px;
+}
+
+/*
+  Global content limiter utility.
+  Apply `.content-limit` to any block whose inner content should not exceed 1440px.
+  The page/background can remain full-width.
+*/
+.content-limit {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--content-padding-x);
+  padding-right: var(--content-padding-x);
+  box-sizing: border-box;
+}
+
+/* Opt out of centering (keeps content left-aligned). */
+.content-limit--left {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Prevent double padding when the parent already has padding. */
+.content-limit--no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Helper for horizontal rows (e.g. headers) inside a limited container. */
+.content-limit--row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}

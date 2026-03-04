@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join - Sign Up</title>
+  <link rel="stylesheet" href="./styles/content-limit.css">
   <link rel="stylesheet" href="./styles/signup.css">
   <link rel="stylesheet" href="./styles/signup-responsive.css">
   <link rel="icon" type="image/png" href="./assets/img/join-logo-white.svg">
@@ -18,83 +19,88 @@
 
 <body>
   <header class="header">
-    <div class="header-left">
-      <img src="./assets/img/join-logo.svg" alt="Join Logo">
+    <div class="content-limit">
+      <div class="header-left">
+        <img src="./assets/img/join-logo.svg" alt="Join Logo">
+      </div>
     </div>
   </header>
-  <div class="content">
-    <div class="login">
-      <div class="signup-header">
-        <img src="./assets/img/arrow-left-line.svg" alt="Back to Login" class="back-to-login"
-          onclick="navigateToLogin()">
-        <h1>Sign Up</h1>
-      </div>
-      <div class="login-separater"></div>
-      <form class="login-input" onsubmit="handleSignupSubmit(event)" novalidate>
-        <div class="input-wrapper">
-          <div class="input-field">
-            <input class="input-focus" type="text" id="register-name" placeholder="Name">
-            <img src="./assets/icons/person.svg">
-          </div>
-          <span class="error-message" id="register-name-error"></span>
+  <div class="content-limit">
+    <div class="content">
+      <div class="login">
+        <div class="signup-header">
+          <img src="./assets/img/arrow-left-line.svg" alt="Back to Login" class="back-to-login"
+            onclick="navigateToLogin()">
+          <h1>Sign Up</h1>
         </div>
-
-        <div class="input-wrapper">
-          <div class="input-field">
-            <input class="input-focus" type="email" id="register-email" placeholder="Email">
-            <img src="./assets/icons/mail.svg">
-          </div>
-          <span class="error-message" id="register-email-error"></span>
-        </div>
-
-        <div class="input-wrapper">
-          <div class="input-field">
-            <input class="input-focus" type="password" id="register-password" placeholder="Password">
-            <img src="./assets/icons/lock.svg" alt="" id="register-lock-icon">
-            <img src="./assets/icons/visibility-off.svg" alt="" id="register-visibility-off-icon"
-              class="is-hidden password-toggle">
-            <img src="./assets/icons/visibility.svg" alt="" id="register-visibility-icon"
-              class="is-hidden password-toggle">
-          </div>
-          <span class="error-message" id="register-password-error"></span>
-        </div>
-
-        <div class="input-wrapper">
-          <div class="input-field">
-            <input class="input-focus" type="password" id="register-password-confirm" placeholder="Confirm Password">
-            <img src="./assets/icons/lock.svg" alt="" id="register-confirm-lock-icon">
-            <img src="./assets/icons/visibility-off.svg" alt="" id="register-confirm-visibility-off-icon"
-              class="is-hidden password-toggle">
-            <img src="./assets/icons/visibility.svg" alt="" id="register-confirm-visibility-icon"
-              class="is-hidden password-toggle">
-          </div>
-          <span class="error-message" id="register-password-confirm-error"></span>
-        </div>
-
-        <div class="privacy-wrapper">
-          <div class="accept-privacy-policy">
-            <input type="checkbox" class="accept-privacy" id="accept-privacy">
-            <div><span class="checkbox-text">I accept the </span><a href="./public/privacy-policy.html">Privacy
-                Policy</a>
+        <div class="login-separater"></div>
+        <form class="login-input" onsubmit="handleSignupSubmit(event)" novalidate>
+          <div class="input-wrapper">
+            <div class="input-field">
+              <input class="input-focus" type="text" id="register-name" placeholder="Name">
+              <img src="./assets/icons/person.svg">
             </div>
+            <span class="error-message" id="register-name-error"></span>
           </div>
-          <span class="error-message" id="accept-privacy-error"></span>
-        </div>
 
-        <div class="login-buttons">
-          <button class="btn-signup">Sign up</button>
-        </div>
-      </form>
+          <div class="input-wrapper">
+            <div class="input-field">
+              <input class="input-focus" type="email" id="register-email" placeholder="Email">
+              <img src="./assets/icons/mail.svg">
+            </div>
+            <span class="error-message" id="register-email-error"></span>
+          </div>
+
+          <div class="input-wrapper">
+            <div class="input-field">
+              <input class="input-focus" type="password" id="register-password" placeholder="Password">
+              <img src="./assets/icons/lock.svg" alt="" id="register-lock-icon">
+              <img src="./assets/icons/visibility-off.svg" alt="" id="register-visibility-off-icon"
+                class="is-hidden password-toggle">
+              <img src="./assets/icons/visibility.svg" alt="" id="register-visibility-icon"
+                class="is-hidden password-toggle">
+            </div>
+            <span class="error-message" id="register-password-error"></span>
+          </div>
+
+          <div class="input-wrapper">
+            <div class="input-field">
+              <input class="input-focus" type="password" id="register-password-confirm"
+                placeholder="Confirm Password">
+              <img src="./assets/icons/lock.svg" alt="" id="register-confirm-lock-icon">
+              <img src="./assets/icons/visibility-off.svg" alt="" id="register-confirm-visibility-off-icon"
+                class="is-hidden password-toggle">
+              <img src="./assets/icons/visibility.svg" alt="" id="register-confirm-visibility-icon"
+                class="is-hidden password-toggle">
+            </div>
+            <span class="error-message" id="register-password-confirm-error"></span>
+          </div>
+
+          <div class="privacy-wrapper">
+            <div class="accept-privacy-policy">
+              <input type="checkbox" class="accept-privacy" id="accept-privacy">
+              <div><span class="checkbox-text">I accept the </span><a href="./public/privacy-policy.html">Privacy
+                  Policy</a>
+              </div>
+            </div>
+            <span class="error-message" id="accept-privacy-error"></span>
+          </div>
+
+          <div class="login-buttons">
+            <button class="btn-signup">Sign up</button>
+          </div>
+        </form>
+      </div>
     </div>
+
+    <div id="msg-box"></div>
+    <footer>
+
+      <a href="./public/privacy-policy.html">Privacy Policy</a>
+      <a href="./public/legal-notice.html">Legal Notice</a>
+
+    </footer>
   </div>
-
-  <div id="msg-box"></div>
-  <footer>
-
-    <a href="./public/privacy-policy.html">Privacy Policy</a>
-    <a href="./public/legal-notice.html">Legal Notice</a>
-
-  </footer>
 </body>
 
 </html>
