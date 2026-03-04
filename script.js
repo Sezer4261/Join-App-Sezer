@@ -50,7 +50,7 @@ function protectThisPage() {
     return;
   }
   if (!localStorage.getItem("user")) {
-    window.location.replace("index.html");
+    window.location.replace("/index.html");
   }
 }
 
@@ -60,7 +60,14 @@ function protectThisPage() {
  * @returns {boolean} Result.
  */
 function isPublicPage(pathname) {
-  return pathname.includes('index.html') || pathname.includes('signup.html');
+  const normalizedPath = String(pathname || "").replace(/\\/g, "/");
+  return (
+    normalizedPath === "/" ||
+    normalizedPath.endsWith("/index.html") ||
+    normalizedPath.endsWith("/signup.html") ||
+    normalizedPath.endsWith("/public/privacy-policy.html") ||
+    normalizedPath.endsWith("/public/legal-notice.html")
+  );
 }
 
 protectThisPage();
@@ -255,7 +262,7 @@ function safeFirebaseLogout() {
  * @returns {void} Result.
  */
 function redirectToLogin() {
-  window.location.replace("index.html");
+  window.location.replace("/index.html");
 }
 
 /**
@@ -268,7 +275,7 @@ function navigateToHelp() {
 
 window.addEventListener("pageshow", (event) => {
   if (event.persisted && !localStorage.getItem("user")) {
-    window.location.replace("index.html");
+    window.location.replace("/index.html");
   }
 });
 

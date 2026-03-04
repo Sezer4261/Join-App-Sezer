@@ -22,7 +22,6 @@ main{
     flex-direction: column;
     align-items: stretch;
     flex: 1 1 auto;
-    gap: 75px;
     height: 100vh;
     overflow: hidden;
     min-height: 0;
@@ -40,6 +39,7 @@ main{
 
 .wrapper h1 {
     font-size: 56px;
+    margin-top: 75px;
     margin-bottom: 30px;
 }
 
@@ -54,6 +54,10 @@ main{
 
 .wrapper span {
     margin-bottom: 30px;
+}
+.span-container-mail-content {
+    margin-bottom: 30px;
+    display: inline-block;
 }
 
 @media (max-width: 1250px) {
