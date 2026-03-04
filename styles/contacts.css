@@ -323,7 +323,7 @@ hr {
 .contact-actions {
     display: flex;
     gap: 8px;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--app-font-family, 'Open Sans', Arial, sans-serif);
     font-size: 16px;
     color: #000;
     height: 24px;

@@ -37,7 +37,7 @@
     align-items: center;
     text-align: center;
     gap: 8px;
-    width: 100px;
+    width: 109px;
     cursor: pointer;
 }
 
@@ -62,7 +62,7 @@ ul img {
 }
 
 .sidebar ul a {
-    width: 63px;
+    width: 71px;
     text-align: left;
     color: #cdcdcd;
     font-weight: 400;
@@ -103,7 +103,7 @@ ul img {
     background-color: #091931;
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 1024px) {
     .app {
         flex-direction: column;
         width: 100%;

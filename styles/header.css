@@ -137,7 +137,7 @@ header {
     display: none;
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 1024px) {
     header {
         left: 0;
     }
