@@ -210,6 +210,7 @@ function applyDashboardStats(tasks) {
     setText("total-awaiting-feedback", stats.awaitingFeedbackCount);
     setText("total-urgent", stats.urgentCount);
     setText("total-tasks-board", stats.totalTasks);
+    setText("due-date", formatDashboardDueDate(stats.earliestUrgentDueDate));
 }
 
 /**
@@ -218,14 +219,83 @@ function applyDashboardStats(tasks) {
  * @returns {*} Result.
  */
 function getDashboardStats(tasks) {
+    const urgentTasks = tasks.filter(t => t.priority === "urgent" && t.status !== "Done");
+    const earliestUrgentDueDate = getEarliestDueDate(urgentTasks);
+
     return {
         todoCount: tasks.filter(t => t.status === "To Do").length,
         doneCount: tasks.filter(t => t.status === "Done").length,
         inProgressCount: tasks.filter(t => t.status === "In Progress").length,
         awaitingFeedbackCount: tasks.filter(t => t.status === "Await Feedback").length,
-        urgentCount: tasks.filter(t => t.priority === "urgent").length,
+        urgentCount: urgentTasks.length,
+        earliestUrgentDueDate,
         totalTasks: tasks.length
     };
+}
+
+/**
+ * Parses a task due date string into a Date without timezone shifting.
+ * Supports the app's ISO format (YYYY-MM-DD) and a few common fallbacks.
+ * @param {string} dueDate - Due date string.
+ * @returns {Date|null} Result.
+ */
+function parseTaskDueDate(dueDate) {
+    if (!dueDate || typeof dueDate !== "string") return null;
+    const value = dueDate.trim();
+    if (!value) return null;
+
+    const isoMatch = /^\d{4}-\d{2}-\d{2}$/.exec(value);
+    if (isoMatch) {
+        const [year, month, day] = value.split("-").map(Number);
+        const date = new Date(year, month - 1, day);
+        return Number.isNaN(date.getTime()) ? null : date;
+    }
+
+    const deDotMatch = /^\d{2}\.\d{2}\.\d{4}$/.exec(value);
+    if (deDotMatch) {
+        const [day, month, year] = value.split(".").map(Number);
+        const date = new Date(year, month - 1, day);
+        return Number.isNaN(date.getTime()) ? null : date;
+    }
+
+    const slashMatch = /^\d{2}\/\d{2}\/\d{4}$/.exec(value);
+    if (slashMatch) {
+        const [day, month, year] = value.split("/").map(Number);
+        const date = new Date(year, month - 1, day);
+        return Number.isNaN(date.getTime()) ? null : date;
+    }
+
+    const fallback = new Date(value);
+    return Number.isNaN(fallback.getTime()) ? null : fallback;
+}
+
+/**
+ * Returns the earliest due date among a list of tasks.
+ * @param {Array<Object>} tasks - Task list.
+ * @returns {Date|null} Result.
+ */
+function getEarliestDueDate(tasks) {
+    let earliest = null;
+    for (const task of tasks) {
+        const date = parseTaskDueDate(task.dueDate);
+        if (!date) continue;
+        if (!earliest || date.getTime() < earliest.getTime()) earliest = date;
+    }
+    return earliest;
+}
+
+/**
+ * Formats the dashboard due date string.
+ * @param {Date|null} date - Date.
+ * @returns {string} Result.
+ */
+function formatDashboardDueDate(date) {
+    if (!date) return "—";
+    return new Intl.DateTimeFormat("en-US", {
+        month: "long",
+        day: "2-digit",
+        year: "numeric"
+    }).format(date);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {

@@ -5,6 +5,16 @@
 	gap: 16px;
 }
 
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	padding-left: 100px;
+	flex: 1 1 auto;
+	overflow-y: auto;
+	padding-right: 40px;
+	min-height: 0;
+}
+
 .help-back-btn {
 	width: 32px;
 	height: 32px;
@@ -19,12 +29,12 @@
 }
 
 .blue-text {
-    color: #29ABE2;
+	color: #29ABE2;
 }
 
 h2 {
-    font-size: 32px;
-    margin-bottom: 16px;
+	font-size: 32px;
+	margin-bottom: 16px;
 }
 
 .help-steps-intro {
