@@ -249,7 +249,7 @@ function getEditContactDialog(id, name, email, phone, initials) {
                         <img src="./assets/icons/mail.svg">
                     </div>
                     <div class="ac-field">
-                        <input class="input-focus" id="edit-phone" name="phone" type="tel" placeholder="Phone" value="${phone || ''}">
+                        <input class="input-focus" id="edit-phone" name="phone" type="tel" placeholder="Phone" value="${phone || ''}" required>
                         <img src="./assets/img/call.png">
                     </div>
                     <div class="ac-actions">

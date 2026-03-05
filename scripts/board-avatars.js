@@ -22,7 +22,7 @@ function renderAvatar(task) {
   for (let i = 0; i < contacts.length; i++) {
     const name = contacts[i];
     if (!name) continue;
-    const initials = name.split(" ").map(n => n[0]).join("");
+    const initials = getContactInitialsFromName(name);
     container.innerHTML += getAvatarMarkup(initials, getRandomColor());
   }
 }

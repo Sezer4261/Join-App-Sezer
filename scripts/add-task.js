@@ -309,7 +309,7 @@ function renderSelectedAvatars() {
  * @returns {void} Result.
  */
 function appendSelectedAvatar(container, name) {
-  const initials = name.split(" ").map(n => n[0]).join("");
+  const initials = getContactInitialsFromName(name);
   container.innerHTML += getSelectedAvatarMarkup(initials);
 }
 

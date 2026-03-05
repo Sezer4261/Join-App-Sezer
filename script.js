@@ -10,6 +10,112 @@ let selectedContacts = [];
 let subtasks = [];
 
 /**
+ * Normalizes a contact/person name input.
+ * @param {string} name - Raw name.
+ * @returns {string} Normalized name.
+ */
+function normalizeContactNameInput(name) {
+  return String(name ?? "").trim().replace(/\s+/g, " ");
+}
+
+/**
+ * Computes initials from a name (max 2 letters: first + last part).
+ * Works even if the name is not fully valid (best-effort).
+ * @param {string} name - Name.
+ * @returns {string} Initials.
+ */
+function getContactInitialsFromName(name) {
+  const normalizedName = normalizeContactNameInput(name);
+  if (!normalizedName) return "";
+  const parts = normalizedName.split(" ").filter(Boolean);
+  if (parts.length === 0) return "";
+
+  const firstPart = String(parts[0] ?? "");
+  const lastPart = String(parts[parts.length - 1] ?? "");
+  const firstLetter = (firstPart.match(/[\p{L}]/u) || [""])[0];
+  const lastLetter = (lastPart.match(/[\p{L}]/u) || [""])[0];
+  const raw = (firstLetter + (parts.length > 1 ? lastLetter : "")).toUpperCase();
+  return raw.slice(0, 2);
+}
+
+/**
+ * Validates a contact name.
+ * Rules:
+ * - Only letters and hyphen per name part (hyphen allowed inside a part)
+ * - 1 to 3 name parts (space separated)
+ * - At least 2 letters total
+ * @param {string} name - Name input.
+ * @returns {{ isValid: boolean, normalizedName: string, initials: string, error: string }} Result.
+ */
+function validateContactNameInput(name) {
+  const normalizedName = normalizeContactNameInput(name);
+  if (!normalizedName) {
+    return { isValid: false, normalizedName, initials: "", error: "Name ist erforderlich." };
+  }
+
+  const parts = normalizedName.split(" ").filter(Boolean);
+  if (parts.length > 3) {
+    return { isValid: false, normalizedName, initials: "", error: "Maximal 3 Namen sind erlaubt." };
+  }
+
+  const partPattern = /^[\p{L}]+(?:-[\p{L}]+)*$/u;
+  for (const part of parts) {
+    if (!partPattern.test(part)) {
+      return { isValid: false, normalizedName, initials: "", error: "Name darf nur Buchstaben und Bindestrich enthalten." };
+    }
+
+    const lettersInPart = part.replace(/-/g, "").length;
+    if (lettersInPart < 2) {
+      return { isValid: false, normalizedName, initials: "", error: "Jeder Namensbestandteil muss mindestens 2 Buchstaben haben." };
+    }
+  }
+
+  const totalLetters = normalizedName.replace(/[^\p{L}]/gu, "").length;
+  if (totalLetters < 2) {
+    return { isValid: false, normalizedName, initials: "", error: "Name muss mindestens 2 Buchstaben enthalten." };
+  }
+
+  const initials = getContactInitialsFromName(normalizedName);
+  return { isValid: true, normalizedName, initials, error: "" };
+}
+
+/**
+ * Validates an email address the same way as the signup form.
+ * @param {string} email - Email input.
+ * @returns {{ isValid: boolean, normalizedEmail: string, error: string }} Result.
+ */
+function validateEmailLikeSignup(email) {
+  const normalizedEmail = String(email ?? "").trim();
+  if (!normalizedEmail) {
+    return { isValid: false, normalizedEmail, error: "Please enter an email address." };
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+    return { isValid: false, normalizedEmail, error: "Please enter a valid email address." };
+  }
+  return { isValid: true, normalizedEmail, error: "" };
+}
+
+/**
+ * Validates a phone number for contacts.
+ * Rule: digits only (type=number) and not empty.
+ * @param {string|number} phone - Phone input.
+ * @returns {{ isValid: boolean, normalizedPhone: string, error: string }} Result.
+ */
+function validateContactPhoneNumber(phone) {
+  const normalizedPhone = String(phone ?? "").trim();
+  if (!normalizedPhone) {
+    return { isValid: false, normalizedPhone, error: "Bitte Telefonnummer eingeben." };
+  }
+  if (!/^\d+$/.test(normalizedPhone)) {
+    return { isValid: false, normalizedPhone, error: "Bitte nur Zahlen eingeben." };
+  }
+  if (normalizedPhone.length < 6 || normalizedPhone.length > 20) {
+    return { isValid: false, normalizedPhone, error: "Telefonnummer muss 6 bis 20 Ziffern lang sein." };
+  }
+  return { isValid: true, normalizedPhone, error: "" };
+}
+
+/**
  * Loads contacts.
  * @returns {Promise<*>} Result.
  */

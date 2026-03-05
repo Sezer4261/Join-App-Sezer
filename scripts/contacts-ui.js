@@ -19,10 +19,25 @@ function updateAddContactSubmitState(dialog) {
   const phoneInput = dialog.querySelector('#ac-phone');
   const submitBtn = dialog.querySelector('[data-ac-submit]');
   if (!submitBtn) return;
+
+  const nameCheck = validateContactNameInput(nameInput?.value ?? "");
+  if (nameInput && typeof nameInput.setCustomValidity === "function") {
+    nameInput.setCustomValidity(nameCheck.isValid ? "" : nameCheck.error);
+  }
+
+  const emailCheck = validateEmailLikeSignup(emailInput?.value ?? "");
+  if (emailInput && typeof emailInput.setCustomValidity === "function") {
+    emailInput.setCustomValidity(emailCheck.isValid ? "" : emailCheck.error);
+  }
+
+  const phoneCheck = validateContactPhoneNumber(phoneInput?.value ?? "");
+  if (phoneInput && typeof phoneInput.setCustomValidity === "function") {
+    phoneInput.setCustomValidity(phoneCheck.isValid ? "" : phoneCheck.error);
+  }
   const isValid = (
-    isNonEmptyString(nameInput?.value ?? '') &&
-    isNonEmptyString(emailInput?.value ?? '') &&
-    isNonEmptyString(phoneInput?.value ?? '')
+    nameCheck.isValid &&
+    emailCheck.isValid &&
+    phoneCheck.isValid
   );
   submitBtn.disabled = !isValid;
   submitBtn.setAttribute('aria-disabled', String(!isValid));
@@ -213,10 +228,25 @@ function updateEditContactSubmitState(dialog) {
   const phoneInput = dialog.querySelector('#edit-phone');
   const submitBtn = dialog.querySelector('[data-edit-submit]');
   if (!submitBtn) return;
+
+  const nameCheck = validateContactNameInput(nameInput?.value ?? "");
+  if (nameInput && typeof nameInput.setCustomValidity === "function") {
+    nameInput.setCustomValidity(nameCheck.isValid ? "" : nameCheck.error);
+  }
+
+  const emailCheck = validateEmailLikeSignup(emailInput?.value ?? "");
+  if (emailInput && typeof emailInput.setCustomValidity === "function") {
+    emailInput.setCustomValidity(emailCheck.isValid ? "" : emailCheck.error);
+  }
+
+  const phoneCheck = validateContactPhoneNumber(phoneInput?.value ?? "");
+  if (phoneInput && typeof phoneInput.setCustomValidity === "function") {
+    phoneInput.setCustomValidity(phoneCheck.isValid ? "" : phoneCheck.error);
+  }
   const isValid = (
-    isNonEmptyString(nameInput?.value ?? '') &&
-    isNonEmptyString(emailInput?.value ?? '') &&
-    isNonEmptyString(phoneInput?.value ?? '')
+    nameCheck.isValid &&
+    emailCheck.isValid &&
+    phoneCheck.isValid
   );
   submitBtn.disabled = !isValid;
   submitBtn.setAttribute('aria-disabled', String(!isValid));

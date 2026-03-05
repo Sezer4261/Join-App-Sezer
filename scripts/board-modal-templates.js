@@ -71,7 +71,7 @@ function generateModalAssignedContacts(task) {
   }
   return task.contacts.map((name) => {
     if (!name) return "";
-    const initials = name.split(" ").map(n => n[0]).join("");
+    const initials = getContactInitialsFromName(name);
     return /*html*/ `
       <div class="modal-contact">
         <div class="avatar" style="background-color: ${getRandomColor()};">

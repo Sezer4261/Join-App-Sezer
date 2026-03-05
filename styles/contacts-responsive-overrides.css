@@ -122,6 +122,16 @@
         padding-right: 16px;
     }
 
+    #contact-list .contact-item a {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    #contact-list .contact-item a.contact-email {
+        pointer-events: auto;
+        cursor: pointer;
+    }
+
     hr {
         width: 100%;
     }

@@ -14,7 +14,7 @@ async function handleContactClick(event) {
     return;
   }
   const container = document.getElementById('contact-details');
-  const initials = contactData.name.split(" ").map(n => n[0]).join("");
+  const initials = getContactInitialsFromName(contactData.name);
   const phone = contactData.phone || '';
   container.innerHTML = getContactDetailsTemplate(initials, contactData.name, contactData.email, phone, contactId);
   initContactMoreMenuAutoClose();
@@ -61,7 +61,7 @@ function renderContactEntries(contactListRef, contactsData) {
       contactListRef.innerHTML += getHeaderLetter(firstLetter);
     }
     const name = contact.name || 'Unnamed';
-    const initials = name.split(" ").map(n => n[0]).join("");
+    const initials = getContactInitialsFromName(name);
     const content = getContactItem(name, contact.email, initials);
     contactListRef.innerHTML += getContactItemWrapper(contact.id, contact.phone, content);
   }

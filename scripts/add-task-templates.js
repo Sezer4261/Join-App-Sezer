@@ -210,7 +210,7 @@ function generateAssignedContacts(contacts) {
   return contacts.map((contact, i) => {
     const isChecked = selectedContacts.includes(contact.name);
     const checkboxId = `contact-${i}`;
-    const initials = contact.name.split(" ").map(part => part.charAt(0)).join("").toUpperCase();
+    const initials = getContactInitialsFromName(contact.name);
     return /*html*/ `
       <div class="dropdown-item">
         <div class="dropdown-avatar">${initials}</div>

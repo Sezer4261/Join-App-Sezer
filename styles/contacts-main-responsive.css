@@ -58,7 +58,7 @@
     .ac-hero,
     .ac-formwrap {
         width: 100%;
-        padding: 32px 40px;
+        padding: 32px 16px;
     }
 
     .ac-form {
@@ -287,11 +287,11 @@
 
 @media (max-width: 780px) {
     .ac-title {
-        font-size: 30px;
+        font-size: 35px;
     }
 
     .ac-subtitle {
-        font-size: 16px;
+        font-size: 18px;
         margin-bottom: 0px;
     }
 
