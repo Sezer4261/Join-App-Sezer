@@ -156,7 +156,7 @@ function protectThisPage() {
     return;
   }
   if (!localStorage.getItem("user")) {
-    window.location.replace("/index.html");
+    window.location.replace("index.html");
   }
 }
 
@@ -171,6 +171,8 @@ function isPublicPage(pathname) {
     normalizedPath === "/" ||
     normalizedPath.endsWith("/index.html") ||
     normalizedPath.endsWith("/signup.html") ||
+    normalizedPath.endsWith("/privacy-policy.html") ||
+    normalizedPath.endsWith("/legal-notice.html") ||
     normalizedPath.endsWith("/public/privacy-policy.html") ||
     normalizedPath.endsWith("/public/legal-notice.html")
   );
@@ -376,12 +378,12 @@ function redirectToLogin() {
  * @returns {void} Result.
  */
 function navigateToHelp() {
-  window.location.href = "/help.html";
+  window.location.href = "help.html";
 }
 
 window.addEventListener("pageshow", (event) => {
   if (event.persisted && !localStorage.getItem("user")) {
-    window.location.replace("/index.html");
+    window.location.replace("index.html");
   }
 });
 
