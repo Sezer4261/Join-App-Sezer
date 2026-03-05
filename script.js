@@ -368,7 +368,7 @@ function safeFirebaseLogout() {
  * @returns {void} Result.
  */
 function redirectToLogin() {
-  window.location.replace("/index.html");
+  window.location.replace("index.html");
 }
 
 /**
