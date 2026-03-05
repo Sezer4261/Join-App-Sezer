@@ -156,7 +156,7 @@ function protectThisPage() {
     return;
   }
   if (!localStorage.getItem("user")) {
-    window.location.replace("index.html");
+    window.location.replace(getPagePath("index.html"));
   }
 }
 
@@ -370,7 +370,7 @@ function safeFirebaseLogout() {
  * @returns {void} Result.
  */
 function redirectToLogin() {
-  window.location.replace("index.html");
+  window.location.replace(getPagePath("index.html"));
 }
 
 /**
@@ -378,12 +378,28 @@ function redirectToLogin() {
  * @returns {void} Result.
  */
 function navigateToHelp() {
-  window.location.href = "help.html";
+  window.location.href = getPagePath("help.html");
+}
+
+/**
+ * Builds a page path that works from root pages and /public pages.
+ * @param {string} fileName - Target HTML file.
+ * @returns {string} Context-safe relative path.
+ */
+function getPagePath(fileName) {
+  const normalizedPath = String(window.location.pathname || "").replace(/\\/g, "/");
+  const inPublicFolder = normalizedPath.includes("/public/");
+  return `${inPublicFolder ? "../" : "./"}${fileName}`;
 }
 
 window.addEventListener("pageshow", (event) => {
-  if (event.persisted && !localStorage.getItem("user")) {
-    window.location.replace("index.html");
+  const currentPage = window.location.pathname;
+  if (!event.persisted || isPublicPage(currentPage)) {
+    return;
+  }
+
+  if (!localStorage.getItem("user")) {
+    window.location.replace(getPagePath("index.html"));
   }
 });
 
