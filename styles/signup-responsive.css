@@ -140,7 +140,7 @@
         width: 94vw;
         height: 480px;
         position: absolute;
-        top: 12%;
+        top: 15%;
     }
 
     .login h1 {
@@ -148,11 +148,19 @@
         height: 60px;
     }
 
+    .input-wrapper {
+        margin-bottom: 6px;
+    }
+
     .login-input,
     .input-wrapper,
     .login-input input {
         width: 82vw;
         max-width: 320px;
+    }
+
+    .login-input {
+        margin-top: 24px;
     }
 
     .login-buttons {
@@ -181,9 +189,13 @@
         top: 11%;
     }
 
+    .accept-privacy-policy {
+        padding: 8px;
+    }
+
     footer {
         position: relative;
-        bottom: -545%;
+        bottom: -565%;
     }
 }
 
@@ -215,5 +227,9 @@
 
     .back-to-login {
         top: 2%;
+    }
+
+    footer {
+        bottom: -535%;
     }
 }
