@@ -1,3 +1,113 @@
+@media (max-width: 1310px) {
+    .title-contacts {
+        font-size: 54px;
+    }
+
+    .subtitle {
+        font-size: 26px;
+    }
+
+    .contact-name-large {
+        font-size: 32px;
+    }
+
+    .contact-header-large {
+        gap: 20px;
+        margin-bottom: 28px;
+    }
+
+    .contact-div-right {
+        margin: 40px 32px 0px 24px;
+        gap: 16px;
+    }
+
+    .contact-maintitle-container {
+        height: auto;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .separator {
+        order: 3;
+        display: block;
+        width: 72px;
+        height: 2px;
+        margin: 0;
+        background: #29ABE2;
+        font-size: 0;
+        color: transparent;
+    }
+
+    .contact-initials-large {
+        width: 80px;
+        height: 80px;
+        font-size: 34px;
+        margin-right: 0px;
+    }
+}
+
+@media (max-width: 1110px) {
+    .contact-section {
+        width: 340px;
+    }
+
+    .scroll {
+        width: 320px !important;
+    }
+
+    .add-contact-btn {
+        max-width: 280px;
+    }
+
+    .contact-item {
+        width: 100%;
+        box-sizing: border-box;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .contact-area {
+        padding: 12px 12px;
+    }
+
+    hr {
+        width: 100%;
+    }
+
+    .title-contacts {
+        font-size: 50px;
+    }
+
+    .subtitle {
+        font-size: 24px;
+    }
+
+    .contact-name-large {
+        font-size: 28px;
+    }
+
+    .contact-header-large {
+        gap: 18px;
+        margin-bottom: 24px;
+    }
+
+    .contact-div-right {
+        margin: 40px 28px 0px 20px;
+        gap: 12px;
+    }
+
+    .contact-maintitle-container {
+        gap: 6px;
+        margin-bottom: 18px;
+    }
+
+    .separator {
+        width: 68px;
+    }
+}
+
 @media (max-width: 1000px) {
     .title-contacts {
         font-size: 48px;
