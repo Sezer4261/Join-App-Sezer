@@ -23,7 +23,7 @@ main {
     flex-direction: column;
     align-items: stretch;
     flex: 1 1 auto;
-    gap: 75px;
+    gap: 0px;
     height: 100vh;
     overflow: hidden;
     min-height: 0;
@@ -41,6 +41,7 @@ main {
 
 .wrapper h1 {
     font-size: 56px;
+    margin-top: 75px;
     margin-bottom: 30px;
 }
 
