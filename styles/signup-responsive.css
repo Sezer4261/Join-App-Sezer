@@ -38,6 +38,10 @@
         height: 560px;
     }
 
+    .header {
+        margin-bottom: 30px;
+    }
+
     .header-left img {
         width: 84px;
         height: 102px;
@@ -77,6 +81,7 @@
 
     .header {
         height: 108px;
+        margin-bottom: 50px;
     }
 
     .header-left {
