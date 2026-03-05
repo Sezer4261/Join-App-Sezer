@@ -74,6 +74,19 @@
     .back-to-login {
         top: 7%;
     }
+
+    .header {
+        height: 108px;
+    }
+
+    .header-left {
+        margin-top: 16px;
+    }
+
+    footer {
+        position: relative;
+        bottom: 28px;
+    }
 }
 
 @media (max-width: 520px) {
