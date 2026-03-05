@@ -376,7 +376,7 @@ function redirectToLogin() {
  * @returns {void} Result.
  */
 function navigateToHelp() {
-  window.location.href = "help.html";
+  window.location.href = "/help.html";
 }
 
 window.addEventListener("pageshow", (event) => {
