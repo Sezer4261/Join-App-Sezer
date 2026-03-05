@@ -36,7 +36,7 @@ function sidebarHighlightingContacts() {
  * @returns {void} Result.
  */
 function openLogInSide() {
-    window.location.href = "/index.html";
+    window.location.href = "index.html";
 }
 
 /**
@@ -54,4 +54,3 @@ function navigateToLegalNotice() {
 function navigateToPrivacyPolicy() {
     window.location.href = "privacy-policy.html";
 }
-
