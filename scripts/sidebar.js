@@ -1,9 +1,19 @@
 /**
+ * Builds a page path that works from root pages and /public pages.
+ * @param {string} fileName - Target HTML file.
+ * @returns {string} Context-safe relative path.
+ */
+function getNavPath(fileName) {
+    const inPublicFolder = window.location.pathname.includes('/public/');
+    return `${inPublicFolder ? '../' : './'}${fileName}`;
+}
+
+/**
  * Executes sidebar highlighting summary logic.
  * @returns {void} Result.
  */
 function sidebarHighlightingSummary() {
-    window.location.href = "summary.html";
+    window.location.href = getNavPath("summary.html");
 }
 
 /**
@@ -11,7 +21,7 @@ function sidebarHighlightingSummary() {
  * @returns {void} Result.
  */
 function sidebarHighlightingAddTask() {
-    window.location.href = "add-task.html";
+    window.location.href = getNavPath("add-task.html");
 }
 
 /**
@@ -19,7 +29,7 @@ function sidebarHighlightingAddTask() {
  * @returns {void} Result.
  */
 function sidebarHighlightingBoard() {
-    window.location.href = "board.html";
+    window.location.href = getNavPath("board.html");
 }
 
 /**
@@ -27,7 +37,7 @@ function sidebarHighlightingBoard() {
  * @returns {void} Result.
  */
 function sidebarHighlightingContacts() {
-    window.location.href = "contacts.html";
+    window.location.href = getNavPath("contacts.html");
 
 }
 
@@ -36,7 +46,7 @@ function sidebarHighlightingContacts() {
  * @returns {void} Result.
  */
 function openLogInSide() {
-    window.location.href = "index.html";
+    window.location.href = getNavPath("index.html");
 }
 
 /**
@@ -44,7 +54,7 @@ function openLogInSide() {
  * @returns {void} Result.
  */
 function navigateToLegalNotice() {
-    window.location.href = "legal-notice.html";
+    window.location.href = getNavPath("legal-notice.html");
 }
 
 /**
@@ -52,5 +62,5 @@ function navigateToLegalNotice() {
  * @returns {void} Result.
  */
 function navigateToPrivacyPolicy() {
-    window.location.href = "privacy-policy.html";
+    window.location.href = getNavPath("privacy-policy.html");
 }
