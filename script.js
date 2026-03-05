@@ -29,7 +29,6 @@ function getContactInitialsFromName(name) {
   if (!normalizedName) return "";
   const parts = normalizedName.split(" ").filter(Boolean);
   if (parts.length === 0) return "";
-
   const firstPart = String(parts[0] ?? "");
   const lastPart = String(parts[parts.length - 1] ?? "");
   const firstLetter = (firstPart.match(/[\p{L}]/u) || [""])[0];
@@ -52,29 +51,24 @@ function validateContactNameInput(name) {
   if (!normalizedName) {
     return { isValid: false, normalizedName, initials: "", error: "Name ist erforderlich." };
   }
-
   const parts = normalizedName.split(" ").filter(Boolean);
   if (parts.length > 3) {
     return { isValid: false, normalizedName, initials: "", error: "Maximal 3 Namen sind erlaubt." };
   }
-
   const partPattern = /^[\p{L}]+(?:-[\p{L}]+)*$/u;
   for (const part of parts) {
     if (!partPattern.test(part)) {
       return { isValid: false, normalizedName, initials: "", error: "Name darf nur Buchstaben und Bindestrich enthalten." };
     }
-
     const lettersInPart = part.replace(/-/g, "").length;
     if (lettersInPart < 2) {
       return { isValid: false, normalizedName, initials: "", error: "Jeder Namensbestandteil muss mindestens 2 Buchstaben haben." };
     }
   }
-
   const totalLetters = normalizedName.replace(/[^\p{L}]/gu, "").length;
   if (totalLetters < 2) {
     return { isValid: false, normalizedName, initials: "", error: "Name muss mindestens 2 Buchstaben enthalten." };
   }
-
   const initials = getContactInitialsFromName(normalizedName);
   return { isValid: true, normalizedName, initials, error: "" };
 }
@@ -397,11 +391,9 @@ window.addEventListener("pageshow", (event) => {
   if (!event.persisted || isPublicPage(currentPage)) {
     return;
   }
-
   if (!localStorage.getItem("user")) {
     window.location.replace(getPagePath("index.html"));
   }
 });
-
 window.addEventListener("beforeunload", () => {
 });
