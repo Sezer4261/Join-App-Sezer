@@ -102,7 +102,7 @@ function getContactItem(contactDataName, contactDataMail, contactNameInitials) {
         <div class="contact-initials">${contactNameInitials}</div>
         <div>
             <div>${contactDataName}</div>
-            <a href="mailto:${contactDataMail}">${contactDataMail}</a>
+            <span class=contact-data-mail>${contactDataMail}</span>
         </div>
 
     </div>

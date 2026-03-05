@@ -176,6 +176,10 @@ main {
     border: 1px solid #fff;
 }
 
+.contact-data-mail {
+    color: #29ABE2;
+}
+
 .bg-blue {
     background: #1E90FF;
 }
