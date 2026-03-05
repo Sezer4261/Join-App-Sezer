@@ -72,7 +72,9 @@
     }
 
     .login-separater {
-        display: none;
+        margin-top: 8px;
+        margin-bottom: 16px;
+        width: 110px;
     }
 
     .back-to-login {
@@ -119,7 +121,8 @@
     }
 
     .login-separater {
-        width: 120px;
+        position: absolute;
+        top: 13%;
     }
 
     .header-left img {
@@ -136,6 +139,8 @@
     .login {
         width: 94vw;
         height: 480px;
+        position: absolute;
+        top: 12%;
     }
 
     .login h1 {
@@ -170,7 +175,19 @@
     .back-to-login {
         top: 3%;
     }
+
+    .login-separater {
+        position: absolute;
+        top: 11%;
+    }
+
+    footer {
+        position: relative;
+        bottom: -545%;
+    }
 }
+
+@media (max-width: 380px) {}
 
 @media (max-width: 360px) {
     .login {
@@ -185,7 +202,7 @@
     .login-input,
     .input-wrapper,
     .login-input input {
-        width: 88vw;
+        width: 82vw;
         max-width: 300px;
     }
 
