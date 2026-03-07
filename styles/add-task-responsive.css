@@ -11,12 +11,28 @@
     }
 
     .priority-options {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 
     .priority-options label {
         min-width: 0;
         flex: 1 1 0;
+    }
+}
+
+@media (max-width: 855px) {
+    .priority-options {
+        gap: 6px;
+    }
+
+    .priority-options label {
+        gap: 4px;
+        font-size: 14px;
+    }
+
+    .priority-options label svg {
+        width: 16px;
+        height: 12px;
     }
 }
 
@@ -139,12 +155,18 @@
 
     .priority-options label {
         min-width: 90px;
-        padding: 6px 12px;
+        padding: 4px 4px;
         font-size: 16px;
     }
 
     .custom-select {
         font-size: 16px;
+    }
+
+    .priority-options label svg {
+        width: 18px;
+        height: 14px;
+        flex-shrink: 0;
     }
 }
 
@@ -159,7 +181,7 @@
 
     .priority-options label {
         min-width: 80px;
-        padding: 5px 10px;
+        padding: 4px 4px;
         font-size: 16px;
     }
 
@@ -179,7 +201,7 @@
 
     .priority-options label {
         min-width: 74px;
-        padding: 4px 8px;
+        padding: 4px 4px;
         font-size: 16px;
     }
 }
