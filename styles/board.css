@@ -373,3 +373,19 @@ h1 {
   display: block;
   min-height: 16px;
 }
+
+#edit-subtask-error {
+  display: none;
+  min-height: 0;
+}
+
+#edit-subtask-error:not(:empty) {
+  display: block;
+  height: 24px;
+  line-height: 24px;
+  overflow: hidden;
+}
+
+#edit-subtask-error:not(:empty) + .subtask-list {
+  height: 70px;
+}
