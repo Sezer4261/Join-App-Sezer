@@ -112,6 +112,7 @@ function generateAddTask(options = {}) {
               </button>
             </div>
           </div>
+          <div class="error-message" id="subtask-error"></div>
           <ul id="subtask-area" class="subtask-list"></ul>
         </label>
         <div class="actions">
