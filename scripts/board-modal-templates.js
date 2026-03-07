@@ -174,6 +174,7 @@ function generateEditTaskTemplate(task) {
               </button>
             </div>
           </div>
+          <div class="error-message" id="edit-subtask-error"></div>
           <ul id="edit-subtask-area" class="subtask-list"></ul>
         </div>
         <div class="edit-actions">
