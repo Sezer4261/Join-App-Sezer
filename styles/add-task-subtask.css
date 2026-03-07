@@ -2,7 +2,6 @@
     display: flex;
     position: relative;
     width: 100%;
-    margin-bottom: 10px;
 }
 
 .subtasks input {
@@ -86,8 +85,12 @@
 }
 
 .subtask-list {
-    height: 130px;
+    height: 100px;
     overflow-y: auto;
+}
+
+#subtask-error:not(:empty) + .subtask-list {
+    height: 70px;
 }
 
 .subtask-list li::before {
