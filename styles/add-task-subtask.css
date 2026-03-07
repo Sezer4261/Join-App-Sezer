@@ -1,12 +1,12 @@
 .subtasks {
     display: flex;
     position: relative;
-    width: fit-content;
+    width: 100%;
     margin-bottom: 10px;
 }
 
 .subtasks input {
-    width: 320px;
+    width: 100%;
     height: 40px;
     padding-right: 72px;
 }
@@ -31,8 +31,8 @@
 
 .subtask-edit {
     position: relative;
-    width: fit-content;
-    min-width: 320px;
+    width: 100%;
+    min-width: 0;
     padding: 0;
     margin-left: 0;
     background: transparent;
@@ -103,9 +103,9 @@
 
 .subtask {
     height: 40px;
-    width: fit-content;
-    min-width: 320px;
-    margin-left: 10px;
+    width: 100%;
+    min-width: 0;
+    margin-left: 0;
     margin-bottom: 4px;
     padding: 5px 10px;
     border-radius: 8px;
