@@ -72,6 +72,12 @@ h1 {
   gap: 16px;
 }
 
+label,
+.assigned-to-label,
+.category {
+  width: 100%;
+}
+
 label {
   display: flex;
   flex-direction: column;
@@ -90,9 +96,24 @@ select {
   border-radius: 6px;
 }
 
+input,
+textarea,
+select,
+.custom-select {
+  width: 100%;
+}
+
+.form-separator {
+  width: 1px;
+  background-color: #d1d5db;
+  align-self: flex-start;
+  height: 370px;
+  flex: 0 0 1px;
+}
+
 textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 120px;
   font: message-box;
 }
 
@@ -201,7 +222,6 @@ select:focus,
   cursor: pointer;
   border-radius: 6px;
   position: relative;
-  width: 320px;
   background: white;
   min-height: 40px;
   display: flex;
