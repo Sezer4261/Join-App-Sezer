@@ -9,6 +9,10 @@ function initAddSubtaskEnter() {
   if (input.dataset && input.dataset.enterHandlerAdded === 'true') return;
   if (input.dataset) input.dataset.enterHandlerAdded = 'true';
 
+  input.addEventListener('input', () => {
+    setSubtaskError('');
+  });
+
   input.addEventListener('keydown', (event) => {
     if (event.isComposing) return;
     if (event.key !== 'Enter') return;
@@ -17,10 +21,14 @@ function initAddSubtaskEnter() {
     event.stopPropagation();
 
     const value = String(input.value || '').trim();
-    if (!value) return;
+    if (!value) {
+      setSubtaskError('Keine leeren Subtasks möglich.');
+      return;
+    }
     subtasks.push({ title: value, done: false });
     showSubtasks();
     input.value = '';
+    setSubtaskError('');
   });
 }
 
@@ -41,13 +49,16 @@ function showSubtasks() {
  * @returns {void} Result.
  */
 function addSubtask() {
-  let subtask = document.getElementById('subtask').value;
+  const input = document.getElementById('subtask');
+  if (!input) return;
+  const subtask = String(input.value || '').trim();
   if (subtask) {
     subtasks.push({ title: subtask, done: false });
     showSubtasks();
-    document.getElementById('subtask').value = '';
+    input.value = '';
+    setSubtaskError('');
   } else {
-    alert("Bitte eine Subtask beschreiben!");
+    setSubtaskError('Keine leeren Subtasks möglich.');
   }
 }
 
@@ -61,6 +72,7 @@ function clearSubtaskInput() {
     input.value = '';
     input.focus();
   }
+  setSubtaskError('');
 }
 
 /**
@@ -116,6 +128,7 @@ function focusSubtaskEditInput(i) {
 function cancelEditSubtask() {
   window.editingSubtaskIndex = null;
   showSubtasks();
+  setSubtaskError('');
 }
 
 /**
@@ -128,10 +141,32 @@ function saveEditedSubtask(i) {
   if (!input) return;
   const value = input.value.trim();
   if (!value) {
-    alert("Bitte eine Subtask beschreiben!");
+    setSubtaskError('Keine leeren Subtasks möglich.', input);
     return;
   }
   subtasks[i].title = value;
   window.editingSubtaskIndex = null;
   showSubtasks();
+  setSubtaskError('');
+}
+
+/**
+ * Sets subtask error message.
+ * @param {string} message - Message text.
+ * @param {HTMLElement} [inputEl] - Optional input to highlight.
+ * @returns {void} Result.
+ */
+function setSubtaskError(message, inputEl) {
+  const errorEl = document.getElementById('subtask-error');
+  if (errorEl) {
+    errorEl.textContent = message || '';
+  }
+  const input = inputEl || document.getElementById('subtask');
+  if (input) {
+    if (message) {
+      input.classList.add('input-error');
+    } else {
+      input.classList.remove('input-error');
+    }
+  }
 }
