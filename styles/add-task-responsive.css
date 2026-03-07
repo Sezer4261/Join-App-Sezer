@@ -4,6 +4,22 @@
     }
 }
 
+@media (max-width: 1200px) {
+    .form-left,
+    .form-right {
+        min-width: 0;
+    }
+
+    .priority-options {
+        flex-wrap: wrap;
+    }
+
+    .priority-options label {
+        min-width: 0;
+        flex: 1 1 0;
+    }
+}
+
 @media (max-width: 900px) {
     .sidebar {
         width: 70px;
@@ -28,6 +44,10 @@
     .task-form {
         flex-direction: column;
         gap: 20px;
+    }
+
+    .form-separator {
+        display: none;
     }
 }
 
