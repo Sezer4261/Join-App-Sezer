@@ -33,6 +33,10 @@ function initEditSubtaskEnter() {
   if (input.dataset && input.dataset.enterHandlerAdded === 'true') return;
   if (input.dataset) input.dataset.enterHandlerAdded = 'true';
 
+  input.addEventListener('input', () => {
+    setEditSubtaskError('');
+  });
+
   input.addEventListener('keydown', (event) => {
     if (event.isComposing) return;
     if (event.key !== 'Enter') return;
@@ -256,9 +260,13 @@ function addEditSubtask() {
   const input = document.getElementById("edit-subtask-input");
   if (!input) return;
   const value = input.value.trim();
-  if (!value) return;
+  if (!value) {
+    setEditSubtaskError('Keine leeren Subtasks möglich.');
+    return;
+  }
   editSubtasks.push({ title: value, done: false });
   input.value = "";
+  setEditSubtaskError('');
   renderEditSubtasks();
 }
 
@@ -286,6 +294,7 @@ function clearEditSubtaskInput() {
   if (!input) return;
   input.value = "";
   input.focus();
+  setEditSubtaskError('');
 }
 
 /**
@@ -313,12 +322,34 @@ function saveEditedEditSubtask(i) {
   if (!input) return;
   const value = input.value.trim();
   if (!value) {
-    alert("Bitte eine Subtask beschreiben!");
+    setEditSubtaskError('Keine leeren Subtasks möglich.', input);
     return;
   }
   editSubtasks[i].title = value;
   window.editingEditSubtaskIndex = null;
   renderEditSubtasks();
+  setEditSubtaskError('');
+}
+
+/**
+ * Sets edit subtask error message.
+ * @param {string} message - Message text.
+ * @param {HTMLElement} [inputEl] - Optional input to highlight.
+ * @returns {void} Result.
+ */
+function setEditSubtaskError(message, inputEl) {
+  const errorEl = document.getElementById('edit-subtask-error');
+  if (errorEl) {
+    errorEl.textContent = message || '';
+  }
+  const input = inputEl || document.getElementById('edit-subtask-input');
+  if (input) {
+    if (message) {
+      input.classList.add('input-error');
+    } else {
+      input.classList.remove('input-error');
+    }
+  }
 }
 
 /**
