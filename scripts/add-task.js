@@ -318,6 +318,45 @@ function appendSelectedAvatar(container, name) {
  * @returns {void} Result.
  */
 function clearForm() {
+  const form = document.getElementById('add-task-form');
+  if (form) {
+    form.reset();
+  }
+  clearValidationErrors();
+  if (typeof setSubtaskError === 'function') {
+    setSubtaskError('');
+  }
+  const titleInput = document.getElementById('title');
+  const dateInput = document.getElementById('date');
+  const categoryInput = document.getElementById('category');
+  const categorySelect = document.getElementById('category-select');
+  titleInput?.classList.remove('input-error');
+  dateInput?.classList.remove('input-error');
+  categoryInput?.classList.remove('input-error');
+  categorySelect?.classList.remove('input-error');
+
+  if (categoryInput) {
+    categoryInput.value = '';
+  }
+  if (categorySelect) {
+    const label = categorySelect.querySelector('span');
+    if (label) {
+      label.childNodes[0].textContent = 'Select task category ';
+    }
+  }
+
+  const dropdown = document.getElementById('dropdown-contacts');
+  if (dropdown) {
+    dropdown.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+  }
+
   selectedContacts = [];
   renderSelectedAvatars();
+
+  if (Array.isArray(subtasks)) {
+    subtasks.length = 0;
+  }
+  showSubtasks();
 }
