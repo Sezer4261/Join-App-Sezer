@@ -298,6 +298,10 @@ function toggleContactSelection(name, checkbox) {
  */
 function renderSelectedAvatars() {
   const container = document.getElementById("selected-avatars");
+  const assignedBlock = document.querySelector('.assigned-to-label');
+  if (assignedBlock) {
+    assignedBlock.classList.toggle('has-avatars', selectedContacts.length > 0);
+  }
   container.innerHTML = "";
   const maxVisible = 4;
   const total = selectedContacts.length;
