@@ -71,6 +71,27 @@
 }
 
 @media (max-width: 750px) {
+    html,
+    body,
+    .app {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .main {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-limit {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
+    }
+
     .task-form {
         flex-direction: column;
         gap: 20px;
@@ -78,6 +99,18 @@
 
     .form-separator {
         display: none;
+    }
+
+    .note {
+        font-size: 16px;
+    }
+
+    .content {
+        min-height: 0;
+    }
+
+    .form-scroll {
+        max-height: calc(100vh - 400px);
     }
 }
 
@@ -158,7 +191,7 @@
     }
 
     .note-outside {
-        display: block;
+        display: none;
     }
 
     .subtask-list {
