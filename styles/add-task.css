@@ -520,3 +520,9 @@ select:focus,
 .category-options:hover {
   background-color: #f0f0f0 !important;
 }
+.form-scroll {
+  max-height: calc(100vh - 240px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+}
