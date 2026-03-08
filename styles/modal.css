@@ -232,8 +232,8 @@ select:focus,
 .dropdown-item input {
   justify-self: flex-end;
   margin-left: auto;
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   appearance: none;
   -webkit-appearance: none;
   border: 2px solid #2a3647;
@@ -262,20 +262,31 @@ select:focus,
 }
 
 .dropdown-item input:checked {
+  background: transparent;
+  border-color: #fff;
+}
+
+.dropdown-item input:checked::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 12px;
+  height: 12px;
   background: #2a3647;
-  border-color: #2a3647;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
 
 .dropdown-item input:checked::after {
   content: "";
   position: absolute;
-  width: 6px;
-  height: 12px;
+  width: 7px;
+  height: 11px;
   border: solid #fff;
   border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  left: 6px;
-  top: 2px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  left: 58%;
+  top: 48%;
 }
 
 .dropdown-item:has(input:checked) {
