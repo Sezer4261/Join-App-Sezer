@@ -36,6 +36,13 @@
     width: 320px;
 }
 
+.edit-form-scroll .dropdown-item input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    flex: 0 0 22px;
+}
+
 .edit-label {
     display: flex;
     flex-direction: column;
@@ -109,6 +116,12 @@
 
 .edit-avatar-container .avatar {
     margin-left: 0;
+}
+
+.edit-avatar-container .avatar-more {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
 }
 
 .edit-actions {
