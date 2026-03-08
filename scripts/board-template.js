@@ -57,9 +57,10 @@ function renderSubtaskProgress(task) {
  * @param {*} color - Parameter.
  * @returns {string} Result.
  */
-function getAvatarMarkup(initials, color) {
+function getAvatarMarkup(initials, color, isMore = false) {
+  const extraClass = isMore ? ' avatar-more' : '';
   return /*html*/ `
-    <div class="avatar" style="background-color: ${color};">
+    <div class="avatar${extraClass}" style="background-color: ${color};">
       ${initials}
     </div>
   `;
