@@ -201,7 +201,8 @@ select:focus,
   background: #fff;
   z-index: 10;
   border-radius: 6px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.12);
+  padding: 6px;
 }
 
 .dropdown-content.show {
@@ -210,19 +211,36 @@ select:focus,
 
 .dropdown-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 12px;
-  padding: 6px 10px;
-  border-radius: 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: transparent;
+  border: none;
+  margin-bottom: 0;
+}
+
+.dropdown-item + .dropdown-item {
+  margin-top: 4px;
 }
 
 .dropdown-item:hover {
-  background-color: #f0f0f0;
+  background-color: #f6f7f9;
 }
 
 .dropdown-item input {
   justify-self: flex-end;
+  margin-left: auto;
+  width: 22px;
+  height: 22px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #2a3647;
+  border-radius: 5px;
+  background: transparent;
+  position: relative;
+  cursor: pointer;
 }
 
 .dropdown-item input,
@@ -231,10 +249,9 @@ select:focus,
 }
 
 .dropdown-avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background-color: #03e3f8;
   color: white;
   display: flex;
   align-items: center;
@@ -244,10 +261,58 @@ select:focus,
   flex-shrink: 0;
 }
 
+.dropdown-item input:checked {
+  background: #2a3647;
+  border-color: #2a3647;
+}
+
+.dropdown-item input:checked::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  left: 6px;
+  top: 2px;
+}
+
+.dropdown-item:has(input:checked) {
+  background-color: #2a3647;
+}
+
+.dropdown-item:has(input:checked) .dropdown-name,
+.dropdown-item:has(input:checked) .dropdown-avatar {
+  color: #fff;
+}
+
+.dropdown-item:has(input:checked) .dropdown-avatar {
+  border: 2px solid #fff;
+}
+
+.dropdown-item:has(input:checked) input {
+  border-color: #fff;
+}
+
+.bg-blue { background: #1E90FF; }
+.bg-green { background: #27AE60; }
+.bg-purple { background: #8E44AD; }
+.bg-orange { background: #FFA500; }
+.bg-pink { background: #E84393; }
+.bg-red { background: #E74C3C; }
+.bg-teal { background: #00BFAE; }
+.bg-brown { background: #A0522D; }
+
 .dropdown-name {
-  flex: 1;
+  flex: 1 1 auto;
+  display: block;
+  min-width: 0;
   text-align: left;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .avatar-container {
