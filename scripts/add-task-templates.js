@@ -208,13 +208,24 @@ function getSubtaskItem(i) {
  * @returns {string} Result.
  */
 function generateAssignedContacts(contacts) {
+  const colorClasses = [
+    'bg-blue',
+    'bg-green',
+    'bg-purple',
+    'bg-orange',
+    'bg-pink',
+    'bg-red',
+    'bg-teal',
+    'bg-brown'
+  ];
   return contacts.map((contact, i) => {
     const isChecked = selectedContacts.includes(contact.name);
     const checkboxId = `contact-${i}`;
     const initials = getContactInitialsFromName(contact.name);
+    const colorClass = colorClasses[i % colorClasses.length];
     return /*html*/ `
       <div class="dropdown-item">
-        <div class="dropdown-avatar">${initials}</div>
+        <div class="dropdown-avatar ${colorClass}">${initials}</div>
         <label for="${checkboxId}" class="dropdown-name">${contact.name}</label>
         <input
           type="checkbox"
