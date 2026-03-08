@@ -299,7 +299,13 @@ function toggleContactSelection(name, checkbox) {
 function renderSelectedAvatars() {
   const container = document.getElementById("selected-avatars");
   container.innerHTML = "";
-  selectedContacts.forEach(name => appendSelectedAvatar(container, name));
+  const maxVisible = 4;
+  const total = selectedContacts.length;
+  const visible = selectedContacts.slice(0, maxVisible);
+  visible.forEach(name => appendSelectedAvatar(container, name));
+  if (total > maxVisible) {
+    container.innerHTML += getSelectedAvatarMoreMarkup(total - maxVisible);
+  }
 }
 
 /**
@@ -310,7 +316,33 @@ function renderSelectedAvatars() {
  */
 function appendSelectedAvatar(container, name) {
   const initials = getContactInitialsFromName(name);
-  container.innerHTML += getSelectedAvatarMarkup(initials);
+  const colorClass = getContactColorClass(name);
+  container.innerHTML += getSelectedAvatarMarkup(initials, colorClass);
+}
+
+/**
+ * Returns contact color class based on name.
+ * @param {string} name - Contact name.
+ * @returns {string} Result.
+ */
+function getContactColorClass(name) {
+  const classes = [
+    'bg-blue',
+    'bg-green',
+    'bg-purple',
+    'bg-orange',
+    'bg-pink',
+    'bg-red',
+    'bg-teal',
+    'bg-brown'
+  ];
+  const key = String(name || '').trim().toLowerCase();
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash * 31 + key.charCodeAt(i)) % 2147483647;
+  }
+  const index = key ? Math.abs(hash) % classes.length : 0;
+  return classes[index];
 }
 
 /**
