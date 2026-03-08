@@ -10,8 +10,28 @@ async function renderAddTask() {
   selectContacts();
   renderSelectedAvatars();
   initAddDropdownClose();
+  initAddTaskBlurValidation();
   initAddSubtaskEnter();
   showSubtasks();
+}
+
+/**
+ * Initializes add task blur validation handlers.
+ * @returns {void} Result.
+ */
+function initAddTaskBlurValidation() {
+  const form = document.getElementById('add-task-form');
+  if (!form || form.dataset.blurValidationInit === '1') return;
+
+  const titleInput = document.getElementById('title');
+  const dateInput = document.getElementById('date');
+  const categorySelect = document.getElementById('category-select');
+
+  titleInput?.addEventListener('blur', validateTitleField);
+  dateInput?.addEventListener('blur', validateDateField);
+  categorySelect?.addEventListener('blur', validateCategoryField);
+
+  form.dataset.blurValidationInit = '1';
 }
 
 /**

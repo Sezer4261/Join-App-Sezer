@@ -237,6 +237,7 @@ button {
     padding-left: 15px;
     border: 1px solid grey;
     border-radius: 8px;
+    font-size: 16px;
 }
 
 .login-input input:focus {
@@ -260,13 +261,14 @@ button {
     width: 422px;
     min-height: 24px;
     margin-bottom: 16px;
+    margin-top: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .login-error {
-    color: #ff3d00;
+    color: #8d0000;
     font-size: 16px;
     font-weight: 500;
     text-align: center;
@@ -278,11 +280,11 @@ button {
 }
 
 .login-input input.input-error {
-    border: 1px solid #ff3d00 !important;
+    border: 1px solid #8d0000 !important;
 }
 
 .login-input input.input-error:focus {
-    border-color: #ff3d00 !important;
+    border-color: #8d0000 !important;
 }
 
 .input-field {

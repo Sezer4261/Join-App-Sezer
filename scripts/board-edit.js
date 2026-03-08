@@ -15,11 +15,38 @@ async function openEditTaskModal(id) {
   const modalContent = modal.querySelector(".modal-content");
   if (!modalContent) return;
   modalContent.innerHTML = generateEditTaskTemplate(task);
+  initEditFormBlurValidation();
   await loadContacts();
   renderEditAssignedContacts();
   renderEditSubtasks();
   initEditDropdownClose();
   initEditSubtaskEnter();
+}
+
+/**
+ * Initializes blur validation handlers for the edit form.
+ * @returns {void} Result.
+ */
+function initEditFormBlurValidation() {
+  const form = document.getElementById('edit-task-form');
+  if (!form || form.dataset.blurValidationInit === '1') return;
+
+  const titleInput = document.getElementById('edit-title');
+  const dateInput = document.getElementById('edit-date');
+  const categorySelect = document.getElementById('edit-category-select');
+
+  titleInput?.addEventListener('blur', () => {
+    validateEditRequiredInput(titleInput, 'edit-title-error');
+  });
+  dateInput?.addEventListener('blur', () => {
+    validateEditRequiredInput(dateInput, 'edit-date-error');
+  });
+  categorySelect?.addEventListener('blur', () => {
+    const categoryInput = document.getElementById('edit-category');
+    validateEditRequiredInput(categoryInput, 'edit-category-error', categorySelect);
+  });
+
+  form.dataset.blurValidationInit = '1';
 }
 
 /**

@@ -43,7 +43,7 @@ html {
 
 .header-left {
     margin-top: 30px;
-    margin-left: 50px;
+    margin-left: 0px;
 }
 
 .header-right {
@@ -176,6 +176,7 @@ main {
     margin-bottom: 0px;
     border: 1px solid grey;
     border-radius: 8px;
+    font-size: 16px;
 }
 
 input::placeholder {
@@ -189,21 +190,21 @@ input.input-focus:focus {
 }
 
 input.input-error {
-    border: 1px solid #ff3d00 !important;
-    box-shadow: 0 0 1.5px #ff3d00 !important;
+    border: 1px solid #8d0000 !important;
+    box-shadow: 0 0 1.5px #8d0000 !important;
 }
 
 input.input-error:focus {
-    border-color: #ff3d00 !important;
-    box-shadow: 0 0 1.5px #ff3d00 !important;
+    border-color: #8d0000 !important;
+    box-shadow: 0 0 1.5px #8d0000 !important;
 }
 
 .error-message {
-    color: #ff3d00;
+    color: #8d0000;
     font-size: 16px;
-    margin-top: 5px;
-    margin-left: 15px;
-    min-height: 16px;
+    margin-top: 3px;
+    margin-left: 8px;
+    min-height: 22px;
     display: block;
 }
 
@@ -231,13 +232,14 @@ input.input-error:focus {
 .accept-privacy-policy {
     display: flex;
     justify-content: center;
-    padding: 12px;
+    padding: 8px;
     border-radius: 8px;
     gap: 8px;
+    border: 1px solid transparent;
 }
 
 .accept-privacy-policy.input-error {
-    border: 1px solid #ff3d00;
+    border: 1px solid #8d0000;
 }
 
 .accept-privacy-policy a {
@@ -290,4 +292,8 @@ footer a:hover {
 
 .checkbox-text {
     color: #a8a8a8;
+}
+
+.privacy-wrapper {
+    min-width: 246px;
 }

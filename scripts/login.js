@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded', () => {
     initIntroAlignment();
     scheduleIntroOverlayRemoval();
     initLoginPasswordToggle();
+    initLoginBlurValidation();
 });
 
 window.addEventListener('load', () => {
@@ -95,6 +96,72 @@ function initLoginPasswordToggle() {
     if (!elements) return;
     initLoginPasswordHandlers(elements);
     syncLoginPasswordIcons(elements);
+}
+
+/**
+ * Initializes login blur validation handlers.
+ * @returns {void} Result.
+ */
+function initLoginBlurValidation() {
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
+    if (!emailInput || !passwordInput) return;
+
+    emailInput.addEventListener('blur', () => validateLoginFieldOnBlur('email'));
+    passwordInput.addEventListener('blur', () => validateLoginFieldOnBlur('password'));
+}
+
+/**
+ * Validates a single login field on blur.
+ * @param {string} fieldName - Field name.
+ * @returns {boolean} Result.
+ */
+function validateLoginFieldOnBlur(fieldName) {
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
+    if (!emailInput || !passwordInput) return false;
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    if (fieldName === 'email') {
+        emailInput.classList.remove('input-error');
+        if (!email) {
+            showLoginBlurError('Please fill in all fields.', emailInput);
+            return false;
+        }
+        if (!isValidEmail(email)) {
+            showLoginBlurError('Please enter a valid email address.', emailInput);
+            return false;
+        }
+    }
+
+    if (fieldName === 'password') {
+        passwordInput.classList.remove('input-error');
+        if (!password) {
+            showLoginBlurError('Please fill in all fields.', passwordInput);
+            return false;
+        }
+    }
+
+    if (email && password && isValidEmail(email)) {
+        removeLoginError();
+        emailInput.classList.remove('input-error');
+        passwordInput.classList.remove('input-error');
+    }
+    return true;
+}
+
+/**
+ * Shows login field error for blur validation.
+ * @param {string} message - Message text.
+ * @param {HTMLElement} input - Input element.
+ * @returns {void} Result.
+ */
+function showLoginBlurError(message, input) {
+    removeLoginError();
+    appendLoginError(message);
+    input?.classList.add('input-error');
 }
 
 /**

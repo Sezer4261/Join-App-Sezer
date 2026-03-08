@@ -175,13 +175,13 @@ function validateConfirmPasswordField(fields, state) {
  */
 function validatePolicyField(fields, state) {
     if (fields.policyCheckbox.checked) return;
-    signupFieldErrors.acceptPrivacy = 'Please accept the privacy policy.';
+    signupFieldErrors['accept-privacy'] = 'Please accept the privacy policy.';
     const policyContainer = document.querySelector('.accept-privacy-policy');
     if (policyContainer) {
         policyContainer.classList.add('input-error');
     }
     if (!state.firstErrorShown) {
-        setSignupErrorText('accept-privacy-error', signupFieldErrors.acceptPrivacy);
+        setSignupErrorText('accept-privacy-error', signupFieldErrors['accept-privacy']);
         state.firstErrorShown = true;
     }
 }
@@ -259,6 +259,7 @@ function attachSignupErrorFocusHandlers() {
         { fieldId: 'register-email', event: 'focus' },
         { fieldId: 'register-password', event: 'focus' },
         { fieldId: 'register-password-confirm', event: 'focus' },
+        { fieldId: 'accept-privacy', event: 'focus' },
     ];
 
     pairs.forEach(({ fieldId, event }) => {
@@ -297,6 +298,8 @@ function attachSignupFormStateHandlers() {
     inputs.forEach(input => bindSignupInputHandlers(input));
     if (policyCheckbox) {
         policyCheckbox.addEventListener('change', updateSignupButtonState);
+        policyCheckbox.addEventListener('change', () => validateSignupFieldOnBlur('accept-privacy'));
+        policyCheckbox.addEventListener('blur', () => validateSignupFieldOnBlur('accept-privacy'));
     }
 }
 
@@ -320,7 +323,92 @@ function getSignupInputElements() {
  */
 function bindSignupInputHandlers(input) {
     input.addEventListener('input', updateSignupButtonState);
-    input.addEventListener('blur', updateSignupButtonState);
+    input.addEventListener('blur', () => {
+        validateSignupFieldOnBlur(input.id);
+        updateSignupButtonState();
+    });
+}
+
+/**
+ * Validates a single signup field on blur.
+ * @param {string} fieldId - Field identifier.
+ * @returns {void} Result.
+ */
+function validateSignupFieldOnBlur(fieldId) {
+    const fields = getSignupFields();
+    switch (fieldId) {
+        case 'register-name':
+            applySignupInputBlurValidation('register-name', fields.nameInput, fields.nameInput?.value.trim() ? '' : 'Please enter your name.');
+            break;
+        case 'register-email': {
+            const emailValue = fields.emailInput?.value.trim() ?? '';
+            const message = !emailValue
+                ? 'Please enter an email address.'
+                : (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue) ? '' : 'Please enter a valid email address.');
+            applySignupInputBlurValidation('register-email', fields.emailInput, message);
+            break;
+        }
+        case 'register-password':
+            applySignupInputBlurValidation('register-password', fields.passwordInput, fields.passwordInput?.value ? '' : 'Please enter a password.');
+            break;
+        case 'register-password-confirm': {
+            const confirmValue = fields.confirmPasswordInput?.value ?? '';
+            const passwordValue = fields.passwordInput?.value ?? '';
+            let message = '';
+            if (!confirmValue) {
+                message = 'Please confirm your password.';
+            } else if (passwordValue && passwordValue !== confirmValue) {
+                message = 'Passwords do not match.';
+            }
+            applySignupInputBlurValidation('register-password-confirm', fields.confirmPasswordInput, message);
+            break;
+        }
+        case 'accept-privacy': {
+            const message = fields.policyCheckbox?.checked ? '' : 'Please accept the privacy policy.';
+            applySignupPolicyBlurValidation(message);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+/**
+ * Applies blur validation state to signup input fields.
+ * @param {string} fieldId - Field identifier.
+ * @param {HTMLElement} input - Input element.
+ * @param {string} message - Validation message.
+ * @returns {void} Result.
+ */
+function applySignupInputBlurValidation(fieldId, input, message) {
+    const errorId = getSignupErrorId(fieldId);
+    if (message) {
+        signupFieldErrors[fieldId] = message;
+        input?.classList.add('input-error');
+        setSignupErrorText(errorId, message);
+        return;
+    }
+    delete signupFieldErrors[fieldId];
+    input?.classList.remove('input-error');
+    setSignupErrorText(errorId, '');
+}
+
+/**
+ * Applies blur validation state to the signup privacy field.
+ * @param {string} message - Validation message.
+ * @returns {void} Result.
+ */
+function applySignupPolicyBlurValidation(message) {
+    const policyContainer = document.querySelector('.accept-privacy-policy');
+    if (message) {
+        signupFieldErrors['accept-privacy'] = message;
+        policyContainer?.classList.add('input-error');
+        setSignupErrorText('accept-privacy-error', message);
+        return;
+    }
+    delete signupFieldErrors['accept-privacy'];
+    policyContainer?.classList.remove('input-error');
+    setSignupErrorText('accept-privacy-error', '');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
