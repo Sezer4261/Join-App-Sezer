@@ -44,8 +44,9 @@ function generateAddTask(options = {}) {
       <h1>Add Task</h1>
       <span class="close-btn" onclick="closeAddTaskDialog()">x</span>
     </div>
-    <form class="task-form" id="add-task-form" onsubmit="saveToArray(event)">
-      <div class="form-left">
+    <div class="form-scroll">
+      <form class="task-form" id="add-task-form" onsubmit="saveToArray(event)">
+        <div class="form-left">
         <label>
           <span>Title<span class="req">*</span></span>
           <input type="text" placeholder="Enter a title" id="title">
@@ -60,8 +61,9 @@ function generateAddTask(options = {}) {
           <input type="date" id="date">
           <div class="error-message" id="date-error"></div>
         </label>
-      </div>
-      <div class="form-right">
+        </div>
+        <div class="form-separator" aria-hidden="true"></div>
+        <div class="form-right">
         <div class="priority">
           <span>Priority</span>
           <div class="priority-options">
@@ -119,8 +121,9 @@ function generateAddTask(options = {}) {
           <button type="reset" class="clear" onclick="${clearOnClick}">${clearLabel}</button>
           <button type="submit" class="create">Create Task <img src="assets/icons/vector-5.svg" alt=""></button>
         </div>
-      </div>
-    </form>
+        </div>
+      </form>
+    </div>
     <p class="note note-outside"><span class="req">*</span>This field is required</p>
   `;
 }
