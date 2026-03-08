@@ -2,6 +2,20 @@
     .content {
         padding-bottom: 120px;
     }
+
+    .actions {
+        bottom: 96px;
+    }
+
+    .note-outside {
+        bottom: 96px;
+        left: 16px;
+    }
+
+    .clear,
+    .create {
+        padding: 8px 14px;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -115,6 +129,16 @@
         flex-direction: row;
         align-items: center;
     }
+
+    .actions {
+        bottom: 96px;
+        right: 16px;
+    }
+
+    .note-outside {
+        bottom: 96px;
+        left: 16px;
+    }
 }
 
 @media (max-width: 550px) {
@@ -134,7 +158,7 @@
     }
 
     .note-outside {
-        display: none;
+        display: block;
     }
 
     .subtask-list {
