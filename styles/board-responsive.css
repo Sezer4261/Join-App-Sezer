@@ -96,7 +96,6 @@
         font-size: 24px;
     }
 
-    .add-task-dialog input,
     .add-task-dialog textarea,
     .add-task-dialog select {
         padding: 8px;
