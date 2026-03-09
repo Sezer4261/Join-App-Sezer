@@ -227,6 +227,22 @@
     }
 }
 
+@media (max-width: 370px) {
+    .priority-options {
+        gap: 4px;
+    }
+
+    .priority-options label {
+        min-width: 80px;
+        font-size: 12px;
+    }
+
+    .priority-options label svg {
+        width: 14px;
+        height: 10px;
+    }
+}
+
 @media (max-width: 360px) {
     h1 {
         font-size: 22px;
@@ -239,11 +255,7 @@
     .priority-options label {
         min-width: 80px;
         padding: 4px 4px;
-        font-size: 16px;
-    }
-
-    .subtasks input {
-        width: 280px;
+        font-size: 12px;
     }
 }
 
@@ -259,6 +271,10 @@
     .priority-options label {
         min-width: 74px;
         padding: 4px 4px;
-        font-size: 16px;
+        font-size: 11px;
+    }
+
+    .subtask {
+        width: 280px;
     }
 }
