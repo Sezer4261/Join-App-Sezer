@@ -31,16 +31,31 @@
 
 }
 
-.edit-form-scroll input,
-.edit-form-scroll label {
-    width: 320px;
+.edit-form-scroll label:has(#edit-title) {
+    margin-top: 24px;
 }
 
-.edit-form-scroll .dropdown-item input[type="checkbox"] {
-    width: 22px;
-    height: 22px;
-    min-width: 22px;
-    flex: 0 0 22px;
+.edit-form-scroll .error-message {
+    display: none;
+    min-height: 0;
+    color: #ff6b6b;
+    font-size: 16px;
+}
+
+.edit-form-scroll .error-message:not(:empty) {
+    display: block;
+    height: 24px;
+    line-height: 24px;
+    overflow: hidden;
+}
+
+.edit-form-scroll .form-separator {
+    display: none;
+}
+
+.edit-form-scroll input,
+.edit-form-scroll label {
+    width: 100%;
 }
 
 .edit-label {
@@ -48,7 +63,6 @@
     flex-direction: column;
     gap: 6px;
     font-size: 16px;
-    margin-top: 24px;
 }
 
 .edit-input,
@@ -78,10 +92,18 @@
 }
 
 .edit-assigned .custom-select {
-    min-height: 40px;
+    min-height: 34px;
     display: flex;
     align-items: center;
     font-size: 16px;
+}
+
+.edit-assigned:has(.dropdown-content.show) {
+    padding-bottom: 160px;
+}
+
+.edit-label:has(.dropdown-content.show) {
+    padding-bottom: 100px;
 }
 
 .edit-assigned .custom-select span,
@@ -117,6 +139,36 @@
 .edit-avatar-container .avatar {
     margin-left: 0;
 }
+
+.edit-avatar-container .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-avatar-container .avatar-more {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    background: #2a3647;
+    border: 2px solid #fff;
+}
+
+.edit-avatar-container .bg-blue { background: #1E90FF; }
+.edit-avatar-container .bg-green { background: #27AE60; }
+.edit-avatar-container .bg-purple { background: #8E44AD; }
+.edit-avatar-container .bg-orange { background: #FFA500; }
+.edit-avatar-container .bg-pink { background: #E84393; }
+.edit-avatar-container .bg-red { background: #E74C3C; }
+.edit-avatar-container .bg-teal { background: #00BFAE; }
+.edit-avatar-container .bg-brown { background: #A0522D; }
 
 .edit-avatar-container .avatar-more {
     width: 32px;
