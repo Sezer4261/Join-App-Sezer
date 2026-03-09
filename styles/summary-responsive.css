@@ -1,4 +1,4 @@
-@media (max-width: 1260px) {
+@media (max-width: 1275px) {
     .headline {
         gap: 16px;
         position: relative;
@@ -32,9 +32,34 @@
 }
 
 @media (max-width: 1060px) {
-    .welcome-msg-box {
-        margin-left: -28px;
+    .dashboard {
+        width: 500px;
     }
+
+    .card-value {
+        font-size: 60px;
+    }
+
+    .kpi-card {
+        width: 200px;
+    }
+
+    .kpi-container {
+        gap: 24px;
+    }
+
+    .deadline-card {
+        width: 432px;
+    }
+
+    .task-summary {
+        gap: 24px;
+    }
+
+    .task-summary-card {
+        width: 124px;
+    }
+
 }
 
 
@@ -166,6 +191,13 @@
     }
 }
 
+@media (max-width: 840px) {
+    .headline {
+        min-width: 0px;
+        width: 75%;
+    }
+}
+
 @media (max-width: 620px) {
     h1 {
         font-size: 36px;
@@ -184,9 +216,18 @@
     .wrapper {
         padding: 0 16px;
     }
+
+    .dashboard {
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
+    .headline {
+        max-width: 400px;
+        left: 13%;
+    }
+
     h1 {
         font-size: 30px;
     }
@@ -215,11 +256,15 @@
     }
 
     .card-value {
-        font-size: 38px;
+        font-size: 32px;
     }
 
     .card-subtitle {
         font-size: 16px;
+    }
+
+    .kpi-card {
+        gap: 16px;
     }
 
     .deadline-card {
@@ -242,11 +287,15 @@
 
     .task-summary-card {
         width: 90px;
-        height: 100px;
+        height: 108px;
     }
 }
 
 @media (max-width: 370px) {
+    .headline {
+        left: 10%;
+    }
+
     .kpi-card {
         gap: 8px;
     }
@@ -293,5 +342,13 @@
 
     .subheadline {
         font-size: 16px;
+    }
+
+    .task-summary {
+        gap: 16px;
+    }
+
+    .kpi-card {
+        width: 135px;
     }
 }
