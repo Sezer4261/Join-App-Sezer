@@ -181,7 +181,6 @@ select:focus,
   cursor: pointer;
   border-radius: 6px;
   position: relative;
-  width: 320px;
   background: white;
 }
 
@@ -229,7 +228,7 @@ select:focus,
   background-color: #f6f7f9;
 }
 
-.dropdown-item input {
+.dropdown-item .contact-checkbox {
   justify-self: flex-end;
   margin-left: auto;
   width: 16px;
@@ -261,48 +260,48 @@ select:focus,
   flex-shrink: 0;
 }
 
-.dropdown-item input:checked {
+.dropdown-item .contact-checkbox:checked {
   background: transparent;
   border-color: #fff;
 }
 
-.dropdown-item input:checked::before {
+.dropdown-item .contact-checkbox:checked::before {
   content: "";
   position: absolute;
-  top: -6px;
-  right: -6px;
-  width: 12px;
-  height: 12px;
+  top: -4px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
   background: #2a3647;
   clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
 
-.dropdown-item input:checked::after {
+.dropdown-item .contact-checkbox:checked::after {
   content: "";
   position: absolute;
-  width: 7px;
-  height: 11px;
+  width: 4px;
+  height: 12px;
   border: solid #fff;
   border-width: 0 2px 2px 0;
-  transform: translate(-50%, -50%) rotate(45deg);
-  left: 58%;
-  top: 48%;
+  transform: translate(-50%, -50%) rotate(40deg);
+  left: 70%;
+  top: 24%;
 }
 
-.dropdown-item:has(input:checked) {
+.dropdown-item:has(.contact-checkbox:checked) {
   background-color: #2a3647;
 }
 
-.dropdown-item:has(input:checked) .dropdown-name,
-.dropdown-item:has(input:checked) .dropdown-avatar {
+.dropdown-item:has(.contact-checkbox:checked) .dropdown-name,
+.dropdown-item:has(.contact-checkbox:checked) .dropdown-avatar {
   color: #fff;
 }
 
-.dropdown-item:has(input:checked) .dropdown-avatar {
+.dropdown-item:has(.contact-checkbox:checked) .dropdown-avatar {
   border: 2px solid #fff;
 }
 
-.dropdown-item:has(input:checked) input {
+.dropdown-item:has(.contact-checkbox:checked) .contact-checkbox {
   border-color: #fff;
 }
 
