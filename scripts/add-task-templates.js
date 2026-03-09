@@ -226,6 +226,7 @@ function generateAssignedContacts(contacts) {
           type="checkbox"
           id="${checkboxId}"
           value="${contact.name}"
+          class="contact-checkbox"
           onchange="toggleContactSelection('${contact.name}', this)"
           ${isChecked ? "checked" : ""}
         >
