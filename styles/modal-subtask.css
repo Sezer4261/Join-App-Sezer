@@ -100,8 +100,6 @@
 
 .subtask {
   height: 40px;
-  width: fit-content;
-  min-width: 320px;
   margin-left: 10px;
   margin-bottom: 4px;
   padding: 5px 10px;
