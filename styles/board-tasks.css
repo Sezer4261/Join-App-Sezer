@@ -199,6 +199,50 @@ body.add-task-dialog-open {
     font-size: 16px;
 }
 
+.add-task-dialog .dropdown-item input {
+    width: 16px;
+    height: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 2px solid #2a3647;
+    border-radius: 5px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+.add-task-dialog .dropdown-item input:checked {
+    background: transparent;
+    border-color: #fff;
+}
+
+.add-task-dialog .dropdown-item input:checked::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 12px;
+    height: 12px;
+    background: #2a3647;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.add-task-dialog .dropdown-item input:checked::after {
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 11px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+    left: 58%;
+    top: 48%;
+}
+
+.add-task-dialog .dropdown-item:has(input:checked) input {
+    border-color: #fff;
+}
+
 .add-task-dialog .custom-select span {
     display: flex;
     align-items: center;
