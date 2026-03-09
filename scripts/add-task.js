@@ -202,8 +202,20 @@ function selectContacts() {
  * @returns {void} Result.
  */
 function toggleDropdown(event) {
-  event.stopPropagation();
-  document.getElementById("dropdown-contacts").classList.toggle("show");
+  if (event) {
+    event.stopPropagation();
+  }
+  const trigger = event?.currentTarget || event?.target;
+  const select = trigger?.closest?.(".custom-select");
+  const dropdown = select?.querySelector?.(".dropdown-content");
+  if (dropdown) {
+    dropdown.classList.toggle("show");
+    return;
+  }
+  const fallback = document.getElementById("dropdown-contacts");
+  if (fallback) {
+    fallback.classList.toggle("show");
+  }
 }
 
 /**
