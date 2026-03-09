@@ -195,7 +195,7 @@ select:focus,
   top: 100%;
   left: 0;
   width: 100%;
-  max-height: 150px;
+  max-height: 180px;
   overflow-y: auto;
   border: 1px solid #ccc;
   background: #fff;
