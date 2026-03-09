@@ -199,7 +199,7 @@ body.add-task-dialog-open {
     font-size: 16px;
 }
 
-.add-task-dialog .dropdown-item input {
+.add-task-dialog .contact-checkbox {
     width: 16px;
     height: 16px;
     appearance: none;
@@ -211,32 +211,36 @@ body.add-task-dialog-open {
     cursor: pointer;
 }
 
-.add-task-dialog .dropdown-item input:checked {
+.add-task-dialog .contact-checkbox:checked {
     background: transparent;
     border-color: #fff;
 }
 
-.add-task-dialog .dropdown-item input:checked::before {
+.add-task-dialog .contact-checkbox:checked::before {
     content: "";
     position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 12px;
-    height: 12px;
+    top: -4px;
+    right: -2px;
+    width: 10px;
+    height: 10px;
     background: #2a3647;
     clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
 
-.add-task-dialog .dropdown-item input:checked::after {
+.add-task-dialog .contact-checkbox:checked::after {
     content: "";
     position: absolute;
-    width: 7px;
-    height: 11px;
+    width: 4px;
+    height: 12px;
     border: solid #fff;
     border-width: 0 2px 2px 0;
-    transform: translate(-50%, -50%) rotate(45deg);
-    left: 58%;
-    top: 48%;
+    transform: translate(-50%, -50%) rotate(40deg);
+    left: 70%;
+    top: 24%;
+}
+
+.add-task-dialog .dropdown-item:has(.contact-checkbox:checked) .contact-checkbox {
+    border-color: #fff;
 }
 
 .add-task-dialog .dropdown-item:has(input:checked) input {
