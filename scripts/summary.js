@@ -220,7 +220,7 @@ function applyDashboardStats(tasks) {
  */
 function getDashboardStats(tasks) {
     const urgentTasks = tasks.filter(t => t.priority === "urgent" && t.status !== "Done");
-    const earliestUrgentDueDate = getEarliestDueDate(urgentTasks);
+    const earliestUrgentDueDate = getEarliestFutureDueDate(urgentTasks);
 
     return {
         todoCount: tasks.filter(t => t.status === "To Do").length,
@@ -231,6 +231,17 @@ function getDashboardStats(tasks) {
         earliestUrgentDueDate,
         totalTasks: tasks.length
     };
+}
+
+/**
+ * Returns whether a date is strictly in the future (after today).
+ * @param {Date} date - Date.
+ * @returns {boolean} Result.
+ */
+function isStrictlyFutureDate(date) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date.getTime() > today.getTime();
 }
 
 /**
@@ -285,12 +296,27 @@ function getEarliestDueDate(tasks) {
 }
 
 /**
+ * Returns the earliest due date that is strictly in the future.
+ * @param {Array<Object>} tasks - Task list.
+ * @returns {Date|null} Result.
+ */
+function getEarliestFutureDueDate(tasks) {
+    let earliest = null;
+    for (const task of tasks) {
+        const date = parseTaskDueDate(task.dueDate);
+        if (!date || !isStrictlyFutureDate(date)) continue;
+        if (!earliest || date.getTime() < earliest.getTime()) earliest = date;
+    }
+    return earliest;
+}
+
+/**
  * Formats the dashboard due date string.
  * @param {Date|null} date - Date.
  * @returns {string} Result.
  */
 function formatDashboardDueDate(date) {
-    if (!date) return "—";
+    if (!date) return "No Urgent Date";
     return new Intl.DateTimeFormat("en-US", {
         month: "long",
         day: "2-digit",
