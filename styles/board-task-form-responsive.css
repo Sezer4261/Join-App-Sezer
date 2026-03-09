@@ -3,7 +3,6 @@
     .edit-task-form .subtasks,
     .edit-task-form .subtask,
     .edit-task-form .subtask-edit {
-        width: 100%;
         min-width: 0;
     }
 
