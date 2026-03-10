@@ -3,7 +3,7 @@
     width: 100%;
     max-width: 352px;
     color: white;
-    background-color: #2A3647;
+    background-color: rgb(24, 36, 53);
     padding: 12px 0;
     text-align: center;
     font-size: 21px;
@@ -189,11 +189,14 @@
     background: #666;
 }
 
-.scroll {
-    height: 100%;
+.contact-scroll {
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
-    overflow-x: hidden;
     width: 400px !important;
+    padding-top: 16px;
+    padding-bottom: 50px;
+    box-sizing: border-box;
 }
 
 @keyframes slideInFromRight {

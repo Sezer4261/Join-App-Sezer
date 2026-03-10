@@ -1,3 +1,20 @@
+let contactDetailsOverflowTimeoutId;
+
+/**
+ * Temporarily hides horizontal overflow while contact details slide in.
+ * @returns {void} Result.
+ */
+function suppressHorizontalOverflowDuringDetailsAnimation() {
+  const detailsSection = document.querySelector('.contact-section-right');
+  if (!detailsSection) return;
+
+  detailsSection.style.overflowX = 'hidden';
+  window.clearTimeout(contactDetailsOverflowTimeoutId);
+  contactDetailsOverflowTimeoutId = window.setTimeout(() => {
+    detailsSection.style.overflowX = '';
+  }, 320);
+}
+
 /**
  * Executes handle contact click logic.
  * @param {Event} event - Browser event.
@@ -17,6 +34,7 @@ async function handleContactClick(event) {
   const initials = getContactInitialsFromName(contactData.name);
   const phone = contactData.phone || '';
   container.innerHTML = getContactDetailsTemplate(initials, contactData.name, contactData.email, phone, contactId);
+  suppressHorizontalOverflowDuringDetailsAnimation();
   initContactMoreMenuAutoClose();
   if (window.innerWidth <= 780) document.querySelector('.wrapper').classList.add('show-contact-details');
 }

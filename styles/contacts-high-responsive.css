@@ -48,13 +48,13 @@
     }
 }
 
-@media (max-width: 1110px) {
+@media (max-width: 1120px) {
     .contact-section {
         width: 340px;
     }
 
-    .scroll {
-        width: 320px !important;
+    .contact-scroll {
+        width: 330px !important;
     }
 
     .add-contact-btn {

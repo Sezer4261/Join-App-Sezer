@@ -1,3 +1,18 @@
+@media (max-width: 1024px) {
+    main {
+        height: calc(100vh - 80px);
+        padding-bottom: 0;
+    }
+
+    .wrapper {
+        height: 100%;
+    }
+
+    .contact-section-left {
+        height: 100%;
+    }
+}
+
 @media (max-width: 780px) {
     .contact-section {
         width: 100%;
@@ -26,15 +41,16 @@
     }
 
     main {
-        height: auto;
-        min-height: 100vh;
-        padding-top: 70px;
+        height: calc(100vh - 80px);
+        min-height: 0;
+        padding-top: 96px;
     }
 
     .wrapper {
         flex-direction: column;
         align-items: stretch;
-        height: auto;
+        height: 100%;
+        min-height: 0;
     }
 
     .contact-section-left,
@@ -43,10 +59,21 @@
         height: auto;
     }
 
+    .contact-section-left {
+        height: calc(100vh - 176px);
+        display: flex;
+        flex-direction: column;
+    }
+
     .contact-section-right {
         padding: 0;
         display: none;
         height: calc(100vh - 145px);
+    }
+
+    .contact-section {
+        height: 100%;
+        min-height: 0;
     }
 
     .contact-div-right {
@@ -106,8 +133,11 @@
         height: 28px;
     }
 
-    .scroll {
+    .contact-scroll {
         width: 100% !important;
+        flex: 1;
+        min-height: 0;
+        padding-bottom: 24px;
     }
 
     .contact-list {
@@ -199,7 +229,7 @@
 
     .contact-more {
         position: fixed;
-        right: 8px;
+        right: 32px;
         bottom: 116px;
         display: block;
         z-index: 100;
@@ -208,7 +238,7 @@
     .contact-more-btn {
         border: none;
         color: white;
-        background-color: #2A3647;
+        background-color: rgb(24, 36, 53);
         text-align: center;
         font-size: 21px;
         font-weight: 600;
@@ -311,8 +341,9 @@
     .add-contact-btn {
         width: 52px;
         height: 52px;
-        right: 8px;
+        right: 32px;
         bottom: 116px;
+        margin-left: 8px;
     }
 
     .add-contact-btn img {
@@ -395,5 +426,25 @@
 
     .responsive-close-btn {
         display: none;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 621px) {
+    main {
+        padding-top: 77px;
+    }
+
+    .contact-section-left {
+        height: calc(100vh - 157px);
+    }
+}
+
+@media (max-width: 600px) {
+    main {
+        padding-top: 70px;
+    }
+
+    .contact-section-left {
+        height: calc(100vh - 150px);
     }
 }
