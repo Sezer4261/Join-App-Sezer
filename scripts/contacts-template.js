@@ -45,17 +45,26 @@ function getDialogAddContact() {
                     <img src="./assets/img/person.png" alt="Person Icon">
                 </div>
                 <form onsubmit="addContact(event)" id="add-contact-form" class="ac-form" novalidate>
-                    <div class="ac-field">
-                        <input class="input-focus" id="ac-name" type="text" placeholder="Name" required>
-                        <img src="./assets/icons/person.svg">
+                    <div class="ac-input-wrapper">
+                        <div class="ac-field">
+                            <input class="input-focus" id="ac-name" type="text" placeholder="Name" required>
+                            <img src="./assets/icons/person.svg">
+                        </div>
+                        <span class="error-message" id="ac-name-error"></span>
                     </div>
-                    <div class="ac-field">
-                        <input class="input-focus" id="ac-email" type="email" placeholder="Email" required>
-                        <img src="./assets/icons/mail.svg">
+                    <div class="ac-input-wrapper">
+                        <div class="ac-field">
+                            <input class="input-focus" id="ac-email" type="email" placeholder="Email" required>
+                            <img src="./assets/icons/mail.svg">
+                        </div>
+                        <span class="error-message" id="ac-email-error"></span>
                     </div>
-                    <div class="ac-field">
-                        <input class="input-focus" id="ac-phone" name="phone" type="tel" placeholder="Phone" required>
-                        <img src="./assets/img/call.png">
+                    <div class="ac-input-wrapper">
+                        <div class="ac-field">
+                            <input class="input-focus" id="ac-phone" name="phone" type="tel" placeholder="Phone" required>
+                            <img src="./assets/img/call.png">
+                        </div>
+                        <span class="error-message" id="ac-phone-error"></span>
                     </div>
                     <div class="ac-actions">
                         <button onclick="closeAddContactDialogWithAnimation()" type="button" class="btn btn-ghost responsive-close-btn" data-ac-cancel aria-label="Cancel">
@@ -240,17 +249,26 @@ function getEditContactDialog(id, name, email, phone, initials) {
                     </div>
                 </div>
                 <form onsubmit="updateContact(event, '${id}')" id="edit-contact-form" class="ac-form" novalidate>
-                    <div class="ac-field">
-                        <input class="input-focus" id="edit-name" type="text" placeholder="Name" value="${name}" required>
-                        <img src="./assets/icons/person.svg">
+                    <div class="ac-input-wrapper">
+                        <div class="ac-field">
+                            <input class="input-focus" id="edit-name" type="text" placeholder="Name" value="${name}" required>
+                            <img src="./assets/icons/person.svg">
+                        </div>
+                        <span class="error-message" id="edit-name-error"></span>
                     </div>
-                    <div class="ac-field">
-                        <input class="input-focus" id="edit-email" type="email" placeholder="Email" value="${email}" required>
-                        <img src="./assets/icons/mail.svg">
+                    <div class="ac-input-wrapper">
+                        <div class="ac-field">
+                            <input class="input-focus" id="edit-email" type="email" placeholder="Email" value="${email}" required>
+                            <img src="./assets/icons/mail.svg">
+                        </div>
+                        <span class="error-message" id="edit-email-error"></span>
                     </div>
-                    <div class="ac-field">
-                        <input class="input-focus" id="edit-phone" name="phone" type="tel" placeholder="Phone" value="${phone || ''}" required>
-                        <img src="./assets/img/call.png">
+                    <div class="ac-input-wrapper">
+                        <div class="ac-field">
+                            <input class="input-focus" id="edit-phone" name="phone" type="tel" placeholder="Phone" value="${phone || ''}" required>
+                            <img src="./assets/img/call.png">
+                        </div>
+                        <span class="error-message" id="edit-phone-error"></span>
                     </div>
                     <div class="ac-actions">
                         <button type="button" class="btn btn-ghost" onclick="closeEditContactDialog(); deleteContact('${id}')" aria-label="Delete contact">

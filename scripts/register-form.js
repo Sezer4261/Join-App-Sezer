@@ -113,10 +113,16 @@ function clearPolicyError() {
  * @returns {void} Result.
  */
 function validateNameField(fields, state) {
-    const nameValue = fields.nameInput.value.trim();
-    if (!nameValue) {
-        setSignupFieldError('register-name', 'Please enter your name.', fields.nameInput, state);
+    const nameValue = fields.nameInput.value;
+    const nameCheck = validateContactNameInput(nameValue);
+
+    if (!nameCheck.isValid) {
+        setSignupFieldError('register-name', nameCheck.error || 'Please enter your name.', fields.nameInput, state);
+        return;
     }
+
+    // Normalize (trim/collapse whitespace) to keep consistent formatting.
+    fields.nameInput.value = nameCheck.normalizedName;
 }
 
 /**
@@ -126,13 +132,35 @@ function validateNameField(fields, state) {
  * @returns {void} Result.
  */
 function validateEmailField(fields, state) {
-    const emailValue = fields.emailInput.value.trim();
-    if (!emailValue) {
-        setSignupFieldError('register-email', 'Please enter an email address.', fields.emailInput, state);
+    const emailValue = fields.emailInput.value;
+    const emailCheck = validateEmailLikeSignup(emailValue);
+
+    if (!emailCheck.isValid) {
+        const message = getSignupEmailErrorMessage(emailCheck);
+        setSignupFieldError('register-email', message, fields.emailInput, state);
         return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-        setSignupFieldError('register-email', 'Please enter a valid email address.', fields.emailInput, state);
+
+    // Normalize (lowercase) so the stored value is consistent across the app.
+    fields.emailInput.value = emailCheck.normalizedEmail;
+}
+
+/**
+ * Maps strict email validation results to the signup form's error messages.
+ * @param {{ isValid: boolean, normalizedEmail: string, error: string, reason?: string }} emailCheck - Validation result.
+ * @returns {string} Message.
+ */
+function getSignupEmailErrorMessage(emailCheck) {
+    switch (emailCheck?.reason) {
+        case 'required':
+            return 'Please enter an email address.';
+        case 'too_long':
+            return 'Maximum 20 characters allowed.';
+        case 'pattern':
+            return 'Please enter a valid email address.';
+        default:
+            // Fallback (keeps behavior stable if reason is missing)
+            return emailCheck?.error || 'Please enter a valid email address.';
     }
 }
 
@@ -275,14 +303,28 @@ function attachSignupErrorFocusHandlers() {
  * @returns {void} Result.
  */
 function updateSignupButtonState() {
-    const nameValue = document.getElementById('register-name')?.value.trim();
-    const emailValue = document.getElementById('register-email')?.value.trim();
+    const nameRaw = document.getElementById('register-name')?.value ?? '';
+    const emailRaw = document.getElementById('register-email')?.value ?? '';
     const passwordValue = document.getElementById('register-password')?.value;
     const confirmValue = document.getElementById('register-password-confirm')?.value;
     const policyChecked = document.getElementById('accept-privacy')?.checked;
     const signupButton = document.querySelector('.btn-signup');
 
-    const isComplete = Boolean(nameValue && emailValue && passwordValue && confirmValue && policyChecked);
+    const nameValid = validateContactNameInput(nameRaw).isValid;
+    const emailValid = validateEmailLikeSignup(emailRaw).isValid;
+    const passwordValid = Boolean(passwordValue);
+    const confirmValid = Boolean(confirmValue) && Boolean(passwordValue) && passwordValue === confirmValue;
+    const policyValid = Boolean(policyChecked);
+    const hasActiveErrors = Object.keys(signupFieldErrors || {}).length > 0;
+
+    const isComplete = Boolean(
+        nameValid &&
+        emailValid &&
+        passwordValid &&
+        confirmValid &&
+        policyValid &&
+        !hasActiveErrors
+    );
     if (signupButton) {
         signupButton.disabled = !isComplete;
     }
@@ -297,7 +339,13 @@ function attachSignupFormStateHandlers() {
     const policyCheckbox = document.getElementById('accept-privacy');
     inputs.forEach(input => bindSignupInputHandlers(input));
     if (policyCheckbox) {
-        policyCheckbox.addEventListener('change', updateSignupButtonState);
+        policyCheckbox.addEventListener('change', () => {
+            // Clear a previously shown error once the checkbox is valid again.
+            if (policyCheckbox.checked) {
+                applySignupPolicyBlurValidation('');
+            }
+            updateSignupButtonState();
+        });
         policyCheckbox.addEventListener('change', () => validateSignupFieldOnBlur('accept-privacy'));
         policyCheckbox.addEventListener('blur', () => validateSignupFieldOnBlur('accept-privacy'));
     }
@@ -322,11 +370,58 @@ function getSignupInputElements() {
  * @returns {void} Result.
  */
 function bindSignupInputHandlers(input) {
-    input.addEventListener('input', updateSignupButtonState);
+    input.addEventListener('input', () => {
+        clearSignupFieldErrorIfResolved(input.id);
+        updateSignupButtonState();
+    });
     input.addEventListener('blur', () => {
         validateSignupFieldOnBlur(input.id);
         updateSignupButtonState();
     });
+}
+
+/**
+ * Clears an already shown field error once the field becomes valid again.
+ * Does not create new errors while typing.
+ * @param {string} fieldId - Field identifier.
+ * @returns {void} Result.
+ */
+function clearSignupFieldErrorIfResolved(fieldId) {
+    const fields = getSignupFields();
+
+    switch (fieldId) {
+        case 'register-name': {
+            const nameCheck = validateContactNameInput(fields.nameInput?.value ?? '');
+            if (nameCheck.isValid) {
+                applySignupInputBlurValidation('register-name', fields.nameInput, '');
+            }
+            break;
+        }
+        case 'register-email': {
+            const emailCheck = validateEmailLikeSignup(fields.emailInput?.value ?? '');
+            if (emailCheck.isValid) {
+                applySignupInputBlurValidation('register-email', fields.emailInput, '');
+            }
+            break;
+        }
+        case 'register-password': {
+            if (fields.passwordInput?.value) {
+                applySignupInputBlurValidation('register-password', fields.passwordInput, '');
+            }
+            break;
+        }
+        case 'register-password-confirm': {
+            const passwordValue = fields.passwordInput?.value ?? '';
+            const confirmValue = fields.confirmPasswordInput?.value ?? '';
+            const isValid = Boolean(confirmValue) && Boolean(passwordValue) && passwordValue === confirmValue;
+            if (isValid) {
+                applySignupInputBlurValidation('register-password-confirm', fields.confirmPasswordInput, '');
+            }
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 /**
@@ -338,14 +433,26 @@ function validateSignupFieldOnBlur(fieldId) {
     const fields = getSignupFields();
     switch (fieldId) {
         case 'register-name':
-            applySignupInputBlurValidation('register-name', fields.nameInput, fields.nameInput?.value.trim() ? '' : 'Please enter your name.');
+            {
+                const nameValue = fields.nameInput?.value ?? '';
+                const nameCheck = validateContactNameInput(nameValue);
+                const message = nameCheck.isValid ? '' : (nameCheck.error || 'Please enter your name.');
+                applySignupInputBlurValidation('register-name', fields.nameInput, message);
+
+                if (nameCheck.isValid && fields.nameInput) {
+                    fields.nameInput.value = nameCheck.normalizedName;
+                }
+            }
             break;
         case 'register-email': {
-            const emailValue = fields.emailInput?.value.trim() ?? '';
-            const message = !emailValue
-                ? 'Please enter an email address.'
-                : (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue) ? '' : 'Please enter a valid email address.');
+            const emailValue = fields.emailInput?.value ?? '';
+            const emailCheck = validateEmailLikeSignup(emailValue);
+            const message = emailCheck.isValid ? '' : getSignupEmailErrorMessage(emailCheck);
             applySignupInputBlurValidation('register-email', fields.emailInput, message);
+
+            if (emailCheck.isValid && fields.emailInput) {
+                fields.emailInput.value = emailCheck.normalizedEmail;
+            }
             break;
         }
         case 'register-password':

@@ -150,7 +150,7 @@
     }
 
     .ac-form {
-        gap: 16px;
+        gap: 8px;
         align-items: center;
         margin-top: 32px;
     }
@@ -235,12 +235,12 @@
     .ac-avatar {
         margin-bottom: 0px;
         position: absolute;
-        bottom: 79%;
+        bottom: 82%;
         z-index: 5;
     }
 
     .ac-form {
-        gap: 16px;
+        gap: 8px;
         align-items: center;
         margin-top: 32px;
     }

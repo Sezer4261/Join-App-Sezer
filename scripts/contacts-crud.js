@@ -9,16 +9,8 @@ async function addContact(event) {
 
   const nameCheck = validateContactNameInput(contact.name);
   if (!nameCheck.isValid) {
-    const nameEl = document.getElementById('ac-name');
-    if (nameEl && typeof nameEl.reportValidity === 'function') {
-      nameEl.setCustomValidity(nameCheck.error);
-      nameEl.reportValidity();
-      nameEl.setCustomValidity('');
-    }
-    if (typeof showMessage === 'function') {
-      showMessage(nameCheck.error, 'error');
-    } else {
-      alert(nameCheck.error);
+    if (typeof showContactSubmitError === 'function') {
+      showContactSubmitError('ac-name', nameCheck.error, ['ac-name', 'ac-email', 'ac-phone']);
     }
     return;
   }
@@ -26,16 +18,8 @@ async function addContact(event) {
 
   const emailCheck = validateEmailLikeSignup(contact.email);
   if (!emailCheck.isValid) {
-    const emailEl = document.getElementById('ac-email');
-    if (emailEl && typeof emailEl.reportValidity === 'function') {
-      emailEl.setCustomValidity(emailCheck.error);
-      emailEl.reportValidity();
-      emailEl.setCustomValidity('');
-    }
-    if (typeof showMessage === 'function') {
-      showMessage(emailCheck.error, 'error');
-    } else {
-      alert(emailCheck.error);
+    if (typeof showContactSubmitError === 'function') {
+      showContactSubmitError('ac-email', emailCheck.error, ['ac-name', 'ac-email', 'ac-phone']);
     }
     return;
   }
@@ -43,16 +27,8 @@ async function addContact(event) {
 
   const phoneCheck = validateContactPhoneNumber(contact.phone);
   if (!phoneCheck.isValid) {
-    const phoneEl = document.getElementById('ac-phone');
-    if (phoneEl && typeof phoneEl.reportValidity === 'function') {
-      phoneEl.setCustomValidity(phoneCheck.error);
-      phoneEl.reportValidity();
-      phoneEl.setCustomValidity('');
-    }
-    if (typeof showMessage === 'function') {
-      showMessage(phoneCheck.error, 'error');
-    } else {
-      alert(phoneCheck.error);
+    if (typeof showContactSubmitError === 'function') {
+      showContactSubmitError('ac-phone', phoneCheck.error, ['ac-name', 'ac-email', 'ac-phone']);
     }
     return;
   }
@@ -164,16 +140,8 @@ async function updateContact(event, contactId) {
   const rawName = document.getElementById('edit-name').value;
   const nameCheck = validateContactNameInput(rawName);
   if (!nameCheck.isValid) {
-    const nameEl = document.getElementById('edit-name');
-    if (nameEl && typeof nameEl.reportValidity === 'function') {
-      nameEl.setCustomValidity(nameCheck.error);
-      nameEl.reportValidity();
-      nameEl.setCustomValidity('');
-    }
-    if (typeof showMessage === 'function') {
-      showMessage(nameCheck.error, 'error');
-    } else {
-      alert(nameCheck.error);
+    if (typeof showContactSubmitError === 'function') {
+      showContactSubmitError('edit-name', nameCheck.error, ['edit-name', 'edit-email', 'edit-phone']);
     }
     return;
   }
@@ -186,16 +154,8 @@ async function updateContact(event, contactId) {
 
   const emailCheck = validateEmailLikeSignup(updatedContact.email);
   if (!emailCheck.isValid) {
-    const emailEl = document.getElementById('edit-email');
-    if (emailEl && typeof emailEl.reportValidity === 'function') {
-      emailEl.setCustomValidity(emailCheck.error);
-      emailEl.reportValidity();
-      emailEl.setCustomValidity('');
-    }
-    if (typeof showMessage === 'function') {
-      showMessage(emailCheck.error, 'error');
-    } else {
-      alert(emailCheck.error);
+    if (typeof showContactSubmitError === 'function') {
+      showContactSubmitError('edit-email', emailCheck.error, ['edit-name', 'edit-email', 'edit-phone']);
     }
     return;
   }
@@ -203,16 +163,8 @@ async function updateContact(event, contactId) {
 
   const phoneCheck = validateContactPhoneNumber(updatedContact.phone);
   if (!phoneCheck.isValid) {
-    const phoneEl = document.getElementById('edit-phone');
-    if (phoneEl && typeof phoneEl.reportValidity === 'function') {
-      phoneEl.setCustomValidity(phoneCheck.error);
-      phoneEl.reportValidity();
-      phoneEl.setCustomValidity('');
-    }
-    if (typeof showMessage === 'function') {
-      showMessage(phoneCheck.error, 'error');
-    } else {
-      alert(phoneCheck.error);
+    if (typeof showContactSubmitError === 'function') {
+      showContactSubmitError('edit-phone', phoneCheck.error, ['edit-name', 'edit-email', 'edit-phone']);
     }
     return;
   }

@@ -219,7 +219,11 @@ function applyDashboardStats(tasks) {
  * @returns {*} Result.
  */
 function getDashboardStats(tasks) {
-    const urgentTasks = tasks.filter(t => t.priority === "urgent" && t.status !== "Done");
+    const urgentTasks = tasks.filter(t => {
+        if (t.priority !== "urgent" || t.status === "Done") return false;
+        const due = parseTaskDueDate(t.dueDate);
+        return Boolean(due && isStrictlyFutureDate(due));
+    });
     const earliestUrgentDueDate = getEarliestFutureDueDate(urgentTasks);
 
     return {
