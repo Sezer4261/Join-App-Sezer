@@ -43,6 +43,7 @@ function getContactInitialsFromName(name) {
  * - Only letters and hyphen per name part (hyphen allowed inside a part)
  * - 1 to 3 name parts (space separated)
  * - At least 2 letters total
+ * - Maximum 20 characters total
  * @param {string} name - Name input.
  * @returns {{ isValid: boolean, normalizedName: string, initials: string, error: string }} Result.
  */
@@ -50,6 +51,9 @@ function validateContactNameInput(name) {
   const normalizedName = normalizeContactNameInput(name);
   if (!normalizedName) {
     return { isValid: false, normalizedName, initials: "", error: "Name ist erforderlich." };
+  }
+  if (normalizedName.length > 20) {
+    return { isValid: false, normalizedName, initials: "", error: "Name darf maximal 20 Zeichen lang sein." };
   }
   const parts = normalizedName.split(" ").filter(Boolean);
   if (parts.length > 3) {
@@ -79,12 +83,27 @@ function validateContactNameInput(name) {
  * @returns {{ isValid: boolean, normalizedEmail: string, error: string }} Result.
  */
 function validateEmailLikeSignup(email) {
-  const normalizedEmail = String(email ?? "").trim();
-  if (!normalizedEmail) {
-    return { isValid: false, normalizedEmail, error: "Please enter an email address." };
+  const trimmedEmail = String(email ?? "").trim();
+  if (!trimmedEmail) {
+    return { isValid: false, normalizedEmail: trimmedEmail, error: "E-Mail ist erforderlich." };
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
-    return { isValid: false, normalizedEmail, error: "Please enter a valid email address." };
+  const normalizedEmail = trimmedEmail.toLowerCase();
+  if (normalizedEmail.length > 20) {
+    return { isValid: false, normalizedEmail, error: "E-Mail darf maximal 20 Zeichen lang sein." };
+  }
+  const localLabel = "[A-Za-zÄÖÜäöüß0-9]+(?:(?:-+|_(?!_))[A-Za-zÄÖÜäöüß0-9]+)*";
+  const domainLabel = "[A-Za-zÄÖÜäöüß0-9]+(?:-[A-Za-zÄÖÜäöüß0-9]+)*";
+  const tldLabel = "[A-Za-zÄÖÜäöüß]{2,}";
+  const strictEmailPattern = new RegExp(
+    `^(?!.*\\.\\.)${localLabel}(?:\\.${localLabel})*@${domainLabel}(?:\\.${domainLabel})*\\.${tldLabel}$`,
+    "u"
+  );
+  if (!strictEmailPattern.test(normalizedEmail)) {
+    return {
+      isValid: false,
+      normalizedEmail,
+      error: "Ungültige E-Mail. '_' ist nur vor @ erlaubt (nicht doppelt), im Domain-Teil ist '_' verboten."
+    };
   }
   return { isValid: true, normalizedEmail, error: "" };
 }
