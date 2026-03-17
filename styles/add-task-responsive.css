@@ -41,7 +41,7 @@
 
     .priority-options label {
         gap: 4px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .priority-options label svg {
@@ -234,7 +234,7 @@
 
     .priority-options label {
         min-width: 80px;
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .priority-options label svg {
@@ -255,7 +255,7 @@
     .priority-options label {
         min-width: 80px;
         padding: 4px 4px;
-        font-size: 12px;
+        font-size: 16px;
     }
 }
 
@@ -271,7 +271,7 @@
     .priority-options label {
         min-width: 74px;
         padding: 4px 4px;
-        font-size: 11px;
+        font-size: 16px;
     }
 
     .subtask {

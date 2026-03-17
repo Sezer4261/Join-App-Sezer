@@ -85,7 +85,7 @@
     .edit-task-form .priority-options label {
         min-width: 80px;
         padding: 4px 4px;
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .edit-task-form .priority-options label svg {
@@ -139,7 +139,7 @@
     .edit-task-form .priority-options label {
         min-width: 74px;
         padding: 4px 4px;
-        font-size: 11px;
+        font-size: 16px;
     }
 
     .edit-task-form .priority-options label svg {

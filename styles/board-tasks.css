@@ -386,7 +386,7 @@ body.add-task-dialog-open {
 .add-task-dialog .avatar-more {
     width: 32px;
     height: 32px;
-    font-size: 14px;
+    font-size: 16px;
     background: #2a3647;
     border: 2px solid #fff;
 }
