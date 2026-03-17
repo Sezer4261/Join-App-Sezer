@@ -352,3 +352,9 @@
         width: 135px;
     }
 }
+
+@media (max-width: 330px) {
+    .deadline-card-left {
+        gap: 8px;
+    }
+}
