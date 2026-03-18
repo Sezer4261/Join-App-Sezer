@@ -40,17 +40,7 @@ Clone the repository:
 
 git clone https://github.com/erikgor00/Join-App.git
 
-Install dependencies:
-
-npm install
-
-Start the application:
-
-ng serve
-
-Open in browser:
-
-http://localhost:4200
+Open the project folder and start index.html in your browser.
 
 ## Live Demo
 
