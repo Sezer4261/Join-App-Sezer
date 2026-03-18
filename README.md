@@ -48,6 +48,10 @@ Start the application:
 
 ng serve
 
+Open in browser:
+
+http://localhost:4200
+
 ## Live Demo
 
 Coming soon
