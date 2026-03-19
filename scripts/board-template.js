@@ -11,7 +11,7 @@ function createTaskCard(task) {
       onclick="openModal(${task.id})">
       <h2 class="task-category" style="background-color: ${task.category === "User Story" ? "#0038FF" : "#1FD7C1"}">${task.category}</h2>
       <h3>${highlightText(task.title)}</h3>
-      <span>${highlightText(task.description.substring(0, 50))}...</span>
+      <span>${highlightText(task.description)}</span>
       <div class="subtask-card">
         ${renderSubtaskProgress(task)}
       </div>
