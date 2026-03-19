@@ -66,12 +66,12 @@ function validateContactNameInput(name) {
     }
     const lettersInPart = part.replace(/-/g, "").length;
     if (lettersInPart < 2) {
-      return { isValid: false, normalizedName, initials: "", error: "Use more than 1 letter.", reason: 'part_too_short' };
+      return { isValid: false, normalizedName, initials: "", error: "Names have more than 1 letter.", reason: 'part_too_short' };
     }
   }
   const totalLetters = normalizedName.replace(/[^\p{L}]/gu, "").length;
   if (totalLetters < 2) {
-    return { isValid: false, normalizedName, initials: "", error: "Use more than 1 letter.", reason: 'too_few_letters' };
+    return { isValid: false, normalizedName, initials: "", error: "Names have more than 1 letter.", reason: 'too_few_letters' };
   }
   const initials = getContactInitialsFromName(normalizedName);
   return { isValid: true, normalizedName, initials, error: "" };
@@ -128,7 +128,7 @@ function validateContactPhoneNumber(phone) {
     return { isValid: false, normalizedPhone, error: "Please enter digits only." };
   }
   if (!/^\d{6,15}$/.test(normalizedPhone)) {
-    return { isValid: false, normalizedPhone, error: "Phone number must be 6 to 15 digits long." };
+    return { isValid: false, normalizedPhone, error: "Must be 6 to 15 digits long." };
   }
   return { isValid: true, normalizedPhone, error: "" };
 }
@@ -142,7 +142,7 @@ async function loadContacts() {
     const data = await fetchContactsData();
     contacts = data ? mapContactsData(data) : [];
   } catch (error) {
-    console.error("Fehler beim Laden der Kontakte:", error);
+    console.error("Error loading contacts:", error);
   }
 }
 

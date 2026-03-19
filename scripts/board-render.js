@@ -77,7 +77,8 @@ function renderTasksIntoColumns() {
     const task = filteredTasks[i];
     const column = getColumnByStatus(task.status);
     if (!column) continue;
-    column.innerHTML += createTaskCard(task);
+    const wrapper = column.querySelector(".task-wrapper");
+    (wrapper || column).innerHTML += createTaskCard(task);
   }
 }
 
