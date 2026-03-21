@@ -94,7 +94,7 @@ label {
 }
 
 .req {
-  color: #ff8190;
+  color: #8d0000;
 }
 
 input,
@@ -116,7 +116,7 @@ select,
   width: 1px;
   background-color: #d1d5db;
   align-self: flex-start;
-  height: 336px;
+  height: 400px;
   flex: 0 0 1px;
 }
 
@@ -135,10 +135,20 @@ textarea {
 }
 
 .note-outside {
-  position: fixed;
-  left: calc(232px + 24px);
-  bottom: 16px;
-  z-index: 200;
+  position: static;
+  margin-top: 0;
+}
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: -145px;
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: var(--main-bg);
+  padding-top: 12px;
 }
 
 .input-error {
@@ -157,6 +167,48 @@ textarea {
   height: 24px;
   line-height: 24px;
   overflow: hidden;
+}
+
+#title-error {
+  display: block;
+  min-height: 24px;
+  line-height: 24px;
+}
+
+#title-error:empty {
+  visibility: hidden;
+}
+
+#title-error:not(:empty) {
+  visibility: visible;
+}
+
+#date-error {
+  display: block;
+  min-height: 24px;
+  line-height: 24px;
+}
+
+#date-error:empty {
+  visibility: hidden;
+}
+
+#date-error:not(:empty) {
+  visibility: visible;
+}
+
+#category-error {
+  display: block;
+  min-height: 24px;
+  line-height: 24px;
+}
+
+#category-error:empty {
+  visibility: hidden;
+}
+
+#category-error:not(:empty) {
+  visibility: visible;
 }
 
 input:focus,
@@ -300,14 +352,6 @@ select:focus,
   display: block;
 }
 
-.assigned-to-label:has(.dropdown-content.show) {
-  padding-bottom: 160px;
-}
-
-.category:has(.dropdown-content.show) {
-  padding-bottom: 100px;
-}
-
 .dropdown-item {
   display: flex;
   justify-content: flex-start;
@@ -426,10 +470,11 @@ select:focus,
 .bg-brown { background: #A0522D; }
 
 .avatar-container {
-  margin-top: 10px;
+  margin-top: 6px;
   display: flex;
   gap: 8px;
   align-items: center;
+  min-height: 36px;
 }
 
 .avatar {
@@ -472,13 +517,12 @@ select:focus,
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 12px;
-  position: fixed;
-  right: 40px;
-  bottom: 16px;
+  margin-top: 0;
+  margin-left: auto;
+  position: static;
   background: transparent;
   padding: 0;
-  z-index: 200;
+  z-index: auto;
 }
 
 .close-btn {
@@ -525,4 +569,5 @@ select:focus,
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 6px;
+  padding-bottom: 180px;
 }

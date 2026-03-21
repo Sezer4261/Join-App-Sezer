@@ -121,7 +121,7 @@
           <p class="note note-inline"><span class="req">*</span>This field is required</p>
 
           <div class="form-scroll">
-            <form class="task-form" id="add-task-form" onsubmit="saveToArray(event)">
+            <form class="task-form" id="add-task-form" novalidate onsubmit="saveToArray(event)">
               <div class="form-left">
               <label>
                 <span>Title<span class="req">*</span></span>
@@ -214,7 +214,7 @@
                     </div>
                   </div>
                 </div>
-                <input type="hidden" id="category" required>
+                <input type="hidden" id="category">
                 <div class="error-message" id="category-error"></div>
               </label>
 
@@ -237,15 +237,17 @@
                 <ul id="subtask-area" class="subtask-list"></ul>
               </label>
 
-              <div class="actions">
-                <button type="reset" class="clear" onclick="clearForm()">Clear x</button>
-                <button type="submit" class="create">Create Task <img src="assets/icons/vector-5.svg" alt=""></button>
-              </div>
               </div>
             </form>
           </div>
 
-          <p class="note note-outside"><span class="req">*</span>This field is required</p>
+          <div class="form-footer">
+            <p class="note note-outside"><span class="req">*</span>This field is required</p>
+            <div class="actions">
+              <button type="reset" class="clear" onclick="clearForm()" form="add-task-form">Clear x</button>
+              <button type="submit" class="create" form="add-task-form">Create Task <img src="assets/icons/vector-5.svg" alt=""></button>
+            </div>
+          </div>
         </section>
       </div>
     </main>

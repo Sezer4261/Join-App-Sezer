@@ -45,7 +45,7 @@ function generateAddTask(options = {}) {
       <span class="close-btn" onclick="closeAddTaskDialog()">x</span>
     </div>
     <div class="form-scroll">
-      <form class="task-form" id="add-task-form" onsubmit="saveToArray(event)">
+      <form class="task-form" id="add-task-form" novalidate onsubmit="saveToArray(event)">
         <div class="form-left">
         <label>
           <span>Title<span class="req">*</span></span>
@@ -97,7 +97,7 @@ function generateAddTask(options = {}) {
               ${generateAddCategoryOptions()}
             </div>
           </div>
-          <input type="hidden" id="category" required>
+          <input type="hidden" id="category">
           <div class="error-message" id="category-error"></div>
         </label>
         <label>
@@ -117,14 +117,16 @@ function generateAddTask(options = {}) {
           <div class="error-message" id="subtask-error"></div>
           <ul id="subtask-area" class="subtask-list"></ul>
         </label>
-        <div class="actions">
-          <button type="reset" class="clear" onclick="${clearOnClick}">${clearLabel}</button>
-          <button type="submit" class="create">Create Task <img src="assets/icons/vector-5.svg" alt=""></button>
-        </div>
         </div>
       </form>
     </div>
-    <p class="note note-outside"><span class="req">*</span>This field is required</p>
+    <div class="form-footer">
+      <p class="note note-outside"><span class="req">*</span>This field is required</p>
+      <div class="actions">
+        <button type="reset" class="clear" onclick="${clearOnClick}" form="add-task-form">${clearLabel}</button>
+        <button type="submit" class="create" form="add-task-form">Create Task <img src="assets/icons/vector-5.svg" alt=""></button>
+      </div>
+    </div>
   `;
 }
 

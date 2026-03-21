@@ -3,15 +3,6 @@
         padding-bottom: 120px;
     }
 
-    .actions {
-        bottom: 96px;
-    }
-
-    .note-outside {
-        bottom: 96px;
-        left: 16px;
-    }
-
     .clear,
     .create {
         padding: 8px 14px;
@@ -19,6 +10,7 @@
 }
 
 @media (max-width: 1200px) {
+
     .form-left,
     .form-right {
         min-width: 0;
@@ -71,6 +63,7 @@
 }
 
 @media (max-width: 750px) {
+
     html,
     body,
     .app {
@@ -111,6 +104,10 @@
 
     .form-scroll {
         max-height: calc(100vh - 400px);
+    }
+
+    .form-footer {
+        margin-top: 8px;
     }
 }
 
@@ -163,15 +160,14 @@
         align-items: center;
     }
 
-    .actions {
-        bottom: 96px;
-        right: 16px;
+    .form-footer {
+        bottom: 72px;
     }
 
-    .note-outside {
-        bottom: 96px;
-        left: 16px;
+    .form-footer {
+        margin-top: 32px;
     }
+
 }
 
 @media (max-width: 550px) {
@@ -196,6 +192,10 @@
 
     .subtask-list {
         height: 70px;
+    }
+
+    .form-footer {
+        margin-top: 16px;
     }
 }
 

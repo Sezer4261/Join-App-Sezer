@@ -29,7 +29,10 @@ function initAddTaskBlurValidation() {
   const categorySelect = document.getElementById('category-select');
 
   titleInput?.addEventListener('blur', validateTitleField);
+  titleInput?.addEventListener('input', clearTitleErrorOnValidInput);
   dateInput?.addEventListener('blur', validateDateField);
+  dateInput?.addEventListener('input', clearDateErrorOnValidInput);
+  dateInput?.addEventListener('change', clearDateErrorOnValidInput);
   categorySelect?.addEventListener('blur', validateCategoryField);
 
   form.dataset.blurValidationInit = '1';
@@ -87,6 +90,18 @@ function validateTitleField() {
 }
 
 /**
+ * Clears title error while typing as soon as input is valid.
+ * @returns {void} Result.
+ */
+function clearTitleErrorOnValidInput() {
+  const input = document.getElementById('title');
+  if (!input) return;
+  if (!String(input.value || '').trim()) return;
+  setErrorText('title-error', '');
+  input.classList.remove('input-error');
+}
+
+/**
  * Validates date field.
  * @returns {void} Result.
  */
@@ -107,6 +122,20 @@ function validateDateField() {
   setErrorText('date-error', '');
   input.classList.remove('input-error');
   return true;
+}
+
+/**
+ * Clears date error while typing as soon as input is valid and not in the past.
+ * @returns {void} Result.
+ */
+function clearDateErrorOnValidInput() {
+  const input = document.getElementById('date');
+  if (!input) return;
+  const selectedDate = String(input.value || '').trim();
+  if (!selectedDate) return;
+  if (selectedDate < getTodayDateString()) return;
+  setErrorText('date-error', '');
+  input.classList.remove('input-error');
 }
 
 /**
