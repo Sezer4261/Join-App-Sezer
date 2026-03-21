@@ -5,6 +5,7 @@
 async function renderAddTask() {
   const content = document.getElementById('add-task-content');
   if (!content) return;
+  applyTodayMinDate();
   await loadContacts();
   resetSelectedContacts();
   selectContacts();
@@ -91,7 +92,43 @@ function validateTitleField() {
  */
 function validateDateField() {
   const input = document.getElementById('date');
-  return validateRequiredInput(input, 'date-error');
+  if (!validateRequiredInput(input, 'date-error')) {
+    return false;
+  }
+
+  const today = getTodayDateString();
+  const selectedDate = String(input.value || '').trim();
+  if (selectedDate < today) {
+    setErrorText('date-error', 'Please select a future date');
+    input.classList.add('input-error');
+    return false;
+  }
+
+  setErrorText('date-error', '');
+  input.classList.remove('input-error');
+  return true;
+}
+
+/**
+ * Applies today's date as minimum selectable due date.
+ * @returns {void} Result.
+ */
+function applyTodayMinDate() {
+  const dateInput = document.getElementById('date');
+  if (!dateInput) return;
+  dateInput.min = getTodayDateString();
+}
+
+/**
+ * Returns today's local date in yyyy-mm-dd.
+ * @returns {string} Result.
+ */
+function getTodayDateString() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 /**
