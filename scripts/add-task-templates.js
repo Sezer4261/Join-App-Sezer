@@ -174,6 +174,7 @@ function getSubtaskEditItem(i) {
         id="subtask-edit-${i}"
         class="subtask-edit-input"
         value="${subtasks[i].title}"
+        pattern=".*\\S.*"
         placeholder="Edit subtask"
       >
       <div class="subtask-input-actions">

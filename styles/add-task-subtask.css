@@ -52,7 +52,7 @@
     cursor: default;
 }
 
-.subtask-edit-input:not(:placeholder-shown)~.subtask-input-actions {
+.subtask-edit-input:not(:placeholder-shown):valid~.subtask-input-actions {
     opacity: 1;
     pointer-events: auto;
 }
@@ -65,6 +65,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: none;
+}
+
+.subtasks input:not(:placeholder-shown)~.subtask-input-actions .subtask-icon-btn,
+.subtask-edit-input:not(:placeholder-shown):valid~.subtask-input-actions .subtask-icon-btn {
     pointer-events: auto;
 }
 
