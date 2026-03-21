@@ -22,7 +22,7 @@ function initAddSubtaskEnter() {
 
     const value = String(input.value || '').trim();
     if (!value) {
-      setSubtaskError('Keine leeren Subtasks möglich.');
+      setSubtaskError('Subtasks must not be empty.');
       return;
     }
     subtasks.push({ title: value, done: false });
@@ -58,7 +58,7 @@ function addSubtask() {
     input.value = '';
     setSubtaskError('');
   } else {
-    setSubtaskError('Keine leeren Subtasks möglich.');
+    setSubtaskError('Subtasks must not be empty.');
   }
 }
 
@@ -141,7 +141,7 @@ function saveEditedSubtask(i) {
   if (!input) return;
   const value = input.value.trim();
   if (!value) {
-    setSubtaskError('Keine leeren Subtasks möglich.', input);
+    setSubtaskError('Subtasks must not be empty.', input);
     return;
   }
   subtasks[i].title = value;

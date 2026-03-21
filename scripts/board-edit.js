@@ -288,7 +288,7 @@ function addEditSubtask() {
   if (!input) return;
   const value = input.value.trim();
   if (!value) {
-    setEditSubtaskError('Keine leeren Subtasks möglich.');
+    setEditSubtaskError('Subtasks must not be empty.');
     return;
   }
   editSubtasks.push({ title: value, done: false });
@@ -349,7 +349,7 @@ function saveEditedEditSubtask(i) {
   if (!input) return;
   const value = input.value.trim();
   if (!value) {
-    setEditSubtaskError('Keine leeren Subtasks möglich.', input);
+    setEditSubtaskError('Subtasks must not be empty.', input);
     return;
   }
   editSubtasks[i].title = value;
