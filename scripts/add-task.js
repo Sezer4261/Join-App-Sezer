@@ -5,6 +5,7 @@
 async function renderAddTask() {
   const content = document.getElementById('add-task-content');
   if (!content) return;
+  setAddTaskActionButtonsDisabled(false);
   applyTodayMinDate();
   await loadContacts();
   resetSelectedContacts();
@@ -214,6 +215,7 @@ async function saveToArray(event) {
  * @returns {void} Result.
  */
 function handleSaveSuccess() {
+  setAddTaskActionButtonsDisabled(true);
     showMessage("Task added to board", "success", {
       iconSrc: "./assets/icons/vector-board.svg",
       iconAlt: "Board"
@@ -231,6 +233,19 @@ function handleSaveSuccess() {
  */
 function handleSaveFailure() {
   showMessage("Task could not be saved", "error");
+}
+
+/**
+ * Enables or disables add-task action buttons.
+ * @param {boolean} disabled - Whether buttons should be disabled.
+ * @returns {void} Result.
+ */
+function setAddTaskActionButtonsDisabled(disabled) {
+  const buttons = document.querySelectorAll('#add-task-form ~ .form-footer .clear, #add-task-form ~ .form-footer .create, .actions .clear[form="add-task-form"], .actions .create[form="add-task-form"]');
+  buttons.forEach((button) => {
+    button.disabled = !!disabled;
+    button.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+  });
 }
 
 /**
