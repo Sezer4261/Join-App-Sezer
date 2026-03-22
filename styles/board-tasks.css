@@ -148,12 +148,9 @@ textarea:focus-within,
 .add-task-dialog-bg {
     background-color: rgba(0, 0, 0, 0.2);
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     z-index: 110;
     display: flex;
     justify-content: center;
@@ -334,7 +331,7 @@ body.add-task-dialog-open {
 .add-task-dialog .error-message {
     display: none;
     min-height: 0;
-    color: #ff6b6b;
+    color: #8d0000;
     font-size: 16px;
 }
 

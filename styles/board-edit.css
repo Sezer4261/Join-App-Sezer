@@ -39,7 +39,7 @@
 .edit-form-scroll .error-message {
     display: none;
     min-height: 0;
-    color: #ff6b6b;
+    color: #8d0000;
     font-size: 16px;
 }
 
@@ -48,6 +48,22 @@
     height: 24px;
     line-height: 24px;
     overflow: hidden;
+}
+
+.edit-form-scroll #edit-title-error {
+    display: block;
+    min-height: 24px;
+    line-height: 24px;
+}
+
+.edit-form-scroll #edit-date-error {
+    display: block;
+    min-height: 24px;
+    line-height: 24px;
+}
+
+.edit-form-scroll #edit-title-error:not(:empty) {
+    visibility: visible;
 }
 
 .edit-form-scroll .form-separator {

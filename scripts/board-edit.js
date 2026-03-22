@@ -15,6 +15,7 @@ async function openEditTaskModal(id) {
   const modalContent = modal.querySelector(".modal-content");
   if (!modalContent) return;
   modalContent.innerHTML = generateEditTaskTemplate(task);
+  applyTodayMinDateForEdit();
   initEditFormBlurValidation();
   await loadContacts();
   renderEditAssignedContacts();
@@ -39,8 +40,10 @@ function initEditFormBlurValidation() {
     validateEditRequiredInput(titleInput, 'edit-title-error');
   });
   dateInput?.addEventListener('blur', () => {
-    validateEditRequiredInput(dateInput, 'edit-date-error');
+    validateEditDateField();
   });
+  dateInput?.addEventListener('input', clearEditDateErrorOnValidInput);
+  dateInput?.addEventListener('change', clearEditDateErrorOnValidInput);
   categorySelect?.addEventListener('blur', () => {
     const categoryInput = document.getElementById('edit-category');
     validateEditRequiredInput(categoryInput, 'edit-category-error', categorySelect);
@@ -164,6 +167,65 @@ function validateEditRequiredInput(input, errorId, highlightElement = input) {
 }
 
 /**
+ * Applies today's date as minimum selectable due date for edit form.
+ * @returns {void} Result.
+ */
+function applyTodayMinDateForEdit() {
+  const dateInput = document.getElementById('edit-date');
+  if (!dateInput) return;
+  dateInput.min = getTodayDateStringForEdit();
+}
+
+/**
+ * Returns today's local date in yyyy-mm-dd for edit form.
+ * @returns {string} Result.
+ */
+function getTodayDateStringForEdit() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+/**
+ * Validates edit due date field.
+ * @returns {boolean} Result.
+ */
+function validateEditDateField() {
+  const input = document.getElementById('edit-date');
+  if (!validateEditRequiredInput(input, 'edit-date-error')) {
+    return false;
+  }
+
+  const today = getTodayDateStringForEdit();
+  const selectedDate = String(input.value || '').trim();
+  if (selectedDate < today) {
+    setEditErrorText('edit-date-error', 'Please select a future date');
+    input.classList.add('input-error');
+    return false;
+  }
+
+  setEditErrorText('edit-date-error', '');
+  input.classList.remove('input-error');
+  return true;
+}
+
+/**
+ * Clears edit date error while typing as soon as input is valid and not in the past.
+ * @returns {void} Result.
+ */
+function clearEditDateErrorOnValidInput() {
+  const input = document.getElementById('edit-date');
+  if (!input) return;
+  const selectedDate = String(input.value || '').trim();
+  if (!selectedDate) return;
+  if (selectedDate < getTodayDateStringForEdit()) return;
+  setEditErrorText('edit-date-error', '');
+  input.classList.remove('input-error');
+}
+
+/**
  * Scrolls edit form to the given element (inside overflow container).
  * @param {HTMLElement|null} target - Target element.
  * @returns {void} Result.
@@ -199,7 +261,7 @@ function validateEditForm() {
     invalid.push({ errorId: 'edit-title-error', focusEl: titleInput });
   }
 
-  if (!validateEditRequiredInput(dateInput, 'edit-date-error')) {
+  if (!validateEditDateField()) {
     invalid.push({ errorId: 'edit-date-error', focusEl: dateInput });
   }
 
