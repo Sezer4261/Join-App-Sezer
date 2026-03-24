@@ -211,6 +211,20 @@ textarea {
   visibility: visible;
 }
 
+#subtask-error {
+  display: block;
+  min-height: 24px;
+  line-height: 24px;
+}
+
+#subtask-error:empty {
+  visibility: hidden;
+}
+
+#subtask-error:not(:empty) {
+  visibility: visible;
+}
+
 input:focus,
 textarea:focus,
 select:focus,

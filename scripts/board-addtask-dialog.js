@@ -34,6 +34,7 @@ async function showAddTaskDialog() {
   selectContacts();
   renderSelectedAvatars();
   if (typeof initAddDropdownClose === "function") initAddDropdownClose();
+  if (typeof initAddTaskBlurValidation === "function") initAddTaskBlurValidation();
   if (typeof initAddSubtaskEnter === "function") initAddSubtaskEnter();
 }
 

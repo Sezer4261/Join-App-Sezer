@@ -287,6 +287,7 @@ body.add-task-dialog-open {
 .add-task-dialog .assigned-to-label,
 .add-task-dialog .category {
     width: 100%;
+    margin-top: 8px;
 }
 
 .add-task-dialog label {
@@ -301,6 +302,17 @@ body.add-task-dialog-open {
     padding: 4px;
     border: 1px solid var(--border, #d1d5db);
     border-radius: 6px;
+}
+
+.add-task-dialog input:focus,
+.add-task-dialog textarea:focus,
+.add-task-dialog select:focus,
+.add-task-dialog .custom-select:focus,
+.add-task-dialog .custom-select:focus-within {
+    outline: none;
+    border-color: #29ABE2;
+    border: 1px solid #29ABE2;
+    box-shadow: none;
 }
 
 .add-task-dialog textarea {
@@ -342,25 +354,89 @@ body.add-task-dialog-open {
     overflow: hidden;
 }
 
+.add-task-dialog #title-error {
+    display: block;
+    height: 24px;
+    line-height: 24px;
+}
+
+.add-task-dialog #title-error:not(:empty) {
+    visibility: visible;
+}
+
+.add-task-dialog #date-error {
+    display: block;
+    height: 24px;
+    line-height: 24px;
+}
+
+.add-task-dialog #date-error:empty {
+    visibility: hidden;
+}
+
+.add-task-dialog #date-error:not(:empty) {
+    visibility: visible;
+}
+
+.add-task-dialog #category-error {
+    display: block;
+    height: 24px;
+    line-height: 24px;
+}
+
+.add-task-dialog #category-error:not(:empty) {
+    visibility: visible;
+}
+
 .add-task-dialog .subtasks input {
     height: 34px;
 }
 
 .add-task-dialog .subtask-list {
-    height: 100px;
+    height: 70px;
     overflow-y: auto;
+}
+
+.add-task-dialog .subtask-edit {
+    width: auto;
+    min-width: 0;
+    margin-left: 10px;
+}
+
+.add-task-dialog .subtask-edit .subtask-input-actions {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.add-task-dialog .subtask-edit .subtask-input-actions .subtask-icon-btn {
+    pointer-events: none;
+}
+
+.add-task-dialog .subtask-edit-input:not(:placeholder-shown):valid ~ .subtask-input-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.add-task-dialog .subtask-edit-input:not(:placeholder-shown):valid ~ .subtask-input-actions .subtask-icon-btn {
+    pointer-events: auto;
+}
+
+.add-task-dialog #subtask-error {
+    display: block;
+    min-height: 24px;
+    line-height: 24px;
+}
+
+.add-task-dialog #subtask-error:empty {
+    visibility: hidden;
+}
+
+.add-task-dialog #subtask-error:not(:empty) {
+    visibility: visible;
 }
 
 .add-task-dialog #subtask-error:not(:empty) + .subtask-list {
     height: 70px;
-}
-
-.add-task-dialog .assigned-to-label:has(.dropdown-content.show) {
-    padding-bottom: 160px;
-}
-
-.add-task-dialog .category:has(.dropdown-content.show) {
-    padding-bottom: 86px;
 }
 
 .add-task-dialog .avatar {
@@ -377,11 +453,12 @@ body.add-task-dialog-open {
 }
 
 .add-task-dialog .avatar-container {
-    margin-top: 10px;
+    margin-top: 3px;
     padding-left: 10px;
     display: flex;
     gap: 8px;
     align-items: center;
+    min-height: 40px;
 }
 
 .add-task-dialog .avatar-more {
@@ -402,7 +479,7 @@ body.add-task-dialog-open {
 .add-task-dialog .bg-brown { background: #A0522D; }
 
 .add-task-dialog .form-scroll {
-    max-height: calc(100% - 160px);
+    max-height: calc(100% - 119px);
     overflow-y: auto;
     overflow-x: hidden;
     padding-right: 6px;
