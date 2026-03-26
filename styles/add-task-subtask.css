@@ -39,8 +39,17 @@
 
 .subtask-edit-input {
     width: 100%;
-    height: 40px;
+    height: 34px;
+    padding-right: 72px;
     border-bottom: 1px solid #29ABE2;
+}
+
+#add-task-content #subtask,
+#add-task-content .subtask-edit-input {
+    width: 100%;
+    height: 34px;
+    padding-right: 72px;
+    box-sizing: border-box;
 }
 
 .subtask-edit .subtask-input-actions {
@@ -112,6 +121,7 @@
 .subtask {
     height: 40px;
     width: 100%;
+    max-width: 100%;
     min-width: 0;
     margin-left: 0;
     margin-bottom: 4px;
@@ -120,6 +130,36 @@
     display: flex;
     align-items: center;
     list-style-type: none;
+}
+
+#add-task-content .subtask > span {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+#add-task-content .subtask-actions {
+    flex: 0 0 auto;
+}
+
+@media (max-width: 320px) {
+    #add-task-content .subtask-list li::before {
+        margin-right: 12px;
+    }
+
+    #add-task-content .subtask-actions {
+        gap: 6px;
+    }
+
+    #add-task-content .subtask-actions img {
+        width: 18px;
+        height: 18px;
+    }
+
+    #add-task-content .subtask-actions .action-separator {
+        margin-left: 3px;
+        margin-right: 3px;
+    }
 }
 
 .subtask-actions {

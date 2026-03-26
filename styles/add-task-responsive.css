@@ -1,6 +1,6 @@
 @media (max-width: 1024px) {
-    .content {
-        padding-bottom: 120px;
+    #add-task-content {
+        padding-bottom: 92px;
     }
 
     .clear,
@@ -102,7 +102,7 @@
         min-height: 0;
     }
 
-    .form-scroll {
+    #add-task-content .form-scroll {
         max-height: calc(100vh - 400px);
     }
 
