@@ -107,7 +107,8 @@
     }
 
     .form-footer {
-        margin-top: 8px;
+        margin-top: 0;
+        position: relative;
     }
 }
 
@@ -161,11 +162,9 @@
     }
 
     .form-footer {
-        bottom: 72px;
-    }
-
-    .form-footer {
-        margin-top: 32px;
+        margin-top: 0;
+        position: relative;
+        bottom: auto;
     }
 
 }
@@ -191,11 +190,35 @@
     }
 
     .subtask-list {
-        height: 70px;
+        height: 0;
+        min-height: 0;
+    }
+
+    .subtask-list:not(:empty),
+    .subtask-list:has(li) {
+        height: 130px;
+        min-height: 130px;
+    }
+
+    .subtask-list:empty,
+    .subtask-list:not(:has(li)) {
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        visibility: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    #add-task-content #subtask-error:not(:empty) + .subtask-list:not(:empty),
+    #add-task-content #subtask-error:not(:empty) + .subtask-list:has(li) {
+        height: 100px;
+        min-height: 100px;
     }
 
     .form-footer {
-        margin-top: 16px;
+        margin-top: 0;
+        position: relative;
     }
 }
 
@@ -276,5 +299,20 @@
 
     .subtask {
         width: 280px;
+    }
+
+    .subtask-list {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .subtask-list:empty,
+    .subtask-list:not(:has(li)) {
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        visibility: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 }

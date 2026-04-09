@@ -95,6 +95,10 @@ function renderEditAssignedContacts() {
  */
 function toggleEditCategoryDropdown(event) {
   event.stopPropagation();
+  // Close other dropdowns first
+  const contactsDropdown = document.getElementById("dropdown-contacts");
+  if (contactsDropdown) contactsDropdown.classList.remove("show");
+  
   const dropdown = document.getElementById("edit-category-dropdown");
   if (!dropdown) return;
   dropdown.classList.toggle("show");

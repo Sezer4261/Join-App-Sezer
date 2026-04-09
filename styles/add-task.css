@@ -143,10 +143,10 @@ textarea {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: -145px;
-  position: sticky;
-  bottom: 0;
-  z-index: 20;
+  margin-top: 0;
+  position: relative;
+  bottom: auto;
+  z-index: auto;
   background: var(--main-bg);
   padding-top: 12px;
 }
@@ -380,6 +380,8 @@ select:focus,
   background: transparent;
   border: none;
   margin-bottom: 0;
+  cursor: pointer;
+  user-select: none;
 }
 
 .dropdown-item + .dropdown-item {

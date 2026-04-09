@@ -130,11 +130,13 @@
     }
 
     .headline {
+        position: relative;
         flex-direction: column;
         align-items: flex-start;
         gap: 0px;
         margin-top: 16px;
         margin-bottom: 0px;
+        left: auto;
     }
 
     .headline h1 {
@@ -151,6 +153,11 @@
         height: 3px;
         margin-top: 8px;
         order: 3;
+        align-self: flex-start;
+    }
+
+    h1 {
+        font-size: 48px;
     }
 
     .subheadline {
@@ -354,6 +361,10 @@
 }
 
 @media (max-width: 330px) {
+    .headline {
+        left: 12px;
+    }
+
     .deadline-card-left {
         gap: 8px;
     }

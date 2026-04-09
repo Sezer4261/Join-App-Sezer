@@ -124,7 +124,7 @@ function generateAddTask(options = {}) {
       <p class="note note-outside"><span class="req">*</span>This field is required</p>
       <div class="actions">
         <button type="reset" class="clear" onclick="${clearOnClick}" form="add-task-form">${clearLabel}</button>
-        <button type="submit" class="create" form="add-task-form">Create Task <img src="assets/icons/vector-5.svg" alt=""></button>
+        <button type="submit" id="create-task-btn" class="create" form="add-task-form">Create Task <img src="assets/icons/vector-5.svg" alt=""></button>
       </div>
     </div>
   `;
@@ -222,9 +222,9 @@ function generateAssignedContacts(contacts) {
       ? getContactColorClass(contact.name)
       : '';
     return /*html*/ `
-      <div class="dropdown-item">
+      <label class="dropdown-item">
         <div class="dropdown-avatar ${colorClass}">${initials}</div>
-        <label for="${checkboxId}" class="dropdown-name">${contact.name}</label>
+        <span class="dropdown-name">${contact.name}</span>
         <input
           type="checkbox"
           id="${checkboxId}"
@@ -233,7 +233,7 @@ function generateAssignedContacts(contacts) {
           onchange="toggleContactSelection('${contact.name}', this)"
           ${isChecked ? "checked" : ""}
         >
-      </div>
+      </label>
     `;
   }).join("");
 }

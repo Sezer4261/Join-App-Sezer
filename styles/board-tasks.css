@@ -394,7 +394,15 @@ body.add-task-dialog-open {
 
 .add-task-dialog .subtask-list {
     height: 70px;
+    min-height: 70px;
     overflow-y: auto;
+}
+
+.add-task-dialog .subtask-list:empty,
+.add-task-dialog .subtask-list:not(:has(li)) {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
 }
 
 .add-task-dialog .subtask-edit {
@@ -437,6 +445,7 @@ body.add-task-dialog-open {
 
 .add-task-dialog #subtask-error:not(:empty) + .subtask-list {
     height: 70px;
+    min-height: 70px;
 }
 
 .add-task-dialog .avatar {

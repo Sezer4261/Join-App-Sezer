@@ -38,9 +38,23 @@ function initAddSubtaskEnter() {
  */
 function showSubtasks() {
   let subtaskArea = document.getElementById('subtask-area');
+  
   subtaskArea.innerHTML = '';
   for (let i = 0; i < subtasks.length; i++) {
     subtaskArea.innerHTML += generateSubtasks(i);
+  }
+  
+  // Hide only the list if empty, show if has items
+  if (subtasks.length === 0) {
+    subtaskArea.style.display = 'none';
+    subtaskArea.style.height = '0';
+    subtaskArea.style.minHeight = '0';
+    subtaskArea.style.visibility = 'hidden';
+  } else {
+    subtaskArea.style.display = '';
+    subtaskArea.style.height = '';
+    subtaskArea.style.minHeight = '';
+    subtaskArea.style.visibility = '';
   }
 }
 

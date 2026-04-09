@@ -100,11 +100,46 @@
 
 .subtask-list {
     height: 100px;
+    min-height: 100px;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #29ABE2 #f0f0f0;
+}
+
+.subtask-list:empty,
+.subtask-list:not(:has(li)) {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    visibility: hidden !important;
+}
+
+.subtask-list:empty ~ .subtask-input-actions,
+.subtask-list:not(:has(li)) ~ .subtask-input-actions {
+    display: none !important;
+}
+
+.subtask-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.subtask-list::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+}
+
+.subtask-list::-webkit-scrollbar-thumb {
+    background-color: #29ABE2;
+    border-radius: 10px;
+}
+
+.subtask-list::-webkit-scrollbar-thumb:hover {
+    background-color: #1f8cb3;
 }
 
 #subtask-error:not(:empty) + .subtask-list {
     height: 70px;
+    min-height: 70px;
 }
 
 .subtask-list li::before {

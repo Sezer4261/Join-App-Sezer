@@ -15,6 +15,7 @@ async function renderAddTask() {
   initAddTaskBlurValidation();
   initAddSubtaskEnter();
   showSubtasks();
+  updateCreateButtonState();
 }
 
 /**
@@ -31,12 +32,36 @@ function initAddTaskBlurValidation() {
 
   titleInput?.addEventListener('blur', validateTitleField);
   titleInput?.addEventListener('input', clearTitleErrorOnValidInput);
+  titleInput?.addEventListener('input', updateCreateButtonState);
   dateInput?.addEventListener('blur', validateDateField);
   dateInput?.addEventListener('input', clearDateErrorOnValidInput);
+  dateInput?.addEventListener('input', updateCreateButtonState);
   dateInput?.addEventListener('change', clearDateErrorOnValidInput);
+  dateInput?.addEventListener('change', updateCreateButtonState);
   categorySelect?.addEventListener('blur', validateCategoryField);
+  categorySelect?.addEventListener('change', updateCreateButtonState);
 
   form.dataset.blurValidationInit = '1';
+}
+
+/**
+ * Updates create button disabled state.
+ * @returns {void} Result.
+ */
+function updateCreateButtonState() {
+  const btn = document.getElementById('create-task-btn');
+  if (!btn) return;
+  
+  const titleInput = document.getElementById('title');
+  const dateInput = document.getElementById('date');
+  const categoryInput = document.getElementById('category');
+  
+  const hasTitle = titleInput && String(titleInput.value || '').trim().length > 0;
+  const hasDate = dateInput && String(dateInput.value || '').trim().length > 0;
+  const hasCategory = categoryInput && String(categoryInput.value || '').trim().length > 0;
+  
+  const isFormValid = hasTitle && hasDate && hasCategory;
+  btn.disabled = !isFormValid;
 }
 
 /**
@@ -289,6 +314,15 @@ function toggleDropdown(event) {
   const trigger = event?.currentTarget || event?.target;
   const select = trigger?.closest?.(".custom-select");
   const dropdown = select?.querySelector?.(".dropdown-content");
+  
+  // Close all other dropdowns first
+  const allDropdowns = document.querySelectorAll(".dropdown-content.show");
+  allDropdowns.forEach((d) => {
+    if (d !== dropdown) {
+      d.classList.remove("show");
+    }
+  });
+  
   if (dropdown) {
     dropdown.classList.toggle("show");
     return;
@@ -306,6 +340,10 @@ function toggleDropdown(event) {
  */
 function toggleAddCategoryDropdown(event) {
   event.stopPropagation();
+  // Close other dropdowns first
+  const contactsDropdown = document.getElementById("dropdown-contacts");
+  if (contactsDropdown) contactsDropdown.classList.remove("show");
+  
   const dropdown = document.getElementById("category-dropdown");
   if (!dropdown) return;
   dropdown.classList.toggle("show");
@@ -508,4 +546,5 @@ function clearForm() {
     subtasks.length = 0;
   }
   showSubtasks();
+  updateCreateButtonState();
 }

@@ -83,7 +83,15 @@
 
 .subtask-list {
   height: 100px;
+  min-height: 100px;
   overflow-y: auto;
+}
+
+.subtask-list:empty,
+.subtask-list:not(:has(li)) {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
 }
 
 .subtask-list li::before {

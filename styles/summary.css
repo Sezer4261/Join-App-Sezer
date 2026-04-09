@@ -50,7 +50,7 @@ main {
 .wrapper {
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: flex-start;
     gap: 8px;
 }
 
@@ -72,6 +72,7 @@ h1 {
     height: 59px;
     width: 3px;
     background-color: #29abe2;
+    align-self: center;
 }
 
 .subheadline {
@@ -202,6 +203,7 @@ h1 {
     height: 102px;
     width: 2px;
     background-color: #D1D1D1;
+    align-self: center;
 }
 
 .due-date {

@@ -218,6 +218,8 @@ select:focus,
   background: transparent;
   border: none;
   margin-bottom: 0;
+  cursor: pointer;
+  user-select: none;
 }
 
 .dropdown-item + .dropdown-item {

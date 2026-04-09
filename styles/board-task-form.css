@@ -197,7 +197,15 @@
     flex-direction: column;
     gap: 6px;
     height: 100px;
+    min-height: 100px;
     overflow-y: auto;
+}
+
+.edit-task-form .subtask-list:empty,
+.edit-task-form .subtask-list:not(:has(li)) {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
 }
 
 .edit-task-form .subtask-list li::before {
@@ -208,6 +216,7 @@
 
 #edit-subtask-error:not(:empty) + .subtask-list {
     height: 70px;
+    min-height: 70px;
 }
 
 .edit-task-form .subtask-list .subtask-edit::before {
