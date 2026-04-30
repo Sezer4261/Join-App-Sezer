@@ -2,7 +2,6 @@
     .headline {
         gap: 16px;
         position: relative;
-        left: 7%;
         min-width: 600px;
     }
 
@@ -82,7 +81,6 @@
 
     .headline {
         justify-content: flex-start;
-        left: 14%;
         margin-top: 16px;
     }
 
@@ -232,7 +230,6 @@
 @media (max-width: 480px) {
     .headline {
         max-width: 400px;
-        left: 13%;
     }
 
     h1 {
