@@ -103,6 +103,28 @@ ul img {
     background-color: #091931;
 }
 
+@media (max-width: 1030px) {
+
+    .sidebar {
+        width: 180px;
+        padding: 40px 0;
+    }
+
+    .logo-sidebar {
+        width: 70px;
+        margin-bottom: 60px;
+    }
+
+    .sidebar li {
+        width: 180px;
+    }
+
+    .footer-link-container {
+        width: 180px;
+    }
+}
+
+
 @media (max-width: 620px) {
     .app {
         flex-direction: column;
