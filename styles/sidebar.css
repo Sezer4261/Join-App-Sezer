@@ -70,7 +70,7 @@ ul img {
 }
 
 .sidebar-footer {
-    margin-top: auto;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
 }
@@ -103,7 +103,7 @@ ul img {
     background-color: #091931;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 620px) {
     .app {
         flex-direction: column;
         width: 100%;

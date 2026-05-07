@@ -58,7 +58,7 @@ main {
     font-size: 61px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 32px;
     margin-bottom: 30px;
     margin-top: 30px;
@@ -87,11 +87,12 @@ h1 {
     align-items: stretch;
     gap: 16px;
     width: 700px;
+    padding-left: 32px;
 }
 
 .kpi-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 30px;
     flex-wrap: wrap;
 }
@@ -161,7 +162,7 @@ h1 {
 
 .deadline-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .deadline-card {
@@ -216,7 +217,7 @@ h1 {
 .task-summary {
     display: flex;
     align-items: stretch;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 30px;
     flex-wrap: wrap;
 }

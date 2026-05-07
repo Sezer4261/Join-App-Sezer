@@ -9,7 +9,10 @@ async function addUser() {
     try {
         await saveNewUser(newUser);
         await saveNewContact(newUser);
-        window.location.href = 'index.html?msg=Du hast dich erfolgreich registriert!';
+        showToast("You signed up successfully");
+        setTimeout(() => {
+            window.location.href = 'index.html?msg=Du hast dich erfolgreich registriert!';
+        }, 300);
     } catch (err) {
         console.error("Fehler beim Posten:", err);
         showRegistrationFailed();

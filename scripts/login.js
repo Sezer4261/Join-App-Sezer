@@ -281,7 +281,10 @@ function validateLoginCredentials({ email, password }) {
 function handleLoginResult(credentials, signedUpUser) {
     if (signedUpUser) {
         storeUserSession(credentials.email, signedUpUser);
-        window.location.href = "summary.html";
+        showToast("You logged in successfully");
+        setTimeout(() => {
+            window.location.href = "summary.html";
+        }, 300);
         return;
     }
     showLoginError("Check your email and password. Please try again.");
@@ -408,5 +411,8 @@ function guestLogin() {
   // Guest-Session speichern (wichtig für Summary)
   localStorage.setItem("user", JSON.stringify({ mode: "guest" }));
 
-  window.location.href = "summary.html";
+  showToast("You logged in successfully");
+  setTimeout(() => {
+    window.location.href = "summary.html";
+  }, 300);
 }

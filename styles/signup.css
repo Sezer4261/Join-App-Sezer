@@ -174,13 +174,15 @@ main {
     height: 40px;
     padding-left: 15px;
     margin-bottom: 0px;
-    border: 1px solid grey;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     font-size: 16px;
+    color: #000000;
 }
 
 input::placeholder {
-    color: #A9A9A9;
+    color: #999999;
+    opacity: 0.85;
 }
 
 input.input-focus:focus {
@@ -272,7 +274,8 @@ input.input-error:focus {
 }
 
 footer {
-    margin-top: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-align: center;
     display: flex;
     justify-content: center;

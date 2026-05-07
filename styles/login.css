@@ -235,9 +235,10 @@ button {
     width: 422px;
     height: 48px;
     padding-left: 15px;
-    border: 1px solid grey;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     font-size: 16px;
+    color: #000000;
 }
 
 .login-input input:focus {
@@ -245,6 +246,11 @@ button {
     border-color: #29ABE2;
     border: 1px solid #29ABE2;
     box-shadow: none;
+}
+
+.login-input input::placeholder {
+    color: #999999;
+    opacity: 1;
 }
 
 .login-buttons {
@@ -313,7 +319,7 @@ button {
 }
 
 footer {
-    margin-top: 50px;
+    margin-top: 20px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -324,6 +330,7 @@ footer a {
     color: #a8a8a8;
     text-decoration: none;
     min-width: 120px;
+    margin-bottom: 20px;
 }
 
 footer a:hover {
