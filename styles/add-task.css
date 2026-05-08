@@ -55,7 +55,7 @@ body {
 }
 
 h1 {
-  font-size: 48px;
+  font-size: 61px;
   margin-bottom: 20px;
 }
 
@@ -100,7 +100,7 @@ label {
 input,
 textarea,
 select {
-  padding: 4px;
+  padding: 12px;
   border: 1px solid var(--border);
   border-radius: 6px;
 }

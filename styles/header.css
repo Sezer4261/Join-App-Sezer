@@ -143,9 +143,23 @@ header {
     display: none;
 }
 
+@media (max-width: 1024px) {
+    header {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 1000;
+    }
+}
+
 @media (max-width: 620px) {
     header {
+        position: fixed;
         left: 0;
+        right: 0;
+        top: 0;
+        z-index: 1000;
     }
 
     .center {
