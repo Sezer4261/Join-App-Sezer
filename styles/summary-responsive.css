@@ -220,16 +220,25 @@
 
     .wrapper {
         padding: 0 16px;
+        flex-direction: column;
+        width: 100%;
     }
 
     .dashboard {
+        width: 100%;
+        padding-left: 0;
+        max-width: 100%;
+    }
+
+    aside {
         width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     .headline {
-        max-width: 400px;
+        max-width: 100%;
+        width: 100%;
     }
 
     h1 {
@@ -242,6 +251,7 @@
 
     .kpi-container {
         margin-top: 16px;
+        justify-content: center;
     }
 
     .kpi-card {
@@ -272,8 +282,10 @@
     }
 
     .deadline-card {
-        width: 330px;
+        width: 100%;
+        max-width: 330px;
         height: 100px;
+        margin: 0 auto;
     }
 
     .deadline-card-left img {
@@ -289,6 +301,10 @@
         font-size: 16px;
     }
 
+    .task-summary {
+        justify-content: center;
+    }
+
     .task-summary-card {
         width: 90px;
         height: 108px;
@@ -297,28 +313,34 @@
 
 @media (max-width: 370px) {
     .headline {
-        left: 10%;
+        left: auto;
+        width: 100%;
+        margin-left: 0;
     }
 
     .kpi-card {
         gap: 8px;
+        width: 140px;
     }
 
     .kpi-container {
         gap: 12px;
+        justify-content: center;
     }
 
     .card-value {
-        font-size: 30px;
+        font-size: 28px;
     }
 
     .card-subtitle {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .deadline-card {
         gap: 16px;
-        width: 312px;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
     }
 
     .deadline-card-left img {
@@ -331,11 +353,12 @@
     }
 
     .due-date {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .task-summary-card {
         width: 84px;
+        height: 100px;
     }
 }
 
@@ -350,19 +373,108 @@
 
     .task-summary {
         gap: 16px;
+        justify-content: center;
     }
 
     .kpi-card {
         width: 135px;
+        height: 95px;
+    }
+
+    .card-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .card-value {
+        font-size: 26px;
+    }
+
+    .deadline-card {
+        width: 100%;
+        max-width: 280px;
     }
 }
 
 @media (max-width: 330px) {
     .headline {
-        left: 12px;
+        left: auto;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .dashboard {
+        padding-left: 0;
+        width: 100%;
     }
 
     .deadline-card-left {
         gap: 8px;
+    }
+
+    .kpi-card {
+        width: 130px;
+    }
+
+    .task-summary-card {
+        width: 80px;
+    }
+}
+
+@media (max-width: 320px) {
+    .wrapper {
+        padding: 0 12px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .subheadline {
+        font-size: 14px;
+    }
+
+    .kpi-card {
+        width: 125px;
+        height: 90px;
+        gap: 8px;
+    }
+
+    .card-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .card-value {
+        font-size: 24px;
+    }
+
+    .card-subtitle {
+        font-size: 12px;
+    }
+
+    .deadline-card {
+        width: 100%;
+        max-width: 260px;
+        height: 90px;
+        gap: 12px;
+    }
+
+    .deadline-card-left img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .deadline-card-separating-line-v {
+        height: 50px;
+    }
+
+    .due-date {
+        font-size: 12px;
+    }
+
+    .task-summary-card {
+        width: 75px;
+        height: 95px;
     }
 }

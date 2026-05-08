@@ -153,6 +153,12 @@ header {
     }
 }
 
+@media (min-width: 1025px) {
+    header {
+        left: 232px;
+    }
+}
+
 @media (max-width: 620px) {
     header {
         position: fixed;

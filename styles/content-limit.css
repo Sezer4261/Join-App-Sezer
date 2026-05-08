@@ -9,6 +9,7 @@
   The page/background can remain full-width.
 */
 .content-limit {
+  height: calc(100vh - 108px);
   width: 100%;
   max-width: var(--content-max-width);
   margin-left: auto;
