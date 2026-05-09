@@ -160,7 +160,7 @@ ul img {
     }
 
     .logo-sidebar {
-        display: block;
+        display: none;
         width: 56px;
         margin: 0 0 0 16px;
         align-self: center;
@@ -222,7 +222,7 @@ ul img {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 620px) {
     .sidebar {
         padding: 0;
     }
