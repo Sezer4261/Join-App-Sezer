@@ -65,14 +65,16 @@
 @media (max-width: 750px) {
 
     html,
-    body,
+    body {
+        min-height: 100%;
+    }
+
     .app {
-        height: 100%;
-        overflow: hidden;
+        min-height: 100vh;
     }
 
     .main {
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
     }
@@ -80,9 +82,7 @@
     .content-limit {
         flex: 1;
         display: flex;
-        flex-direction: column;
         min-height: 0;
-        overflow: hidden;
     }
 
     .task-form {
@@ -103,7 +103,7 @@
     }
 
     #add-task-content .form-scroll {
-        max-height: calc(100vh - 400px);
+        max-height: calc(100vh - 320px);
     }
 
     .form-footer {
@@ -118,15 +118,23 @@
     }
 
     .sidebar {
-        width: 100%;
+        width: auto;
         height: 60px;
+
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
+
         padding: 0 10px;
+
         position: fixed;
-        bottom: 0;
-        left: 0;
+
+        bottom: 8px;
+        left: 8px;
+        right: 8px;
+
+        border-radius: 16px;
+
         z-index: 100;
     }
 

@@ -4,22 +4,22 @@ header {
     justify-content: space-between;
     row-gap: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 24px 32px;
+    padding: 12px 24px;
     background-color: white;
     position: fixed;
     top: 0;
-    left: 232px;
     right: 0;
     z-index: 1000;
     flex-wrap: nowrap;
     min-height: 56px;
+    overflow: visible;
 }
 
 .header-logo {
-    display: none;
-    width: 56px;
+    display: block;
+    width: 36px;
     height: auto;
-    margin-right: 12px;
+    margin-right: 8px;
 }
 
 .center {
@@ -32,7 +32,7 @@ header {
 
 .app-tagline {
     font-size: 20px;
-    width: 575px;
+    width: auto;
 }
 
 .user-actions {
@@ -66,19 +66,38 @@ header {
     justify-content: center;
 }
 
+
+
 .user-profile {
+    width: 40px;
+    height: 40px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    font-weight: bold;
-    border: 2px solid #2a3647;
-    color: #29abe2;
+
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+
+    border: 2px solid #2a3647;
+    background-color: white;
+    color: #29abe2;
+
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+
     cursor: pointer;
-    transition: all 120ms;
+
+    flex-shrink: 0;
+}
+
+.user-profile-container {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .user-profile:hover {
@@ -86,16 +105,16 @@ header {
 }
 
 .profile-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
+    position: fixed;
+    top: 80px;
+    right: 20px;
     background: #2a3647;
     border-radius: 24px 0 24px 24px;
     min-width: 170px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     display: none;
     flex-direction: column;
-    z-index: 100;
+    z-index: 1000;
     margin-top: 8px;
     overflow: hidden;
     padding: 8px 0;
@@ -103,8 +122,6 @@ header {
 
 .profile-menu.active {
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .profile-menu.active a,
@@ -144,7 +161,7 @@ header {
 }
 
 @media (max-width: 1024px) {
-    header {
+    .header {
         position: fixed;
         left: 0;
         right: 0;
@@ -154,22 +171,37 @@ header {
 }
 
 @media (min-width: 1025px) {
-    header {
+    .header {
         left: 232px;
     }
 }
 
 @media (max-width: 620px) {
-    header {
+    .header {
         position: fixed;
         left: 0;
         right: 0;
         top: 0;
         z-index: 1000;
+        padding: 8px 16px;
+        min-height: 80px;
+    }
+
+    .header-logo {
+        width: 36px;
+        height: auto;
     }
 
     .center {
-        justify-content: flex-start;
+        display: none;
+    }
+
+    .content-limit--row {
+        min-width: 0;
+    }
+
+    .user-actions {
+        flex-shrink: 0;
     }
 }
 
@@ -193,9 +225,17 @@ header {
 }
 
 @media (max-width: 620px) {
-    header {
+    .center {
+        flex: 0;
+    }
+}
+
+
+@media (max-width: 620px) {
+    .header {
         justify-content: space-between;
-        padding: 16px;
+        padding: 8px 16px;
+        min-height: 80px;
     }
 
     .header-logo {
@@ -218,7 +258,7 @@ header {
 }
 
 @media (max-width: 320px) {
-    header {
+    .header {
         padding: 12px;
         gap: 10px;
     }
@@ -259,5 +299,25 @@ header {
         font-size: 18px;
         font-weight: 600;
         z-index: 105;
+    }
+}
+
+@media (max-width: 780px) {
+    header {
+        left: 0 !important;
+        width: 100% !important;
+        padding: 12px 16px;
+    }
+
+    .center {
+        display: none;
+    }
+
+    .content-limit--row {
+        width: 100%;
+    }
+
+    .user-actions {
+        margin-left: auto;
     }
 }

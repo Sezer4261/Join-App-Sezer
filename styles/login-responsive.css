@@ -44,6 +44,8 @@
     .header-left img {
         width: 48px;
         height: auto;
+        margin-top: -45px;
+        margin-left: -50px;
     }
 
     .login-error-container {
@@ -86,12 +88,12 @@
         margin-top: -40px;
     }
 
-    .login-buttons {
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        gap: 16px;
-    }
+  .login-buttons {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    gap: 16px;
+}
 
     .btn-login {
         width: 177px;
@@ -106,12 +108,16 @@
     }
 
     .login {
-        width: 290px;
+        width: 380px;
         height: 380px;
     }
 
+    .login-input {
+        width: 310px;
+    }
+
     .login-input input {
-        width: 260px;
+        width: 280px;
         height: 40px;
     }
 
@@ -126,14 +132,16 @@
         margin-bottom: 16px;
     }
 
-    .login-input {
-        width: 100%;
+    .login {
+        width: 360px;
+        height: 380px;
     }
 }
 
 @media (max-width: 375px) {
     .header {
         height: 130px;
+        position: relative;
     }
 
     .header-right {

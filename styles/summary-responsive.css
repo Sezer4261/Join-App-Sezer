@@ -252,10 +252,13 @@
     .kpi-container {
         margin-top: 16px;
         justify-content: center;
+        gap: 12px;
+
+        flex-wrap: nowrap;
     }
 
     .kpi-card {
-        width: 150px;
+        width: 140px;
         height: 100px;
     }
 
@@ -303,10 +306,12 @@
 
     .task-summary {
         justify-content: center;
+        gap: 8px;
+        flex-wrap: nowrap;
     }
 
     .task-summary-card {
-        width: 90px;
+        width: 84px;
         height: 108px;
     }
 }
@@ -450,7 +455,8 @@
     }
 
     .card-subtitle {
-        font-size: 12px;
+        font-size: 14px;
+        line-height: 1.1;
     }
 
     .deadline-card {
@@ -470,11 +476,15 @@
     }
 
     .due-date {
-        font-size: 12px;
+        font-size: 16px;
+    }
+
+    .task-summary {
+        gap: 4px;
     }
 
     .task-summary-card {
-        width: 75px;
-        height: 95px;
+        width: 88px;
+        height: 108px;
     }
 }

@@ -195,7 +195,7 @@ ul img {
     }
 
     .sidebar-footer {
-        display: flex;
+        display: none;
         flex-direction: row;
         gap: 16px;
         margin-top: 0;

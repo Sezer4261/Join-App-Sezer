@@ -129,4 +129,12 @@ function applyEmailInitial(profile, userData) {
   }
 }
 
+function toggleProfileMenu(event) {
+  event.stopPropagation();
+
+  const menu = document.getElementById("profile-menu");
+
+  menu.classList.toggle("show-profile-menu");
+}
+
 document.addEventListener("DOMContentLoaded", updateUserProfile);

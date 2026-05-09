@@ -9,7 +9,6 @@
   The page/background can remain full-width.
 */
 .content-limit {
-  height: calc(100vh - 108px);
   width: 100%;
   max-width: var(--content-max-width);
   margin-left: auto;
@@ -21,7 +20,7 @@
 
 /* Opt out of centering (keeps content left-aligned). */
 .content-limit--left {
-  margin-left: 0;
+  margin-left: auto;
   margin-right: auto;
 }
 

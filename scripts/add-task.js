@@ -364,6 +364,7 @@ function setAddCategory(value) {
   setErrorText('category-error', '');
   updateAddCategoryLabel(select, value);
   closeAddCategoryDropdown();
+  updateCreateButtonState();
 }
 
 /**
