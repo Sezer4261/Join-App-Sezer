@@ -32,10 +32,10 @@ body {
   flex-direction: column;
 }
 
-.main header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
+.main .header {
+    position: fixed;
+    top: 0;
+    z-index: 10;
 }
 
 .content {
@@ -52,7 +52,7 @@ body {
 }
 
 .content {
-  padding: 24px 40px;
+  padding: 120px 40px 24px 40px;
 }
 
 h1 {

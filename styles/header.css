@@ -172,8 +172,11 @@ header {
 }
 
 @media (min-width: 1025px) {
-    header {
+    .header {
+        position: fixed;
+        top: 0;
         left: 232px;
+        right: 0;
     }
 }
 
