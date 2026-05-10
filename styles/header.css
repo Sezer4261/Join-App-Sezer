@@ -8,7 +8,8 @@ header {
     background-color: white;
     position: fixed;
     top: 0;
-    right: 0;
+    left: 232px;
+    width: calc(100% - 232px);
     z-index: 1000;
     flex-wrap: nowrap;
     min-height: 56px;
@@ -163,10 +164,10 @@ header {
 @media (max-width: 1024px) {
     header {
         position: fixed;
-        left: 0;
-        right: 0;
+        left: 232px;
         top: 0;
         z-index: 1000;
+        width: calc(100% - 232px);
     }
 }
 

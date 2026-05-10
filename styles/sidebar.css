@@ -109,10 +109,9 @@ ul img {
 
 @media (max-width: 1030px) and (min-width: 621px) {
 
-    header {
-        left: 120px !important;
-        right: 0 !important;
-        width: auto !important;
+    .header {
+        left: 232px !important;
+        width: calc(100% - 232px) !important;
     }
 
     .sidebar ul {
