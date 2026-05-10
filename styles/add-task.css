@@ -18,6 +18,7 @@
 
 body {
   background: var(--main-bg);
+  overflow: hidden;
 }
 
 .app {
@@ -85,6 +86,7 @@ label,
 
 .assigned-to-label {
   position: relative;
+  padding-top: 25px;
 }
 
 label {
@@ -337,6 +339,7 @@ select:focus,
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  font-size: 16px;
 }
 
 .custom-select .dropdown-arrow {
@@ -595,7 +598,6 @@ select:focus,
   max-height: calc(100vh - 210px);
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 6px;
-  padding-bottom: 180px;
+  padding: 0 6px 24px 13px;
   position: relative;
 }

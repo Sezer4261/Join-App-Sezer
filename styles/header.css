@@ -161,7 +161,7 @@ header {
 }
 
 @media (max-width: 1024px) {
-    .header {
+    header {
         position: fixed;
         left: 0;
         right: 0;
@@ -171,13 +171,13 @@ header {
 }
 
 @media (min-width: 1025px) {
-    .header {
+    header {
         left: 232px;
     }
 }
 
 @media (max-width: 620px) {
-    .header {
+    header {
         position: fixed;
         left: 0;
         right: 0;
@@ -232,7 +232,7 @@ header {
 
 
 @media (max-width: 620px) {
-    .header {
+    header {
         justify-content: space-between;
         padding: 8px 16px;
         min-height: 80px;
@@ -258,7 +258,7 @@ header {
 }
 
 @media (max-width: 320px) {
-    .header {
+    header {
         padding: 12px;
         gap: 10px;
     }
@@ -269,14 +269,27 @@ header {
 }
 
 @media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) {
+
     body {
         overflow: hidden;
     }
 
-    body>* {
+    main,
+    aside,
+    .wrapper,
+    .sidebar,
+    .content,
+    .main-content {
+        visibility: hidden;
         pointer-events: none;
         user-select: none;
-        visibility: hidden;
+    }
+
+    header,
+    header * {
+        visibility: visible !important;
+        position: relative;
+        z-index: 9999;
     }
 
     body::before {

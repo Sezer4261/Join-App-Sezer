@@ -257,7 +257,7 @@ function generateTaskFromForm() {
     contacts: [...selectedContacts],
     category,
     subtasks: [...subtasks],
-    status: "To Do",
+    status: window.currentBoardStatus || "To Do",
   };
 }
 

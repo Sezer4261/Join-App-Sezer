@@ -20,7 +20,7 @@
     }
 
     .content {
-        padding: 16px;
+        padding: 120px 16px 16px 16px;
     }
 
     .board-search {
@@ -43,23 +43,25 @@
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px) and (min-width: 621px) {
     .app {
-        flex-direction: column;
         height: 100vh;
         height: 100dvh;
     }
 
     .main {
-        order: 1;
-        overflow: hidden;
-        margin-top: 104px;
+        margin-left: 180px;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
+    /* Header is fixed (header.css). Ensure content is not hidden under it on this breakpoint */
     .content {
-        padding: 20px 24px 120px;
+        padding: 16px;
+        margin-top: 96px;
     }
 }
+
 
 @media (max-width: 1070px) {
 

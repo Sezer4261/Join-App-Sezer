@@ -107,25 +107,28 @@ ul img {
     background-color: #091931;
 }
 
-@media (max-width: 1030px) {
+@media (max-width: 1030px) and (min-width: 621px) {
 
-    .sidebar {
-        width: 180px;
-        padding: 40px 0;
-        margin-top: 80px;
+    header {
+        left: 120px !important;
+        right: 0 !important;
+        width: auto !important;
+    }
+
+    .sidebar ul {
+        padding-top: 80px;
     }
 
     .logo-sidebar {
         width: 70px;
-        margin-bottom: 60px;
+        margin-bottom: 40px;
     }
 
-    .sidebar li {
-        width: 180px;
-    }
-
-    .footer-link-container {
-        width: 180px;
+    .sidebar-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-bottom: 24px;
     }
 }
 
@@ -284,3 +287,4 @@ ul img {
         display: none;
     }
 }
+

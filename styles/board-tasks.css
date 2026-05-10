@@ -299,7 +299,7 @@ body.add-task-dialog-open {
 .add-task-dialog input,
 .add-task-dialog textarea,
 .add-task-dialog select {
-    padding: 4px;
+    padding: 10px;
     border: 1px solid var(--border, #d1d5db);
     border-radius: 6px;
 }

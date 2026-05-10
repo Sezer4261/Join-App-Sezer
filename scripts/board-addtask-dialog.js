@@ -2,7 +2,8 @@
  * Shows add task dialog.
  * @returns {Promise<*>} Result.
  */
-async function showAddTaskDialog() {
+async function showAddTaskDialog(status = "To Do") {
+  window.currentBoardStatus = status;
   const modalContent = document.getElementById("add-task-dialog-message");
   const dialogOverlay = document.getElementById("add-task-dialog");
   if (!dialogOverlay || !modalContent) return;

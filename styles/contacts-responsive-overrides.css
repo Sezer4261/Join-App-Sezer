@@ -83,7 +83,7 @@
     }
 
     main {
-        height: calc(100vh - 96px);
+        height: calc(100vh - 45px);
         min-height: 0;
         padding-top: 96px;
         overflow-y: auto;
@@ -490,6 +490,6 @@
     }
 
     .contact-section-left {
-        height: calc(100vh - 150px);
+        height: calc(100vh - 70px);
     }
 }
