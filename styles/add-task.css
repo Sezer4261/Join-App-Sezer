@@ -13,7 +13,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 body {
@@ -58,6 +58,7 @@ body {
 h1 {
   font-size: 61px;
   margin-bottom: 20px;
+  margin-left: 10px;
 }
 
 .task-form {
@@ -92,7 +93,7 @@ label,
 label {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
 }
 
 .req {
@@ -112,6 +113,7 @@ textarea,
 select,
 .custom-select {
   width: 100%;
+  font-size: 16px;
 }
 
 .form-separator {
@@ -138,12 +140,13 @@ textarea {
 
 .note-outside {
   position: static;
-  margin-top: 0;
+  margin-top: 75px;
 }
 
 .form-footer {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   margin-top: 0;
   position: relative;
@@ -166,8 +169,8 @@ textarea {
 
 .error-message:not(:empty) {
   display: block;
-  height: 24px;
-  line-height: 24px;
+  height: 16px;
+  line-height: 16px;
   overflow: hidden;
 }
 
@@ -497,7 +500,7 @@ select:focus,
   display: flex;
   gap: 8px;
   align-items: center;
-  min-height: 36px;
+  min-height: 20px;
 }
 
 .avatar {
@@ -595,9 +598,9 @@ select:focus,
   background-color: #f0f0f0 !important;
 }
 #add-task-content .form-scroll {
-  max-height: calc(100vh - 210px);
+  height: calc(100dvh - 210px);
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0 6px 24px 13px;
+  padding: 0 18px 24px 18px;
   position: relative;
 }

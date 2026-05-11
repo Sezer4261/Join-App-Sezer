@@ -70,11 +70,11 @@
     }
 
     .app {
-        min-height: 100vh;
+        min-height: 100dvh;
     }
 
     .main {
-        min-height: 100vh;
+        min-height: 0;
         display: flex;
         flex-direction: column;
     }
@@ -103,7 +103,7 @@
     }
 
     #add-task-content .form-scroll {
-        max-height: calc(100vh - 320px);
+        max-height: calc(100vh - 340px);
     }
 
     .form-footer {
@@ -120,21 +120,15 @@
     .sidebar {
         width: auto;
         height: 60px;
-
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-
         padding: 0 10px;
-
         position: fixed;
-
-        bottom: 8px;
-        left: 8px;
-        right: 8px;
-
-        border-radius: 16px;
-
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 0;
         z-index: 100;
     }
 
@@ -143,7 +137,7 @@
     }
 
     .content {
-        padding: 16px;
+        padding: 24px 12px 120px 12px;
     }
 
     h1 {
@@ -151,8 +145,7 @@
     }
 
     .content {
-        padding: 16px;
-        padding-bottom: 120px;
+        padding: 110px 8px 120px 8px;
     }
 
     .custom-select {
@@ -175,6 +168,11 @@
         bottom: auto;
     }
 
+    html,
+    body {
+    overflow-y: hidden;
+    height: 100dvh;
+    }
 }
 
 @media (max-width: 550px) {
@@ -188,9 +186,11 @@
 
 @media (max-width: 500px) {
     .note-inline {
-        display: block;
-        margin-bottom: 24px;
-        font-size: 16px;
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 24px;
+        margin-bottom: 0;
+        font-size: 14px;
     }
 
     .note-outside {
@@ -232,7 +232,8 @@
 
 @media (max-width: 480px) {
     h1 {
-        font-size: 24px;
+        font-size: 48px;
+        margin-bottom: 32px;
     }
 
     input,
@@ -241,10 +242,19 @@
         font-size: 16px;
     }
 
+    .priority-options {
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        gap: 12px;
+    }
+
     .priority-options label {
-        min-width: 90px;
-        padding: 4px 4px;
-        font-size: 16px;
+        flex: 1;
+        width: auto;
+        min-width: 0;
+        padding: 10px 6px;
+        font-size: 14px;
     }
 
     .custom-select {
@@ -276,11 +286,12 @@
 
 @media (max-width: 360px) {
     h1 {
-        font-size: 22px;
+        font-size: 40px;
+        margin-bottom: 24px;
     }
 
     .priority-options {
-        gap: 6px;
+        gap: 12px;
     }
 
     .priority-options label {
@@ -292,7 +303,8 @@
 
 @media (max-width: 320px) {
     h1 {
-        font-size: 20px;
+        font-size: 36px;
+        margin-bottom: 20px;
     }
 
     .custom-select {
@@ -306,7 +318,8 @@
     }
 
     .subtask {
-        width: 280px;
+        width: 100%;
+        max-width: 100%;
     }
 
     .subtask-list {

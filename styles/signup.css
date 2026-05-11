@@ -37,7 +37,7 @@ html {
 }
 
 .header-left img {
-    width: 100px;
+    width: 150px;
     height: 122px;
 }
 
@@ -274,7 +274,7 @@ input.input-error:focus {
 }
 
 footer {
-    margin-top: 20px;
+    margin-top: 60px;
     margin-bottom: 20px;
     text-align: center;
     display: flex;

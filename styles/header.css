@@ -17,7 +17,7 @@ header {
 }
 
 .header-logo {
-    display: block;
+    display: none;
     width: 36px;
     height: auto;
     margin-right: 8px;
@@ -34,6 +34,7 @@ header {
 .app-tagline {
     font-size: 20px;
     width: auto;
+    padding-left: 60px;
 }
 
 .user-actions {
@@ -239,7 +240,7 @@ header {
     header {
         justify-content: space-between;
         padding: 8px 16px;
-        min-height: 80px;
+        min-height: 60px;
     }
 
     .header-logo {

@@ -433,7 +433,7 @@
 
 @media (max-width: 320px) {
     .wrapper {
-        padding: 0 12px;
+        padding: 0 11px;
     }
 
     h1 {
@@ -445,9 +445,9 @@
     }
 
     .kpi-card {
-        width: 125px;
-        height: 90px;
-        gap: 8px;
+        width: 118px;
+        height: 88px;
+        gap: 6px;
     }
 
     .card-icon {
@@ -466,9 +466,9 @@
 
     .deadline-card {
         width: 100%;
-        max-width: 260px;
-        height: 90px;
-        gap: 12px;
+        max-width: 248px;
+        height: 84px;
+        gap: 10px;
     }
 
     .deadline-card-left img {
@@ -485,11 +485,11 @@
     }
 
     .task-summary {
-        gap: 4px;
+        gap: 8px;
     }
 
     .task-summary-card {
-        width: 88px;
-        height: 108px;
+        width: 82px;
+        height: 96px;
     }
 }
