@@ -20,8 +20,8 @@
 
 /* Opt out of centering (keeps content left-aligned). */
 .content-limit--left {
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 /* Prevent double padding when the parent already has padding. */
