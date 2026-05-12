@@ -222,7 +222,9 @@
         padding: 0;
 
         display: flex;
+        flex-direction: row;
         align-items: center;
+        justify-content: space-between;
     }
 
     .user-actions {
@@ -235,6 +237,21 @@
 
     .profile-menu-item-help {
         display: block;
+    }
+}
+
+@media (min-width: 621px) and (max-width: 780px) {
+    .header-logo {
+        display: none;
+    }
+
+    .app-tagline {
+        padding-left: 292px;
+    }
+    .center {
+        display: flex !important;
+        width: auto !important;
+        flex: 1 1 auto !important;
     }
 }
 

@@ -113,6 +113,9 @@ ul img {
         left: 232px !important;
         width: calc(100% - 232px) !important;
     }
+    .sidebar {
+        z-index: 1100;
+    }
 
     .sidebar ul {
         padding-top: 80px;
@@ -120,6 +123,7 @@ ul img {
 
     .logo-sidebar {
         width: 70px;
+        margin-top: 16px;
         margin-bottom: 40px;
     }
 
