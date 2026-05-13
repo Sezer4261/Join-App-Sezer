@@ -135,7 +135,17 @@
 
     .form-left,
     .form-right {
-        gap: 16px !important;
+        gap: 0 !important;
+    }
+
+    .form-left > *,
+    .form-right > * {
+        margin-bottom: 16px;
+    }
+
+    .form-left > *:last-child,
+    .form-right > *:last-child {
+        margin-bottom: 0;
     }
 
     .assigned-to-label {
@@ -229,7 +239,7 @@
     }
 
     .note-outside {
-        display: block;
+        display: none;
         font-size: 14px;
         margin-top: 12px;
         text-align: left;

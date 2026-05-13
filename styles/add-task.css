@@ -134,10 +134,21 @@ textarea {
 
 .note-inline {
   display: none;
+  margin-top: 8px;
+  font-size: 16px;
 }
 
 .note-outside {
   position: static;
+  margin-right: auto;
+  font-size: 16px;
+}
+
+.priority,
+.assigned-to-label,
+.category,
+.form-left label {
+    min-height: 50px;
 }
 
 .form-footer {
@@ -152,6 +163,7 @@ textarea {
   background: var(--main-bg);
   padding-top: 40px;
   padding-right: 20px;
+  width: 100%;
 }
 
 .input-error {
