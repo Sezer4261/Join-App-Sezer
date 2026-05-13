@@ -4,9 +4,9 @@
 }
 
 .logo-sidebar {
-    width: 100px;
+    width: 75px;
     height: auto;
-    margin-bottom: 110px;
+    margin-bottom: 90px;
 }
 
 .sidebar {
@@ -75,6 +75,7 @@ ul img {
 
 .sidebar-footer {
     margin-top: 30px;
+    margin-bottom: -45px;
     display: flex;
     flex-direction: column;
 }

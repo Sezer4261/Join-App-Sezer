@@ -103,7 +103,7 @@
 
     .task-form {
         flex-direction: column;
-        gap: 20px;
+        gap: 8px;
     }
 
     .form-separator {
@@ -135,21 +135,12 @@
 
     .form-left,
     .form-right {
-        gap: 0;
-    }
-
-    .form-left > label + label {
-        margin-top: 16px;
-    }
-
-    .form-right .priority + .assigned-to-label,
-    .form-right .assigned-to-label + .category,
-    .form-right .category + label {
-        margin-top: 8px;
+        gap: 16px !important;
     }
 
     .assigned-to-label {
-        padding-top: 20px;
+        padding-top: 0;
+        margin-top: 12px;
     }
 
     .priority {
@@ -203,6 +194,7 @@
     .actions {
         flex-direction: row;
         align-items: center;
+        gap: 15px;
     }
 
     .form-footer {
@@ -224,6 +216,7 @@
     .create {
         padding: 8px 14px;
         font-size: 16px;
+        font-weight: 400;
     }
 }
 
@@ -231,13 +224,15 @@
     .note-inline {
         display: flex;
         justify-content: flex-start;
-        margin-top: 24px;
-        margin-bottom: 0;
+        margin-top: 8px;
         font-size: 14px;
     }
 
     .note-outside {
-        display: none;
+        display: block;
+        font-size: 14px;
+        margin-top: 12px;
+        text-align: left;
     }
 
     .subtask-list {
@@ -268,8 +263,8 @@
     }
 
     .form-footer {
-        margin-top: -10px;
         position: relative;
+        margin-top: 10px;
     }
 }
 

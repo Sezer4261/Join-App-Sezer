@@ -14,7 +14,8 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 0;
+    margin-top: 24px;
     margin-left: 24px;
 }
 
@@ -194,7 +195,7 @@
     min-height: 0;
     overflow-y: auto;
     width: 400px !important;
-    padding-top: 16px;
+    padding-top: 0;
     padding-bottom: 50px;
     box-sizing: border-box;
 }

@@ -336,7 +336,7 @@
     }
 
     .kpi-container {
-        gap: 12px;
+        gap: 15px;
         justify-content: center;
     }
 
@@ -468,9 +468,9 @@
 
     .deadline-card {
         width: 100%;
-        max-width: 248px;
+        max-width: 250px;
         height: 84px;
-        gap: 10px;
+        gap: 15px;
     }
 
     .deadline-card-left img {
@@ -487,7 +487,7 @@
     }
 
     .task-summary {
-        gap: 8px;
+        gap: 15px;
     }
 
     .task-summary-card {
