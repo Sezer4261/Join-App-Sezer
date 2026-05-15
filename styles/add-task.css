@@ -46,7 +46,7 @@ body {
 }
 
 .content {
-  padding: 120px 40px 24px 40px;
+  padding: 170px 40px 24px 40px;
 }
 
 h1 {
@@ -156,7 +156,7 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 0;
+  margin-top: 55px;
   position: relative;
   bottom: auto;
   z-index: auto;

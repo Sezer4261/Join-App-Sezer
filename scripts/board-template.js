@@ -39,7 +39,7 @@ function getPriorityIcon(priority) {
  */
 function renderSubtaskProgress(task) {
   if (!task.subtasks || task.subtasks.length === 0) {
-    return `<div>0/0</div>`;
+    return "";
   }
   const done = task.subtasks.filter(st => st.done).length;
   const total = task.subtasks.length;

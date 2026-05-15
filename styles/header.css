@@ -4,15 +4,15 @@
     justify-content: space-between;
     row-gap: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 12px 24px;
+    padding: 12px 8px 12px 24px;
     background-color: white;
     position: fixed;
     top: 0;
     left: 232px;
-    width: calc(100% - 232px);
+    right: 0;
     z-index: 1000;
     flex-wrap: nowrap;
-    min-height: 56px;
+    min-height: 80px;
     overflow: visible;
 }
 
@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    flex: 0 0 auto;
+    flex: 1;
     white-space: nowrap;
     min-width: 0;
 }
@@ -35,7 +35,7 @@
 .app-tagline {
     font-size: 20px;
     width: auto;
-    padding-left: 60px;
+    padding-left: 0;
 }
 
 .user-actions {
