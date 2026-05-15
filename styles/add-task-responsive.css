@@ -97,8 +97,7 @@
     }
 
     #add-task-content {
-    width: 100%;
-    max-width: 100%;
+    width: 51vh;
     }
 
     .task-form {

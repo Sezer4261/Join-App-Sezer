@@ -172,8 +172,10 @@
     }
 
     .board-column {
-        width: 100%;
-        min-width: 0;
+        max-width: 100%;
+        margin: 0;
+        padding: 0px;
+        padding-left: 10px;
     }
 
     .task-wrapper {
@@ -242,7 +244,7 @@
     }
 
     .board-column {
-        max-width: 288px;
+        max-width: 368px;
     }
 }
 
@@ -442,6 +444,34 @@
 }
 
 @media (max-width: 320px) {
+    .content {
+        padding: 16px 8px 83px;
+        margin-left: 0px;
+        padding-right: 14px;
+    }
+
+    .board-header {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 10px;
+    }
+
+    .board-actions {
+        grid-column: 1;
+        grid-row: 2;
+        margin-top: 0;
+    }
+
+    .add-task-mobile-btn {
+        grid-column: 1;
+        grid-row: 3;
+        justify-self: end;
+        margin-top: 4px;
+    }
+
+    .board-column {
+        max-width: 100%;
+    }
     .modal-content .edit-task-form .priority-options label {
         min-width: 70px;
         padding: 4px 6px;
@@ -455,5 +485,11 @@
 
     .modal-content .edit-assigned .custom-select {
         width: 100%;
+    }
+
+    .task-wrapper .no-tasks {
+        width: 100%;
+        height: 40px;
+        min-height: 40px;
     }
 }

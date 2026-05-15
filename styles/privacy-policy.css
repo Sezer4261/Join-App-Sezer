@@ -81,9 +81,18 @@ main {
         height: 80px;
         background: #2A3647;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         align-items: center;
+        gap: 16px;
+        padding: 0 16px;
         z-index: 1000;
+    }
+
+    .mobile-footer-links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
     }
 
     .mobile-footer-link {
@@ -96,7 +105,7 @@ main {
 
     .mobile-footer-link.active {
         background: #091931;
-        padding: 12px 18px;
+        padding: 31px 18px;
         border-radius: 12px;
         color: white;
     }

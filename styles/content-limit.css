@@ -20,14 +20,13 @@
 
 /* Opt out of centering (keeps content left-aligned). */
 .content-limit--left {
-  margin-left: 0;
+  margin-left: -15px;
   margin-right: 0;
 }
 
 /* Prevent double padding when the parent already has padding. */
 .content-limit--no-padding {
   padding-left: 0;
-  padding-right: 0;
 }
 
 /* Helper for horizontal rows (e.g. headers) inside a limited container. */
