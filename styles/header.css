@@ -16,6 +16,13 @@
     overflow: visible;
 }
 
+.header .content-limit {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+}
+
 .header-logo {
     display: none;
     width: 36px;

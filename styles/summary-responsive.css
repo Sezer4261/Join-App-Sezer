@@ -436,24 +436,45 @@
 
 @media (max-width: 320px) {
     .wrapper {
-        padding: 0 11px;
+        padding: 0 8px;
+        align-items: center;
     }
 
+    .dashboard {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+        align-items: center;
+    }
+
+    .headline {
+        width: 100%;
+        margin-left: 0;
+        left: auto;
+    }
+
+    .headline h1,
     h1 {
         font-size: 24px;
+        margin-left: 0;
     }
 
     .subheadline {
         font-size: 14px;
     }
 
+    .header-separating-line-v {
+        align-self: flex-start;
+    }
+
     .kpi-container {
-        gap: 16px;
-        justify-content: space-between;
+        gap: 8px;
+        justify-content: center;
+        width: 100%;
     }
 
     .kpi-card {
-        width: calc((100% - 16px) / 2);
+        width: calc((100% - 8px) / 2);
         height: 96px;
         gap: 8px;
     }
@@ -493,8 +514,9 @@
     }
 
     .task-summary {
-        gap: 18px;
-        justify-content: stretch;
+        gap: 8px;
+        justify-content: center;
+        width: 100%;
     }
 
     .task-summary-card {

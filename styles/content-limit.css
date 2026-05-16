@@ -20,7 +20,7 @@
 
 /* Opt out of centering (keeps content left-aligned). */
 .content-limit--left {
-  margin-left: -15px;
+  margin-left: -5px;
   margin-right: 0;
 }
 

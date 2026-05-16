@@ -101,7 +101,7 @@ body {
   flex-shrink: 0;
 }
 
-.search-highlight {
+.search-icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -112,12 +112,20 @@ body {
   flex-shrink: 0;
 }
 
-.search-highlight:hover {
+.search-icon-btn:hover {
   background: #d9d9d9;
   border-radius: 50%;
 }
 
-.board-search svg {
+mark.search-term-highlight {
+  background-color: #ffe066;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+  font-style: normal;
+}
+
+.search-icon-btn svg {
   width: 22px;
   height: 22px;
   color: #666;

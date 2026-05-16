@@ -38,6 +38,9 @@ function initAddTaskBlurValidation() {
   dateInput?.addEventListener('input', updateCreateButtonState);
   dateInput?.addEventListener('change', clearDateErrorOnValidInput);
   dateInput?.addEventListener('change', updateCreateButtonState);
+  dateInput?.addEventListener('click', () => {
+    try { dateInput.showPicker(); } catch (_) {}
+  });
   categorySelect?.addEventListener('blur', validateCategoryField);
   categorySelect?.addEventListener('change', updateCreateButtonState);
 

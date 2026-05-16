@@ -89,7 +89,7 @@ main {
         position: fixed;
         bottom: 0;
         left: 0;
-        right: 0;
+        right: -15px;
         height: 80px;
         background: #2A3647;
         display: flex;

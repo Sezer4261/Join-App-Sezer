@@ -44,6 +44,9 @@ function initEditFormBlurValidation() {
   });
   dateInput?.addEventListener('input', clearEditDateErrorOnValidInput);
   dateInput?.addEventListener('change', clearEditDateErrorOnValidInput);
+  dateInput?.addEventListener('click', () => {
+    try { dateInput.showPicker(); } catch (_) {}
+  });
   categorySelect?.addEventListener('blur', () => {
     const categoryInput = document.getElementById('edit-category');
     validateEditRequiredInput(categoryInput, 'edit-category-error', categorySelect);

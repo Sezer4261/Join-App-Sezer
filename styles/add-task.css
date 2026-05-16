@@ -384,7 +384,7 @@ select:focus,
 
 .dropdown-content,
 .dropdown-name {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .dropdown-content.show {
@@ -393,10 +393,12 @@ select:focus,
 
 .dropdown-item {
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 6px 10px;
   border-radius: 12px;
   background: transparent;
   border: none;

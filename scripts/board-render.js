@@ -120,7 +120,7 @@ function highlightText(text) {
   if (!text) return "";
   const escaped = escapeRegExp(boardSearchTerm);
   const regex = new RegExp(escaped, "gi");
-  return text.replace(regex, (match) => `<mark class="search-highlight">${match}</mark>`);
+  return text.replace(regex, (match) => `<mark class="search-term-highlight">${match}</mark>`);
 }
 
 /**
