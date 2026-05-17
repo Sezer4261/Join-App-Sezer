@@ -1,0 +1,280 @@
+﻿@media (max-width: 480px) {
+    .board-search {
+        padding: 6px 10px;
+    }
+
+    .add-task-btn {
+        padding: 10px 14px;
+    }
+
+    .task-card {
+        padding: 12px;
+    }
+
+    .modal-content {
+        width: 92%;
+        padding: 16px 18px;
+    }
+
+    .modal-content .edit-task-form {
+        gap: 16px;
+    }
+
+    .modal-content .edit-task-form h1 {
+        font-size: 20px;
+    }
+
+    .modal-content .edit-input,
+    .modal-content .edit-textarea {
+        font-size: 16px;
+        padding: 7px;
+    }
+
+    .modal-content .edit-task-form .priority-options label {
+        min-width: 78px;
+        padding: 5px 8px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 420px) {
+    .modal-content {
+        width: 96%;
+        padding: 12px 14px;
+    }
+
+    .modal-content .edit-task-form,
+    .modal-content .edit-form-scroll {
+        width: 100%;
+    }
+
+    .modal-content .edit-task-form label,
+    .modal-content .edit-input,
+    .modal-content .edit-textarea,
+    .modal-content .edit-assigned,
+    .modal-content .edit-assigned .custom-select,
+    .modal-content #editCategorySelect,
+    .modal-content .edit-subtasks,
+    .modal-content .edit-subtasks .subtasks,
+    .modal-content .edit-subtasks .subtasks input {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .modal-content .edit-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .modal-content .edit-actions button {
+        padding: 7px 10px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .modal-content {
+        width: 94vw;
+        max-width: 94vw;
+    }
+
+    .modal-content .edit-task-form label,
+    .modal-content .edit-input,
+    .modal-content .edit-textarea,
+    .modal-content .edit-task-form select,
+    .modal-content .custom-select,
+    .modal-content #editCategorySelect,
+    .modal-content #edit-category-select,
+    .modal-content .edit-task-form .priority-options,
+    .modal-content .edit-subtasks,
+    .modal-content .edit-subtasks .subtasks,
+    .modal-content .edit-subtasks .subtasks input,
+    .modal-content #editSubtaskArea {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    .modal-content .edit-task-form .priority-options {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .modal-content .edit-task-form .priority-options label {
+        min-width: 30%;
+        flex: 1 1 30%;
+        padding: 4px 6px;
+        font-size: 16px;
+    }
+
+    .modal-content .edit-actions {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 360px) {
+    .modal-content .edit-task-form {
+        gap: 14px;
+    }
+
+    .modal-content .edit-task-form h1 {
+        font-size: 18px;
+    }
+
+    .modal-content .edit-actions button {
+        padding: 7px 10px;
+        font-size: 16px;
+    }
+
+    .board-search input {
+        font-size: 16px;
+    }
+
+    .board-header h1 {
+        font-size: 36px;
+    }
+
+    .add-task-dialog .priority-options label {
+        min-width: 70px;
+        gap: 4px;
+    }
+
+    .add-task-dialog .priority-options label svg {
+        width: 16px;
+        height: 12px;
+    }
+}
+
+@media (max-width: 335px) {
+    .add-task-dialog .priority-options label {
+        padding: 4px 8px;
+        font-size: 16px;
+    }
+
+    .add-task-dialog .priority-options label svg {
+        width: 12px;
+        height: 8px;
+    }
+    .modal-title h2 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 320px) {
+    .add-task-dialog-bg {
+        align-items: flex-start;
+        padding-top: 8px;
+    }
+
+    .add-task-dialog {
+        width: 98vw !important;
+        max-width: 98vw !important;
+        height: auto !important;
+        max-height: 84vh !important;
+        margin-left: 0 !important;
+        margin-top: 62px !important;
+        padding: 14px !important;
+        overflow-y: auto !important;
+    }
+
+    /* Let form content scroll with the dialog, no nested scroll */
+    .add-task-dialog .form-scroll {
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+
+    /* Reset absolute positioning so buttons appear at the bottom in normal flow */
+    .add-task-dialog .form-footer {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        margin-top: 16px !important;
+        padding-top: 8px !important;
+    }
+
+    .add-task-dialog .actions {
+        position: static !important;
+        right: unset !important;
+        bottom: unset !important;
+    }
+
+    .add-task-dialog .note-outside {
+        position: static !important;
+        left: unset !important;
+        bottom: unset !important;
+    }
+
+    .add-task-dialog h1 {
+        font-size: 20px;
+    }
+
+    .add-task-dialog input,
+    .add-task-dialog textarea,
+    .add-task-dialog select {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .add-task-dialog .priority-options {
+        gap: 4px;
+    }
+
+    .add-task-dialog .actions button {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+
+    .content {
+        padding: 16px 8px 83px;
+        margin-left: 0px;
+        padding-right: 14px;
+    }
+
+    .board-header {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 10px;
+    }
+
+    .board-actions {
+        grid-column: 1;
+        grid-row: 2;
+        margin-top: 0;
+    }
+
+    .add-task-mobile-btn {
+        grid-column: 1;
+        grid-row: 3;
+        justify-self: end;
+        margin-top: 4px;
+    }
+
+    .board-column {
+        max-width: 100%;
+    }
+    .modal-content .edit-task-form .priority-options label {
+        min-width: 70px;
+        padding: 4px 6px;
+        font-size: 16px;
+    }
+
+    .modal-content .edit-task-form .priority-options label svg {
+        width: 14px;
+        height: 10px;
+    }
+
+    .modal-content .edit-assigned .custom-select {
+        width: 100%;
+    }
+
+    .task-wrapper .no-tasks {
+        width: 100%;
+        height: 40px;
+        min-height: 40px;
+    }
+}

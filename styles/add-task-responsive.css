@@ -126,6 +126,7 @@
 
     #add-task-content .form-scroll {
         max-height: calc(100vh - 300px);
+        overflow-y: auto;
     }
 
     .form-footer {
@@ -430,5 +431,9 @@
         visibility: hidden !important;
         margin: 0 !important;
         padding: 0 !important;
+    }
+
+    .form-footer {
+        padding-right: 0;
     }
 }

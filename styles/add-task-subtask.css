@@ -203,8 +203,7 @@
     align-items: center;
     margin-left: auto;
     gap: 8px;
-    opacity: 0;
-    transition: opacity 120ms;
+    opacity: 1;
 }
 
 .subtask-actions img {
@@ -221,6 +220,4 @@
     background-color: #eaeaea;
 }
 
-.subtask:hover .subtask-actions {
-    opacity: 1;
-}
+

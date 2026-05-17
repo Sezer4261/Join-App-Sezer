@@ -383,3 +383,30 @@ select:focus,
 .category-options:hover {
   background-color: #f0f0f0 !important;
 }
+
+/* Compact dropdown items in the edit task modal */
+#task-modal .edit-assigned .dropdown-item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  padding: 4px 8px !important;
+  gap: 8px !important;
+  border-radius: 8px !important;
+}
+
+#task-modal .edit-assigned .dropdown-avatar {
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+#task-modal .edit-assigned .dropdown-name {
+  font-size: 14px !important;
+}
+
+#task-modal .edit-assigned .dropdown-item .contact-checkbox {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+}

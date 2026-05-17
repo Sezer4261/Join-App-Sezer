@@ -11,13 +11,17 @@
     <link rel="stylesheet" href="./styles/sidebar.css">
     <link rel="stylesheet" href="./styles/header.css">
     <link rel="stylesheet" href="./styles/board.css">
+    <link rel="stylesheet" href="./styles/board-templates.css">
     <link rel="stylesheet" href="./styles/modal.css">
     <link rel="stylesheet" href="./styles/modal-subtask.css">
     <link rel="stylesheet" href="./styles/board-edit.css">
     <link rel="stylesheet" href="./styles/board-tasks.css">
     <link rel="stylesheet" href="./styles/board-task-form.css">
-    <link rel="stylesheet" href="./styles/board-task-form-responsive.css">
     <link rel="stylesheet" href="./styles/board-responsive.css">
+    <link rel="stylesheet" href="./styles/board-edit-responsive.css">
+    <link rel="stylesheet" href="./styles/board-modal-responsive.css">
+    <link rel="stylesheet" href="./styles/add-task-dropdown.css">
+    <link rel="stylesheet" href="./styles/add-task-avatar.css">
 
     <link rel="icon" type="image/png" href="./assets/img/join-logo-white.svg">
 
@@ -27,6 +31,8 @@
 
     <script src="./scripts/sidebar.js" defer></script>
 
+    <script src="./scripts/add-task-validation.js" defer></script>
+    <script src="./scripts/add-task-contacts.js" defer></script>
     <script src="./scripts/add-task.js" defer></script>
     <script src="./scripts/add-task-subtasks.js" defer></script>
     <script src="./scripts/add-task-templates.js" defer></script>
@@ -39,6 +45,8 @@
     <script src="./scripts/board-api.js" defer></script>
     <script src="./scripts/board-dnd.js" defer></script>
     <script src="./scripts/board-modal.js" defer></script>
+    <script src="./scripts/board-edit-validation.js" defer></script>
+    <script src="./scripts/board-edit-subtasks.js" defer></script>
     <script src="./scripts/board-edit.js" defer></script>
     <script src="./scripts/board-addtask-dialog.js" defer></script>
 </head>
@@ -280,6 +288,8 @@
                     <div class="board-column"
                         id="todo-column"
                         ondragover="allowDrop(event)"
+                        ondragenter="dragEnterColumn(event, 'todo-column')"
+                        ondragleave="dragLeaveColumn(event, 'todo-column')"
                         ondrop="dropTask(event, 'To Do')">
 
                         <div class="column-header">
@@ -308,6 +318,8 @@
                     <div class="board-column"
                         id="inprogress-column"
                         ondragover="allowDrop(event)"
+                        ondragenter="dragEnterColumn(event, 'inprogress-column')"
+                        ondragleave="dragLeaveColumn(event, 'inprogress-column')"
                         ondrop="dropTask(event, 'In Progress')">
 
                         <div class="column-header">
@@ -336,6 +348,8 @@
                     <div class="board-column"
                         id="awaiting-column"
                         ondragover="allowDrop(event)"
+                        ondragenter="dragEnterColumn(event, 'awaiting-column')"
+                        ondragleave="dragLeaveColumn(event, 'awaiting-column')"
                         ondrop="dropTask(event, 'Await Feedback')">
 
                         <div class="column-header">
@@ -364,6 +378,8 @@
                     <div class="board-column"
                         id="done-column"
                         ondragover="allowDrop(event)"
+                        ondragenter="dragEnterColumn(event, 'done-column')"
+                        ondragleave="dragLeaveColumn(event, 'done-column')"
                         ondrop="dropTask(event, 'Done')">
 
                         <div class="column-header">

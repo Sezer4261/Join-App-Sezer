@@ -146,36 +146,63 @@
     margin-left: 8px;
 }
 
+/* Compact dropdown items inside the edit form */
+.edit-assigned .dropdown-item {
+    padding: 4px 8px;
+    gap: 8px;
+    border-radius: 8px;
+}
+
+.edit-assigned .dropdown-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.edit-assigned .dropdown-name {
+    font-size: 14px;
+}
+
+.edit-assigned .dropdown-item .contact-checkbox {
+    width: 14px;
+    height: 14px;
+}
+
 .edit-avatar-container {
     display: flex;
-    gap: 8px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
     align-items: center;
-    flex-wrap: wrap;
+    overflow: hidden;
 }
 
 .edit-avatar-container .avatar {
     margin-left: 0;
+    flex-shrink: 0;
 }
 
 .edit-avatar-container .avatar {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     border: 2px solid #fff;
     color: #fff;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 13px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .edit-avatar-container .avatar-more {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
     background: #2a3647;
     border: 2px solid #fff;
+    flex-shrink: 0;
 }
 
 .edit-avatar-container .bg-blue { background: #1E90FF; }

@@ -8,6 +8,7 @@ function renderBoard() {
   renderTasksIntoColumns();
   updateNoTaskPlaceholders();
   renderAllAvatars();
+  if (typeof initTouchDrag === 'function') initTouchDrag();
 }
 
 /**

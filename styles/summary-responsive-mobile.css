@@ -1,0 +1,219 @@
+﻿@media (max-width: 1024px) {
+
+    .deadline-card {
+        width: 432px;
+        height: 130px;
+    }
+
+    .task-summary-card {
+        width: 124px;
+        height: 130px;
+    }
+}
+
+@media (max-width: 900px) {
+    .wrapper {
+        justify-content: center;
+    }
+
+    .headline {
+        position: relative;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0px;
+        margin-top: 16px;
+        margin-bottom: 0px;
+        left: auto;
+    }
+
+    .headline h1 {
+        order: 1;
+    }
+
+    .subheadline {
+        order: 2;
+    }
+
+    .header-separating-line-v {
+        display: block;
+        width: 80px;
+        height: 3px;
+        margin-top: 8px;
+        order: 3;
+        align-self: flex-start;
+    }
+
+    h1 {
+        font-size: 48px;
+    }
+
+    .subheadline {
+        font-size: 22px;
+    }
+
+    .welcome-msg-box {
+        display: none;
+    }
+
+    aside.mobile-welcome-overlay {
+        position: fixed;
+        inset: 0;
+        background-color: #F6F7F8;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.45s ease;
+    }
+
+    aside.mobile-welcome-overlay.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    aside.mobile-welcome-overlay .welcome-msg-box {
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+
+    aside.mobile-welcome-overlay .welcome-msg,
+    aside.mobile-welcome-overlay .username-field {
+        text-align: center;
+    }
+}
+
+@media (max-width: 840px) {
+    .headline {
+        min-width: 0px;
+        width: 75%;
+    }
+}
+
+@media (max-width: 780px) {
+
+    .header {
+        left: 0;
+        width: 100%;
+    }
+}  
+
+@media (max-width: 620px) {
+    h1 {
+        font-size: 36px;
+    }
+
+    .subheadline {
+        font-size: 18px;
+    }
+}  
+
+
+@media (max-width: 600px) {
+    main {
+        gap: 40px;
+    }
+
+    .wrapper {
+        padding: 0 10px;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .dashboard {
+        width: 100%;
+        padding-left: 0;
+        max-width: 100%;
+        gap: 26px;
+    }
+
+    aside {
+        width: 100%;
+    }
+}
+
+@media (max-width: 510px) {
+    .headline {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .subheadline {
+        font-size: 16px;
+    }
+
+    .kpi-container {
+        margin-top: 16px;
+        justify-content: space-between;
+        gap: 10px;
+
+        flex-wrap: nowrap;
+    }
+
+    .kpi-card {
+        width: calc((100% - 10px) / 2);
+        height: 100px;
+    }
+
+    .card-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .card-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .card-value {
+        font-size: 32px;
+    }
+
+    .card-subtitle {
+        font-size: 16px;
+    }
+
+    .kpi-card {
+        gap: 16px;
+    }
+
+    .deadline-card {
+        width: 100%;
+        max-width: 100%;
+        height: 100px;
+        margin: 0 auto;
+    }
+
+    .deadline-card-left img {
+        width: 44px;
+        height: 44px;
+    }
+
+    .deadline-card-separating-line-v {
+        height: 80px;
+    }
+
+    .due-date {
+        font-size: 16px;
+    }
+
+    .task-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        justify-content: stretch;
+        gap: 16px;
+    }
+
+    .task-summary-card {
+        width: 100%;
+        min-width: 0;
+        height: 108px;
+    }
+}
+

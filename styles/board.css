@@ -164,6 +164,11 @@ h1 {
   transition: background 0.2s;
 }
 
+.board-column.drag-over {
+  background: #dce8ff;
+  outline: 2px dashed #29ABE2;
+}
+
 .task-wrapper {
   display: flex;
   flex-direction: column;
@@ -216,10 +221,6 @@ h1 {
   margin-left: -6px;
 }
 
-.avatar-container {
-  display: flex;
-}
-
 .modal {
   display: none;
   justify-content: center;
@@ -244,6 +245,7 @@ h1 {
   height: auto;
   max-width: 560px;
   max-height: 85vh;
+  margin-top: 96px;
   overflow-y: auto;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   transform: translateX(100%);
@@ -284,97 +286,6 @@ h1 {
 
 .close-btn:hover {
   background-color: rgba(0, 0, 0, 0.1);
-}
-
-.modal-title h2 {
-  font-size: 40px;
-  font-weight: bold;
-  margin: 12px 0 10px 0;
-}
-
-.modal-description {
-  margin-bottom: 12px;
-}
-
-.modal-date {
-  margin-bottom: 12px;
-}
-
-.modal-priority {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.modal-priority strong {
-  margin-right: 24px;
-}
-
-.modal-priority div {
-  margin-right: 12px;
-}
-
-.modal-contacts {
-  margin-bottom: 12px;
-}
-
-.modal-contacts-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin: 14px 0 0 12px;
-}
-
-.modal-contact {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.modal-actions {
-  display: flex;
-  align-self: flex-end;
-  margin-top: 24px;
-  gap: 8px;
-}
-
-.modal-actions div {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.modal-delete:hover .modal-action-delete-text {
-  cursor: pointer;
-  font-weight: bold;
-  color: #29ABE2;
-}
-
-.modal-delete:hover .delete-svg-path {
-  fill: #29ABE2;
-}
-
-.action-separator {
-  height: 25px;
-  width: 2px;
-  background-color: #b5b5b5;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-.clear:hover {
-  border-color: #29ABE2;
-  color: #29ABE2;
-}
-
-.create:hover {
-  background-color: #29ABE2;
-}
-
-.create img {
-  width: 16px;
-  height: 16px;
 }
 
 .input-error {

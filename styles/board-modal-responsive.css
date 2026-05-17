@@ -1,0 +1,123 @@
+﻿
+/* Always keep edit-form assigned contacts in a single horizontal row */
+.modal-content .edit-avatar-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+    gap: 6px !important;
+    align-items: center !important;
+}
+
+/* Compact dropdown items in edit modal on all screen sizes */
+.modal-content .edit-assigned .dropdown-item {
+    padding: 4px 8px !important;
+    gap: 8px !important;
+}
+
+.modal-content .edit-assigned .dropdown-avatar {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+}
+
+.modal-content .edit-assigned .dropdown-name {
+    font-size: 14px !important;
+}
+
+/* â”€â”€ Edit task form responsive (merged from board-task-form-responsive.css) â”€â”€ */
+@media (max-width: 600px) {
+
+    .edit-task-form .subtasks,
+    .edit-task-form .subtask,
+    .edit-task-form .subtask-edit {
+        min-width: 0;
+    }
+
+    .edit-task-form .subtasks input,
+    .edit-task-form .subtask-edit-input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .edit-task-form .subtasks input,
+    .edit-task-form .subtask-edit-input,
+    .edit-task-form .subtask {
+        height: 36px;
+    }
+
+    .edit-task-form .subtask-actions img {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 420px) {
+
+    .edit-task-form input,
+    .edit-task-form textarea,
+    .edit-task-form select {
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    .edit-task-form .subtasks input,
+    .edit-task-form .subtask-edit-input,
+    .edit-task-form .subtask {
+        height: 34px;
+    }
+
+    .edit-task-form .subtask-input-actions {
+        gap: 6px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .edit-task-form,
+    .edit-form-scroll,
+    .edit-task-form label,
+    .edit-task-form .edit-input,
+    .edit-task-form .edit-textarea,
+    .edit-task-form select,
+    .edit-task-form .priority-options,
+    .edit-task-form .custom-select,
+    .edit-task-form #editCategorySelect,
+    .edit-task-form .edit-subtasks,
+    .edit-task-form .subtasks,
+    .edit-task-form .subtasks input,
+    .edit-task-form #editSubtaskArea {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    .edit-task-form #editSubtaskArea,
+    .edit-task-form #editSubtaskArea li,
+    .edit-task-form #editSubtaskArea .subtask,
+    .edit-task-form #editSubtaskArea .subtask-edit {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box;
+    }
+
+    .edit-task-form .subtasks {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .edit-task-form .priority-options label {
+        min-width: 80px;
+        padding: 4px 4px;
+        font-size: 16px;
+    }
+
+    .edit-task-form .priority-options label svg {
+        width: 14px;
+        height: 10px;
+    }
+}
