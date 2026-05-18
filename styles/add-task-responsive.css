@@ -1,6 +1,6 @@
 @media (max-width: 1024px) {
     #add-task-content {
-        padding-bottom: 92px;
+        padding-bottom: 70px;
     }
 
     .clear,
@@ -75,6 +75,11 @@
     html,
     body {
         min-height: 100%;
+    }
+
+    .clear,
+    .create {
+        padding: 6px 6px;
     }
 
     .app {
