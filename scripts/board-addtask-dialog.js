@@ -2,32 +2,29 @@
  * Shows add task dialog.
  * @returns {Promise<*>} Result.
  */
-async function showAddTaskDialog(status = "To Do") {
-  window.currentBoardStatus = status;
-  const modalContent = document.getElementById("add-task-dialog-message");
-  const dialogOverlay = document.getElementById("add-task-dialog");
-  if (!dialogOverlay || !modalContent) return;
+/**
+ * Registers the backdrop click handler once.
+ * @param {HTMLElement} dialogOverlay - Dialog overlay element.
+ * @returns {void} Result.
+ */
+function initAddTaskDialogBackdropHandler(dialogOverlay) {
+  if (window.addTaskDialogBackdropHandlerAdded) return;
+  window.addTaskDialogBackdropHandlerAdded = true;
+  dialogOverlay.addEventListener("click", (event) => {
+    if (event.target !== dialogOverlay) return;
+    event.stopPropagation();
+    closeAddTaskDialog();
+  });
+}
 
-  dialogOverlay.dataset.closing = "false";
-  dialogOverlay.classList.remove("d-none");
-  document.body.classList.add("add-task-dialog-open");
-
-  modalContent.classList.remove("is-open");
-
-  if (!window.addTaskDialogBackdropHandlerAdded) {
-    window.addTaskDialogBackdropHandlerAdded = true;
-    dialogOverlay.addEventListener("click", (event) => {
-      // Close only on real backdrop clicks. Using contains(event.target) can break
-      // when inner click handlers re-render/remove the original target node.
-      if (event.target !== dialogOverlay) return;
-      event.stopPropagation();
-      closeAddTaskDialog();
-    });
-  }
-
+/**
+ * Renders the add task form, triggers animation, and loads contacts.
+ * @param {HTMLElement} modalContent - Modal content element.
+ * @returns {Promise<void>} Result.
+ */
+async function initAddTaskDialogContent(modalContent) {
   modalContent.innerHTML = generateAddTask({ variant: "dialog" });
   if (typeof applyTodayMinDate === "function") applyTodayMinDate();
-  // force reflow so the transition runs every time
   void modalContent.offsetWidth;
   requestAnimationFrame(() => modalContent.classList.add("is-open"));
   await loadContacts();
@@ -39,43 +36,54 @@ async function showAddTaskDialog(status = "To Do") {
   if (typeof initAddSubtaskEnter === "function") initAddSubtaskEnter();
 }
 
+async function showAddTaskDialog(status = "To Do") {
+  window.currentBoardStatus = status;
+  const modalContent = document.getElementById("add-task-dialog-message");
+  const dialogOverlay = document.getElementById("add-task-dialog");
+  if (!dialogOverlay || !modalContent) return;
+  dialogOverlay.dataset.closing = "false";
+  dialogOverlay.classList.remove("d-none");
+  document.body.classList.add("add-task-dialog-open");
+  modalContent.classList.remove("is-open");
+  initAddTaskDialogBackdropHandler(dialogOverlay);
+  await initAddTaskDialogContent(modalContent);
+}
+
 /**
  * Closes add task dialog.
  * @returns {void} Result.
  */
-function closeAddTaskDialog() {
-  const dialogOverlay = document.getElementById("add-task-dialog");
-  const modalContent = document.getElementById("add-task-dialog-message");
-  if (!dialogOverlay) return;
-
-  if (dialogOverlay.dataset.closing === "true") return;
-  dialogOverlay.dataset.closing = "true";
-
-  const cleanup = () => {
-    dialogOverlay.classList.add("d-none");
-    dialogOverlay.dataset.closing = "false";
-    document.body.classList.remove("add-task-dialog-open");
-  };
-
-  if (!modalContent) {
-    cleanup();
-    return;
-  }
-
+/**
+ * Runs the slide-out close animation for the add task dialog.
+ * @param {HTMLElement} modalContent - Content element.
+ * @param {Function} cleanup - Cleanup callback.
+ * @returns {void} Result.
+ */
+function runAddTaskDialogCloseAnimation(modalContent, cleanup) {
   const onTransitionEnd = (event) => {
     if (event && event.target !== modalContent) return;
     modalContent.removeEventListener("transitionend", onTransitionEnd);
     cleanup();
   };
-
   modalContent.addEventListener("transitionend", onTransitionEnd);
-
-  requestAnimationFrame(() => {
-    modalContent.classList.remove("is-open");
-  });
-
+  requestAnimationFrame(() => modalContent.classList.remove("is-open"));
   setTimeout(() => {
     modalContent.removeEventListener("transitionend", onTransitionEnd);
     cleanup();
   }, 400);
+}
+
+function closeAddTaskDialog() {
+  const dialogOverlay = document.getElementById("add-task-dialog");
+  const modalContent = document.getElementById("add-task-dialog-message");
+  if (!dialogOverlay) return;
+  if (dialogOverlay.dataset.closing === "true") return;
+  dialogOverlay.dataset.closing = "true";
+  const cleanup = () => {
+    dialogOverlay.classList.add("d-none");
+    dialogOverlay.dataset.closing = "false";
+    document.body.classList.remove("add-task-dialog-open");
+  };
+  if (!modalContent) { cleanup(); return; }
+  runAddTaskDialogCloseAnimation(modalContent, cleanup);
 }

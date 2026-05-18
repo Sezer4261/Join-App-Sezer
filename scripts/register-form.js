@@ -262,18 +262,16 @@ function showFieldErrorMessage(fieldId) {
  * @returns {void} Result.
  */
 function clearAllSignupErrorMessages() {
-    const ids = Object.values({
-        registerName: 'register-name-error',
-        registerEmail: 'register-email-error',
-        registerPassword: 'register-password-error',
-        registerPasswordConfirm: 'register-password-confirm-error',
-        acceptPrivacy: 'accept-privacy-error'
-    });
+    const ids = [
+        'register-name-error',
+        'register-email-error',
+        'register-password-error',
+        'register-password-confirm-error',
+        'accept-privacy-error'
+    ];
     ids.forEach(spanId => {
         const span = document.getElementById(spanId);
-        if (span) {
-            span.textContent = '';
-        }
+        if (span) span.textContent = '';
     });
 }
 

@@ -2,6 +2,18 @@
  * Renders add task.
  * @returns {Promise<*>} Result.
  */
+/**
+ * Initializes event handlers after add-task form is rendered.
+ * @returns {void} Result.
+ */
+function initAddTaskHandlers() {
+  initAddDropdownClose();
+  initAddTaskBlurValidation();
+  initAddSubtaskEnter();
+  showSubtasks();
+  updateCreateButtonState();
+}
+
 async function renderAddTask() {
   const content = document.getElementById('add-task-content');
   if (!content) return;
@@ -11,25 +23,21 @@ async function renderAddTask() {
   resetSelectedContacts();
   selectContacts();
   renderSelectedAvatars();
-  initAddDropdownClose();
-  initAddTaskBlurValidation();
-  initAddSubtaskEnter();
-  showSubtasks();
-  updateCreateButtonState();
+  initAddTaskHandlers();
 }
 
 /**
  * Initializes add task blur validation handlers.
  * @returns {void} Result.
  */
-function initAddTaskBlurValidation() {
-  const form = document.getElementById('add-task-form');
-  if (!form || form.dataset.blurValidationInit === '1') return;
-
-  const titleInput = document.getElementById('title');
-  const dateInput = document.getElementById('date');
-  const categorySelect = document.getElementById('category-select');
-
+/**
+ * Binds blur/change/click handlers for title, date, and category fields.
+ * @param {HTMLElement} titleInput - Title input.
+ * @param {HTMLElement} dateInput - Date input.
+ * @param {HTMLElement} categorySelect - Category select.
+ * @returns {void} Result.
+ */
+function bindAddTaskFieldListeners(titleInput, dateInput, categorySelect) {
   titleInput?.addEventListener('blur', validateTitleField);
   titleInput?.addEventListener('input', clearTitleErrorOnValidInput);
   titleInput?.addEventListener('input', updateCreateButtonState);
@@ -38,12 +46,19 @@ function initAddTaskBlurValidation() {
   dateInput?.addEventListener('input', updateCreateButtonState);
   dateInput?.addEventListener('change', clearDateErrorOnValidInput);
   dateInput?.addEventListener('change', updateCreateButtonState);
-  dateInput?.addEventListener('click', () => {
-    try { dateInput.showPicker(); } catch (_) {}
-  });
+  dateInput?.addEventListener('click', () => { try { dateInput.showPicker(); } catch (_) {} });
   categorySelect?.addEventListener('blur', validateCategoryField);
   categorySelect?.addEventListener('change', updateCreateButtonState);
+}
 
+function initAddTaskBlurValidation() {
+  const form = document.getElementById('add-task-form');
+  if (!form || form.dataset.blurValidationInit === '1') return;
+  bindAddTaskFieldListeners(
+    document.getElementById('title'),
+    document.getElementById('date'),
+    document.getElementById('category-select')
+  );
   form.dataset.blurValidationInit = '1';
 }
 
@@ -51,20 +66,24 @@ function initAddTaskBlurValidation() {
  * Updates create button disabled state.
  * @returns {void} Result.
  */
-function updateCreateButtonState() {
-  const btn = document.getElementById('create-task-btn');
-  if (!btn) return;
-  
+/**
+ * Returns whether all required add-task form fields are filled.
+ * @returns {boolean} Result.
+ */
+function isAddTaskFormComplete() {
   const titleInput = document.getElementById('title');
   const dateInput = document.getElementById('date');
   const categoryInput = document.getElementById('category');
-  
   const hasTitle = titleInput && String(titleInput.value || '').trim().length > 0;
   const hasDate = dateInput && String(dateInput.value || '').trim().length > 0;
   const hasCategory = categoryInput && String(categoryInput.value || '').trim().length > 0;
-  
-  const isFormValid = hasTitle && hasDate && hasCategory;
-  btn.disabled = !isFormValid;
+  return hasTitle && hasDate && hasCategory;
+}
+
+function updateCreateButtonState() {
+  const btn = document.getElementById('create-task-btn');
+  if (!btn) return;
+  btn.disabled = !isAddTaskFormComplete();
 }
 
 /**
@@ -96,24 +115,26 @@ async function saveToArray(event) {
  * Executes handle save success logic.
  * @returns {void} Result.
  */
+/**
+ * Handles post-save navigation (close dialog or redirect).
+ * @returns {void} Result.
+ */
+function schedulePostSaveNavigation() {
+  if (typeof closeAddTaskDialog === "function") {
+    setTimeout(async () => { closeAddTaskDialog(); await loadTasks(); }, 1500);
+  } else {
+    setTimeout(() => { window.location.href = "board.html"; }, 1500);
+  }
+}
+
 function handleSaveSuccess() {
   setAddTaskActionButtonsDisabled(true);
-  showMessage("Task added to board", "success", {
-    iconSrc: "./assets/icons/vector-board.svg",
-    iconAlt: "Board"
-  });
+  showMessage("Task added to board", "success", { iconSrc: "./assets/icons/vector-board.svg", iconAlt: "Board" });
   subtasks.length = 0;
   selectedContacts.length = 0;
   showSubtasks();
   document.getElementById('add-task-form').reset();
-  if (typeof closeAddTaskDialog === "function") {
-    setTimeout(async () => {
-      closeAddTaskDialog();
-      await loadTasks();
-    }, 1500);
-  } else {
-    setTimeout(() => { window.location.href = "board.html"; }, 1500);
-  }
+  schedulePostSaveNavigation();
 }
 
 /**
@@ -161,47 +182,49 @@ async function saveTask(task) {
  * Clears form.
  * @returns {void} Result.
  */
-function clearForm() {
-  const form = document.getElementById('add-task-form');
-  if (form) {
-    form.reset();
-  }
-  clearValidationErrors();
-  if (typeof setSubtaskError === 'function') {
-    setSubtaskError('');
-  }
-  const titleInput = document.getElementById('title');
-  const dateInput = document.getElementById('date');
+/**
+ * Clears category UI fields.
+ * @returns {void} Result.
+ */
+function clearFormCategoryUI() {
   const categoryInput = document.getElementById('category');
   const categorySelect = document.getElementById('category-select');
-  titleInput?.classList.remove('input-error');
-  dateInput?.classList.remove('input-error');
-  categoryInput?.classList.remove('input-error');
-  categorySelect?.classList.remove('input-error');
-
-  if (categoryInput) {
-    categoryInput.value = '';
-  }
+  if (categoryInput) categoryInput.value = '';
   if (categorySelect) {
     const label = categorySelect.querySelector('span');
-    if (label) {
-      label.childNodes[0].textContent = 'Select task category ';
-    }
+    if (label) label.childNodes[0].textContent = 'Select task category ';
   }
+}
 
+/**
+ * Clears contacts dropdown checkboxes and resets selected avatars.
+ * @returns {void} Result.
+ */
+function clearFormContactsDropdown() {
   const dropdown = document.getElementById('dropdown-contacts');
-  if (dropdown) {
-    dropdown.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-  }
-
+  if (dropdown) dropdown.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; });
   selectedContacts = [];
   renderSelectedAvatars();
+}
 
-  if (Array.isArray(subtasks)) {
-    subtasks.length = 0;
-  }
+/**
+ * Clears subtasks array and re-renders subtask area.
+ * @returns {void} Result.
+ */
+function clearFormSubtasks() {
+  if (Array.isArray(subtasks)) subtasks.length = 0;
   showSubtasks();
   updateCreateButtonState();
+}
+
+function clearForm() {
+  const form = document.getElementById('add-task-form');
+  if (form) form.reset();
+  clearValidationErrors();
+  if (typeof setSubtaskError === 'function') setSubtaskError('');
+  ['title', 'date', 'category'].forEach(id => document.getElementById(id)?.classList.remove('input-error'));
+  document.getElementById('category-select')?.classList.remove('input-error');
+  clearFormCategoryUI();
+  clearFormContactsDropdown();
+  clearFormSubtasks();
 }

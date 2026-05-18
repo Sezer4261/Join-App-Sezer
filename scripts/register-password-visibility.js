@@ -97,18 +97,33 @@ function syncPasswordVisibilityIcons(elements) {
  * Initializes signup password visibility toggles.
  * @returns {void} Result.
  */
-function initSignupPasswordVisibilityToggles() {
+/**
+ * Initializes password visibility for the register-password field.
+ * @returns {void} Result.
+ */
+function initRegisterPasswordToggle() {
     initPasswordVisibilityToggle({
         inputId: 'register-password',
         lockIconId: 'register-lock-icon',
         visibilityOffIconId: 'register-visibility-off-icon',
         visibilityIconId: 'register-visibility-icon'
     });
+}
 
+/**
+ * Initializes password visibility for the register-password-confirm field.
+ * @returns {void} Result.
+ */
+function initRegisterConfirmPasswordToggle() {
     initPasswordVisibilityToggle({
         inputId: 'register-password-confirm',
         lockIconId: 'register-confirm-lock-icon',
         visibilityOffIconId: 'register-confirm-visibility-off-icon',
         visibilityIconId: 'register-confirm-visibility-icon'
     });
+}
+
+function initSignupPasswordVisibilityToggles() {
+    initRegisterPasswordToggle();
+    initRegisterConfirmPasswordToggle();
 }

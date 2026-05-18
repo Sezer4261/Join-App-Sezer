@@ -26,22 +26,27 @@ function initIntroAlignment() {
  * Executes align intro logo logic.
  * @returns {void} Result.
  */
+/**
+ * Applies overlay size properties based on header logo rect.
+ * @param {HTMLElement|null} introOverlay - Intro overlay element.
+ * @param {DOMRect} headerRect - Header logo bounding rect.
+ * @returns {void} Result.
+ */
+function applyLogoOverlaySize(introOverlay, headerRect) {
+    if (!introOverlay) return;
+    introOverlay.style.setProperty('--logo-target-width', `${headerRect.width}px`);
+    introOverlay.style.setProperty('--logo-target-height', `${headerRect.height}px`);
+}
+
 function alignIntroLogo() {
     const introLogo = document.getElementById('intro-logo');
     const headerLogo = document.querySelector('.header-left img');
     if (!introLogo || !headerLogo) return;
-    const introOverlay = document.getElementById('intro-overlay');
     const introRect = introLogo.getBoundingClientRect();
     const headerRect = headerLogo.getBoundingClientRect();
-    const dx = getCenterDeltaX(introRect, headerRect);
-    const dy = getCenterDeltaY(introRect, headerRect);
-    introLogo.style.setProperty('--logo-dx', `${dx}px`);
-    introLogo.style.setProperty('--logo-dy', `${dy}px`);
-
-    if (introOverlay) {
-        introOverlay.style.setProperty('--logo-target-width', `${headerRect.width}px`);
-        introOverlay.style.setProperty('--logo-target-height', `${headerRect.height}px`);
-    }
+    introLogo.style.setProperty('--logo-dx', `${getCenterDeltaX(introRect, headerRect)}px`);
+    introLogo.style.setProperty('--logo-dy', `${getCenterDeltaY(introRect, headerRect)}px`);
+    applyLogoOverlaySize(document.getElementById('intro-overlay'), headerRect);
 }
 
 /**
@@ -116,39 +121,56 @@ function initLoginBlurValidation() {
  * @param {string} fieldName - Field name.
  * @returns {boolean} Result.
  */
-function validateLoginFieldOnBlur(fieldName) {
-    const emailInput = document.getElementById('login-email');
-    const passwordInput = document.getElementById('login-password');
-    if (!emailInput || !passwordInput) return false;
+/**
+ * Validates the email field on blur.
+ * @param {string} email - Email value.
+ * @param {HTMLElement} emailInput - Email input element.
+ * @returns {boolean} Result.
+ */
+function validateLoginEmailField(email, emailInput) {
+    emailInput.classList.remove('input-error');
+    if (!email) { showLoginBlurError('Please fill in all fields.', emailInput); return false; }
+    if (!isValidEmail(email)) { showLoginBlurError('Please enter a valid email address.', emailInput); return false; }
+    return true;
+}
 
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
+/**
+ * Validates the password field on blur.
+ * @param {string} password - Password value.
+ * @param {HTMLElement} passwordInput - Password input element.
+ * @returns {boolean} Result.
+ */
+function validateLoginPasswordField(password, passwordInput) {
+    passwordInput.classList.remove('input-error');
+    if (!password) { showLoginBlurError('Please fill in all fields.', passwordInput); return false; }
+    return true;
+}
 
-    if (fieldName === 'email') {
-        emailInput.classList.remove('input-error');
-        if (!email) {
-            showLoginBlurError('Please fill in all fields.', emailInput);
-            return false;
-        }
-        if (!isValidEmail(email)) {
-            showLoginBlurError('Please enter a valid email address.', emailInput);
-            return false;
-        }
-    }
-
-    if (fieldName === 'password') {
-        passwordInput.classList.remove('input-error');
-        if (!password) {
-            showLoginBlurError('Please fill in all fields.', passwordInput);
-            return false;
-        }
-    }
-
+/**
+ * Clears login errors when both fields are valid.
+ * @param {string} email - Email value.
+ * @param {string} password - Password value.
+ * @param {HTMLElement} emailInput - Email input element.
+ * @param {HTMLElement} passwordInput - Password input element.
+ * @returns {void} Result.
+ */
+function clearLoginFieldErrors(email, password, emailInput, passwordInput) {
     if (email && password && isValidEmail(email)) {
         removeLoginError();
         emailInput.classList.remove('input-error');
         passwordInput.classList.remove('input-error');
     }
+}
+
+function validateLoginFieldOnBlur(fieldName) {
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
+    if (!emailInput || !passwordInput) return false;
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+    if (fieldName === 'email' && !validateLoginEmailField(email, emailInput)) return false;
+    if (fieldName === 'password' && !validateLoginPasswordField(password, passwordInput)) return false;
+    clearLoginFieldErrors(email, password, emailInput, passwordInput);
     return true;
 }
 

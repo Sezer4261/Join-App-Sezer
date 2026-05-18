@@ -3,18 +3,22 @@
  * @param {string} id - Identifier.
  * @returns {Promise<*>} Result.
  */
-async function openEditTaskModal(id) {
-  const task = tasks.find(t => t.id === id);
-  if (!task) return;
-  activeTask = task;
+/**
+ * Sets up the edit modal content from task data.
+ * @param {Object} task - Task object.
+ * @returns {void} Result.
+ */
+function setupEditModalContent(task) {
   editSubtasks = Array.isArray(task.subtasks) ? task.subtasks.map(st => ({ ...st })) : [];
   selectedContacts = Array.isArray(task.contacts) ? [...task.contacts] : [];
   window.editingEditSubtaskIndex = null;
-  const modal = document.getElementById("task-modal");
-  if (!modal) return;
-  const modalContent = modal.querySelector(".modal-content");
-  if (!modalContent) return;
-  modalContent.innerHTML = generateEditTaskTemplate(task);
+}
+
+/**
+ * Initializes all handlers after loading the edit form.
+ * @returns {Promise<void>} Result.
+ */
+async function initEditModalHandlers() {
   applyTodayMinDateForEdit();
   initEditFormBlurValidation();
   await loadContacts();
@@ -24,34 +28,49 @@ async function openEditTaskModal(id) {
   initEditSubtaskEnter();
 }
 
+async function openEditTaskModal(id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+  activeTask = task;
+  setupEditModalContent(task);
+  const modal = document.getElementById("task-modal");
+  if (!modal) return;
+  const modalContent = modal.querySelector(".modal-content");
+  if (!modalContent) return;
+  modalContent.innerHTML = generateEditTaskTemplate(task);
+  await initEditModalHandlers();
+}
+
 /**
  * Initializes blur validation handlers for the edit form.
  * @returns {void} Result.
  */
+/**
+ * Binds all blur/change listeners for the edit form fields.
+ * @param {HTMLElement} titleInput - Title input.
+ * @param {HTMLElement} dateInput - Date input.
+ * @param {HTMLElement} categorySelect - Category select.
+ * @returns {void} Result.
+ */
+function bindEditFormFieldListeners(titleInput, dateInput, categorySelect) {
+  titleInput?.addEventListener('blur', () => validateEditRequiredInput(titleInput, 'edit-title-error'));
+  dateInput?.addEventListener('blur', () => validateEditDateField());
+  dateInput?.addEventListener('input', clearEditDateErrorOnValidInput);
+  dateInput?.addEventListener('change', clearEditDateErrorOnValidInput);
+  dateInput?.addEventListener('click', () => { try { dateInput.showPicker(); } catch (_) {} });
+  categorySelect?.addEventListener('blur', () => {
+    validateEditRequiredInput(document.getElementById('edit-category'), 'edit-category-error', categorySelect);
+  });
+}
+
 function initEditFormBlurValidation() {
   const form = document.getElementById('edit-task-form');
   if (!form || form.dataset.blurValidationInit === '1') return;
-
-  const titleInput = document.getElementById('edit-title');
-  const dateInput = document.getElementById('edit-date');
-  const categorySelect = document.getElementById('edit-category-select');
-
-  titleInput?.addEventListener('blur', () => {
-    validateEditRequiredInput(titleInput, 'edit-title-error');
-  });
-  dateInput?.addEventListener('blur', () => {
-    validateEditDateField();
-  });
-  dateInput?.addEventListener('input', clearEditDateErrorOnValidInput);
-  dateInput?.addEventListener('change', clearEditDateErrorOnValidInput);
-  dateInput?.addEventListener('click', () => {
-    try { dateInput.showPicker(); } catch (_) {}
-  });
-  categorySelect?.addEventListener('blur', () => {
-    const categoryInput = document.getElementById('edit-category');
-    validateEditRequiredInput(categoryInput, 'edit-category-error', categorySelect);
-  });
-
+  bindEditFormFieldListeners(
+    document.getElementById('edit-title'),
+    document.getElementById('edit-date'),
+    document.getElementById('edit-category-select')
+  );
   form.dataset.blurValidationInit = '1';
 }
 
@@ -60,24 +79,27 @@ function initEditFormBlurValidation() {
  * Prevents submitting the edit form.
  * @returns {void} Result.
  */
+/**
+ * Binds keydown handler for the subtask input.
+ * @param {HTMLElement} input - Subtask input element.
+ * @returns {void} Result.
+ */
+function bindEditSubtaskKeydownHandler(input) {
+  input.addEventListener('input', () => setEditSubtaskError(''));
+  input.addEventListener('keydown', (event) => {
+    if (event.isComposing || event.key !== 'Enter' || event.shiftKey) return;
+    event.preventDefault();
+    event.stopPropagation();
+    addEditSubtask();
+  });
+}
+
 function initEditSubtaskEnter() {
   const input = document.getElementById('edit-subtask-input');
   if (!input) return;
   if (input.dataset && input.dataset.enterHandlerAdded === 'true') return;
   if (input.dataset) input.dataset.enterHandlerAdded = 'true';
-
-  input.addEventListener('input', () => {
-    setEditSubtaskError('');
-  });
-
-  input.addEventListener('keydown', (event) => {
-    if (event.isComposing) return;
-    if (event.key !== 'Enter') return;
-    if (event.shiftKey) return;
-    event.preventDefault();
-    event.stopPropagation();
-    addEditSubtask();
-  });
+  bindEditSubtaskKeydownHandler(input);
 }
 
 /**
@@ -121,42 +143,37 @@ function setEditCategory(value) {
   select.classList.remove('input-error');
   setEditErrorText('edit-category-error', '');
   const label = select.querySelector("span");
-  if (label) {
-    label.childNodes[0].textContent = value + " ";
-  }
-  const dropdown = document.getElementById("edit-category-dropdown");
-  if (dropdown) dropdown.classList.remove("show");
+  if (label) label.childNodes[0].textContent = value + " ";
+  document.getElementById("edit-category-dropdown")?.classList.remove("show");
 }
 
 /**
  * Initializes edit dropdown close.
  * @returns {void} Result.
  */
+/**
+ * Handles outside-click to close edit form dropdowns.
+ * @param {Event} event - Click event.
+ * @returns {void} Result.
+ */
+function handleEditDropdownOutsideClick(event) {
+  const target = event.target;
+  const selectContacts = document.getElementById("select-contacts");
+  const contactsDropdown = document.getElementById("dropdown-contacts");
+  const categorySelect = document.getElementById("edit-category-select");
+  const categoryDropdown = document.getElementById("edit-category-dropdown");
+  const clickedInside =
+    selectContacts?.contains(target) || contactsDropdown?.contains(target) ||
+    categorySelect?.contains(target) || categoryDropdown?.contains(target);
+  if (clickedInside) return;
+  contactsDropdown?.classList.remove("show");
+  categoryDropdown?.classList.remove("show");
+}
+
 function initEditDropdownClose() {
   if (window.editDropdownHandlerAdded) return;
   window.editDropdownHandlerAdded = true;
-  document.addEventListener(
-    "click",
-    (event) => {
-      const selectContacts = document.getElementById("select-contacts");
-      const contactsDropdown = document.getElementById("dropdown-contacts");
-      const categorySelect = document.getElementById("edit-category-select");
-      const categoryDropdown = document.getElementById("edit-category-dropdown");
-
-      const target = event.target;
-      const clickedInside =
-        (selectContacts && selectContacts.contains(target)) ||
-        (contactsDropdown && contactsDropdown.contains(target)) ||
-        (categorySelect && categorySelect.contains(target)) ||
-        (categoryDropdown && categoryDropdown.contains(target));
-
-      if (clickedInside) return;
-
-      if (contactsDropdown) contactsDropdown.classList.remove("show");
-      if (categoryDropdown) categoryDropdown.classList.remove("show");
-    },
-    true
-  );
+  document.addEventListener("click", handleEditDropdownOutsideClick, true);
 }
 
 /**

@@ -102,7 +102,7 @@ select:focus,
 
 .note {
   font-size: 20px;
-  margin-bottom: -32px;
+  margin-bottom: 0;
 }
 
 .priority {

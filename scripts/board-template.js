@@ -3,24 +3,33 @@
  * @param {Object} task - Task object.
  * @returns {string} Result.
  */
-function createTaskCard(task) {
-  return /*html*/ `
-    <div class="task-card"
-      draggable="true"
-      ondragstart="startDrag(${task.id})"
-      onclick="openModal(${task.id})">
-      <h2 class="task-category" style="background-color: ${task.category === "User Story" ? "#0038FF" : "#1FD7C1"}">${task.category}</h2>
+/**
+ * Returns the inner HTML body of a task card.
+ * @param {Object} task - Task object.
+ * @returns {string} Result.
+ */
+function getTaskCardBody(task) {
+    const catColor = task.category === "User Story" ? "#0038FF" : "#1FD7C1";
+    return /*html*/ `
+      <h2 class="task-category" style="background-color: ${catColor}">${task.category}</h2>
       <h3>${highlightText(task.title)}</h3>
       <span>${highlightText(task.description)}</span>
-      <div class="subtask-card">
-        ${renderSubtaskProgress(task)}
-      </div>
+      <div class="subtask-card">${renderSubtaskProgress(task)}</div>
       <div class="task-footer">
         <div class="avatar-container" id="avatars-${task.id}"></div>
         <div>${getPriorityIcon(task.priority)}</div>
       </div>
-    </div>
-  `;
+    `;
+}
+
+function createTaskCard(task) {
+    return /*html*/ `
+      <div class="task-card" draggable="true"
+        ondragstart="startDrag(${task.id})"
+        onclick="openModal(${task.id})">
+        ${getTaskCardBody(task)}
+      </div>
+    `;
 }
 /**
  * Returns priority icon.

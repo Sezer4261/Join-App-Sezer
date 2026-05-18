@@ -1,27 +1,37 @@
 /**
+ * Returns or creates the toast container element.
+ * @returns {HTMLElement} Result.
+ */
+function getOrCreateToastContainer() {
+    let container = document.getElementById('toast-container');
+    if (container) return container;
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+    return container;
+}
+
+/**
+ * Creates a toast element.
+ * @param {string} message - Toast message text.
+ * @returns {HTMLElement} Result.
+ */
+function createToastElement(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    return toast;
+}
+
+/**
  * Shows a toast notification.
  * @param {string} message - Toast message text.
  * @returns {void} Result.
  */
 function showToast(message) {
-    // Create toast container if it doesn't exist
-    let toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.id = 'toast-container';
-        toastContainer.className = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    
-    toastContainer.appendChild(toast);
-
-    // Remove toast after animation completes (5 seconds)
-    setTimeout(() => {
-        toast.remove();
-    }, 5000);
+    const container = getOrCreateToastContainer();
+    const toast = createToastElement(message);
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 5000);
 }

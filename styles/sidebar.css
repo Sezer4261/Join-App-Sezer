@@ -16,6 +16,8 @@
     background-color: #2a3647;
     padding: 64px 0 64px 0;
     width: 232px;
+    min-width: 232px;
+    flex-shrink: 0;
     position: relative;
 }
 
@@ -116,6 +118,7 @@ ul img {
     }
     .sidebar {
         z-index: 1100;
+        overflow-y: auto;
     }
 
     .sidebar ul {

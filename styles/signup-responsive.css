@@ -136,7 +136,7 @@
 
     footer {
         position: fixed;
-        bottom: -50px;
+        bottom: 80px;
         left: 0;
         right: 0;
         display: flex;
@@ -218,7 +218,7 @@
 
     footer {
         position: fixed;
-        bottom: -50px;
+        bottom: 80px;
         left: 0;
         right: 0;
         display: flex;
@@ -241,7 +241,7 @@
 @media (max-width: 380px) {
     footer {
         position: fixed;
-        bottom: -50px;
+        bottom: 80px;
         left: 0;
         right: 0;
         display: flex;
@@ -300,7 +300,7 @@
 
     footer {
         position: fixed;
-        bottom: -25px;
+        bottom: 80px;
         left: 0;
         right: 0;
         display: flex;

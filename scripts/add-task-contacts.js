@@ -12,29 +12,22 @@ function selectContacts() {
  * @param {Event} event - Browser event.
  * @returns {void} Result.
  */
+/**
+ * Closes all dropdowns except the given one, then toggles it.
+ * @param {HTMLElement|null} dropdown - Target dropdown element.
+ * @returns {void} Result.
+ */
+function toggleOrFallbackDropdown(dropdown) {
+  if (dropdown) { dropdown.classList.toggle("show"); return; }
+  document.getElementById("dropdown-contacts")?.classList.toggle("show");
+}
+
 function toggleDropdown(event) {
-  if (event) {
-    event.stopPropagation();
-  }
+  if (event) event.stopPropagation();
   const trigger = event?.currentTarget || event?.target;
-  const select = trigger?.closest?.(".custom-select");
-  const dropdown = select?.querySelector?.(".dropdown-content");
-
-  const allDropdowns = document.querySelectorAll(".dropdown-content.show");
-  allDropdowns.forEach((d) => {
-    if (d !== dropdown) {
-      d.classList.remove("show");
-    }
-  });
-
-  if (dropdown) {
-    dropdown.classList.toggle("show");
-    return;
-  }
-  const fallback = document.getElementById("dropdown-contacts");
-  if (fallback) {
-    fallback.classList.toggle("show");
-  }
+  const dropdown = trigger?.closest?.(".custom-select")?.querySelector?.(".dropdown-content") || null;
+  document.querySelectorAll(".dropdown-content.show").forEach(d => { if (d !== dropdown) d.classList.remove("show"); });
+  toggleOrFallbackDropdown(dropdown);
 }
 
 /**
@@ -96,29 +89,25 @@ function closeAddCategoryDropdown() {
  * Initializes add dropdown close.
  * @returns {void} Result.
  */
+/**
+ * Handles outside clicks to close add task dropdowns.
+ * @param {Event} event - Click event.
+ * @returns {void} Result.
+ */
+function handleAddDropdownOutsideClick(event) {
+  const target = event.target;
+  const clickedInside =
+    document.getElementById("select-contacts")?.contains(target) ||
+    document.getElementById("dropdown-contacts")?.contains(target) ||
+    document.getElementById("category-select")?.contains(target) ||
+    document.getElementById("category-dropdown")?.contains(target);
+  if (!clickedInside) closeAddDropdowns();
+}
+
 function initAddDropdownClose() {
   if (window.addDropdownHandlerAdded) return;
   window.addDropdownHandlerAdded = true;
-  document.addEventListener(
-    "click",
-    (event) => {
-      const selectContacts = document.getElementById("select-contacts");
-      const contactsDropdown = document.getElementById("dropdown-contacts");
-      const categorySelect = document.getElementById("category-select");
-      const categoryDropdown = document.getElementById("category-dropdown");
-
-      const target = event.target;
-      const clickedInside =
-        (selectContacts && selectContacts.contains(target)) ||
-        (contactsDropdown && contactsDropdown.contains(target)) ||
-        (categorySelect && categorySelect.contains(target)) ||
-        (categoryDropdown && categoryDropdown.contains(target));
-
-      if (clickedInside) return;
-      closeAddDropdowns();
-    },
-    true
-  );
+  document.addEventListener("click", handleAddDropdownOutsideClick, true);
 }
 
 /**
@@ -184,22 +173,20 @@ function appendSelectedAvatar(container, name) {
  * @param {string} name - Contact name.
  * @returns {string} Result.
  */
-function getContactColorClass(name) {
-  const classes = [
-    'bg-blue',
-    'bg-green',
-    'bg-purple',
-    'bg-orange',
-    'bg-pink',
-    'bg-red',
-    'bg-teal',
-    'bg-brown'
-  ];
-  const key = String(name || '').trim().toLowerCase();
+/**
+ * Computes a deterministic hash index for the contact key.
+ * @param {string} key - Normalized contact key.
+ * @returns {number} Result.
+ */
+function computeContactHash(key) {
   let hash = 0;
-  for (let i = 0; i < key.length; i++) {
-    hash = (hash * 31 + key.charCodeAt(i)) % 2147483647;
-  }
-  const index = key ? Math.abs(hash) % classes.length : 0;
+  for (let i = 0; i < key.length; i++) hash = (hash * 31 + key.charCodeAt(i)) % 2147483647;
+  return hash;
+}
+
+function getContactColorClass(name) {
+  const classes = ['bg-blue','bg-green','bg-purple','bg-orange','bg-pink','bg-red','bg-teal','bg-brown'];
+  const key = String(name || '').trim().toLowerCase();
+  const index = key ? Math.abs(computeContactHash(key)) % classes.length : 0;
   return classes[index];
 }

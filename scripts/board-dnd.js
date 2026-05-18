@@ -70,28 +70,33 @@ function getColumnIdAtPoint(x, y) {
   return null;
 }
 
+/**
+ * Creates a drag clone element positioned at rect.
+ * @param {HTMLElement} card - Source card.
+ * @param {DOMRect} rect - Bounding rect.
+ * @returns {HTMLElement} Result.
+ */
+function createTouchDragClone(card, rect) {
+  const clone = card.cloneNode(true);
+  clone.style.cssText = `
+    position: fixed;
+    left: ${rect.left}px; top: ${rect.top}px;
+    width: ${rect.width}px; opacity: 0.85;
+    pointer-events: none; z-index: 9999;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    border-radius: 12px; transition: none;
+  `;
+  return clone;
+}
+
 function onTouchStart(event) {
   const card = event.currentTarget;
   const touch = event.touches[0];
   const rect = card.getBoundingClientRect();
-
   draggedTaskId = parseInt(card.dataset.taskId, 10);
   touchDragOffsetX = touch.clientX - rect.left;
   touchDragOffsetY = touch.clientY - rect.top;
-
-  touchDragClone = card.cloneNode(true);
-  touchDragClone.style.cssText = `
-    position: fixed;
-    left: ${rect.left}px;
-    top: ${rect.top}px;
-    width: ${rect.width}px;
-    opacity: 0.85;
-    pointer-events: none;
-    z-index: 9999;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    border-radius: 12px;
-    transition: none;
-  `;
+  touchDragClone = createTouchDragClone(card, rect);
   document.body.appendChild(touchDragClone);
   card.style.opacity = '0.3';
 }
@@ -109,26 +114,29 @@ function onTouchMove(event) {
   if (colId) document.getElementById(colId).classList.add('drag-over');
 }
 
+/**
+ * Applies a successful touch drop to the target column, or restores card.
+ * @param {string|null} colId - Target column id.
+ * @returns {void} Result.
+ */
+function applyTouchDrop(colId) {
+  if (!colId || !COLUMN_STATUS[colId]) {
+    document.querySelectorAll('.task-card').forEach(c => c.style.opacity = '');
+    return;
+  }
+  const task = tasks.find(t => t.id === draggedTaskId);
+  if (!task) return;
+  task.status = COLUMN_STATUS[colId];
+  updateTask(task);
+  renderBoard();
+  initTouchDrag();
+}
+
 function onTouchEnd(event) {
   if (!touchDragClone) return;
   const touch = event.changedTouches[0];
-
   document.querySelectorAll('.board-column').forEach(c => c.classList.remove('drag-over'));
-
-  const colId = getColumnIdAtPoint(touch.clientX, touch.clientY);
-  if (colId && COLUMN_STATUS[colId]) {
-    const task = tasks.find(t => t.id === draggedTaskId);
-    if (task) {
-      task.status = COLUMN_STATUS[colId];
-      updateTask(task);
-      renderBoard();
-      initTouchDrag();
-    }
-  } else {
-    // Restore original card opacity if dropped outside
-    document.querySelectorAll('.task-card').forEach(c => c.style.opacity = '');
-  }
-
+  applyTouchDrop(getColumnIdAtPoint(touch.clientX, touch.clientY));
   touchDragClone.remove();
   touchDragClone = null;
   draggedTaskId = null;

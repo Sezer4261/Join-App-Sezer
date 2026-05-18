@@ -30,22 +30,22 @@ function setContactErrorText(spanId, value) {
  * @param {string} message - Error message (empty to clear).
  * @returns {void} Result.
  */
-function applyContactInlineValidation(fieldId, input, message) {
-  const spanId = getContactErrorSpanId(fieldId);
-  const fieldContainer = input?.closest('.ac-field');
-
-  if (message) {
-    contactDialogFieldErrors[fieldId] = message;
-    input?.classList.add('input-error');
-    fieldContainer?.classList.add('input-error');
-    setContactErrorText(spanId, message);
-    return;
-  }
-
+function applyContactFieldError(fieldId, input, spanId, message) {
+  contactDialogFieldErrors[fieldId] = message;
+  input?.classList.add('input-error');
+  input?.closest('.ac-field')?.classList.add('input-error');
+  setContactErrorText(spanId, message);
+}
+function clearContactFieldError(fieldId, input, spanId) {
   delete contactDialogFieldErrors[fieldId];
   input?.classList.remove('input-error');
-  fieldContainer?.classList.remove('input-error');
+  input?.closest('.ac-field')?.classList.remove('input-error');
   setContactErrorText(spanId, '');
+}
+function applyContactInlineValidation(fieldId, input, message) {
+  const spanId = getContactErrorSpanId(fieldId);
+  if (message) { applyContactFieldError(fieldId, input, spanId, message); return; }
+  clearContactFieldError(fieldId, input, spanId);
 }
 
 /**
@@ -82,16 +82,16 @@ function showContactFieldErrorMessage(fieldId, fieldIds) {
  */
 function validateContactDialogField(fieldId, value) {
   if (fieldId === 'ac-name' || fieldId === 'edit-name') {
-    const check = validateContactNameInput(value);
-    return { isValid: check.isValid, normalizedValue: check.normalizedName, error: check.error };
+    const c = validateContactNameInput(value);
+    return { isValid: c.isValid, normalizedValue: c.normalizedName, error: c.error };
   }
   if (fieldId === 'ac-email' || fieldId === 'edit-email') {
-    const check = validateEmailLikeSignup(value);
-    return { isValid: check.isValid, normalizedValue: check.normalizedEmail, error: check.error };
+    const c = validateEmailLikeSignup(value);
+    return { isValid: c.isValid, normalizedValue: c.normalizedEmail, error: c.error };
   }
   if (fieldId === 'ac-phone' || fieldId === 'edit-phone') {
-    const check = validateContactPhoneNumber(value);
-    return { isValid: check.isValid, normalizedValue: check.normalizedPhone, error: check.error };
+    const c = validateContactPhoneNumber(value);
+    return { isValid: c.isValid, normalizedValue: c.normalizedPhone, error: c.error };
   }
   return { isValid: true, normalizedValue: value, error: '' };
 }
@@ -145,33 +145,26 @@ function showContactSubmitError(fieldId, message, allFieldIds) {
  * @param {HTMLElement} dialog - Dialog element.
  * @returns {void} Result.
  */
+function applyContactFieldValidity(input, check) {
+  if (input && typeof input.setCustomValidity === 'function') {
+    input.setCustomValidity(check.isValid ? '' : check.error);
+  }
+  return check.isValid;
+}
+function computeAddContactValidity(dialog) {
+  const n = dialog.querySelector('#ac-name');
+  const e = dialog.querySelector('#ac-email');
+  const p = dialog.querySelector('#ac-phone');
+  const nc = validateContactNameInput(n?.value ?? '');
+  const ec = validateEmailLikeSignup(e?.value ?? '');
+  const pc = validateContactPhoneNumber(p?.value ?? '');
+  return applyContactFieldValidity(n, nc) & applyContactFieldValidity(e, ec) & applyContactFieldValidity(p, pc);
+}
 function updateAddContactSubmitState(dialog) {
   if (!dialog) return;
-  const nameInput = dialog.querySelector('#ac-name');
-  const emailInput = dialog.querySelector('#ac-email');
-  const phoneInput = dialog.querySelector('#ac-phone');
   const submitBtn = dialog.querySelector('[data-ac-submit]');
   if (!submitBtn) return;
-
-  const nameCheck = validateContactNameInput(nameInput?.value ?? "");
-  if (nameInput && typeof nameInput.setCustomValidity === "function") {
-    nameInput.setCustomValidity(nameCheck.isValid ? "" : nameCheck.error);
-  }
-
-  const emailCheck = validateEmailLikeSignup(emailInput?.value ?? "");
-  if (emailInput && typeof emailInput.setCustomValidity === "function") {
-    emailInput.setCustomValidity(emailCheck.isValid ? "" : emailCheck.error);
-  }
-
-  const phoneCheck = validateContactPhoneNumber(phoneInput?.value ?? "");
-  if (phoneInput && typeof phoneInput.setCustomValidity === "function") {
-    phoneInput.setCustomValidity(phoneCheck.isValid ? "" : phoneCheck.error);
-  }
-  const isValid = (
-    nameCheck.isValid &&
-    emailCheck.isValid &&
-    phoneCheck.isValid
-  );
+  const isValid = !!computeAddContactValidity(dialog);
   submitBtn.disabled = !isValid;
   submitBtn.setAttribute('aria-disabled', String(!isValid));
 }
@@ -181,30 +174,17 @@ function updateAddContactSubmitState(dialog) {
  * @param {HTMLElement} dialog - Dialog element.
  * @returns {void} Result.
  */
+function bindContactFieldListeners(field, fieldIds, handler) {
+  field.addEventListener('focus', () => showContactFieldErrorMessage(field.id, fieldIds));
+  field.addEventListener('input', () => { clearContactDialogFieldErrorIfResolved(field.id); handler(); });
+  field.addEventListener('change', () => { clearContactDialogFieldErrorIfResolved(field.id); handler(); });
+  field.addEventListener('blur', () => { validateContactDialogFieldOnBlur(field.id); handler(); });
+}
 function initAddContactDialogValidation(dialog) {
   if (!dialog || dialog.dataset.acValidationInit === '1') return;
-  const fields = ADD_CONTACT_FIELD_IDS
-    .map((id) => dialog.querySelector(`#${id}`))
-    .filter(Boolean);
-
   const handler = () => updateAddContactSubmitState(dialog);
-
-  fields.forEach((field) => {
-    field.addEventListener('focus', () => showContactFieldErrorMessage(field.id, ADD_CONTACT_FIELD_IDS));
-    field.addEventListener('input', () => {
-      clearContactDialogFieldErrorIfResolved(field.id);
-      handler();
-    });
-    field.addEventListener('change', () => {
-      clearContactDialogFieldErrorIfResolved(field.id);
-      handler();
-    });
-    field.addEventListener('blur', () => {
-      validateContactDialogFieldOnBlur(field.id);
-      handler();
-    });
-  });
-
+  ADD_CONTACT_FIELD_IDS.map((id) => dialog.querySelector(`#${id}`)).filter(Boolean)
+    .forEach((field) => bindContactFieldListeners(field, ADD_CONTACT_FIELD_IDS, handler));
   bindContactValidationReset(dialog, handler, '#add-contact-form', ADD_CONTACT_FIELD_IDS);
   dialog.dataset.acValidationInit = '1';
   handler();
@@ -233,33 +213,20 @@ function bindContactValidationReset(dialog, handler, formSelector, fieldIds) {
  * @param {HTMLElement} dialog - Dialog element.
  * @returns {void} Result.
  */
+function computeEditContactValidity(dialog) {
+  const n = dialog.querySelector('#edit-name');
+  const e = dialog.querySelector('#edit-email');
+  const p = dialog.querySelector('#edit-phone');
+  const nc = validateContactNameInput(n?.value ?? '');
+  const ec = validateEmailLikeSignup(e?.value ?? '');
+  const pc = validateContactPhoneNumber(p?.value ?? '');
+  return applyContactFieldValidity(n, nc) & applyContactFieldValidity(e, ec) & applyContactFieldValidity(p, pc);
+}
 function updateEditContactSubmitState(dialog) {
   if (!dialog) return;
-  const nameInput = dialog.querySelector('#edit-name');
-  const emailInput = dialog.querySelector('#edit-email');
-  const phoneInput = dialog.querySelector('#edit-phone');
   const submitBtn = dialog.querySelector('[data-edit-submit]');
   if (!submitBtn) return;
-
-  const nameCheck = validateContactNameInput(nameInput?.value ?? "");
-  if (nameInput && typeof nameInput.setCustomValidity === "function") {
-    nameInput.setCustomValidity(nameCheck.isValid ? "" : nameCheck.error);
-  }
-
-  const emailCheck = validateEmailLikeSignup(emailInput?.value ?? "");
-  if (emailInput && typeof emailInput.setCustomValidity === "function") {
-    emailInput.setCustomValidity(emailCheck.isValid ? "" : emailCheck.error);
-  }
-
-  const phoneCheck = validateContactPhoneNumber(phoneInput?.value ?? "");
-  if (phoneInput && typeof phoneInput.setCustomValidity === "function") {
-    phoneInput.setCustomValidity(phoneCheck.isValid ? "" : phoneCheck.error);
-  }
-  const isValid = (
-    nameCheck.isValid &&
-    emailCheck.isValid &&
-    phoneCheck.isValid
-  );
+  const isValid = !!computeEditContactValidity(dialog);
   submitBtn.disabled = !isValid;
   submitBtn.setAttribute('aria-disabled', String(!isValid));
 }
@@ -271,28 +238,9 @@ function updateEditContactSubmitState(dialog) {
  */
 function initEditContactDialogValidation(dialog) {
   if (!dialog || dialog.dataset.editValidationInit === '1') return;
-  const fields = EDIT_CONTACT_FIELD_IDS
-    .map((id) => dialog.querySelector(`#${id}`))
-    .filter(Boolean);
-
   const handler = () => updateEditContactSubmitState(dialog);
-
-  fields.forEach((field) => {
-    field.addEventListener('focus', () => showContactFieldErrorMessage(field.id, EDIT_CONTACT_FIELD_IDS));
-    field.addEventListener('input', () => {
-      clearContactDialogFieldErrorIfResolved(field.id);
-      handler();
-    });
-    field.addEventListener('change', () => {
-      clearContactDialogFieldErrorIfResolved(field.id);
-      handler();
-    });
-    field.addEventListener('blur', () => {
-      validateContactDialogFieldOnBlur(field.id);
-      handler();
-    });
-  });
-
+  EDIT_CONTACT_FIELD_IDS.map((id) => dialog.querySelector(`#${id}`)).filter(Boolean)
+    .forEach((field) => bindContactFieldListeners(field, EDIT_CONTACT_FIELD_IDS, handler));
   bindContactValidationReset(dialog, handler, '#edit-contact-form', EDIT_CONTACT_FIELD_IDS);
   dialog.dataset.editValidationInit = '1';
   handler();

@@ -3,49 +3,46 @@
  * @param {Event} event - Browser event.
  * @returns {Promise<*>} Result.
  */
-async function addContact(event) {
-  event.preventDefault();
-  const contact = generateObjFromContact();
-
+/**
+ * Validates all fields for a new contact. Returns null if valid, otherwise shows error.
+ * @param {Object} contact - Contact object (mutated on success).
+ * @param {string[]} fields - Field IDs for error context.
+ * @returns {boolean} True if valid.
+ */
+function validateAndNormalizeNewContact(contact, fields) {
   const nameCheck = validateContactNameInput(contact.name);
-  if (!nameCheck.isValid) {
-    if (typeof showContactSubmitError === 'function') {
-      showContactSubmitError('ac-name', nameCheck.error, ['ac-name', 'ac-email', 'ac-phone']);
-    }
-    return;
-  }
+  if (!nameCheck.isValid) { showContactSubmitError?.('ac-name', nameCheck.error, fields); return false; }
   contact.name = nameCheck.normalizedName;
-
   const emailCheck = validateEmailLikeSignup(contact.email);
-  if (!emailCheck.isValid) {
-    if (typeof showContactSubmitError === 'function') {
-      showContactSubmitError('ac-email', emailCheck.error, ['ac-name', 'ac-email', 'ac-phone']);
-    }
-    return;
-  }
+  if (!emailCheck.isValid) { showContactSubmitError?.('ac-email', emailCheck.error, fields); return false; }
   contact.email = emailCheck.normalizedEmail;
-
   const phoneCheck = validateContactPhoneNumber(contact.phone);
-  if (!phoneCheck.isValid) {
-    if (typeof showContactSubmitError === 'function') {
-      showContactSubmitError('ac-phone', phoneCheck.error, ['ac-name', 'ac-email', 'ac-phone']);
-    }
-    return;
-  }
+  if (!phoneCheck.isValid) { showContactSubmitError?.('ac-phone', phoneCheck.error, fields); return false; }
   contact.phone = phoneCheck.normalizedPhone;
+  return true;
+}
 
-  if (!isContactComplete(contact)) {
-    alert("Bitte alle Felder ausfüllen!");
-    return;
-  }
+/**
+ * Performs the save and post-save actions after contact validation.
+ * @param {Object} contact - Contact object.
+ * @returns {Promise<void>} Result.
+ */
+async function performAddContactSave(contact) {
   const saved = await saveContact(contact);
   if (!saved) return;
   await renderContactGroup();
-  const dialog = document.getElementById("add-contact-dialog");
-  if (dialog) dialog.close();
-  const form = document.getElementById('add-contact-form');
-  if (form) form.reset();
+  document.getElementById("add-contact-dialog")?.close();
+  document.getElementById('add-contact-form')?.reset();
   setTimeout(() => showContactsToast('Contact successfully created'), 0);
+}
+
+async function addContact(event) {
+  event.preventDefault();
+  const contact = generateObjFromContact();
+  const fields = ['ac-name', 'ac-email', 'ac-phone'];
+  if (!validateAndNormalizeNewContact(contact, fields)) return;
+  if (!isContactComplete(contact)) { alert("Bitte alle Felder ausfüllen!"); return; }
+  await performAddContactSave(contact);
 }
 
 /**
@@ -114,14 +111,9 @@ async function fetchContactDetails(contactId) {
  */
 async function deleteContact(contactId) {
   try {
-    const response = await fetch(`${BASE_URL}/contacts/${contactId}.json`, {
-      method: "DELETE"
-    });
-    if (response.ok) {
-      await renderContactGroup();
-    } else {
-      console.error("Fehler beim Löschen des Kontakts.");
-    }
+    const response = await fetch(`${BASE_URL}/contacts/${contactId}.json`, { method: "DELETE" });
+    if (response.ok) { await renderContactGroup(); }
+    else { console.error("Fehler beim Löschen des Kontakts."); }
   } catch (error) {
     console.error("Fehler beim Löschen des Kontakts:", error);
   }
@@ -134,51 +126,35 @@ async function deleteContact(contactId) {
  * @param {string} contactId - Contact identifier.
  * @returns {Promise<*>} Result.
  */
-async function updateContact(event, contactId) {
-  event.preventDefault();
-
+/**
+ * Validates and normalizes edit contact fields. Returns null if invalid.
+ * @param {string[]} fields - Field IDs for error context.
+ * @returns {{name: string, email: string, phone: string}|null} Result.
+ */
+function validateAndBuildUpdatedContact(fields) {
   const rawName = document.getElementById('edit-name').value;
   const nameCheck = validateContactNameInput(rawName);
-  if (!nameCheck.isValid) {
-    if (typeof showContactSubmitError === 'function') {
-      showContactSubmitError('edit-name', nameCheck.error, ['edit-name', 'edit-email', 'edit-phone']);
-    }
-    return;
-  }
+  if (!nameCheck.isValid) { showContactSubmitError?.('edit-name', nameCheck.error, fields); return null; }
+  const contact = { name: nameCheck.normalizedName, email: document.getElementById('edit-email').value, phone: document.getElementById('edit-phone').value };
+  const emailCheck = validateEmailLikeSignup(contact.email);
+  if (!emailCheck.isValid) { showContactSubmitError?.('edit-email', emailCheck.error, fields); return null; }
+  contact.email = emailCheck.normalizedEmail;
+  const phoneCheck = validateContactPhoneNumber(contact.phone);
+  if (!phoneCheck.isValid) { showContactSubmitError?.('edit-phone', phoneCheck.error, fields); return null; }
+  contact.phone = phoneCheck.normalizedPhone;
+  return contact;
+}
 
-  const updatedContact = {
-    name: nameCheck.normalizedName,
-    email: document.getElementById('edit-email').value,
-    phone: document.getElementById('edit-phone').value
-  };
-
-  const emailCheck = validateEmailLikeSignup(updatedContact.email);
-  if (!emailCheck.isValid) {
-    if (typeof showContactSubmitError === 'function') {
-      showContactSubmitError('edit-email', emailCheck.error, ['edit-name', 'edit-email', 'edit-phone']);
-    }
-    return;
-  }
-  updatedContact.email = emailCheck.normalizedEmail;
-
-  const phoneCheck = validateContactPhoneNumber(updatedContact.phone);
-  if (!phoneCheck.isValid) {
-    if (typeof showContactSubmitError === 'function') {
-      showContactSubmitError('edit-phone', phoneCheck.error, ['edit-name', 'edit-email', 'edit-phone']);
-    }
-    return;
-  }
-  updatedContact.phone = phoneCheck.normalizedPhone;
+async function updateContact(event, contactId) {
+  event.preventDefault();
+  const fields = ['edit-name', 'edit-email', 'edit-phone'];
+  const updatedContact = validateAndBuildUpdatedContact(fields);
+  if (!updatedContact) return;
   try {
     const response = await fetch(`${BASE_URL}/contacts/${contactId}.json`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedContact),
+      method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updatedContact)
     });
-    if (!response.ok) {
-      console.error("Fehler beim Aktualisieren des Kontakts.");
-      return;
-    }
+    if (!response.ok) { console.error("Fehler beim Aktualisieren des Kontakts."); return; }
     await renderContactGroup();
     closeEditContactDialog();
     refreshContactDetails();

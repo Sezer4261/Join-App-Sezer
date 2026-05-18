@@ -137,19 +137,27 @@ function escapeRegExp(value) {
  * Updates no task placeholders.
  * @returns {void} Result.
  */
+/**
+ * Updates placeholder visibility for a single column.
+ * @param {{id: string, status: string}} column - Column config.
+ * @param {Array} filteredTasks - Filtered task list.
+ * @returns {void} Result.
+ */
+function updateColumnPlaceholder(column, filteredTasks) {
+    const el = document.getElementById(column.id);
+    if (!el) return;
+    const placeholder = el.querySelector(".no-tasks");
+    if (!placeholder) return;
+    placeholder.style.display = filteredTasks.some(t => t.status === column.status) ? "none" : "flex";
+}
+
 function updateNoTaskPlaceholders() {
-  const filteredTasks = getFilteredTasks();
-  const columns = [
-    { id: "todo-column", status: "To Do" },
-    { id: "inprogress-column", status: "In Progress" },
-    { id: "awaiting-column", status: "Await Feedback" },
-    { id: "done-column", status: "Done" }
-  ];
-  for (let i = 0; i < columns.length; i++) {
-    const columnElement = document.getElementById(columns[i].id);
-    if (!columnElement) continue;
-    const placeholder = columnElement.querySelector(".no-tasks");
-    if (!placeholder) continue;
-    placeholder.style.display = filteredTasks.some(task => task.status === columns[i].status) ? "none" : "flex";
-  }
+    const filteredTasks = getFilteredTasks();
+    const columns = [
+        { id: "todo-column", status: "To Do" },
+        { id: "inprogress-column", status: "In Progress" },
+        { id: "awaiting-column", status: "Await Feedback" },
+        { id: "done-column", status: "Done" }
+    ];
+    columns.forEach(col => updateColumnPlaceholder(col, filteredTasks));
 }

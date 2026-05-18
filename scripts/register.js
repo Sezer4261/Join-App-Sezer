@@ -2,17 +2,27 @@
  * Adds user.
  * @returns {Promise<*>} Result.
  */
+/**
+ * Performs registration: saves user, saves contact, shows toast, redirects.
+ * @param {Object} newUser - New user object.
+ * @returns {Promise<void>} Result.
+ */
+async function performSignupRegistration(newUser) {
+    await saveNewUser(newUser);
+    await saveNewContact(newUser);
+    showToast("You signed up successfully");
+    setTimeout(() => {
+        window.location.href = 'index.html?msg=Du hast dich erfolgreich registriert!';
+    }, 300);
+}
+
 async function addUser() {
     const values = getSignupValues();
     if (!isPasswordMatch(values)) { showPasswordMismatch(values.confirmPassword); return; }
-    const newUser = buildNewUser(values); users.push(newUser);
+    const newUser = buildNewUser(values);
+    users.push(newUser);
     try {
-        await saveNewUser(newUser);
-        await saveNewContact(newUser);
-        showToast("You signed up successfully");
-        setTimeout(() => {
-            window.location.href = 'index.html?msg=Du hast dich erfolgreich registriert!';
-        }, 300);
+        await performSignupRegistration(newUser);
     } catch (err) {
         console.error("Fehler beim Posten:", err);
         showRegistrationFailed();
@@ -110,18 +120,12 @@ function showRegistrationFailed() {
  * @returns {Promise<*>} Result.
  */
 async function postData(path = "", user = {}) {
-    let response = await fetch(`${BASE_URL}/${path}.json`, {
+    const response = await fetch(`${BASE_URL}/${path}.json`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user)
     });
-
-    if (!response.ok) {
-        throw new Error(`HTTP-Error! Status: ${response.status}`);
-    }
-
+    if (!response.ok) throw new Error(`HTTP-Error! Status: ${response.status}`);
     return await response.json();
 }
 

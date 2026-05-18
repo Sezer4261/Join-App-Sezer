@@ -81,6 +81,21 @@
         max-width: 94vw;
     }
 
+    .modal-content .edit-assigned:has(.dropdown-content.show),
+    .modal-content .edit-label:has(.dropdown-content.show) {
+        padding-bottom: 0;
+    }
+
+    .modal-content .edit-assigned .dropdown-content,
+    .modal-content .edit-label .dropdown-content {
+        position: static;
+        top: auto;
+        left: auto;
+        width: 100%;
+        margin-top: 8px;
+        max-height: 180px;
+    }
+
     .modal-content .edit-task-form label,
     .modal-content .edit-input,
     .modal-content .edit-textarea,
@@ -192,7 +207,7 @@
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        justify-content: flex-end !important;
+        justify-content: space-between !important;
         margin-top: 16px !important;
         padding-top: 8px !important;
     }

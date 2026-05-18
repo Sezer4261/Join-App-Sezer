@@ -14,22 +14,30 @@ function renderAllAvatars() {
  * @param {Object} task - Task object.
  * @returns {void} Result.
  */
+/**
+ * Appends avatar elements for visible contacts.
+ * @param {HTMLElement} container - Avatar container.
+ * @param {string[]} contacts - Contact names.
+ * @param {number} maxVisible - Max avatars to show.
+ * @returns {void} Result.
+ */
+function appendVisibleAvatars(container, contacts, maxVisible) {
+    const visible = contacts.slice(0, maxVisible);
+    for (let i = 0; i < visible.length; i++) {
+        if (!visible[i]) continue;
+        container.innerHTML += getAvatarMarkup(getContactInitialsFromName(visible[i]), getRandomColor());
+    }
+}
+
 function renderAvatar(task) {
-  let container = document.getElementById(`avatars-${task.id}`);
-  if (!container) return;
-  container.innerHTML = "";
-  let contacts = Array.isArray(task.contacts) ? task.contacts : [];
-  const maxVisible = 3;
-  const visible = contacts.slice(0, maxVisible);
-  for (let i = 0; i < visible.length; i++) {
-    const name = visible[i];
-    if (!name) continue;
-    const initials = getContactInitialsFromName(name);
-    container.innerHTML += getAvatarMarkup(initials, getRandomColor());
-  }
-  if (contacts.length > maxVisible) {
-    container.innerHTML += getAvatarMarkup(`+${contacts.length - maxVisible}`, "#2a3647", true);
-  }
+    const container = document.getElementById(`avatars-${task.id}`);
+    if (!container) return;
+    container.innerHTML = "";
+    const contacts = Array.isArray(task.contacts) ? task.contacts : [];
+    const maxVisible = 3;
+    appendVisibleAvatars(container, contacts, maxVisible);
+    if (contacts.length > maxVisible)
+        container.innerHTML += getAvatarMarkup(`+${contacts.length - maxVisible}`, "#2a3647", true);
 }
 
 /**

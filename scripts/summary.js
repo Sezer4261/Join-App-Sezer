@@ -111,63 +111,89 @@ async function resolveUserName(session) {
  * then fades it out and removes it from the layout.
  * @returns {void} Result.
  */
-function showMobileWelcomeOverlay() {
-    const mq = window.matchMedia("(max-width: 900px)");
-
-    const welcomeBox = document.getElementById("welcome-msg-box");
-    if (!welcomeBox) return;
-
-    const aside = welcomeBox.closest("aside");
-    if (!aside) return;
-
-    const resetToDefault = () => {
-        aside.classList.remove("is-visible");
-        aside.classList.remove("mobile-welcome-overlay");
-        aside.style.display = "";
-        welcomeBox.style.display = "";
-    };
-
-    if (!window.mobileWelcomeOverlayMqListenerAdded) {
-        window.mobileWelcomeOverlayMqListenerAdded = true;
-        mq.addEventListener("change", (event) => {
-            if (!event.matches) resetToDefault();
-        });
-    }
-
-    if (!mq.matches) {
-        resetToDefault();
-        return;
-    }
-
-    aside.classList.add("mobile-welcome-overlay");
-    aside.style.display = "flex";
-
-    welcomeBox.style.display = "flex";
-
+/**
+ * Resets mobile overlay elements to default state.
+ * @param {HTMLElement} aside - Aside element.
+ * @param {HTMLElement} welcomeBox - Welcome box element.
+ * @returns {void} Result.
+ */
+function resetMobileOverlayToDefault(aside, welcomeBox) {
     aside.classList.remove("is-visible");
-    requestAnimationFrame(() => aside.classList.add("is-visible"));
+    aside.classList.remove("mobile-welcome-overlay");
+    aside.style.display = "";
+    welcomeBox.style.display = "";
+}
 
-    const hide = () => {
-        aside.classList.remove("is-visible");
-    };
+/**
+ * Registers the media query change listener once.
+ * @param {MediaQueryList} mq - Media query list.
+ * @param {HTMLElement} aside - Aside element.
+ * @param {HTMLElement} welcomeBox - Welcome box element.
+ * @returns {void} Result.
+ */
+function initMobileOverlayMqListener(mq, aside, welcomeBox) {
+    if (window.mobileWelcomeOverlayMqListenerAdded) return;
+    window.mobileWelcomeOverlayMqListenerAdded = true;
+    mq.addEventListener("change", (event) => {
+        if (!event.matches) resetMobileOverlayToDefault(aside, welcomeBox);
+    });
+}
 
-    const cleanup = () => {
-        if (aside.classList.contains("is-visible")) return;
-        aside.style.display = "none";
-        welcomeBox.style.display = "";
-        aside.classList.remove("mobile-welcome-overlay");
-        aside.removeEventListener("transitionend", onTransitionEnd);
-    };
+/**
+ * Cleans up after overlay transition.
+ * @param {HTMLElement} aside - Aside element.
+ * @param {HTMLElement} welcomeBox - Welcome box element.
+ * @param {Function} onTransitionEnd - Listener to remove.
+ * @returns {void} Result.
+ */
+function cleanupMobileOverlay(aside, welcomeBox, onTransitionEnd) {
+    if (aside.classList.contains("is-visible")) return;
+    aside.style.display = "none";
+    welcomeBox.style.display = "";
+    aside.classList.remove("mobile-welcome-overlay");
+    aside.removeEventListener("transitionend", onTransitionEnd);
+}
 
+/**
+ * Schedules hide and cleanup timeouts for the mobile overlay.
+ * @param {HTMLElement} aside - Aside element.
+ * @param {HTMLElement} welcomeBox - Welcome box element.
+ * @returns {void} Result.
+ */
+function scheduleMobileOverlayHide(aside, welcomeBox) {
     const onTransitionEnd = (event) => {
         if (event.propertyName !== "opacity") return;
-        cleanup();
+        cleanupMobileOverlay(aside, welcomeBox, onTransitionEnd);
     };
-
     aside.addEventListener("transitionend", onTransitionEnd);
+    setTimeout(() => aside.classList.remove("is-visible"), 1500);
+    setTimeout(() => cleanupMobileOverlay(aside, welcomeBox, onTransitionEnd), 2300);
+}
 
-    setTimeout(hide, 1500);
-    setTimeout(cleanup, 2300);
+/**
+ * Triggers overlay animation and schedules hide.
+ * @param {HTMLElement} aside - Aside element.
+ * @param {HTMLElement} welcomeBox - Welcome box element.
+ * @returns {void} Result.
+ */
+function showMobileOverlayAnimation(aside, welcomeBox) {
+    aside.classList.add("mobile-welcome-overlay");
+    aside.style.display = "flex";
+    welcomeBox.style.display = "flex";
+    aside.classList.remove("is-visible");
+    requestAnimationFrame(() => aside.classList.add("is-visible"));
+    scheduleMobileOverlayHide(aside, welcomeBox);
+}
+
+function showMobileWelcomeOverlay() {
+    const mq = window.matchMedia("(max-width: 900px)");
+    const welcomeBox = document.getElementById("welcome-msg-box");
+    if (!welcomeBox) return;
+    const aside = welcomeBox.closest("aside");
+    if (!aside) return;
+    initMobileOverlayMqListener(mq, aside, welcomeBox);
+    if (!mq.matches) { resetMobileOverlayToDefault(aside, welcomeBox); return; }
+    showMobileOverlayAnimation(aside, welcomeBox);
 }
 
 /**
@@ -218,21 +244,31 @@ function applyDashboardStats(tasks) {
  * @param {*} tasks - Parameter.
  * @returns {*} Result.
  */
+/**
+ * Returns task counts per status.
+ * @param {Array} tasks - Task list.
+ * @returns {Object} Result.
+ */
+function getTaskStatusCounts(tasks) {
+    return {
+        todoCount: tasks.filter(t => t.status === "To Do").length,
+        doneCount: tasks.filter(t => t.status === "Done").length,
+        inProgressCount: tasks.filter(t => t.status === "In Progress").length,
+        awaitingFeedbackCount: tasks.filter(t => t.status === "Await Feedback").length
+    };
+}
+
 function getDashboardStats(tasks) {
     const urgentTasks = tasks.filter(t => {
         if (t.priority !== "urgent" || t.status === "Done") return false;
         const due = parseTaskDueDate(t.dueDate);
         return Boolean(due && isStrictlyFutureDate(due));
     });
-    const earliestUrgentDueDate = getEarliestFutureDueDate(urgentTasks);
-
+    const counts = getTaskStatusCounts(tasks);
     return {
-        todoCount: tasks.filter(t => t.status === "To Do").length,
-        doneCount: tasks.filter(t => t.status === "Done").length,
-        inProgressCount: tasks.filter(t => t.status === "In Progress").length,
-        awaitingFeedbackCount: tasks.filter(t => t.status === "Await Feedback").length,
+        ...counts,
         urgentCount: urgentTasks.length,
-        earliestUrgentDueDate,
+        earliestUrgentDueDate: getEarliestFutureDueDate(urgentTasks),
         totalTasks: tasks.length
     };
 }
@@ -254,34 +290,45 @@ function isStrictlyFutureDate(date) {
  * @param {string} dueDate - Due date string.
  * @returns {Date|null} Result.
  */
-function parseTaskDueDate(dueDate) {
-    if (!dueDate || typeof dueDate !== "string") return null;
-    const value = dueDate.trim();
-    if (!value) return null;
+/**
+ * Parses ISO (YYYY-MM-DD) date string into a local Date.
+ * @param {string} value - Trimmed value.
+ * @returns {Date|null} Result.
+ */
+function parseIsoDate(value) {
+    const [year, month, day] = value.split("-").map(Number);
+    const date = new Date(year, month - 1, day);
+    return Number.isNaN(date.getTime()) ? null : date;
+}
 
-    const isoMatch = /^\d{4}-\d{2}-\d{2}$/.exec(value);
-    if (isoMatch) {
-        const [year, month, day] = value.split("-").map(Number);
-        const date = new Date(year, month - 1, day);
-        return Number.isNaN(date.getTime()) ? null : date;
-    }
-
+/**
+ * Parses common European/US date string formats.
+ * @param {string} value - Trimmed value.
+ * @returns {Date|null} Result.
+ */
+function parseFallbackDate(value) {
     const deDotMatch = /^\d{2}\.\d{2}\.\d{4}$/.exec(value);
     if (deDotMatch) {
         const [day, month, year] = value.split(".").map(Number);
         const date = new Date(year, month - 1, day);
         return Number.isNaN(date.getTime()) ? null : date;
     }
-
     const slashMatch = /^\d{2}\/\d{2}\/\d{4}$/.exec(value);
     if (slashMatch) {
         const [day, month, year] = value.split("/").map(Number);
         const date = new Date(year, month - 1, day);
         return Number.isNaN(date.getTime()) ? null : date;
     }
-
     const fallback = new Date(value);
     return Number.isNaN(fallback.getTime()) ? null : fallback;
+}
+
+function parseTaskDueDate(dueDate) {
+    if (!dueDate || typeof dueDate !== "string") return null;
+    const value = dueDate.trim();
+    if (!value) return null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return parseIsoDate(value);
+    return parseFallbackDate(value);
 }
 
 /**

@@ -31,15 +31,13 @@ function validateEditRequiredInput(input, errorId, highlightElement = input) {
   if (!input || !value) {
     setEditErrorText(errorId, 'This field is required');
     input?.classList.add('input-error');
-    if (highlightElement && highlightElement !== input) {
+    if (highlightElement && highlightElement !== input)
       highlightElement.classList.add('input-error');
-    }
     return false;
   }
   input.classList.remove('input-error');
-  if (highlightElement && highlightElement !== input) {
+  if (highlightElement && highlightElement !== input)
     highlightElement.classList.remove('input-error');
-  }
   return true;
 }
 
@@ -71,10 +69,7 @@ function getTodayDateStringForEdit() {
  */
 function validateEditDateField() {
   const input = document.getElementById('edit-date');
-  if (!validateEditRequiredInput(input, 'edit-date-error')) {
-    return false;
-  }
-
+  if (!validateEditRequiredInput(input, 'edit-date-error')) return false;
   const today = getTodayDateStringForEdit();
   const selectedDate = String(input.value || '').trim();
   if (selectedDate < today) {
@@ -82,7 +77,6 @@ function validateEditDateField() {
     input.classList.add('input-error');
     return false;
   }
-
   setEditErrorText('edit-date-error', '');
   input.classList.remove('input-error');
   return true;
@@ -125,38 +119,32 @@ function scrollEditFormTo(target) {
  * Validates edit form.
  * @returns {boolean} Result.
  */
-function validateEditForm() {
-  clearEditValidationErrors();
+/**
+ * Collects invalid fields from the edit form.
+ * @returns {Array<{errorId: string, focusEl: HTMLElement}>} Result.
+ */
+function collectEditFormErrors() {
   const titleInput = document.getElementById('edit-title');
   const dateInput = document.getElementById('edit-date');
   const categoryInput = document.getElementById('edit-category');
   const categorySelect = document.getElementById('edit-category-select');
-
   const invalid = [];
-
-  if (!validateEditRequiredInput(titleInput, 'edit-title-error')) {
+  if (!validateEditRequiredInput(titleInput, 'edit-title-error'))
     invalid.push({ errorId: 'edit-title-error', focusEl: titleInput });
-  }
-
-  if (!validateEditDateField()) {
+  if (!validateEditDateField())
     invalid.push({ errorId: 'edit-date-error', focusEl: dateInput });
-  }
-
-  if (!validateEditRequiredInput(categoryInput, 'edit-category-error', categorySelect)) {
+  if (!validateEditRequiredInput(categoryInput, 'edit-category-error', categorySelect))
     invalid.push({ errorId: 'edit-category-error', focusEl: categorySelect });
-  }
+  return invalid;
+}
 
-  if (invalid.length > 0) {
-    const first = invalid[0];
-    const errorEl = document.getElementById(first.errorId);
-    scrollEditFormTo(errorEl || first.focusEl);
-    try {
-      first.focusEl?.focus?.();
-    } catch (e) {
-      // ignore focus errors
-    }
-    return false;
-  }
-
-  return true;
+function validateEditForm() {
+  clearEditValidationErrors();
+  const invalid = collectEditFormErrors();
+  if (invalid.length === 0) return true;
+  const first = invalid[0];
+  const errorEl = document.getElementById(first.errorId);
+  scrollEditFormTo(errorEl || first.focusEl);
+  try { first.focusEl?.focus?.(); } catch (e) { /* ignore */ }
+  return false;
 }

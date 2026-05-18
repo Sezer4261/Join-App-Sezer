@@ -3,28 +3,19 @@
  * Prevents submitting the main task form.
  * @returns {void} Result.
  */
-function initAddSubtaskEnter() {
-  const input = document.getElementById('subtask');
-  if (!input) return;
-  if (input.dataset && input.dataset.enterHandlerAdded === 'true') return;
-  if (input.dataset) input.dataset.enterHandlerAdded = 'true';
-
-  input.addEventListener('input', () => {
-    setSubtaskError('');
-  });
-
+/**
+ * Binds keydown handler for the subtask input.
+ * @param {HTMLElement} input - Subtask input element.
+ * @returns {void} Result.
+ */
+function bindSubtaskKeydownHandler(input) {
+  input.addEventListener('input', () => setSubtaskError(''));
   input.addEventListener('keydown', (event) => {
-    if (event.isComposing) return;
-    if (event.key !== 'Enter') return;
-    if (event.shiftKey) return;
+    if (event.isComposing || event.key !== 'Enter' || event.shiftKey) return;
     event.preventDefault();
     event.stopPropagation();
-
     const value = String(input.value || '').trim();
-    if (!value) {
-      setSubtaskError('Subtasks must not be empty.');
-      return;
-    }
+    if (!value) { setSubtaskError('Subtasks must not be empty.'); return; }
     subtasks.push({ title: value, done: false });
     showSubtasks();
     input.value = '';
@@ -32,30 +23,36 @@ function initAddSubtaskEnter() {
   });
 }
 
+function initAddSubtaskEnter() {
+  const input = document.getElementById('subtask');
+  if (!input) return;
+  if (input.dataset && input.dataset.enterHandlerAdded === 'true') return;
+  if (input.dataset) input.dataset.enterHandlerAdded = 'true';
+  bindSubtaskKeydownHandler(input);
+}
+
 /**
  * Shows subtasks.
  * @returns {void} Result.
  */
-function showSubtasks() {
-  let subtaskArea = document.getElementById('subtask-area');
-  
-  subtaskArea.innerHTML = '';
-  for (let i = 0; i < subtasks.length; i++) {
-    subtaskArea.innerHTML += generateSubtasks(i);
-  }
-  
-  // Hide only the list if empty, show if has items
+/**
+ * Applies visibility styles to the subtask area based on count.
+ * @param {HTMLElement} subtaskArea - Subtask area element.
+ * @returns {void} Result.
+ */
+function applySubtaskAreaVisibility(subtaskArea) {
   if (subtasks.length === 0) {
-    subtaskArea.style.display = 'none';
-    subtaskArea.style.height = '0';
-    subtaskArea.style.minHeight = '0';
-    subtaskArea.style.visibility = 'hidden';
+    subtaskArea.style.cssText = 'display:none;height:0;min-height:0;visibility:hidden';
   } else {
-    subtaskArea.style.display = '';
-    subtaskArea.style.height = '';
-    subtaskArea.style.minHeight = '';
-    subtaskArea.style.visibility = '';
+    subtaskArea.style.cssText = '';
   }
+}
+
+function showSubtasks() {
+  const subtaskArea = document.getElementById('subtask-area');
+  subtaskArea.innerHTML = '';
+  for (let i = 0; i < subtasks.length; i++) subtaskArea.innerHTML += generateSubtasks(i);
+  applySubtaskAreaVisibility(subtaskArea);
 }
 
 /**

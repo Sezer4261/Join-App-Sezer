@@ -123,6 +123,15 @@
     padding-bottom: 100px;
 }
 
+.edit-form-scroll:has(.dropdown-content.show) {
+    overflow: visible;
+}
+
+.modal-content:has(.edit-assigned .dropdown-content.show),
+.modal-content:has(.edit-label .dropdown-content.show) {
+    overflow: visible;
+}
+
 .edit-assigned .custom-select span,
 .edit-label .custom-select span,
 .edit-assigned .dropdown-content,

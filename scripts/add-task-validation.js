@@ -59,10 +59,7 @@ function clearTitleErrorOnValidInput() {
  */
 function validateDateField() {
   const input = document.getElementById('date');
-  if (!validateRequiredInput(input, 'date-error')) {
-    return false;
-  }
-
+  if (!validateRequiredInput(input, 'date-error')) return false;
   const today = getTodayDateString();
   const selectedDate = String(input.value || '').trim();
   if (selectedDate < today) {
@@ -70,7 +67,6 @@ function validateDateField() {
     input.classList.add('input-error');
     return false;
   }
-
   setErrorText('date-error', '');
   input.classList.remove('input-error');
   return true;
@@ -133,14 +129,12 @@ function validateRequiredInput(input, errorId, highlightElement = input) {
   if (!input || !input.value.trim()) {
     setErrorText(errorId, 'This field is required');
     input?.classList.add('input-error');
-    if (highlightElement && highlightElement !== input) {
+    if (highlightElement && highlightElement !== input)
       highlightElement.classList.add('input-error');
-    }
     return false;
   }
   input.classList.remove('input-error');
-  if (highlightElement && highlightElement !== input) {
+  if (highlightElement && highlightElement !== input)
     highlightElement.classList.remove('input-error');
-  }
   return true;
 }

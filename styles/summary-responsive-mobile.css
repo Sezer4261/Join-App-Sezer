@@ -98,7 +98,46 @@
         left: 0;
         width: 100%;
     }
-}  
+}
+
+/* At 780px the sidebar (232px) is still visible, so content is only ~548px wide.
+   Make the dashboard and its cards fluid so they don't overflow. */
+@media (max-width: 780px) {
+    .dashboard {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+    }
+
+    .deadline-card {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 90px;
+    }
+
+    .kpi-container {
+        gap: 16px;
+    }
+
+    .kpi-card {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 0;
+        max-width: none;
+    }
+
+    .task-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .task-summary-card {
+        width: 100%;
+        min-width: 0;
+        height: 108px;
+    }
+}
 
 @media (max-width: 620px) {
     h1 {

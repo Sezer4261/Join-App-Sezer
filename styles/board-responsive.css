@@ -66,11 +66,57 @@
 
 
     .add-task-dialog {
+        display: flex;
+        flex-direction: column;
         width: 95vw;
         height: 90vh;
         max-width: 95vw;
         max-height: 90vh;
+        overflow: hidden;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 0;
+    }
+
+    /* form-scroll handles inner scrolling — dialog itself stays clipped */
+    .add-task-dialog .form-scroll {
+        flex: 1;
+        min-height: 0;
+        max-height: none;
         overflow-y: auto;
+        padding-bottom: 16px;
+    }
+
+    .add-task-dialog .form-footer {
+        flex-shrink: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 8px 12px;
+        margin-top: 0;
+        padding-top: 16px;
+        padding-right: 0;
+        position: relative;
+    }
+
+    .add-task-dialog .actions {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+        width: 100%;
+        right: unset;
+        bottom: unset;
+    }
+
+    .add-task-dialog .note-outside {
+        position: static;
+        flex: 1 1 100%;
+        margin-right: 0;
+        left: unset;
+        bottom: unset;
     }
 
     .add-task-dialog .task-form {
@@ -123,16 +169,80 @@
     }
 }
 
+/* At 780px the header already spans full width and the sidebar (232px) is still visible.
+   The 2-column grid in ~548px content is too tight — switch to single column early. */
+@media (max-width: 780px) {
+    .board-columns {
+        display: grid;
+        grid-template-columns: 1fr;
+        min-width: 0;
+        padding: 0;
+    }
+
+    .board-column {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
 @media (max-width: 650px) {
     .add-task-dialog-bg {
         align-items: flex-start;
         padding-top: 80px;
     }
 
+    /* Flex-column layout: header | scrollable form | footer always at bottom */
     .add-task-dialog {
+        display: flex;
+        flex-direction: column;
         margin-left: 0;
         margin-top: 0;
         padding: 20px;
+        height: calc(100dvh - 100px);
+        max-height: calc(100dvh - 100px);
+        overflow: hidden;
+    }
+
+    .add-task-dialog .form-scroll {
+        flex: 1;
+        min-height: 0;
+        max-height: none;
+        overflow-y: auto;
+        padding-bottom: 16px;
+    }
+
+    /* Reset absolute positioning — footer flows at bottom of the flex column */
+    .add-task-dialog .form-footer {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 8px 12px;
+        margin-top: 0;
+        padding-top: 16px;
+        padding-right: 0;
+        position: relative;
+    }
+
+    .add-task-dialog .actions {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+        width: 100%;
+        right: unset;
+        bottom: unset;
+    }
+
+    .add-task-dialog .note-outside {
+        position: static;
+        flex: 1 1 100%;
+        margin-right: 0;
+        left: unset;
+        bottom: unset;
     }
 
     .add-task-dialog h1 {
@@ -158,6 +268,13 @@
 
     .add-task-dialog .note {
         font-size: 16px;
+    }
+
+    /* Give subtask list enough room to scroll through items */
+    .add-task-dialog .subtask-list {
+        height: 130px;
+        min-height: 130px;
+        overflow-y: auto;
     }
 
     .board-header {
@@ -191,6 +308,12 @@
         justify-self: end;
     }
 
+}
+
+@media (max-width: 620px) {
+    .modal {
+        padding-left: 0;
+    }
 }
 
 @media (max-width: 600px) {
@@ -295,7 +418,8 @@
     }
 
     .add-task-dialog .note {
-        display: none;
+        display: block;
+        font-size: 14px;
     }
 }
 

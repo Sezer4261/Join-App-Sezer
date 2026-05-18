@@ -64,11 +64,10 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 55px;
+  margin-top: 185px;
   position: relative;
   bottom: auto;
   z-index: auto;
-  background: var(--main-bg);
   padding-top: 40px;
   padding-right: 20px;
   width: 100%;

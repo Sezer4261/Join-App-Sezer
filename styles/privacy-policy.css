@@ -17,12 +17,20 @@ body {
     overflow-x: hidden;
 }
 
+nav.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+}
+
 main {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     flex: 1 1 auto;
     min-height: 100vh;
+    margin-left: 232px;
 }
 
 .wrapper {
@@ -62,15 +70,19 @@ main {
     display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 620px) {
 
-    .sidebar {
+    nav.sidebar {
         display: none;
     }
 
     .header {
-        left: 0;
-        width: 100%;
+        left: 0 !important;
+        width: 100% !important;
+    }
+
+    main {
+        margin-left: 0;
     }
 
     .mobile-footer {

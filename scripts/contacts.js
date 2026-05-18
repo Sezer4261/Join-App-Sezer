@@ -20,16 +20,13 @@ function suppressHorizontalOverflowDuringDetailsAnimation() {
  * @param {Event} event - Browser event.
  * @returns {Promise<*>} Result.
  */
-async function handleContactClick(event) {
-  const clickedContact = event.currentTarget;
-  document.querySelectorAll('.contact-area, .contact-item').forEach(contact => contact.classList.remove('selected'));
-  clickedContact.classList.add('selected');
-  const contactId = clickedContact.dataset.id;
-  const contactData = await fetchContactDetails(contactId);
-  if (!contactData) {
-    console.error("Kontakt konnte nicht geladen werden.");
-    return;
-  }
+/**
+ * Renders the contact details panel for the given contact.
+ * @param {Object} contactData - Contact data object.
+ * @param {string} contactId - Contact ID.
+ * @returns {void} Result.
+ */
+function renderContactDetailsPanel(contactData, contactId) {
   const container = document.getElementById('contact-details');
   const initials = getContactInitialsFromName(contactData.name);
   const phone = contactData.phone || '';
@@ -37,6 +34,16 @@ async function handleContactClick(event) {
   suppressHorizontalOverflowDuringDetailsAnimation();
   initContactMoreMenuAutoClose();
   if (window.innerWidth <= 780) document.querySelector('.wrapper').classList.add('show-contact-details');
+}
+
+async function handleContactClick(event) {
+  const clickedContact = event.currentTarget;
+  document.querySelectorAll('.contact-area, .contact-item').forEach(c => c.classList.remove('selected'));
+  clickedContact.classList.add('selected');
+  const contactId = clickedContact.dataset.id;
+  const contactData = await fetchContactDetails(contactId);
+  if (!contactData) { console.error("Kontakt konnte nicht geladen werden."); return; }
+  renderContactDetailsPanel(contactData, contactId);
 }
 
 /**
@@ -68,20 +75,29 @@ async function renderContactGroup() {
  * @param {*} contactsData - Parameter.
  * @returns {void} Result.
  */
+/**
+ * Appends header and contact item for a single contact entry.
+ * @param {HTMLElement} contactListRef - Contact list container.
+ * @param {Object} contact - Contact object.
+ * @param {string} currentLetter - Current group letter (mutated by caller via return).
+ * @returns {string} Updated current letter.
+ */
+function appendContactEntry(contactListRef, contact, currentLetter) {
+  const firstLetter = (contact.name || 'Unnamed').charAt(0).toUpperCase();
+  if (currentLetter !== firstLetter) {
+    contactListRef.innerHTML += getHeaderLetter(firstLetter);
+    currentLetter = firstLetter;
+  }
+  const name = contact.name || 'Unnamed';
+  contactListRef.innerHTML += getContactItemWrapper(contact.id, contact.phone, getContactItem(name, contact.email, getContactInitialsFromName(name)));
+  return currentLetter;
+}
+
 function renderContactEntries(contactListRef, contactsData) {
   let currentLetter = '';
   contactsData.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
   for (let i = 0; i < contactsData.length; i++) {
-    const contact = contactsData[i];
-    const firstLetter = (contact.name || 'Unnamed').charAt(0).toUpperCase();
-    if (currentLetter !== firstLetter) {
-      currentLetter = firstLetter;
-      contactListRef.innerHTML += getHeaderLetter(firstLetter);
-    }
-    const name = contact.name || 'Unnamed';
-    const initials = getContactInitialsFromName(name);
-    const content = getContactItem(name, contact.email, initials);
-    contactListRef.innerHTML += getContactItemWrapper(contact.id, contact.phone, content);
+    currentLetter = appendContactEntry(contactListRef, contactsData[i], currentLetter);
   }
 }
 

@@ -47,32 +47,48 @@ function getContactInitialsFromName(name) {
  * @param {string} name - Name input.
  * @returns {{ isValid: boolean, normalizedName: string, initials: string, error: string, reason?: 'required'|'too_long'|'too_many_parts'|'invalid_chars'|'part_too_short'|'too_few_letters' }} Result.
  */
-function validateContactNameInput(name) {
-  const normalizedName = normalizeContactNameInput(name);
-  if (!normalizedName) {
-    return { isValid: false, normalizedName, initials: "", error: "Please enter a name.", reason: 'required' };
-  }
-  if (normalizedName.length > 20) {
-    return { isValid: false, normalizedName, initials: "", error: "Maximum 20 characters allowed.", reason: 'too_long' };
-  }
+/**
+ * Checks basic name constraints (required, length, parts count).
+ * @param {string} normalizedName - Normalized name.
+ * @returns {Object|null} Error object or null if valid.
+ */
+function checkContactNameBasics(normalizedName) {
+  if (!normalizedName)
+    return { isValid: false, error: "Please enter a name.", reason: 'required' };
+  if (normalizedName.length > 20)
+    return { isValid: false, error: "Maximum 20 characters allowed.", reason: 'too_long' };
   const parts = normalizedName.split(" ").filter(Boolean);
-  if (parts.length > 3) {
-    return { isValid: false, normalizedName, initials: "", error: "Maximum 3 name parts allowed.", reason: 'too_many_parts' };
-  }
+  if (parts.length > 3)
+    return { isValid: false, error: "Maximum 3 name parts allowed.", reason: 'too_many_parts' };
+  return null;
+}
+
+/**
+ * Checks validity of each name part.
+ * @param {string[]} parts - Name parts.
+ * @returns {Object|null} Error object or null if valid.
+ */
+function checkContactNamePartValidity(parts) {
   const partPattern = /^[\p{L}]+(?:-[\p{L}]+)*$/u;
   for (const part of parts) {
-    if (!partPattern.test(part)) {
-      return { isValid: false, normalizedName, initials: "", error: "Please use only letters.", reason: 'invalid_chars' };
-    }
-    const lettersInPart = part.replace(/-/g, "").length;
-    if (lettersInPart < 2) {
-      return { isValid: false, normalizedName, initials: "", error: "Names have more than 1 letter.", reason: 'part_too_short' };
-    }
+    if (!partPattern.test(part))
+      return { isValid: false, error: "Please use only letters.", reason: 'invalid_chars' };
+    if (part.replace(/-/g, "").length < 2)
+      return { isValid: false, error: "Names have more than 1 letter.", reason: 'part_too_short' };
   }
+  return null;
+}
+
+function validateContactNameInput(name) {
+  const normalizedName = normalizeContactNameInput(name);
+  const basicError = checkContactNameBasics(normalizedName);
+  if (basicError) return { ...basicError, normalizedName, initials: "" };
+  const parts = normalizedName.split(" ").filter(Boolean);
+  const partError = checkContactNamePartValidity(parts);
+  if (partError) return { ...partError, normalizedName, initials: "" };
   const totalLetters = normalizedName.replace(/[^\p{L}]/gu, "").length;
-  if (totalLetters < 2) {
+  if (totalLetters < 2)
     return { isValid: false, normalizedName, initials: "", error: "Names have more than 1 letter.", reason: 'too_few_letters' };
-  }
   const initials = getContactInitialsFromName(normalizedName);
   return { isValid: true, normalizedName, initials, error: "" };
 }
@@ -86,30 +102,29 @@ function validateContactNameInput(name) {
  * @param {string} email - Email input.
  * @returns {{ isValid: boolean, normalizedEmail: string, error: string, reason?: 'required'|'too_long'|'pattern' }} Result.
  */
-function validateEmailLikeSignup(email) {
-  const trimmedEmail = String(email ?? "").trim();
-  if (!trimmedEmail) {
-    return { isValid: false, normalizedEmail: trimmedEmail, error: "Please enter an email address.", reason: 'required' };
-  }
-  const normalizedEmail = trimmedEmail.toLowerCase();
-  if (normalizedEmail.length > 20) {
-    return { isValid: false, normalizedEmail, error: "Maximum 20 characters allowed.", reason: 'too_long' };
-  }
+/**
+ * Builds strict email regex pattern.
+ * @returns {RegExp} Result.
+ */
+function buildStrictEmailPattern() {
   const localLabel = "[A-Za-zÄÖÜäöüß0-9]+(?:(?:-+|_(?!_))[A-Za-zÄÖÜäöüß0-9]+)*";
   const domainLabel = "[A-Za-zÄÖÜäöüß0-9]+(?:-[A-Za-zÄÖÜäöüß0-9]+)*";
   const tldLabel = "[A-Za-zÄÖÜäöüß]{2,}";
-  const strictEmailPattern = new RegExp(
+  return new RegExp(
     `^(?!.*\\.\\.)${localLabel}(?:\\.${localLabel})*@${domainLabel}(?:\\.${domainLabel})*\\.${tldLabel}$`,
     "u"
   );
-  if (!strictEmailPattern.test(normalizedEmail)) {
-    return {
-      isValid: false,
-      normalizedEmail,
-      error: "Please enter a valid email address.",
-      reason: 'pattern'
-    };
-  }
+}
+
+function validateEmailLikeSignup(email) {
+  const trimmedEmail = String(email ?? "").trim();
+  if (!trimmedEmail)
+    return { isValid: false, normalizedEmail: trimmedEmail, error: "Please enter an email address.", reason: 'required' };
+  const normalizedEmail = trimmedEmail.toLowerCase();
+  if (normalizedEmail.length > 20)
+    return { isValid: false, normalizedEmail, error: "Maximum 20 characters allowed.", reason: 'too_long' };
+  if (!buildStrictEmailPattern().test(normalizedEmail))
+    return { isValid: false, normalizedEmail, error: "Please enter a valid email address.", reason: 'pattern' };
   return { isValid: true, normalizedEmail, error: "" };
 }
 
@@ -238,21 +253,28 @@ function getOrCreateMessageBox() {
  * @param {{ iconSrc?: string, iconAlt?: string }} [options] - Optional options.
  * @returns {void} Result.
  */
+/**
+ * Appends icon element to message box.
+ * @param {HTMLElement} box - Message box element.
+ * @param {{ iconSrc: string, iconAlt?: string }} options - Icon options.
+ * @returns {void} Result.
+ */
+function appendMessageIcon(box, options) {
+  const iconEl = document.createElement("img");
+  iconEl.src = options.iconSrc;
+  iconEl.alt = options.iconAlt || "";
+  iconEl.style.width = "24px";
+  iconEl.style.height = "24px";
+  iconEl.style.flex = "0 0 auto";
+  box.appendChild(iconEl);
+}
+
 function setMessageBoxContent(box, message, options = {}) {
   box.innerHTML = "";
   const textEl = document.createElement("span");
   textEl.textContent = message;
   box.appendChild(textEl);
-
-  if (options && options.iconSrc) {
-    const iconEl = document.createElement("img");
-    iconEl.src = options.iconSrc;
-    iconEl.alt = options.iconAlt || "";
-    iconEl.style.width = "24px";
-    iconEl.style.height = "24px";
-    iconEl.style.flex = "0 0 auto";
-    box.appendChild(iconEl);
-  }
+  if (options && options.iconSrc) appendMessageIcon(box, options);
 }
 
 /**
@@ -283,11 +305,24 @@ function setMessageBoxBaseStyles(box) {
  * @param {*} box - Parameter.
  * @returns {void} Result.
  */
-function setMessageBoxLayoutStyles(box) {
+/**
+ * Sets flex layout styles on message box.
+ * @param {HTMLElement} box - Message box element.
+ * @returns {void} Result.
+ */
+function setMessageBoxFlexStyles(box) {
   box.style.display = "flex";
   box.style.alignItems = "center";
   box.style.justifyContent = "center";
   box.style.gap = "10px";
+}
+
+/**
+ * Sets size and appearance styles on message box.
+ * @param {HTMLElement} box - Message box element.
+ * @returns {void} Result.
+ */
+function setMessageBoxSizeStyles(box) {
   box.style.minWidth = "280px";
   box.style.maxWidth = "min(520px, calc(100vw - 32px))";
   box.style.padding = "18px 22px";
@@ -297,6 +332,11 @@ function setMessageBoxLayoutStyles(box) {
   box.style.fontWeight = "400";
   box.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.22)";
   box.style.pointerEvents = "none";
+}
+
+function setMessageBoxLayoutStyles(box) {
+  setMessageBoxFlexStyles(box);
+  setMessageBoxSizeStyles(box);
 }
 
 /**
