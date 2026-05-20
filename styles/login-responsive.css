@@ -109,7 +109,8 @@
 
     .login {
         width: 380px;
-        height: 380px;
+        min-height: 380px;
+        height: auto;
     }
 
     .login-input {

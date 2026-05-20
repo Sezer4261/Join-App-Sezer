@@ -2,7 +2,7 @@
     .headline {
         gap: 16px;
         position: relative;
-        min-width: 600px;
+        min-width: 0;
     }
 
     .welcome-msg {

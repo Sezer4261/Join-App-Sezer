@@ -18,12 +18,21 @@
 
 body {
   background: var(--main-bg);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .app {
   display: flex;
   min-height: 100vh;
+}
+
+/* Sticky sidebar so the footer links are always visible regardless of page content height */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .main {
