@@ -132,7 +132,7 @@
 
 @media (max-width: 900px) {
     .content {
-        padding: 20px 20px 40px;
+        padding: 20px 20px 0px;
     }
 }
 
