@@ -99,6 +99,11 @@ function onTouchStart(event) {
   touchDragClone = createTouchDragClone(card, rect);
   document.body.appendChild(touchDragClone);
   card.style.opacity = '0.3';
+  // Show drop-target overlay when columns are stacked vertically
+  if (window.innerWidth <= 780) {
+    const overlay = document.getElementById('mobile-drop-overlay');
+    if (overlay) overlay.classList.add('active');
+  }
 }
 
 function onTouchMove(event) {
@@ -112,6 +117,17 @@ function onTouchMove(event) {
   document.querySelectorAll('.board-column').forEach(c => c.classList.remove('drag-over'));
   const colId = getColumnIdAtPoint(touch.clientX, touch.clientY);
   if (colId) document.getElementById(colId).classList.add('drag-over');
+
+  // Highlight mobile drop-target buttons
+  const overlay = document.getElementById('mobile-drop-overlay');
+  if (overlay && overlay.classList.contains('active')) {
+    overlay.querySelectorAll('.mobile-drop-btn').forEach(btn => {
+      const r = btn.getBoundingClientRect();
+      const over = touch.clientX >= r.left && touch.clientX <= r.right &&
+                   touch.clientY >= r.top  && touch.clientY <= r.bottom;
+      btn.classList.toggle('drop-active', over);
+    });
+  }
 }
 
 /**
@@ -136,7 +152,23 @@ function onTouchEnd(event) {
   if (!touchDragClone) return;
   const touch = event.changedTouches[0];
   document.querySelectorAll('.board-column').forEach(c => c.classList.remove('drag-over'));
-  applyTouchDrop(getColumnIdAtPoint(touch.clientX, touch.clientY));
+
+  // Check if finger is over a mobile drop-target button
+  let mobileColId = null;
+  const overlay = document.getElementById('mobile-drop-overlay');
+  if (overlay && overlay.classList.contains('active')) {
+    overlay.querySelectorAll('.mobile-drop-btn').forEach(btn => {
+      const r = btn.getBoundingClientRect();
+      if (touch.clientX >= r.left && touch.clientX <= r.right &&
+          touch.clientY >= r.top  && touch.clientY <= r.bottom) {
+        mobileColId = btn.dataset.col;
+      }
+    });
+    overlay.classList.remove('active');
+    overlay.querySelectorAll('.mobile-drop-btn').forEach(b => b.classList.remove('drop-active'));
+  }
+
+  applyTouchDrop(mobileColId || getColumnIdAtPoint(touch.clientX, touch.clientY));
   touchDragClone.remove();
   touchDragClone = null;
   draggedTaskId = null;

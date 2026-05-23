@@ -26,6 +26,22 @@
     }
 }
 
+@media (max-width: 990px) {
+    .task-form {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-left,
+    .form-right {
+        width: 100%;
+    }
+
+    .form-separator {
+        display: none;
+    }
+}
+
 @media (max-width: 855px) {
     .priority-options {
         gap: 6px;
@@ -34,6 +50,7 @@
     .priority-options label {
         gap: 4px;
         font-size: 16px;
+        padding: 4px 6px;
     }
 
     .priority-options label svg {
