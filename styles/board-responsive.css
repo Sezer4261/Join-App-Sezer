@@ -4,12 +4,6 @@
     }
 }
 
-@media (max-width: 1240px) {
-    .column-title {
-        font-size: 16px;
-    }
-}
-
 @media (max-width: 1260px) {
     .column-title {
         font-size: 20px;
@@ -20,7 +14,7 @@
     }
 
     .content {
-        padding: 120px 16px 16px 16px;
+        padding: 16px 16px 16px;
     }
 
     .board-search {
@@ -32,21 +26,25 @@
     }
 
     .board-columns {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        padding: 0;
+        display: flex;
+        flex-wrap: nowrap;
         gap: 12px;
+        align-items: flex-start;
+        overflow-x: auto;
+        padding-bottom: 16px;
     }
 
     .board-column {
+        flex: 1 1 200px;
+        min-width: 200px;
         min-height: auto;
     }
 }
 
 @media (max-width: 1024px) and (min-width: 621px) {
     .app {
-        height: 100vh;
-        height: 100dvh;
+        min-height: 100vh;
+        min-height: 100dvh;
     }
 
     .main {
@@ -56,8 +54,7 @@
 
     /* Header is fixed (header.css). Ensure content is not hidden under it on this breakpoint */
     .content {
-        padding: 16px;
-        margin-top: 96px;
+        padding: 16px 8px;
     }
 }
 
@@ -132,7 +129,7 @@
 
 @media (max-width: 900px) {
     .content {
-        padding: 20px 20px 0px;
+        padding: 16px 20px;
     }
 }
 
@@ -173,15 +170,16 @@
    The 2-column grid in ~548px content is too tight — switch to single column early. */
 @media (max-width: 780px) {
     .board-columns {
-        display: grid;
-        grid-template-columns: 1fr;
-        min-width: 0;
-        padding: 0;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        overflow-x: auto;
+        padding-bottom: 16px;
     }
 
     .board-column {
-        max-width: 100%;
-        width: 100%;
+        flex: 1 1 200px;
+        min-width: 200px;
     }
 }
 
@@ -314,15 +312,14 @@
     .modal {
         padding-left: 0;
     }
-}
 
-@media (max-width: 600px) {
     .board-header h1 {
         margin-left: 0;
     }
 
     .content {
         padding: 16px 16px 83px;
+        margin-top: 76px;
     }
 
     h1 {
@@ -330,14 +327,14 @@
     }
 
     .board-columns {
-        display: grid;
-        grid-template-columns: 1fr;
-        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
     .board-column {
-        max-width: 100%;
         width: 100%;
+        min-width: 0;
         margin: 0;
         padding: 12px;
     }

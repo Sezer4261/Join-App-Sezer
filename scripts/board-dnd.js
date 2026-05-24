@@ -89,21 +89,26 @@ function createTouchDragClone(card, rect) {
   return clone;
 }
 
+let longPressTimer;
+
+clearTimeout(longPressTimer);
+
 function onTouchStart(event) {
   const card = event.currentTarget;
   const touch = event.touches[0];
   const rect = card.getBoundingClientRect();
-  draggedTaskId = parseInt(card.dataset.taskId, 10);
-  touchDragOffsetX = touch.clientX - rect.left;
-  touchDragOffsetY = touch.clientY - rect.top;
-  touchDragClone = createTouchDragClone(card, rect);
-  document.body.appendChild(touchDragClone);
-  card.style.opacity = '0.3';
-  // Show drop-target overlay when columns are stacked vertically
-  if (window.innerWidth <= 780) {
-    const overlay = document.getElementById('mobile-drop-overlay');
-    if (overlay) overlay.classList.add('active');
-  }
+  longPressTimer = setTimeout(() => {
+    draggedTaskId = parseInt(card.dataset.taskId, 10);
+    touchDragOffsetX = touch.clientX - rect.left;
+    touchDragOffsetY = touch.clientY - rect.top;
+    touchDragClone = createTouchDragClone(card, rect);
+    document.body.appendChild(touchDragClone);
+    card.style.opacity = '0,3';
+    if (window.innerWidth <= 620) {
+      const overlay = document.getElementById('mobile-drop-overlay');
+      if (overlay) overlay.classList.add('active');
+    }
+  }, 800);
 }
 
 function onTouchMove(event) {
