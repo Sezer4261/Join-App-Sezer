@@ -93,22 +93,34 @@ let longPressTimer;
 
 clearTimeout(longPressTimer);
 
+function activateTouchDrag(card, touch, rect) {
+  draggedTaskId = parseInt(card.dataset.taskId, 10);
+  touchDragOffsetX = touch.clientX - rect.left;
+  touchDragOffsetY = touch.clientY - rect.top;
+  touchDragClone = createTouchDragClone(card, rect);
+  document.body.appendChild(touchDragClone);
+  card.style.opacity = '0,3';
+  if (window.innerWidth <= 620) {
+    const overlay = document.getElementById('mobile-drop-overlay');
+    if (overlay) overlay.classList.add('active');
+  }
+}
+
 function onTouchStart(event) {
   const card = event.currentTarget;
   const touch = event.touches[0];
   const rect = card.getBoundingClientRect();
-  longPressTimer = setTimeout(() => {
-    draggedTaskId = parseInt(card.dataset.taskId, 10);
-    touchDragOffsetX = touch.clientX - rect.left;
-    touchDragOffsetY = touch.clientY - rect.top;
-    touchDragClone = createTouchDragClone(card, rect);
-    document.body.appendChild(touchDragClone);
-    card.style.opacity = '0,3';
-    if (window.innerWidth <= 620) {
-      const overlay = document.getElementById('mobile-drop-overlay');
-      if (overlay) overlay.classList.add('active');
-    }
-  }, 800);
+  longPressTimer = setTimeout(() => activateTouchDrag(card, touch, rect), 800);
+}
+
+function updateMobileDropHighlights(overlay, touch) {
+  if (!overlay || !overlay.classList.contains('active')) return;
+  overlay.querySelectorAll('.mobile-drop-btn').forEach(btn => {
+    const r = btn.getBoundingClientRect();
+    const over = touch.clientX >= r.left && touch.clientX <= r.right &&
+                 touch.clientY >= r.top  && touch.clientY <= r.bottom;
+    btn.classList.toggle('drop-active', over);
+  });
 }
 
 function onTouchMove(event) {
@@ -117,22 +129,10 @@ function onTouchMove(event) {
   const touch = event.touches[0];
   touchDragClone.style.left = (touch.clientX - touchDragOffsetX) + 'px';
   touchDragClone.style.top  = (touch.clientY - touchDragOffsetY) + 'px';
-
-  // Highlight column under finger
   document.querySelectorAll('.board-column').forEach(c => c.classList.remove('drag-over'));
   const colId = getColumnIdAtPoint(touch.clientX, touch.clientY);
   if (colId) document.getElementById(colId).classList.add('drag-over');
-
-  // Highlight mobile drop-target buttons
-  const overlay = document.getElementById('mobile-drop-overlay');
-  if (overlay && overlay.classList.contains('active')) {
-    overlay.querySelectorAll('.mobile-drop-btn').forEach(btn => {
-      const r = btn.getBoundingClientRect();
-      const over = touch.clientX >= r.left && touch.clientX <= r.right &&
-                   touch.clientY >= r.top  && touch.clientY <= r.bottom;
-      btn.classList.toggle('drop-active', over);
-    });
-  }
+  updateMobileDropHighlights(document.getElementById('mobile-drop-overlay'), touch);
 }
 
 /**
@@ -153,26 +153,27 @@ function applyTouchDrop(colId) {
   initTouchDrag();
 }
 
+function getMobileDropColId(overlay, touch) {
+  if (!overlay || !overlay.classList.contains('active')) return null;
+  let colId = null;
+  overlay.querySelectorAll('.mobile-drop-btn').forEach(btn => {
+    const r = btn.getBoundingClientRect();
+    if (touch.clientX >= r.left && touch.clientX <= r.right &&
+        touch.clientY >= r.top  && touch.clientY <= r.bottom) {
+      colId = btn.dataset.col;
+    }
+  });
+  overlay.classList.remove('active');
+  overlay.querySelectorAll('.mobile-drop-btn').forEach(b => b.classList.remove('drop-active'));
+  return colId;
+}
+
 function onTouchEnd(event) {
+  clearTimeout(longPressTimer);
   if (!touchDragClone) return;
   const touch = event.changedTouches[0];
   document.querySelectorAll('.board-column').forEach(c => c.classList.remove('drag-over'));
-
-  // Check if finger is over a mobile drop-target button
-  let mobileColId = null;
-  const overlay = document.getElementById('mobile-drop-overlay');
-  if (overlay && overlay.classList.contains('active')) {
-    overlay.querySelectorAll('.mobile-drop-btn').forEach(btn => {
-      const r = btn.getBoundingClientRect();
-      if (touch.clientX >= r.left && touch.clientX <= r.right &&
-          touch.clientY >= r.top  && touch.clientY <= r.bottom) {
-        mobileColId = btn.dataset.col;
-      }
-    });
-    overlay.classList.remove('active');
-    overlay.querySelectorAll('.mobile-drop-btn').forEach(b => b.classList.remove('drop-active'));
-  }
-
+  const mobileColId = getMobileDropColId(document.getElementById('mobile-drop-overlay'), touch);
   applyTouchDrop(mobileColId || getColumnIdAtPoint(touch.clientX, touch.clientY));
   touchDragClone.remove();
   touchDragClone = null;

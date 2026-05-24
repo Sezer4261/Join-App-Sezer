@@ -4,10 +4,7 @@
  */
 function renderBoard() {
   initBoardSearch();
-  clearTaskCards();
-  renderTasksIntoColumns();
-  updateNoTaskPlaceholders();
-  renderAllAvatars();
+  refreshTaskView();
   if (typeof initTouchDrag === 'function') initTouchDrag();
 }
 
@@ -33,12 +30,16 @@ function initBoardSearch() {
  * @param {*} clearBtn - Parameter.
  * @returns {void} Result.
  */
-function updateBoardSearch(input, clearBtn) {
-  boardSearchTerm = input.value.trim();
+function refreshTaskView() {
   clearTaskCards();
   renderTasksIntoColumns();
   updateNoTaskPlaceholders();
   renderAllAvatars();
+}
+
+function updateBoardSearch(input, clearBtn) {
+  boardSearchTerm = input.value.trim();
+  refreshTaskView();
   if (clearBtn) clearBtn.style.visibility = boardSearchTerm ? "visible" : "hidden";
 }
 
@@ -51,10 +52,7 @@ function updateBoardSearch(input, clearBtn) {
 function clearBoardSearch(input, clearBtn) {
   boardSearchTerm = "";
   input.value = "";
-  clearTaskCards();
-  renderTasksIntoColumns();
-  updateNoTaskPlaceholders();
-  renderAllAvatars();
+  refreshTaskView();
   if (clearBtn) clearBtn.style.visibility = boardSearchTerm ? "visible" : "hidden";
   input.focus();
 }

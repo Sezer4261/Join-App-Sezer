@@ -54,6 +54,7 @@ function openModal(id) {
     if (oldModal) oldModal.remove();
     const modal = createModalElement(task);
     document.body.appendChild(modal);
+    document.body.classList.add("modal-open");
     modal.style.display = "flex";
     bindModalEvents(modal);
     animateModalOpen(modal, task);
@@ -121,7 +122,7 @@ function closeModal() {
     if (modal.dataset.closing === "true") return;
     modal.dataset.closing = "true";
     const modalContent = modal.querySelector(".modal-content");
-    const cleanup = () => { if (modal?.parentNode) modal.remove(); activeTask = null; };
+    const cleanup = () => { if (modal?.parentNode) modal.remove(); activeTask = null; document.body.classList.remove("modal-open"); };
     if (!modalContent) { cleanup(); return; }
     runModalCloseAnimation(modalContent, cleanup);
 }

@@ -48,19 +48,7 @@ function validateEditRequiredInput(input, errorId, highlightElement = input) {
 function applyTodayMinDateForEdit() {
   const dateInput = document.getElementById('edit-date');
   if (!dateInput) return;
-  dateInput.min = getTodayDateStringForEdit();
-}
-
-/**
- * Returns today's local date in yyyy-mm-dd for edit form.
- * @returns {string} Result.
- */
-function getTodayDateStringForEdit() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  dateInput.min = getTodayDateString();
 }
 
 /**
@@ -70,7 +58,7 @@ function getTodayDateStringForEdit() {
 function validateEditDateField() {
   const input = document.getElementById('edit-date');
   if (!validateEditRequiredInput(input, 'edit-date-error')) return false;
-  const today = getTodayDateStringForEdit();
+  const today = getTodayDateString();
   const selectedDate = String(input.value || '').trim();
   if (selectedDate < today) {
     setEditErrorText('edit-date-error', 'Please select a future date');
@@ -91,7 +79,7 @@ function clearEditDateErrorOnValidInput() {
   if (!input) return;
   const selectedDate = String(input.value || '').trim();
   if (!selectedDate) return;
-  if (selectedDate < getTodayDateStringForEdit()) return;
+  if (selectedDate < getTodayDateString()) return;
   setEditErrorText('edit-date-error', '');
   input.classList.remove('input-error');
 }

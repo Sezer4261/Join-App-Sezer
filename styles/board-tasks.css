@@ -37,7 +37,8 @@
     display: none;
 }
 
-body.add-task-dialog-open {
+body.add-task-dialog-open,
+body.modal-open {
     overflow: hidden;
 }
 

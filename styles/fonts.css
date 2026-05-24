@@ -18,6 +18,10 @@
   --app-font-family: 'Open Sans', Arial, sans-serif;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   font-family: var(--app-font-family);

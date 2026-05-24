@@ -56,12 +56,16 @@ function isPasswordMatch(values) {
  * @param {*} confirmPassword - Parameter.
  * @returns {void} Result.
  */
-function showPasswordMismatch(confirmPassword) {
+function showSignupError(message) {
     if (typeof showMessage === 'function') {
-        showMessage('Passwords do not match.', 'error');
+        showMessage(message, 'error');
     } else {
-        alert('Passwords do not match.');
+        alert(message);
     }
+}
+
+function showPasswordMismatch(confirmPassword) {
+    showSignupError('Passwords do not match.');
     confirmPassword.focus();
 }
 
@@ -106,11 +110,7 @@ async function saveNewContact(newUser) {
  * @returns {void} Result.
  */
 function showRegistrationFailed() {
-    if (typeof showMessage === 'function') {
-        showMessage('Registration failed. Please try again.', 'error');
-    } else {
-        alert('Registration failed. Please try again.');
-    }
+    showSignupError('Registration failed. Please try again.');
 }
 
 /**

@@ -173,11 +173,5 @@ function setSubtaskError(message, inputEl) {
     errorEl.textContent = message || '';
   }
   const input = inputEl || document.getElementById('subtask');
-  if (input) {
-    if (message) {
-      input.classList.add('input-error');
-    } else {
-      input.classList.remove('input-error');
-    }
-  }
+  if (input) input.classList.toggle('input-error', !!message);
 }
