@@ -9,7 +9,7 @@
  * @returns {HTMLElement} Result.
  */
 function createModalElement(task) {
-    const modal = document.createElement("div");
+    const modal = document.createElement("dialog");
     modal.id = "task-modal";
     modal.className = "modal";
     modal.innerHTML = getTaskModalTemplate(task);
@@ -24,6 +24,10 @@ function createModalElement(task) {
 function bindModalEvents(modal) {
     modal.addEventListener("click", (event) => {
         if (event.target === modal) closeModal();
+    });
+    modal.addEventListener("cancel", (event) => {
+        event.preventDefault();
+        closeModal();
     });
     const content = modal.querySelector(".modal-content");
     if (content) content.addEventListener("click", (e) => e.stopPropagation());
@@ -54,8 +58,8 @@ function openModal(id) {
     if (oldModal) oldModal.remove();
     const modal = createModalElement(task);
     document.body.appendChild(modal);
-    document.body.classList.add("modal-open");
-    modal.style.display = "flex";
+    modal.showModal();
+    document.documentElement.style.overflow = 'hidden';
     bindModalEvents(modal);
     animateModalOpen(modal, task);
 }
@@ -122,7 +126,7 @@ function closeModal() {
     if (modal.dataset.closing === "true") return;
     modal.dataset.closing = "true";
     const modalContent = modal.querySelector(".modal-content");
-    const cleanup = () => { if (modal?.parentNode) modal.remove(); activeTask = null; document.body.classList.remove("modal-open"); };
+    const cleanup = () => { if (modal?.parentNode) { modal.close(); modal.remove(); } document.documentElement.style.overflow = ''; activeTask = null; };
     if (!modalContent) { cleanup(); return; }
     runModalCloseAnimation(modalContent, cleanup);
 }

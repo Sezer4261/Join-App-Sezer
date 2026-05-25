@@ -82,8 +82,8 @@ function getAddTaskPriorityHTML() {
 function getAddTaskContactsHTML() {
   return /*html*/ `
     <div class="assigned-to-label">Assigned to
-      <div id="select-contacts" class="custom-select" tabindex="0">
-        <span onclick="toggleDropdown(event)">Select contacts to assign<img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow"></span>
+      <div id="select-contacts" class="custom-select" tabindex="0" onclick="toggleDropdown(event)">
+        <span>Select contacts to assign<img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow"></span>
         <div id="dropdown-contacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
       </div>
       <div id="selected-avatars" class="avatar-container"></div>
@@ -268,29 +268,6 @@ function getAssignedContactItemHTML(contact, i) {
 
 function generateAssignedContacts(contacts) {
   return contacts.map((contact, i) => getAssignedContactItemHTML(contact, i)).join("");
-}
-
-/**
- * Generates task from form.
- * @returns {string} Result.
- */
-function generateTaskFromForm() {
-  const title = document.getElementById('title').value.trim();
-  const description = document.getElementById('description').value.trim();
-  const dueDate = document.getElementById('date').value.trim();
-  const priority = document.querySelector('input[name="priority"]:checked').value;
-  const category = document.getElementById('category').value.trim();
-  return {
-    id: Date.now(),
-    title,
-    description,
-    dueDate,
-    priority,
-    contacts: [...selectedContacts],
-    category,
-    subtasks: [...subtasks],
-    status: window.currentBoardStatus || "To Do",
-  };
 }
 
 /**

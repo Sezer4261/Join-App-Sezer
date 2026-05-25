@@ -36,6 +36,13 @@ function applyContactFieldError(fieldId, input, spanId, message) {
   input?.closest('.ac-field')?.classList.add('input-error');
   setContactErrorText(spanId, message);
 }
+/**
+ * Clears an inline validation error for a contact dialog field.
+ * @param {string} fieldId - Field id.
+ * @param {HTMLElement|null} input - Input element.
+ * @param {string} spanId - Error span id.
+ * @returns {void} Result.
+ */
 function clearContactFieldError(fieldId, input, spanId) {
   delete contactDialogFieldErrors[fieldId];
   input?.classList.remove('input-error');
@@ -151,6 +158,11 @@ function applyContactFieldValidity(input, check) {
   }
   return check.isValid;
 }
+/**
+ * Validates all add-contact dialog fields and updates their custom validity.
+ * @param {HTMLElement} dialog - Dialog element.
+ * @returns {boolean} Whether all fields are valid.
+ */
 function computeAddContactValidity(dialog) {
   const n = dialog.querySelector('#ac-name');
   const e = dialog.querySelector('#ac-email');
@@ -212,6 +224,11 @@ function bindContactValidationReset(dialog, handler, formSelector, fieldIds) {
  * Updates edit contact submit state.
  * @param {HTMLElement} dialog - Dialog element.
  * @returns {void} Result.
+ */
+/**
+ * Validates all edit-contact dialog fields and updates their custom validity.
+ * @param {HTMLElement} dialog - Dialog element.
+ * @returns {boolean} Whether all fields are valid.
  */
 function computeEditContactValidity(dialog) {
   const n = dialog.querySelector('#edit-name');

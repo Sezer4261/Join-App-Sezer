@@ -1,19 +1,9 @@
 /**
- * Builds a page path that works from root pages and /public pages.
- * @param {string} fileName - Target HTML file.
- * @returns {string} Context-safe relative path.
- */
-function getNavPath(fileName) {
-    const inPublicFolder = window.location.pathname.includes('/public/');
-    return `${inPublicFolder ? '../' : './'}${fileName}`;
-}
-
-/**
  * Executes sidebar highlighting summary logic.
  * @returns {void} Result.
  */
 function sidebarHighlightingSummary() {
-    window.location.href = getNavPath("summary.html");
+    window.location.href = getPagePath("summary.html");
 }
 
 /**
@@ -21,7 +11,7 @@ function sidebarHighlightingSummary() {
  * @returns {void} Result.
  */
 function sidebarHighlightingAddTask() {
-    window.location.href = getNavPath("add-task.html");
+    window.location.href = getPagePath("add-task.html");
 }
 
 /**
@@ -29,7 +19,7 @@ function sidebarHighlightingAddTask() {
  * @returns {void} Result.
  */
 function sidebarHighlightingBoard() {
-    window.location.href = getNavPath("board.html");
+    window.location.href = getPagePath("board.html");
 }
 
 /**
@@ -37,7 +27,7 @@ function sidebarHighlightingBoard() {
  * @returns {void} Result.
  */
 function sidebarHighlightingContacts() {
-    window.location.href = getNavPath("contacts.html");
+    window.location.href = getPagePath("contacts.html");
 
 }
 
@@ -46,7 +36,7 @@ function sidebarHighlightingContacts() {
  * @returns {void} Result.
  */
 function openLogInSide() {
-    window.location.href = getNavPath("index.html");
+    window.location.href = getPagePath("index.html");
 }
 
 /**
@@ -54,7 +44,7 @@ function openLogInSide() {
  * @returns {void} Result.
  */
 function navigateToLegalNotice() {
-    window.location.href = getNavPath("legal-notice.html");
+    window.location.href = getPagePath("legal-notice.html");
 }
 
 /**
@@ -62,5 +52,5 @@ function navigateToLegalNotice() {
  * @returns {void} Result.
  */
 function navigateToPrivacyPolicy() {
-    window.location.href = getNavPath("privacy-policy.html");
+    window.location.href = getPagePath("privacy-policy.html");
 }

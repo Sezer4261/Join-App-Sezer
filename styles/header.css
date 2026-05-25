@@ -115,7 +115,6 @@
     min-width: 170px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     display: none;
-    flex-direction: column;
     z-index: 1000;
     margin-top: 8px;
     overflow: hidden;
@@ -124,6 +123,7 @@
 
 .profile-menu.active {
     display: flex;
+    flex-direction: column;
 }
 
 .profile-menu.active a,

@@ -5,6 +5,14 @@
         min-width: 0;
     }
 
+    h1 {
+        font-size: 48px;
+    }
+
+    .subheadline {
+        font-size: 20px;
+    }
+
     .welcome-msg {
         font-size: 32px;
     }

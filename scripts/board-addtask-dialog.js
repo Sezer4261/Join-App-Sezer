@@ -15,6 +15,10 @@ function initAddTaskDialogBackdropHandler(dialogOverlay) {
     event.stopPropagation();
     closeAddTaskDialog();
   });
+  dialogOverlay.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeAddTaskDialog();
+  });
 }
 
 /**
@@ -42,8 +46,8 @@ async function showAddTaskDialog(status = "To Do") {
   const dialogOverlay = document.getElementById("add-task-dialog");
   if (!dialogOverlay || !modalContent) return;
   dialogOverlay.dataset.closing = "false";
-  dialogOverlay.classList.remove("d-none");
-  document.body.classList.add("add-task-dialog-open");
+  if (!dialogOverlay.open) dialogOverlay.showModal();
+  document.documentElement.style.overflow = 'hidden';
   modalContent.classList.remove("is-open");
   initAddTaskDialogBackdropHandler(dialogOverlay);
   await initAddTaskDialogContent(modalContent);
@@ -80,9 +84,9 @@ function closeAddTaskDialog() {
   if (dialogOverlay.dataset.closing === "true") return;
   dialogOverlay.dataset.closing = "true";
   const cleanup = () => {
-    dialogOverlay.classList.add("d-none");
+    dialogOverlay.close();
+    document.documentElement.style.overflow = '';
     dialogOverlay.dataset.closing = "false";
-    document.body.classList.remove("add-task-dialog-open");
   };
   if (!modalContent) { cleanup(); return; }
   runAddTaskDialogCloseAnimation(modalContent, cleanup);

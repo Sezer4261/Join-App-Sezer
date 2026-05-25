@@ -81,18 +81,13 @@
         max-width: 94vw;
     }
 
-    .modal-content .edit-assigned:has(.dropdown-content.show),
-    .modal-content .edit-label:has(.dropdown-content.show) {
-        padding-bottom: 0;
-    }
-
     .modal-content .edit-assigned .dropdown-content,
     .modal-content .edit-label .dropdown-content {
-        position: static;
-        top: auto;
-        left: auto;
+        position: absolute;
+        top: 100%;
+        left: 0;
         width: 100%;
-        margin-top: 8px;
+        margin-top: 0;
         max-height: 180px;
     }
 
@@ -179,6 +174,58 @@
 }
 
 @media (max-width: 320px) {
+    .modal-content {
+        width: 96vw;
+        max-width: 96vw;
+        max-height: 84vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .modal-content:has(.edit-assigned .dropdown-content.show),
+    .modal-content:has(.edit-label .dropdown-content.show) {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .modal-content .edit-form-scroll,
+    .modal-content .edit-form-scroll:has(.dropdown-content.show) {
+        overflow-y: visible;
+        overflow-x: hidden;
+    }
+
+    .modal-content .edit-assigned .custom-select {
+        display: block;
+        height: auto;
+        min-height: 40px;
+        padding: 0;
+        line-height: normal;
+        box-sizing: border-box;
+    }
+
+    .modal-content .edit-assigned .custom-select > span {
+        min-height: 40px;
+        padding: 0 10px;
+        line-height: 40px;
+        box-sizing: border-box;
+    }
+
+    .modal-content .edit-assigned .dropdown-content,
+    .modal-content .edit-label .dropdown-content {
+        position: static;
+        top: auto;
+        left: auto;
+        width: 100%;
+        margin-top: 8px;
+        max-height: 220px;
+        box-sizing: border-box;
+    }
+
+    .modal-content .edit-assigned .dropdown-item,
+    .modal-content .edit-label .dropdown-item {
+        padding: 8px 10px;
+    }
+
     .add-task-dialog-bg {
         align-items: flex-start;
         padding-top: 8px;

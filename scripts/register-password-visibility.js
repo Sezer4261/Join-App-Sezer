@@ -123,6 +123,10 @@ function initRegisterConfirmPasswordToggle() {
     });
 }
 
+/**
+ * Initializes password visibility toggles for all signup password fields.
+ * @returns {void} Result.
+ */
 function initSignupPasswordVisibilityToggles() {
     initRegisterPasswordToggle();
     initRegisterConfirmPasswordToggle();

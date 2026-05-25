@@ -20,14 +20,12 @@ function initBoardSearch() {
   input.oninput = () => updateBoardSearch(input, clearBtn);
   if (clearBtn) {
     clearBtn.onclick = () => clearBoardSearch(input, clearBtn);
-    clearBtn.style.visibility = boardSearchTerm ? "visible" : "hidden";
+    clearBtn.classList.toggle("search-clear--visible", !!boardSearchTerm);
   }
 }
 
 /**
- * Updates board search.
- * @param {HTMLElement} input - Input element.
- * @param {*} clearBtn - Parameter.
+ * Clears all task cards and re-renders them with the current search filter.
  * @returns {void} Result.
  */
 function refreshTaskView() {
@@ -37,10 +35,16 @@ function refreshTaskView() {
   renderAllAvatars();
 }
 
+/**
+ * Updates the active search term and refreshes the board task view.
+ * @param {HTMLElement} input - Search input element.
+ * @param {HTMLElement} clearBtn - Clear button element.
+ * @returns {void} Result.
+ */
 function updateBoardSearch(input, clearBtn) {
   boardSearchTerm = input.value.trim();
   refreshTaskView();
-  if (clearBtn) clearBtn.style.visibility = boardSearchTerm ? "visible" : "hidden";
+  if (clearBtn) clearBtn.classList.toggle("search-clear--visible", !!boardSearchTerm);
 }
 
 /**
@@ -53,7 +57,7 @@ function clearBoardSearch(input, clearBtn) {
   boardSearchTerm = "";
   input.value = "";
   refreshTaskView();
-  if (clearBtn) clearBtn.style.visibility = boardSearchTerm ? "visible" : "hidden";
+  if (clearBtn) clearBtn.classList.toggle("search-clear--visible", !!boardSearchTerm);
   input.focus();
 }
 

@@ -206,10 +206,6 @@ select:focus,
   flex-shrink: 0;
 }
 
-.priority-btn {
-  flex-direction: row;
-}
-
 .priority-btn:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }

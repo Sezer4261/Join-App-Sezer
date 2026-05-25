@@ -45,6 +45,7 @@
 
 .edit-task-form .priority-options label {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 6px;
@@ -58,10 +59,6 @@
     font-weight: 500;
     font-size: 16px;
     transition: all 120ms;
-}
-
-.edit-task-form .priority-btn {
-    flex-direction: row;
 }
 
 .edit-task-form .priority-options label.urgent svg,

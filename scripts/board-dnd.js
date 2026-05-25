@@ -16,6 +16,12 @@ function allowDrop(event) {
   event.preventDefault();
 }
 
+/**
+ * Highlights the column when a dragged card enters it.
+ * @param {DragEvent} event - Browser drag event.
+ * @param {string} colId - Target column element id.
+ * @returns {void} Result.
+ */
 function dragEnterColumn(event, colId) {
   event.preventDefault();
   document.querySelectorAll('.board-column').forEach(c => c.classList.remove('drag-over'));
@@ -23,6 +29,12 @@ function dragEnterColumn(event, colId) {
   if (col) col.classList.add('drag-over');
 }
 
+/**
+ * Removes the drag-over highlight when the dragged card leaves a column.
+ * @param {DragEvent} event - Browser drag event.
+ * @param {string} colId - Column element id.
+ * @returns {void} Result.
+ */
 function dragLeaveColumn(event, colId) {
   // Only remove if leaving to outside the column entirely
   const col = document.getElementById(colId);
@@ -60,6 +72,12 @@ const COLUMN_STATUS = {
   'done-column':       'Done',
 };
 
+/**
+ * Returns the board column id whose element is at the given screen coordinates.
+ * @param {number} x - Horizontal screen coordinate.
+ * @param {number} y - Vertical screen coordinate.
+ * @returns {string|null} Column id, or null if none found.
+ */
 function getColumnIdAtPoint(x, y) {
   const els = document.elementsFromPoint(x, y);
   for (const el of els) {
@@ -93,19 +111,32 @@ let longPressTimer;
 
 clearTimeout(longPressTimer);
 
+/**
+ * Activates touch drag: records the dragged task, creates the visual clone
+ * and shows the mobile drop overlay on small screens.
+ * @param {HTMLElement} card - Task card element.
+ * @param {Touch} touch - The initiating touch point.
+ * @param {DOMRect} rect - Bounding rect of the card.
+ * @returns {void} Result.
+ */
 function activateTouchDrag(card, touch, rect) {
   draggedTaskId = parseInt(card.dataset.taskId, 10);
   touchDragOffsetX = touch.clientX - rect.left;
   touchDragOffsetY = touch.clientY - rect.top;
   touchDragClone = createTouchDragClone(card, rect);
   document.body.appendChild(touchDragClone);
-  card.style.opacity = '0,3';
+  card.style.opacity = '0.3';
   if (window.innerWidth <= 620) {
     const overlay = document.getElementById('mobile-drop-overlay');
     if (overlay) overlay.classList.add('active');
   }
 }
 
+/**
+ * Handles touchstart on a task card to start the long-press drag timer.
+ * @param {TouchEvent} event - Browser touch event.
+ * @returns {void} Result.
+ */
 function onTouchStart(event) {
   const card = event.currentTarget;
   const touch = event.touches[0];
@@ -113,6 +144,12 @@ function onTouchStart(event) {
   longPressTimer = setTimeout(() => activateTouchDrag(card, touch, rect), 800);
 }
 
+/**
+ * Highlights the mobile drop button that the user's finger is currently over.
+ * @param {HTMLElement|null} overlay - The mobile drop overlay element.
+ * @param {Touch} touch - Current touch point.
+ * @returns {void} Result.
+ */
 function updateMobileDropHighlights(overlay, touch) {
   if (!overlay || !overlay.classList.contains('active')) return;
   overlay.querySelectorAll('.mobile-drop-btn').forEach(btn => {
@@ -123,6 +160,11 @@ function updateMobileDropHighlights(overlay, touch) {
   });
 }
 
+/**
+ * Moves the drag clone to follow the finger and highlights the column below.
+ * @param {TouchEvent} event - Browser touch event.
+ * @returns {void} Result.
+ */
 function onTouchMove(event) {
   if (!touchDragClone) return;
   event.preventDefault();
@@ -153,6 +195,12 @@ function applyTouchDrop(colId) {
   initTouchDrag();
 }
 
+/**
+ * Reads which mobile drop button the touch ended on, then dismisses the overlay.
+ * @param {HTMLElement|null} overlay - The mobile drop overlay element.
+ * @param {Touch} touch - The final touch point.
+ * @returns {string|null} Column id of the chosen button, or null.
+ */
 function getMobileDropColId(overlay, touch) {
   if (!overlay || !overlay.classList.contains('active')) return null;
   let colId = null;
@@ -168,9 +216,21 @@ function getMobileDropColId(overlay, touch) {
   return colId;
 }
 
+/**
+ * Handles touchend: clears the long-press timer, suppresses the synthetic click,
+ * and applies the drop to the target column.
+ * @param {TouchEvent} event - Browser touch event.
+ * @returns {void} Result.
+ */
 function onTouchEnd(event) {
   clearTimeout(longPressTimer);
   if (!touchDragClone) return;
+  // Suppress only the immediate synthetic click the browser fires after touchend
+  // (arrives within ~50 ms). Real user clicks take longer and must not be blocked.
+  const dragEndTime = Date.now();
+  document.addEventListener('click', (e) => {
+    if (Date.now() - dragEndTime < 350) e.stopImmediatePropagation();
+  }, { capture: true, once: true });
   const touch = event.changedTouches[0];
   document.querySelectorAll('.board-column').forEach(c => c.classList.remove('drag-over'));
   const mobileColId = getMobileDropColId(document.getElementById('mobile-drop-overlay'), touch);
@@ -180,6 +240,10 @@ function onTouchEnd(event) {
   draggedTaskId = null;
 }
 
+/**
+ * Attaches touch drag listeners to every task card on the board.
+ * @returns {void} Result.
+ */
 function initTouchDrag() {
   document.querySelectorAll('.task-card').forEach(card => {
     const id = card.getAttribute('ondragstart')?.match(/\d+/)?.[0];
@@ -191,5 +255,6 @@ function initTouchDrag() {
     card.addEventListener('touchstart', onTouchStart, { passive: true });
     card.addEventListener('touchmove',  onTouchMove,  { passive: false });
     card.addEventListener('touchend',   onTouchEnd,   { passive: true });
+    card.addEventListener('contextmenu', e => e.preventDefault());
   });
 }

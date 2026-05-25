@@ -51,6 +51,10 @@ function bindAddTaskFieldListeners(titleInput, dateInput, categorySelect) {
   categorySelect?.addEventListener('change', updateCreateButtonState);
 }
 
+/**
+ * Initializes blur/change validation listeners for the add-task form fields.
+ * @returns {void} Result.
+ */
 function initAddTaskBlurValidation() {
   const form = document.getElementById('add-task-form');
   if (!form || form.dataset.blurValidationInit === '1') return;
@@ -62,10 +66,6 @@ function initAddTaskBlurValidation() {
   form.dataset.blurValidationInit = '1';
 }
 
-/**
- * Updates create button disabled state.
- * @returns {void} Result.
- */
 /**
  * Returns whether all required add-task form fields are filled.
  * @returns {boolean} Result.
@@ -80,6 +80,10 @@ function isAddTaskFormComplete() {
   return hasTitle && hasDate && hasCategory;
 }
 
+/**
+ * Updates the disabled state of the create-task button based on form completeness.
+ * @returns {void} Result.
+ */
 function updateCreateButtonState() {
   const btn = document.getElementById('create-task-btn');
   if (!btn) return;
@@ -92,6 +96,29 @@ function updateCreateButtonState() {
  */
 function resetSelectedContacts() {
   selectedContacts = [];
+}
+
+/**
+ * Builds a task data object from the current add-task form values.
+ * @returns {Object} Task data object ready for saving.
+ */
+function generateTaskFromForm() {
+  const title = document.getElementById('title').value.trim();
+  const description = document.getElementById('description').value.trim();
+  const dueDate = document.getElementById('date').value.trim();
+  const priority = document.querySelector('input[name="priority"]:checked').value;
+  const category = document.getElementById('category').value.trim();
+  return {
+    id: Date.now(),
+    title,
+    description,
+    dueDate,
+    priority,
+    contacts: [...selectedContacts],
+    category,
+    subtasks: [...subtasks],
+    status: window.currentBoardStatus || "To Do",
+  };
 }
 
 /**
@@ -217,6 +244,10 @@ function clearFormSubtasks() {
   updateCreateButtonState();
 }
 
+/**
+ * Resets the add-task form and clears all validation errors and selections.
+ * @returns {void} Result.
+ */
 function clearForm() {
   const form = document.getElementById('add-task-form');
   if (form) form.reset();

@@ -22,6 +22,11 @@ function getTaskCardBody(task) {
     `;
 }
 
+/**
+ * Creates a draggable task card HTML string for the given task.
+ * @param {Object} task - Task object.
+ * @returns {string} HTML string for the task card.
+ */
 function createTaskCard(task) {
     return /*html*/ `
       <div class="task-card" draggable="true"

@@ -115,14 +115,6 @@
     font-size: 16px;
 }
 
-.edit-assigned:has(.dropdown-content.show) {
-    padding-bottom: 160px;
-}
-
-.edit-label:has(.dropdown-content.show) {
-    padding-bottom: 100px;
-}
-
 .edit-form-scroll:has(.dropdown-content.show) {
     overflow: visible;
 }
@@ -180,7 +172,6 @@
 
 .edit-avatar-container {
     display: flex;
-    flex-direction: row;
     flex-wrap: nowrap;
     gap: 6px;
     align-items: center;

@@ -431,13 +431,13 @@
     background: rgba(42, 54, 71, 0.97);
     padding: 12px 16px 28px;
     border-radius: 16px 16px 0 0;
-    flex-direction: column;
-    gap: 10px;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
 }
 
 .mobile-drop-overlay.active {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .mobile-drop-label {

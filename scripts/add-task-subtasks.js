@@ -23,6 +23,10 @@ function bindSubtaskKeydownHandler(input) {
   });
 }
 
+/**
+ * Initializes the Enter key handler on the subtask input field.
+ * @returns {void} Result.
+ */
 function initAddSubtaskEnter() {
   const input = document.getElementById('subtask');
   if (!input) return;

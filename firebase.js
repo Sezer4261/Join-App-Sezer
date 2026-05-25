@@ -7,6 +7,11 @@ const firebaseConfig = {
   appId: "DEIN_APP_ID"
 };
 
+/**
+ * Checks whether the Firebase config still contains placeholder values.
+ * @param {Object} config - Firebase configuration object.
+ * @returns {boolean} True if any value contains the placeholder prefix.
+ */
 function isPlaceholderFirebaseConfig(config) {
   if (!config || typeof config !== "object") return true;
   return Object.values(config).some((value) =>
@@ -14,6 +19,11 @@ function isPlaceholderFirebaseConfig(config) {
   );
 }
 
+/**
+ * Attaches a firebaseLogout helper to the window object.
+ * @param {Object} auth - Firebase Auth instance.
+ * @returns {void} Result.
+ */
 function exposeFirebaseLogout(auth) {
   function firebaseLogout() {
     if (auth && typeof auth.signOut === "function") {
@@ -25,6 +35,10 @@ function exposeFirebaseLogout(auth) {
   window.firebaseLogout = firebaseLogout;
 }
 
+/**
+ * Initializes the Firebase app if the SDK is loaded and the config is valid.
+ * @returns {boolean} True if initialization succeeded.
+ */
 function initFirebaseIfAvailable() {
   if (typeof firebase === "undefined") return false;
   if (isPlaceholderFirebaseConfig(firebaseConfig)) return false;
@@ -35,6 +49,11 @@ function initFirebaseIfAvailable() {
   return true;
 }
 
+/**
+ * Dynamically injects an external script into the document head.
+ * @param {string} src - URL of the script to load.
+ * @returns {Promise<void>} Resolves when the script has loaded.
+ */
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     const script = document.createElement("script");
@@ -46,6 +65,10 @@ function loadScript(src) {
   });
 }
 
+/**
+ * Loads the Firebase SDK scripts if not already present and then initializes the app.
+ * @returns {Promise<void>} Result.
+ */
 async function ensureFirebaseSdkAndInit() {
   if (isPlaceholderFirebaseConfig(firebaseConfig)) {
     return;
@@ -127,14 +150,6 @@ function applyEmailInitial(profile, userData) {
   if (userData.email) {
     profile.textContent = userData.email[0].toUpperCase();
   }
-}
-
-function toggleProfileMenu(event) {
-  event.stopPropagation();
-
-  const menu = document.getElementById("profile-menu");
-
-  menu.classList.toggle("show-profile-menu");
 }
 
 document.addEventListener("DOMContentLoaded", updateUserProfile);

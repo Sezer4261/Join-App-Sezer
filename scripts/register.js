@@ -56,6 +56,11 @@ function isPasswordMatch(values) {
  * @param {*} confirmPassword - Parameter.
  * @returns {void} Result.
  */
+/**
+ * Displays a signup error message via showMessage, or falls back to alert.
+ * @param {string} message - Error message to display.
+ * @returns {void} Result.
+ */
 function showSignupError(message) {
     if (typeof showMessage === 'function') {
         showMessage(message, 'error');

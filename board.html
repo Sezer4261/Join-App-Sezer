@@ -38,6 +38,7 @@
     <script src="./scripts/add-task-templates.js" defer></script>
 
     <script src="./scripts/board-modal-templates.js" defer></script>
+    <script src="./scripts/board-modal-edit-templates.js" defer></script>
     <script src="./scripts/board-template.js" defer></script>
     <script src="./scripts/board-state.js" defer></script>
     <script src="./scripts/board-avatars.js" defer></script>
@@ -412,14 +413,14 @@
 
     </div>
 
-    <div id="add-task-dialog"
-        class="add-task-dialog-bg d-none">
+    <dialog id="add-task-dialog"
+        class="add-task-dialog-bg">
 
         <div id="add-task-dialog-message"
             class="add-task-dialog">
         </div>
 
-    </div>
+    </dialog>
 
     <!-- Mobile drag-and-drop target overlay (shown only on stacked-column screens) -->
     <div id="mobile-drop-overlay" class="mobile-drop-overlay">

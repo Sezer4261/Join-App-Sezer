@@ -2,7 +2,6 @@
 /* Always keep edit-form assigned contacts in a single horizontal row */
 .modal-content .edit-avatar-container {
     display: flex !important;
-    flex-direction: row !important;
     flex-wrap: nowrap !important;
     overflow: hidden !important;
     gap: 6px !important;

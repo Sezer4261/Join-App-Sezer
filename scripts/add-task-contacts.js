@@ -22,6 +22,12 @@ function toggleOrFallbackDropdown(dropdown) {
   document.getElementById("dropdown-contacts")?.classList.toggle("show");
 }
 
+/**
+ * Toggles the contacts dropdown for the clicked custom-select trigger.
+ * Closes all other open dropdowns first.
+ * @param {Event} event - Browser event.
+ * @returns {void} Result.
+ */
 function toggleDropdown(event) {
   if (event) event.stopPropagation();
   const trigger = event?.currentTarget || event?.target;

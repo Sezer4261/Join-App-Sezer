@@ -79,6 +79,11 @@ function checkContactNamePartValidity(parts) {
   return null;
 }
 
+/**
+ * Validates and normalizes a contact name input string.
+ * @param {string} name - Raw name value.
+ * @returns {{ isValid: boolean, normalizedName: string, initials: string, error: string }} Result.
+ */
 function validateContactNameInput(name) {
   const normalizedName = normalizeContactNameInput(name);
   const basicError = checkContactNameBasics(normalizedName);
