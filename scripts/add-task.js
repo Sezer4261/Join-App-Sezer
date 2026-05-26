@@ -37,6 +37,240 @@ async function renderAddTask() {
  * @param {HTMLElement} categorySelect - Category select.
  * @returns {void} Result.
  */
+const ADD_TASK_DATE_PICKER_MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+const ADD_TASK_DATE_PICKER_WEEKDAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+
+const addTaskDatePickerState = {
+  popup: null,
+  title: null,
+  grid: null,
+  activeInput: null,
+  viewDate: null,
+};
+
+function shouldUseCustomAddTaskDatePicker() {
+  return typeof window.matchMedia === 'function' && window.matchMedia('(pointer: fine)').matches;
+}
+
+function parseAddTaskDateValue(value) {
+  const normalizedValue = String(value || '').trim();
+  if (!normalizedValue) return null;
+  const [year, month, day] = normalizedValue.split('-').map(Number);
+  if (!year || !month || !day) return null;
+  const parsedDate = new Date(year, month - 1, day);
+  if (Number.isNaN(parsedDate.getTime())) return null;
+  return parsedDate;
+}
+
+function formatAddTaskDateValue(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function getAddTaskDatePickerMinValue(dateInput) {
+  return String(dateInput?.min || getTodayDateString()).trim();
+}
+
+function getAddTaskDatePickerInitialDate(dateInput) {
+  return parseAddTaskDateValue(dateInput?.value)
+    || parseAddTaskDateValue(getAddTaskDatePickerMinValue(dateInput))
+    || new Date();
+}
+
+function ensureAddTaskDatePickerPopup(dateInput) {
+  if (!addTaskDatePickerState.popup) {
+    const popup = document.createElement('div');
+    popup.className = 'add-task-date-picker-popup';
+    popup.hidden = true;
+    popup.innerHTML = `
+      <div class="add-task-date-picker__header">
+        <button type="button" class="add-task-date-picker__nav" data-action="previous-month" aria-label="Previous month">&#8249;</button>
+        <div class="add-task-date-picker__title" aria-live="polite"></div>
+        <button type="button" class="add-task-date-picker__nav" data-action="next-month" aria-label="Next month">&#8250;</button>
+      </div>
+      <div class="add-task-date-picker__weekdays">${ADD_TASK_DATE_PICKER_WEEKDAYS.map((day) => `<span>${day}</span>`).join('')}</div>
+      <div class="add-task-date-picker__grid" role="grid"></div>
+    `;
+    popup.addEventListener('click', handleAddTaskDatePickerClick);
+    document.addEventListener('pointerdown', handleAddTaskDatePickerOutsidePointerDown, true);
+    document.addEventListener('keydown', handleAddTaskDatePickerGlobalKeydown);
+    window.addEventListener('resize', updateAddTaskDatePickerPosition);
+    window.addEventListener('scroll', updateAddTaskDatePickerPosition, true);
+    addTaskDatePickerState.popup = popup;
+    addTaskDatePickerState.title = popup.querySelector('.add-task-date-picker__title');
+    addTaskDatePickerState.grid = popup.querySelector('.add-task-date-picker__grid');
+  }
+
+  const popupParent = dateInput?.closest('dialog') || document.body;
+  if (addTaskDatePickerState.popup.parentElement !== popupParent) {
+    popupParent.appendChild(addTaskDatePickerState.popup);
+  }
+
+  return addTaskDatePickerState.popup;
+}
+
+function updateAddTaskDateInputMode(dateInput) {
+  if (!dateInput) return;
+  const useCustomPicker = shouldUseCustomAddTaskDatePicker();
+  dateInput.readOnly = useCustomPicker;
+  dateInput.setAttribute('aria-haspopup', 'dialog');
+  dateInput.setAttribute('aria-expanded', addTaskDatePickerState.activeInput === dateInput ? 'true' : 'false');
+}
+
+function renderAddTaskDatePicker() {
+  const { activeInput, title, grid, viewDate } = addTaskDatePickerState;
+  if (!activeInput || !title || !grid || !viewDate) return;
+  const year = viewDate.getFullYear();
+  const month = viewDate.getMonth();
+  title.textContent = `${ADD_TASK_DATE_PICKER_MONTHS[month]} ${year}`;
+
+  const selectedValue = String(activeInput.value || '').trim();
+  const minValue = getAddTaskDatePickerMinValue(activeInput);
+  const firstOfMonth = new Date(year, month, 1);
+  const startOffset = (firstOfMonth.getDay() + 6) % 7;
+  const gridStart = new Date(year, month, 1 - startOffset);
+
+  grid.innerHTML = Array.from({ length: 42 }, (_, index) => {
+    const dayDate = new Date(gridStart);
+    dayDate.setDate(gridStart.getDate() + index);
+    const dayValue = formatAddTaskDateValue(dayDate);
+    const isCurrentMonth = dayDate.getMonth() === month;
+    const isToday = dayValue === getTodayDateString();
+    const isSelected = dayValue === selectedValue;
+    const isDisabled = dayValue < minValue;
+    const classNames = [
+      'add-task-date-picker__day',
+      isCurrentMonth ? '' : 'is-outside-month',
+      isToday ? 'is-today' : '',
+      isSelected ? 'is-selected' : '',
+    ].filter(Boolean).join(' ');
+    return `
+      <button
+        type="button"
+        class="${classNames}"
+        data-date="${dayValue}"
+        ${isDisabled ? 'disabled' : ''}
+        aria-pressed="${isSelected ? 'true' : 'false'}"
+      >${dayDate.getDate()}</button>
+    `;
+  }).join('');
+}
+
+function updateAddTaskDatePickerPosition() {
+  const { popup, activeInput } = addTaskDatePickerState;
+  if (!popup || popup.hidden || !activeInput) return;
+  const rect = activeInput.getBoundingClientRect();
+  popup.style.width = `${Math.round(rect.width)}px`;
+  popup.style.left = `${Math.round(rect.left)}px`;
+  popup.style.top = `${Math.round(rect.bottom + 8)}px`;
+
+  const popupRect = popup.getBoundingClientRect();
+  const maxLeft = Math.max(12, window.innerWidth - popupRect.width - 12);
+  if (rect.left > maxLeft) popup.style.left = `${Math.round(maxLeft)}px`;
+
+  const fitsBelow = rect.bottom + popupRect.height + 20 <= window.innerHeight;
+  if (!fitsBelow) {
+    popup.style.top = `${Math.max(12, Math.round(rect.top - popupRect.height - 8))}px`;
+  }
+}
+
+function closeAddTaskDatePicker() {
+  const { popup, activeInput } = addTaskDatePickerState;
+  if (!popup) return;
+  popup.hidden = true;
+  if (activeInput) activeInput.setAttribute('aria-expanded', 'false');
+  addTaskDatePickerState.activeInput = null;
+  addTaskDatePickerState.viewDate = null;
+}
+
+function setAddTaskDatePickerValue(dateValue) {
+  const { activeInput } = addTaskDatePickerState;
+  if (!activeInput) return;
+  activeInput.value = dateValue;
+  activeInput.dispatchEvent(new Event('input', { bubbles: true }));
+  activeInput.dispatchEvent(new Event('change', { bubbles: true }));
+  activeInput.focus({ preventScroll: true });
+  closeAddTaskDatePicker();
+}
+
+function handleAddTaskDatePickerClick(event) {
+  const actionButton = event.target.closest('[data-action]');
+  if (actionButton) {
+    const monthOffset = actionButton.dataset.action === 'previous-month' ? -1 : 1;
+    const currentViewDate = addTaskDatePickerState.viewDate || new Date();
+    addTaskDatePickerState.viewDate = new Date(currentViewDate.getFullYear(), currentViewDate.getMonth() + monthOffset, 1);
+    renderAddTaskDatePicker();
+    updateAddTaskDatePickerPosition();
+    return;
+  }
+
+  const dayButton = event.target.closest('[data-date]');
+  if (!dayButton || dayButton.disabled) return;
+  setAddTaskDatePickerValue(dayButton.dataset.date);
+}
+
+function handleAddTaskDatePickerOutsidePointerDown(event) {
+  const { popup, activeInput } = addTaskDatePickerState;
+  if (!popup || popup.hidden || !activeInput) return;
+  const dateLabel = activeInput.closest('label');
+  if (popup.contains(event.target) || activeInput === event.target || dateLabel?.contains(event.target)) return;
+  closeAddTaskDatePicker();
+}
+
+function handleAddTaskDatePickerGlobalKeydown(event) {
+  if (event.key === 'Escape') closeAddTaskDatePicker();
+}
+
+function openCustomAddTaskDatePicker(dateInput) {
+  const popup = ensureAddTaskDatePickerPopup(dateInput);
+  addTaskDatePickerState.activeInput = dateInput;
+  addTaskDatePickerState.viewDate = new Date(getAddTaskDatePickerInitialDate(dateInput).getFullYear(), getAddTaskDatePickerInitialDate(dateInput).getMonth(), 1);
+  updateAddTaskDateInputMode(dateInput);
+  popup.hidden = false;
+  renderAddTaskDatePicker();
+  updateAddTaskDatePickerPosition();
+  dateInput.focus({ preventScroll: true });
+}
+
+function openAddTaskDatePicker(dateInput) {
+  if (!dateInput) return;
+  if (
+    shouldUseCustomAddTaskDatePicker()
+    && addTaskDatePickerState.activeInput === dateInput
+    && addTaskDatePickerState.popup
+    && !addTaskDatePickerState.popup.hidden
+  ) {
+    closeAddTaskDatePicker();
+    return;
+  }
+  updateAddTaskDateInputMode(dateInput);
+  if (shouldUseCustomAddTaskDatePicker()) {
+    openCustomAddTaskDatePicker(dateInput);
+    return;
+  }
+  try {
+    dateInput.showPicker();
+    return;
+  } catch (_) {}
+  dateInput.focus({ preventScroll: true });
+}
+
 function bindAddTaskFieldListeners(titleInput, dateInput, categorySelect) {
   titleInput?.addEventListener('blur', validateTitleField);
   titleInput?.addEventListener('input', clearTitleErrorOnValidInput);
@@ -46,7 +280,32 @@ function bindAddTaskFieldListeners(titleInput, dateInput, categorySelect) {
   dateInput?.addEventListener('input', updateCreateButtonState);
   dateInput?.addEventListener('change', clearDateErrorOnValidInput);
   dateInput?.addEventListener('change', updateCreateButtonState);
-  dateInput?.addEventListener('click', () => { try { dateInput.showPicker(); } catch (_) {} });
+  const dateLabel = dateInput?.closest('label');
+  updateAddTaskDateInputMode(dateInput);
+  dateInput?.addEventListener('pointerdown', (event) => {
+    if (!shouldUseCustomAddTaskDatePicker()) return;
+    event.preventDefault();
+    openAddTaskDatePicker(dateInput);
+  });
+  dateInput?.addEventListener('click', () => {
+    if (shouldUseCustomAddTaskDatePicker()) return;
+    openAddTaskDatePicker(dateInput);
+  });
+  dateInput?.addEventListener('keydown', (event) => {
+    if (!shouldUseCustomAddTaskDatePicker()) return;
+    if (!['Enter', ' ', 'ArrowDown'].includes(event.key)) return;
+    event.preventDefault();
+    openAddTaskDatePicker(dateInput);
+  });
+  dateLabel?.addEventListener('pointerdown', (event) => {
+    if (!dateInput || event.target === dateInput || event.target?.id === 'date-error' || !shouldUseCustomAddTaskDatePicker()) return;
+    event.preventDefault();
+    openAddTaskDatePicker(dateInput);
+  });
+  dateLabel?.addEventListener('click', (event) => {
+    if (!dateInput || event.target === dateInput || event.target?.id === 'date-error' || shouldUseCustomAddTaskDatePicker()) return;
+    openAddTaskDatePicker(dateInput);
+  });
   categorySelect?.addEventListener('blur', validateCategoryField);
   categorySelect?.addEventListener('change', updateCreateButtonState);
 }
@@ -118,6 +377,7 @@ function generateTaskFromForm() {
     category,
     subtasks: [...subtasks],
     status: window.currentBoardStatus || "To Do",
+    order: Date.now(),
   };
 }
 
@@ -155,6 +415,7 @@ function schedulePostSaveNavigation() {
 }
 
 function handleSaveSuccess() {
+  closeAddTaskDatePicker();
   setAddTaskActionButtonsDisabled(true);
   showMessage("Task added to board", "success", { iconSrc: "./assets/icons/vector-board.svg", iconAlt: "Board" });
   subtasks.length = 0;

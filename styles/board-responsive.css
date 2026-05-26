@@ -166,20 +166,61 @@
     }
 }
 
-/* At 780px the header already spans full width and the sidebar (232px) is still visible.
-   The 2-column grid in ~548px content is too tight — switch to single column early. */
-@media (max-width: 780px) {
+@media (max-width: 1140px) and (min-width: 621px) {
+    .content {
+        padding-bottom: 48px;
+    }
+
     .board-columns {
-        display: flex;
-        gap: 12px;
-        align-items: flex-start;
-        overflow-x: auto;
-        padding-bottom: 16px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        align-items: start;
+        overflow: visible;
+        flex: 0 0 auto;
+        min-height: auto;
+        padding-bottom: 0;
     }
 
     .board-column {
-        flex: 1 1 200px;
-        min-width: 200px;
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 780px) and (min-width: 621px) {
+    .board-columns {
+        gap: 12px;
+    }
+
+    .board-column {
+        padding: 8px;
+    }
+
+    .column-header {
+        margin-bottom: 12px;
+        align-items: flex-start;
+    }
+
+    .column-header img {
+        margin-left: 4px;
+    }
+
+    .column-title {
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    .task-card {
+        padding: 12px;
+    }
+
+    .task-card h2 {
+        font-size: 16px;
+    }
+
+    .task-card h3 {
+        font-size: 15px;
     }
 }
 

@@ -150,7 +150,7 @@
 
     .ac-formwrap {
         flex-direction: column;
-        padding: 0;
+        padding: 0 12px 24px;
     }
 
     .ac-avatar {
@@ -161,6 +161,8 @@
     }
 
     .ac-form {
+        width: 100%;
+        max-width: 280px;
         gap: 8px;
         align-items: center;
         margin-top: 32px;
@@ -171,7 +173,7 @@
     }
 
     .ac-field {
-        width: 280px;
+        width: min(280px, 100%);
         padding-right: 8px;
         height: 40px;
     }
@@ -182,7 +184,8 @@
     }
 
     .ac-actions {
-        margin-top: 0px;
+        width: 100%;
+        margin-top: 12px;
     }
 
     .ac-hero {
@@ -240,7 +243,7 @@
 
     .ac-formwrap {
         flex-direction: column;
-        padding: 0;
+        padding: 0 12px 24px;
     }
 
     .ac-avatar {
@@ -251,6 +254,8 @@
     }
 
     .ac-form {
+        width: 100%;
+        max-width: 280px;
         gap: 8px;
         align-items: center;
         margin-top: 32px;
@@ -261,7 +266,7 @@
     }
 
     .ac-field {
-        width: 280px;
+        width: min(280px, 100%);
         padding-right: 8px;
         height: 40px;
     }
@@ -272,7 +277,8 @@
     }
 
     .ac-actions {
-        margin-top: 0px;
+        width: 100%;
+        margin-top: 12px;
     }
 
     .ac-hero {

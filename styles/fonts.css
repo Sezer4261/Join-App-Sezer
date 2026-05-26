@@ -33,3 +33,15 @@ textarea,
 select {
   font-family: inherit;
 }
+
+a,
+button,
+input,
+textarea,
+select,
+label,
+summary,
+[onclick],
+[tabindex]:not([tabindex="-1"]) {
+  touch-action: manipulation;
+}

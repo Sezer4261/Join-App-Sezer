@@ -133,6 +133,15 @@
     font-size: 16px;
 }
 
+.edit-assigned .dropdown-content,
+.edit-label .dropdown-content {
+    top: calc(100% + 6px);
+    z-index: 1100;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
 .edit-assigned .custom-select span,
 .edit-label .custom-select span {
     display: flex;

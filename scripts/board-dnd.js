@@ -7,6 +7,8 @@ function startDrag(id) {
   draggedTaskId = id;
 }
 
+const TASK_ORDER_STEP = 1024;
+
 /**
  * Executes allow drop logic.
  * @param {Event} event - Browser event.
@@ -52,10 +54,9 @@ function dragLeaveColumn(event, colId) {
 function dropTask(event, newStatus) {
   event.preventDefault();
   document.querySelectorAll('.board-column').forEach(c => c.classList.remove('drag-over'));
-  const task = tasks.find(t => t.id === draggedTaskId);
-  if (!task) return;
-  task.status = newStatus;
-  updateTask(task);
+  const placement = getTaskMovePlacementFromPoint(event.clientX, event.clientY, newStatus);
+  moveTaskToPlacement(draggedTaskId, placement.status, placement.anchorTaskId, placement.insertAfter);
+  draggedTaskId = null;
   renderBoard();
 }
 
@@ -71,6 +72,108 @@ const COLUMN_STATUS = {
   'awaiting-column':   'Await Feedback',
   'done-column':       'Done',
 };
+
+/**
+ * Returns the task card under the given screen coordinates.
+ * @param {number} x - Horizontal screen coordinate.
+ * @param {number} y - Vertical screen coordinate.
+ * @returns {HTMLElement|null} Result.
+ */
+function getTaskCardAtPoint(x, y) {
+  const elements = document.elementsFromPoint(x, y);
+  for (const element of elements) {
+    const card = element.closest?.('.task-card[data-task-id]');
+    if (!card || card.classList.contains('task-card-summary')) continue;
+    if (parseInt(card.dataset.taskId, 10) === draggedTaskId) continue;
+    return card;
+  }
+  return null;
+}
+
+/**
+ * Returns the intended move placement for the dragged task.
+ * @param {number} x - Horizontal screen coordinate.
+ * @param {number} y - Vertical screen coordinate.
+ * @param {string} fallbackStatus - Target status when no anchor task is hit.
+ * @returns {{status: string, anchorTaskId: number|null, insertAfter: boolean}} Result.
+ */
+function getTaskMovePlacementFromPoint(x, y, fallbackStatus) {
+  const targetCard = getTaskCardAtPoint(x, y);
+  if (!targetCard) {
+    return { status: fallbackStatus, anchorTaskId: null, insertAfter: false };
+  }
+  const rect = targetCard.getBoundingClientRect();
+  const targetColumn = targetCard.closest('.board-column');
+  return {
+    status: COLUMN_STATUS[targetColumn?.id] || fallbackStatus,
+    anchorTaskId: parseInt(targetCard.dataset.taskId, 10),
+    insertAfter: y > rect.top + rect.height / 2,
+  };
+}
+
+/**
+ * Applies sequential order values to the given tasks.
+ * @param {Array} orderedTasks - Ordered task list.
+ * @returns {void} Result.
+ */
+function assignSequentialTaskOrder(orderedTasks) {
+  orderedTasks.forEach((task, index) => {
+    task.order = (index + 1) * TASK_ORDER_STEP;
+  });
+}
+
+/**
+ * Persists the changed task order for the affected columns.
+ * @param {Array} affectedStatuses - Board status list.
+ * @returns {void} Result.
+ */
+function persistColumnTaskOrderChanges(affectedStatuses) {
+  const seenFirebaseIds = new Set();
+  const changedTasks = [];
+  affectedStatuses.forEach((status) => {
+    getTasksForStatusInDisplayOrder(tasks, status).forEach((task) => {
+      if (!task?.firebaseId || seenFirebaseIds.has(task.firebaseId)) return;
+      seenFirebaseIds.add(task.firebaseId);
+      changedTasks.push(task);
+    });
+  });
+  changedTasks.forEach((task) => updateTask(task));
+}
+
+/**
+ * Moves the given task to a concrete position in the target column.
+ * @param {number|string} taskId - Dragged task id.
+ * @param {string} targetStatus - Target column status.
+ * @param {number|null} anchorTaskId - Neighbor task id.
+ * @param {boolean} insertAfter - Whether to insert after the anchor task.
+ * @returns {void} Result.
+ */
+function moveTaskToPlacement(taskId, targetStatus, anchorTaskId = null, insertAfter = false) {
+  const draggedTask = tasks.find((task) => task.id === taskId);
+  if (!draggedTask) return;
+  const sourceStatus = draggedTask.status;
+  draggedTask.status = targetStatus;
+
+  const targetColumnTasks = getTasksForStatusInDisplayOrder(tasks, targetStatus)
+    .filter((task) => task.id !== draggedTask.id);
+  let insertIndex = targetColumnTasks.length;
+
+  if (anchorTaskId !== null) {
+    const anchorIndex = targetColumnTasks.findIndex((task) => task.id === anchorTaskId);
+    if (anchorIndex !== -1) insertIndex = insertAfter ? anchorIndex + 1 : anchorIndex;
+  }
+
+  targetColumnTasks.splice(insertIndex, 0, draggedTask);
+  assignSequentialTaskOrder(targetColumnTasks);
+
+  const affectedStatuses = [targetStatus];
+  if (sourceStatus !== targetStatus) {
+    assignSequentialTaskOrder(getTasksForStatusInDisplayOrder(tasks, sourceStatus));
+    affectedStatuses.push(sourceStatus);
+  }
+
+  persistColumnTaskOrderChanges(affectedStatuses);
+}
 
 /**
  * Returns the board column id whose element is at the given screen coordinates.
@@ -187,10 +290,7 @@ function applyTouchDrop(colId) {
     document.querySelectorAll('.task-card').forEach(c => c.style.opacity = '');
     return;
   }
-  const task = tasks.find(t => t.id === draggedTaskId);
-  if (!task) return;
-  task.status = COLUMN_STATUS[colId];
-  updateTask(task);
+  moveTaskToPlacement(draggedTaskId, COLUMN_STATUS[colId]);
   renderBoard();
   initTouchDrag();
 }
@@ -234,7 +334,16 @@ function onTouchEnd(event) {
   const touch = event.changedTouches[0];
   document.querySelectorAll('.board-column').forEach(c => c.classList.remove('drag-over'));
   const mobileColId = getMobileDropColId(document.getElementById('mobile-drop-overlay'), touch);
-  applyTouchDrop(mobileColId || getColumnIdAtPoint(touch.clientX, touch.clientY));
+  if (mobileColId) {
+    applyTouchDrop(mobileColId);
+  } else {
+    const fallbackColId = getColumnIdAtPoint(touch.clientX, touch.clientY);
+    const fallbackStatus = COLUMN_STATUS[fallbackColId] || null;
+    const placement = getTaskMovePlacementFromPoint(touch.clientX, touch.clientY, fallbackStatus);
+    if (placement.status) moveTaskToPlacement(draggedTaskId, placement.status, placement.anchorTaskId, placement.insertAfter);
+    renderBoard();
+    initTouchDrag();
+  }
   touchDragClone.remove();
   touchDragClone = null;
   draggedTaskId = null;
@@ -245,8 +354,8 @@ function onTouchEnd(event) {
  * @returns {void} Result.
  */
 function initTouchDrag() {
-  document.querySelectorAll('.task-card').forEach(card => {
-    const id = card.getAttribute('ondragstart')?.match(/\d+/)?.[0];
+  document.querySelectorAll('.task-card:not(.task-card-summary)').forEach(card => {
+    const id = card.dataset.taskId || card.getAttribute('ondragstart')?.match(/\d+/)?.[0];
     if (!id) return;
     card.dataset.taskId = id;
     card.removeEventListener('touchstart', onTouchStart);

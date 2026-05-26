@@ -27,14 +27,6 @@ body {
   min-height: 100vh;
 }
 
-/* Sticky sidebar so the footer links are always visible regardless of page content height */
-.sidebar {
-  position: sticky;
-  top: 0;
-  height: auto;
-  overflow-y: auto;
-}
-
 .main {
   flex: 1;
   display: flex;

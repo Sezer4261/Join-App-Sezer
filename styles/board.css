@@ -251,6 +251,7 @@ h1 {
 .modal-content {
   display: flex;
   flex-direction: column;
+  position: relative;
   background-color: #fff;
   padding: 20px 30px;
   border-radius: 12px;
@@ -272,8 +273,9 @@ h1 {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 32px;
-  right: 32px;
+  top: 37px;
+  right: 11px;
+  color: #2a3647;
   font-size: 24px;
   width: 24px;
   height: 24px;

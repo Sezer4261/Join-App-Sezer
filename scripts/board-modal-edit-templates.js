@@ -44,8 +44,8 @@ function getEditFormPriorityHTML(task) {
 function getEditFormAssignedHTML() {
   return /*html*/ `
     <div class="edit-assigned"><span>Assigned to</span>
-      <div id="select-contacts" tabindex="0" class="custom-select">
-        <span onclick="toggleDropdown(event)">Select contacts
+      <div id="select-contacts" tabindex="0" class="custom-select" onclick="toggleDropdown(event)">
+        <span>Select contacts
           <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow"></span>
         <div id="dropdown-contacts" class="dropdown-content" onclick="event.stopPropagation()"></div>
       </div>
@@ -62,8 +62,8 @@ function getEditFormAssignedHTML() {
 function getEditFormCategoryHTML(task) {
   return /*html*/ `
     <div class="edit-label"><span>Category<span class="req">*</span></span>
-      <div id="edit-category-select" tabindex="0" class="custom-select">
-        <span onclick="toggleEditCategoryDropdown(event)">${task.category ? task.category + " " : "Select task category "}
+      <div id="edit-category-select" tabindex="0" class="custom-select" onclick="toggleEditCategoryDropdown(event)">
+        <span>${task.category ? task.category + " " : "Select task category "}
           <img src="./assets/icons/arrow-drop-down.svg" alt="" class="dropdown-arrow"></span>
         <div id="edit-category-dropdown" class="dropdown-content" onclick="event.stopPropagation()">${generateEditCategoryOptions(task.category)}</div>
       </div>

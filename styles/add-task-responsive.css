@@ -221,6 +221,14 @@
         padding: 110px 4px 80px 4px;
     }
 
+    #add-task-content {
+        padding-bottom: calc(104px + env(safe-area-inset-bottom));
+    }
+
+    #add-task-content .dropdown-content {
+        z-index: 90;
+    }
+
     .custom-select {
         width: 100%;
         max-width: 100%;

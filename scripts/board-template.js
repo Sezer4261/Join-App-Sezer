@@ -29,12 +29,33 @@ function getTaskCardBody(task) {
  */
 function createTaskCard(task) {
     return /*html*/ `
-      <div class="task-card" draggable="true"
+      <div class="task-card" draggable="true" data-task-id="${task.id}"
         ondragstart="startDrag(${task.id})"
         onclick="openModal(${task.id})">
         ${getTaskCardBody(task)}
       </div>
     `;
+}
+
+/**
+ * Creates the compact overview toggle card for a board column.
+ * @param {string} columnId - Column element id.
+ * @param {number} visibleLimit - Number of visible tasks before collapsing.
+ * @param {boolean} expanded - Whether the column is expanded.
+ * @returns {string} HTML string.
+ */
+function createTaskSummaryCard(columnId, visibleLimit, expanded) {
+  const title = expanded ? 'Show less' : `${visibleLimit}+`;
+  const subtitle = expanded ? 'Collapse column' : '';
+  return /*html*/ `
+    <button type="button"
+      class="task-card task-card-summary"
+      onclick="toggleBoardColumnExpansion('${columnId}')"
+      aria-expanded="${expanded}">
+      <span class="task-card-summary-title">${title}</span>
+      ${subtitle ? `<span class="task-card-summary-subtitle">${subtitle}</span>` : ''}
+    </button>
+  `;
 }
 /**
  * Returns priority icon.

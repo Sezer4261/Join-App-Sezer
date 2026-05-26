@@ -1,9 +1,115 @@
+const BOARD_COLUMN_CONFIGS = [
+  { id: "todo-column", status: "To Do" },
+  { id: "inprogress-column", status: "In Progress" },
+  { id: "awaiting-column", status: "Await Feedback" },
+  { id: "done-column", status: "Done" }
+];
+
+const COMPACT_BOARD_MEDIUM_VISIBLE_TASKS = 2;
+const COMPACT_BOARD_DESKTOP_VISIBLE_TASKS = 4;
+
+/**
+ * Returns the numeric task order if present.
+ * @param {Object} task - Task object.
+ * @returns {number|null} Result.
+ */
+function getTaskOrderValue(task) {
+  const value = Number(task?.order);
+  return Number.isFinite(value) ? value : null;
+}
+
+/**
+ * Returns the given tasks in stable display order.
+ * @param {Array} taskList - Task list.
+ * @returns {Array} Ordered task list.
+ */
+function getTasksInDisplayOrder(taskList) {
+  return taskList
+    .map((task, index) => ({ task, index }))
+    .sort((a, b) => {
+      const aOrder = getTaskOrderValue(a.task);
+      const bOrder = getTaskOrderValue(b.task);
+      if (aOrder !== null && bOrder !== null && aOrder !== bOrder) return aOrder - bOrder;
+      return a.index - b.index;
+    })
+    .map(({ task }) => task);
+}
+
+/**
+ * Returns all tasks for the given column status in display order.
+ * @param {Array} taskList - Task list.
+ * @param {string} status - Board status.
+ * @returns {Array} Ordered task list for the status.
+ */
+function getTasksForStatusInDisplayOrder(taskList, status) {
+  return getTasksInDisplayOrder(taskList.filter((task) => task.status === status));
+}
+
 /**
  * Renders board.
  * @returns {void} Result.
  */
 function renderBoard() {
   initBoardSearch();
+  initBoardResponsiveCompactMode();
+  refreshTaskView();
+  if (typeof initTouchDrag === 'function') initTouchDrag();
+}
+
+/**
+ * Registers the resize handler for compact board rendering.
+ * @returns {void} Result.
+ */
+function initBoardResponsiveCompactMode() {
+  if (boardResponsiveHandlerAdded) return;
+  boardResponsiveHandlerAdded = true;
+  lastBoardCompactLimit = getCompactBoardVisibleTaskLimit();
+  window.addEventListener("resize", handleBoardResponsiveResize, { passive: true });
+}
+
+/**
+ * Re-renders the board when the compact preview mode changes.
+ * @returns {void} Result.
+ */
+function handleBoardResponsiveResize() {
+  const nextCompactLimit = getCompactBoardVisibleTaskLimit();
+  if (nextCompactLimit === lastBoardCompactLimit) return;
+  lastBoardCompactLimit = nextCompactLimit;
+  if (!nextCompactLimit) expandedBoardColumns.clear();
+  refreshTaskView();
+  if (typeof initTouchDrag === 'function') initTouchDrag();
+}
+
+/**
+ * Returns whether the board should show compact task previews per column.
+ * @returns {boolean} Result.
+ */
+function shouldUseCompactBoardTaskPreview() {
+  return !boardSearchTerm && window.innerWidth >= 621;
+}
+
+/**
+ * Returns the number of visible tasks per compact board column for the current width.
+ * @returns {number} Result.
+ */
+function getCompactBoardVisibleTaskLimit() {
+  if (!shouldUseCompactBoardTaskPreview()) return 0;
+  return window.innerWidth <= 1140
+    ? COMPACT_BOARD_MEDIUM_VISIBLE_TASKS
+    : COMPACT_BOARD_DESKTOP_VISIBLE_TASKS;
+}
+
+/**
+ * Toggles a compact column between collapsed and expanded state.
+ * @param {string} columnId - Column id.
+ * @returns {void} Result.
+ */
+function toggleBoardColumnExpansion(columnId) {
+  if (expandedBoardColumns.has(columnId)) {
+    expandedBoardColumns.delete(columnId);
+  } else {
+    expandedBoardColumns.add(columnId);
+  }
   refreshTaskView();
   if (typeof initTouchDrag === 'function') initTouchDrag();
 }
@@ -66,7 +172,7 @@ function clearBoardSearch(input, clearBtn) {
  * @returns {void} Result.
  */
 function clearTaskCards() {
-  const cards = document.querySelectorAll(".task-card");
+  const cards = document.querySelectorAll(".task-card, .task-card-summary");
   cards.forEach((card) => card.remove());
 }
 
@@ -76,12 +182,35 @@ function clearTaskCards() {
  */
 function renderTasksIntoColumns() {
   const filteredTasks = getFilteredTasks();
-  for (let i = 0; i < filteredTasks.length; i++) {
-    const task = filteredTasks[i];
-    const column = getColumnByStatus(task.status);
-    if (!column) continue;
-    const wrapper = column.querySelector(".task-wrapper");
-    (wrapper || column).innerHTML += createTaskCard(task);
+  const compactVisibleLimit = getCompactBoardVisibleTaskLimit();
+  BOARD_COLUMN_CONFIGS.forEach((columnConfig) => renderTasksForColumn(columnConfig, filteredTasks, compactVisibleLimit));
+}
+
+/**
+ * Renders one board column including the compact +N summary card.
+ * @param {{id: string, status: string}} columnConfig - Column config.
+ * @param {Array} filteredTasks - Filtered task list.
+ * @param {number} compactVisibleLimit - Number of visible tasks in compact mode, or 0 when disabled.
+ * @returns {void} Result.
+ */
+function renderTasksForColumn(columnConfig, filteredTasks, compactVisibleLimit) {
+  const column = document.getElementById(columnConfig.id);
+  const wrapper = column?.querySelector(".task-wrapper");
+  if (!wrapper) return;
+  const columnTasks = getTasksForStatusInDisplayOrder(filteredTasks, columnConfig.status);
+  const shouldCollapse = compactVisibleLimit > 0 && columnTasks.length > compactVisibleLimit;
+  const expanded = shouldCollapse && expandedBoardColumns.has(columnConfig.id);
+  const visibleTasks = shouldCollapse && !expanded
+    ? columnTasks.slice(0, compactVisibleLimit)
+    : columnTasks;
+  for (let i = 0; i < visibleTasks.length; i++) {
+    wrapper.insertAdjacentHTML("beforeend", createTaskCard(visibleTasks[i]));
+  }
+  if (shouldCollapse) {
+    wrapper.insertAdjacentHTML(
+      "beforeend",
+      createTaskSummaryCard(columnConfig.id, compactVisibleLimit, expanded)
+    );
   }
 }
 
@@ -155,11 +284,5 @@ function updateColumnPlaceholder(column, filteredTasks) {
 
 function updateNoTaskPlaceholders() {
     const filteredTasks = getFilteredTasks();
-    const columns = [
-        { id: "todo-column", status: "To Do" },
-        { id: "inprogress-column", status: "In Progress" },
-        { id: "awaiting-column", status: "Await Feedback" },
-        { id: "done-column", status: "Done" }
-    ];
-    columns.forEach(col => updateColumnPlaceholder(col, filteredTasks));
+  BOARD_COLUMN_CONFIGS.forEach(col => updateColumnPlaceholder(col, filteredTasks));
 }

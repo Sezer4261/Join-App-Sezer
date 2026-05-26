@@ -72,6 +72,13 @@
   user-select: none;
 }
 
+.dropdown-item:has(.contact-checkbox) {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 16px;
+  align-items: center;
+  column-gap: 10px;
+}
+
 .dropdown-item + .dropdown-item {
   margin-top: 4px;
 }
@@ -93,6 +100,11 @@
   background: transparent;
   position: relative;
   cursor: pointer;
+}
+
+.dropdown-item .contact-checkbox {
+  margin-left: 0;
+  justify-self: end;
 }
 
 .dropdown-item input,
@@ -124,6 +136,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.dropdown-item:has(.contact-checkbox) .dropdown-name {
+  flex: initial;
+  display: block;
+  width: auto;
 }
 
 .dropdown-item input:checked {
