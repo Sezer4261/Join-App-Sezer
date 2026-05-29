@@ -108,9 +108,14 @@
     }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 390px) {
     main {
         padding-bottom: calc(180px + env(safe-area-inset-bottom));
+    }
+
+    .content-limit--left {
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
     .wrapper {

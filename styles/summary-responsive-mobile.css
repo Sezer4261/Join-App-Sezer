@@ -117,7 +117,16 @@
     .task-summary-card {
         width: 100%;
         min-width: 0;
-        height: 108px;
+        height: 130px;
+    }
+
+    .task-summary-card .card-value {
+        font-size: 40px;
+    }
+
+    .task-summary-card .card-subtitle {
+        font-size: 16px;
+        line-height: 1.2;
     }
 }
 
