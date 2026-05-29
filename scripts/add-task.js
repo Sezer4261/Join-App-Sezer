@@ -60,7 +60,29 @@ const addTaskDatePickerState = {
   grid: null,
   activeInput: null,
   viewDate: null,
+  globalHandlersBound: false,
 };
+
+function ensureAddTaskDatePickerGlobalHandlers() {
+  if (addTaskDatePickerState.globalHandlersBound) return;
+  document.addEventListener('pointerdown', handleAddTaskDatePickerOutsidePointerDown, true);
+  document.addEventListener('focusin', handleAddTaskDatePickerFocusIn, true);
+  document.addEventListener('keydown', handleAddTaskDatePickerGlobalKeydown);
+  window.addEventListener('resize', updateAddTaskDatePickerPosition);
+  window.addEventListener('scroll', updateAddTaskDatePickerPosition, true);
+  addTaskDatePickerState.globalHandlersBound = true;
+}
+
+function isInsideActiveAddTaskDatePicker(target) {
+  const { popup, activeInput } = addTaskDatePickerState;
+  if (!activeInput) return false;
+  const dateLabel = activeInput.closest('label');
+  return !!(
+    popup?.contains(target)
+    || activeInput === target
+    || dateLabel?.contains(target)
+  );
+}
 
 function shouldUseCustomAddTaskDatePicker() {
   return typeof window.matchMedia === 'function' && window.matchMedia('(pointer: fine)').matches;
@@ -94,6 +116,8 @@ function getAddTaskDatePickerInitialDate(dateInput) {
 }
 
 function ensureAddTaskDatePickerPopup(dateInput) {
+  ensureAddTaskDatePickerGlobalHandlers();
+
   if (!addTaskDatePickerState.popup) {
     const popup = document.createElement('div');
     popup.className = 'add-task-date-picker-popup';
@@ -108,10 +132,6 @@ function ensureAddTaskDatePickerPopup(dateInput) {
       <div class="add-task-date-picker__grid" role="grid"></div>
     `;
     popup.addEventListener('click', handleAddTaskDatePickerClick);
-    document.addEventListener('pointerdown', handleAddTaskDatePickerOutsidePointerDown, true);
-    document.addEventListener('keydown', handleAddTaskDatePickerGlobalKeydown);
-    window.addEventListener('resize', updateAddTaskDatePickerPosition);
-    window.addEventListener('scroll', updateAddTaskDatePickerPosition, true);
     addTaskDatePickerState.popup = popup;
     addTaskDatePickerState.title = popup.querySelector('.add-task-date-picker__title');
     addTaskDatePickerState.grid = popup.querySelector('.add-task-date-picker__grid');
@@ -190,11 +210,12 @@ function updateAddTaskDatePickerPosition() {
   }
 }
 
-function closeAddTaskDatePicker() {
+function closeAddTaskDatePicker(options = {}) {
+  const { blurActiveInput = false } = options;
   const { popup, activeInput } = addTaskDatePickerState;
-  if (!popup) return;
-  popup.hidden = true;
+  if (popup) popup.hidden = true;
   if (activeInput) activeInput.setAttribute('aria-expanded', 'false');
+  if (blurActiveInput && activeInput === document.activeElement) activeInput.blur();
   addTaskDatePickerState.activeInput = null;
   addTaskDatePickerState.viewDate = null;
 }
@@ -227,9 +248,16 @@ function handleAddTaskDatePickerClick(event) {
 
 function handleAddTaskDatePickerOutsidePointerDown(event) {
   const { popup, activeInput } = addTaskDatePickerState;
-  if (!popup || popup.hidden || !activeInput) return;
-  const dateLabel = activeInput.closest('label');
-  if (popup.contains(event.target) || activeInput === event.target || dateLabel?.contains(event.target)) return;
+  if (!activeInput) return;
+  if (popup && !popup.hidden && isInsideActiveAddTaskDatePicker(event.target)) return;
+  if (!popup && isInsideActiveAddTaskDatePicker(event.target)) return;
+  closeAddTaskDatePicker({ blurActiveInput: true });
+}
+
+function handleAddTaskDatePickerFocusIn(event) {
+  const { activeInput } = addTaskDatePickerState;
+  if (!activeInput) return;
+  if (isInsideActiveAddTaskDatePicker(event.target)) return;
   closeAddTaskDatePicker();
 }
 
@@ -250,6 +278,7 @@ function openCustomAddTaskDatePicker(dateInput) {
 
 function openAddTaskDatePicker(dateInput) {
   if (!dateInput) return;
+  ensureAddTaskDatePickerGlobalHandlers();
   if (
     shouldUseCustomAddTaskDatePicker()
     && addTaskDatePickerState.activeInput === dateInput
@@ -264,6 +293,9 @@ function openAddTaskDatePicker(dateInput) {
     openCustomAddTaskDatePicker(dateInput);
     return;
   }
+  addTaskDatePickerState.activeInput = dateInput;
+  addTaskDatePickerState.viewDate = null;
+  updateAddTaskDateInputMode(dateInput);
   try {
     dateInput.showPicker();
     return;

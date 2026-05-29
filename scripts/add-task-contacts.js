@@ -23,6 +23,77 @@ function toggleOrFallbackDropdown(dropdown) {
 }
 
 /**
+ * Resolves the scroll container that should stay stable while toggling a dropdown.
+ * @param {HTMLElement|null} select - Dropdown trigger element.
+ * @returns {HTMLElement|null} Result.
+ */
+function getDropdownScrollContainer(select) {
+  if (!select) return null;
+  if (select.closest('.edit-task-form') && window.matchMedia('(max-width: 320px)').matches) {
+    return select.closest('.modal-content');
+  }
+
+  let current = select.parentElement;
+  while (current) {
+    const style = window.getComputedStyle(current);
+    const overflowY = style.overflowY;
+    if ((overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay') && current.scrollHeight > current.clientHeight) {
+      return current;
+    }
+    current = current.parentElement;
+  }
+
+  return document.scrollingElement || document.documentElement;
+}
+
+/**
+ * Returns the visible vertical bounds of the given scroll container.
+ * @param {HTMLElement|null} scrollContainer - Scroll container element.
+ * @returns {{top:number,bottom:number}} Result.
+ */
+function getScrollContainerViewport(scrollContainer) {
+  const root = document.scrollingElement || document.documentElement;
+  if (!scrollContainer || scrollContainer === root || scrollContainer === document.documentElement || scrollContainer === document.body) {
+    return { top: 0, bottom: window.innerHeight };
+  }
+  const rect = scrollContainer.getBoundingClientRect();
+  return { top: rect.top, bottom: rect.bottom };
+}
+
+/**
+ * Keeps the mobile board edit dropdown within the visible scroll area.
+ * @param {HTMLElement|null} select - Dropdown trigger element.
+ * @param {HTMLElement|null} dropdown - Dropdown panel element.
+ * @param {HTMLElement|null} scrollContainer - Scroll container element.
+ * @returns {void} Result.
+ */
+function keepMobileEditDropdownVisible(select, dropdown, scrollContainer) {
+  if (!select || !dropdown || !scrollContainer) return;
+  if (!dropdown.classList.contains('show')) return;
+  if (!select.closest('.edit-task-form') || !window.matchMedia('(max-width: 320px)').matches) return;
+
+  const viewport = getScrollContainerViewport(scrollContainer);
+  const selectRect = select.getBoundingClientRect();
+  const dropdownRect = dropdown.getBoundingClientRect();
+  const topPadding = 12;
+  const bottomPadding = 12;
+  let delta = 0;
+
+  if (selectRect.top < viewport.top + topPadding) {
+    delta += selectRect.top - (viewport.top + topPadding);
+  }
+
+  const overflowBelow = dropdownRect.bottom - (viewport.bottom - bottomPadding);
+  if (overflowBelow > 0) {
+    delta += overflowBelow;
+  }
+
+  if (delta !== 0) {
+    scrollContainer.scrollTop += delta;
+  }
+}
+
+/**
  * Toggles the contacts dropdown for the clicked custom-select trigger.
  * Closes all other open dropdowns first.
  * @param {Event} event - Browser event.
@@ -31,9 +102,18 @@ function toggleOrFallbackDropdown(dropdown) {
 function toggleDropdown(event) {
   if (event) event.stopPropagation();
   const trigger = event?.currentTarget || event?.target;
-  const dropdown = trigger?.closest?.(".custom-select")?.querySelector?.(".dropdown-content") || null;
+  const select = trigger?.closest?.(".custom-select") || null;
+  const dropdown = select?.querySelector?.(".dropdown-content") || null;
+  const scrollContainer = getDropdownScrollContainer(select);
+  const previousScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
   document.querySelectorAll(".dropdown-content.show").forEach(d => { if (d !== dropdown) d.classList.remove("show"); });
   toggleOrFallbackDropdown(dropdown);
+
+  if (!scrollContainer) return;
+  requestAnimationFrame(() => {
+    scrollContainer.scrollTop = previousScrollTop;
+    keepMobileEditDropdownVisible(select, dropdown, scrollContainer);
+  });
 }
 
 /**

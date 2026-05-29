@@ -41,8 +41,8 @@ main {
     gap: 75px;
     height: 100vh;
     overflow-y: auto;
-    padding-top: 96px;
-    padding-bottom: 24px;
+    padding-top: 182px;
+    padding-bottom: 206px;
 }
 
 .wrapper {
@@ -59,7 +59,7 @@ main {
     justify-content: flex-start;
     gap: 32px;
     margin-bottom: 30px;
-    margin-top: 30px;
+    margin-top: 0;
 }
 
 h1 {

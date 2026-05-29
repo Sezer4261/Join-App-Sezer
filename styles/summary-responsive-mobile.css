@@ -99,6 +99,7 @@
 
     .kpi-container {
         gap: 16px;
+        justify-content: center;
     }
 
     .kpi-card {
@@ -146,7 +147,7 @@
         width: 100%;
         padding-left: 0;
         max-width: 100%;
-        gap: 26px;
+        gap: 20px;
     }
 
     aside {
@@ -170,14 +171,14 @@
 
     .kpi-container {
         margin-top: 16px;
-        justify-content: space-between;
-        gap: 10px;
+        justify-content: center;
+        gap: 16px;
 
         flex-wrap: nowrap;
     }
 
     .kpi-card {
-        width: calc((100% - 10px) / 2);
+        width: calc((100% - 16px) / 2);
         height: 100px;
     }
 

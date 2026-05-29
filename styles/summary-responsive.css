@@ -71,6 +71,11 @@
 
 
 @media (max-width: 1024px) {
+    main {
+        padding-top: 96px;
+        padding-bottom: 24px;
+    }
+
     .header-separating-line-v {
         height: 50px;
     }
