@@ -6,8 +6,6 @@ const SIGNUP_ERROR_ID_MAP = {
     'register-password': 'register-password-error',
     'register-password-confirm': 'register-password-confirm-error',
     'accept-privacy': 'accept-privacy-error',
-
-    // Backwards-compatible aliases (falls irgendwo camelCase verwendet wird)
     registerName: 'register-name-error',
     registerEmail: 'register-email-error',
     registerPassword: 'register-password-error',
@@ -121,7 +119,6 @@ function validateNameField(fields, state) {
         return;
     }
 
-    // Normalize (trim/collapse whitespace) to keep consistent formatting.
     fields.nameInput.value = nameCheck.normalizedName;
 }
 
@@ -141,7 +138,6 @@ function validateEmailField(fields, state) {
         return;
     }
 
-    // Normalize (lowercase) so the stored value is consistent across the app.
     fields.emailInput.value = emailCheck.normalizedEmail;
 }
 
@@ -159,7 +155,6 @@ function getSignupEmailErrorMessage(emailCheck) {
         case 'pattern':
             return 'Please enter a valid email address.';
         default:
-            // Fallback (keeps behavior stable if reason is missing)
             return emailCheck?.error || 'Please enter a valid email address.';
     }
 }

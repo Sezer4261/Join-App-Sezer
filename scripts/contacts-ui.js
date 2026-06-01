@@ -57,7 +57,6 @@ function bindAddContactDialogEvents(dialog) {
   }
 }
 
-// NEU: Schließt Add Contact Dialog mit Animation
 /**
  * Closes add contact dialog with animation.
  * @returns {void} Result.

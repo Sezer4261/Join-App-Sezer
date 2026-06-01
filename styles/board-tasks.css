@@ -232,6 +232,7 @@
 
 .add-task-dialog .priority-options label {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 6px;
     padding: 4px 4px;

@@ -34,7 +34,7 @@
 
     .contact-section-left {
         width: 100%;
-        min-height: calc(100vh - 80px);
+        min-height: 0;
     }
 
     .contact-section {

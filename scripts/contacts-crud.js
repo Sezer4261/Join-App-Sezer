@@ -103,7 +103,6 @@ async function fetchContactDetails(contactId) {
   }
 }
 
-// delete contact
 /**
  * Deletes contact.
  * @param {string} contactId - Contact identifier.

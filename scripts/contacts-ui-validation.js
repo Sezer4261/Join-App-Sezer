@@ -238,7 +238,6 @@ function updateAddContactSubmitState(dialog) {
 function bindContactFieldListeners(field, fieldIds, handler) {
   field.addEventListener('focus', () => showContactFieldErrorMessage(field.id, fieldIds));
   field.addEventListener('input', () => {
-    // Validate and show errors in real-time for contacts
     const check = validateContactDialogField(field.id, field.value ?? '');
     if (!check.isValid) {
       applyContactInlineValidation(field.id, field, check.error);

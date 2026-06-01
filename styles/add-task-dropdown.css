@@ -307,6 +307,7 @@ select:focus,
 
 .priority-options label {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 6px;

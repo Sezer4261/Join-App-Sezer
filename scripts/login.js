@@ -1,4 +1,3 @@
-// Entferne Intro-Overlay nach Animation
 window.addEventListener('DOMContentLoaded', () => {
     initIntroAlignment();
     scheduleIntroOverlayRemoval();
@@ -430,7 +429,6 @@ function navigateToSignup() {
  * @returns {void} Result.
  */
 function guestLogin() {
-  // Guest-Session speichern (wichtig für Summary)
   localStorage.setItem("user", JSON.stringify({ mode: "guest" }));
 
   showToast("You logged in successfully");

@@ -10,8 +10,7 @@ async function loadTasks() {
   } catch (error) {
     console.error("Fehler beim Laden der Tasks:", error);
   }
-  
-  // Also load contacts for the edit modal
+
   await loadContacts();
   
   renderBoard();

@@ -240,18 +240,16 @@
     main {
         padding-top: 77px;
     }
-
-    .contact-section-left {
-        height: calc(100vh - 157px);
-    }
 }
 
 @media (max-width: 600px) {
     main {
         padding-top: 70px;
     }
+}
 
-    .contact-section-left {
-        height: calc(100vh - 70px);
+@media (max-width: 620px) {
+    main {
+        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
     }
 }

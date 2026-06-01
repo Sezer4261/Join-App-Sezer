@@ -61,8 +61,6 @@ function dropTask(event, newStatus) {
   renderBoard();
 }
 
-// ── Long-press drag (≤620px stacked layout) ────────────────────────────────────
-
 let touchDragClone = null;
 let touchDragOffsetX = 0;
 let touchDragOffsetY = 0;
@@ -426,8 +424,6 @@ function maybeCancelLongPressOnMove(clientX, clientY) {
   }
 }
 
-// ── Touch handlers (phones / touch emulation) ─────────────────────────────────
-
 /**
  * @param {TouchEvent} event
  */
@@ -463,15 +459,12 @@ function onTouchEnd(event) {
   resetLongPressState();
 }
 
-// ── Mouse handlers (DevTools responsive with mouse) ───────────────────────────
-
 /**
  * @param {MouseEvent} event
  */
 function onMouseDown(event) {
   if (!isStackedBoardLayout()) return;
   if (event.button !== 0) return;
-  // Ignore synthetic mouse events after touch (mobile browsers).
   if (Date.now() - lastTouchStartTime < 600) return;
   beginLongPress(event.currentTarget, event.clientX, event.clientY);
   document.addEventListener('mousemove', onDocumentMouseMove);

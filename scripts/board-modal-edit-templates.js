@@ -1,7 +1,3 @@
-// ── Edit-task modal templates ─────────────────────────────────────────────────
-// All HTML generation for the inline edit form inside the task modal.
-// Depends on: URGENT_ICON, MEDIUM_ICON, LOW_ICON (add-task-templates.js)
-
 /**
  * Returns title, description, and due-date labels for the edit form.
  * @param {Object} task - Task object.
