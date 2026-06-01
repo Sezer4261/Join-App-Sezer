@@ -394,11 +394,12 @@
         width: 100%;
     }
 
-    /* Mobile long-press drag should not trigger text selection/callouts */
+    /* Long-press drag: no text selection/callout; allow custom drag instead of scroll */
     .task-card {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         user-select: none;
+        touch-action: none;
     }
 
     .modal-content .edit-task-form {
