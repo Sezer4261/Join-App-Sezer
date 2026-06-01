@@ -394,6 +394,13 @@
         width: 100%;
     }
 
+    /* Mobile long-press drag should not trigger text selection/callouts */
+    .task-card {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
     .modal-content .edit-task-form {
         gap: 20px;
     }
