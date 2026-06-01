@@ -215,6 +215,20 @@ let longPressTimer;
 clearTimeout(longPressTimer);
 
 /**
+ * Determines if the mobile drop overlay should be shown based on layout.
+ * Shows overlay for vertical stacked column layouts (typically ≤620px).
+ * @returns {boolean} Result.
+ */
+function shouldShowMobileDropOverlay() {
+  // Check if columns are vertically stacked (not horizontally scrolling)
+  const boardColumns = document.querySelector('.board-columns');
+  if (!boardColumns) return false;
+  const style = window.getComputedStyle(boardColumns);
+  // If flex-direction is column (vertical stacking), show overlay
+  return style.flexDirection === 'column' || window.innerWidth <= 620;
+}
+
+/**
  * Activates touch drag: records the dragged task, creates the visual clone
  * and shows the mobile drop overlay on small screens.
  * @param {HTMLElement} card - Task card element.
@@ -229,7 +243,7 @@ function activateTouchDrag(card, touch, rect) {
   touchDragClone = createTouchDragClone(card, rect);
   document.body.appendChild(touchDragClone);
   card.style.opacity = '0.3';
-  if (window.innerWidth <= 620) {
+  if (shouldShowMobileDropOverlay()) {
     const overlay = document.getElementById('mobile-drop-overlay');
     if (overlay) overlay.classList.add('active');
   }
@@ -244,7 +258,7 @@ function onTouchStart(event) {
   const card = event.currentTarget;
   const touch = event.touches[0];
   const rect = card.getBoundingClientRect();
-  longPressTimer = setTimeout(() => activateTouchDrag(card, touch, rect), 800);
+  longPressTimer = setTimeout(() => activateTouchDrag(card, touch, rect), 500);
 }
 
 /**

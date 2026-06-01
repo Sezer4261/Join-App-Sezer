@@ -66,7 +66,7 @@ const addTaskDatePickerState = {
 function ensureAddTaskDatePickerGlobalHandlers() {
   if (addTaskDatePickerState.globalHandlersBound) return;
   document.addEventListener('pointerdown', handleAddTaskDatePickerOutsidePointerDown, true);
-  document.addEventListener('focusin', handleAddTaskDatePickerFocusIn, true);
+  document.addEventListener('pointerup', handleAddTaskDatePickerOutsidePointerUp, true);
   document.addEventListener('keydown', handleAddTaskDatePickerGlobalKeydown);
   window.addEventListener('resize', updateAddTaskDatePickerPosition);
   window.addEventListener('scroll', updateAddTaskDatePickerPosition, true);
@@ -76,12 +76,17 @@ function ensureAddTaskDatePickerGlobalHandlers() {
 function isInsideActiveAddTaskDatePicker(target) {
   const { popup, activeInput } = addTaskDatePickerState;
   if (!activeInput) return false;
+  // Check if target is the popup or any element within it
+  if (popup?.contains(target)) return true;
+  // Check if target is the input itself
+  if (activeInput === target) return true;
+  // Check if target is within the label
   const dateLabel = activeInput.closest('label');
-  return !!(
-    popup?.contains(target)
-    || activeInput === target
-    || dateLabel?.contains(target)
-  );
+  if (dateLabel?.contains(target)) return true;
+  // Check if target is the error span
+  const errorSpan = document.getElementById('date-error');
+  if (errorSpan?.contains(target)) return true;
+  return false;
 }
 
 function shouldUseCustomAddTaskDatePicker() {
@@ -132,6 +137,7 @@ function ensureAddTaskDatePickerPopup(dateInput) {
       <div class="add-task-date-picker__grid" role="grid"></div>
     `;
     popup.addEventListener('click', handleAddTaskDatePickerClick);
+    popup.addEventListener('pointerup', handleAddTaskDatePickerPointerUp);
     addTaskDatePickerState.popup = popup;
     addTaskDatePickerState.title = popup.querySelector('.add-task-date-picker__title');
     addTaskDatePickerState.grid = popup.querySelector('.add-task-date-picker__grid');
@@ -231,6 +237,9 @@ function setAddTaskDatePickerValue(dateValue) {
 }
 
 function handleAddTaskDatePickerClick(event) {
+  event.stopPropagation();
+  event.preventDefault();
+  
   const actionButton = event.target.closest('[data-action]');
   if (actionButton) {
     const monthOffset = actionButton.dataset.action === 'previous-month' ? -1 : 1;
@@ -246,12 +255,41 @@ function handleAddTaskDatePickerClick(event) {
   setAddTaskDatePickerValue(dayButton.dataset.date);
 }
 
+function handleAddTaskDatePickerPointerUp(event) {
+  const dayButton = event.target.closest('[data-date]');
+  if (!dayButton || dayButton.disabled) return;
+  event.stopPropagation();
+  event.preventDefault();
+}
+
 function handleAddTaskDatePickerOutsidePointerDown(event) {
   const { popup, activeInput } = addTaskDatePickerState;
   if (!activeInput) return;
-  if (popup && !popup.hidden && isInsideActiveAddTaskDatePicker(event.target)) return;
-  if (!popup && isInsideActiveAddTaskDatePicker(event.target)) return;
+  
+  // Check if the click is inside the date picker popup or related elements
+  if (popup && !popup.hidden && isInsideActiveAddTaskDatePicker(event.target)) {
+    event.stopPropagation();
+    return;
+  }
+  if (!popup && isInsideActiveAddTaskDatePicker(event.target)) {
+    event.stopPropagation();
+    return;
+  }
+  
+  // Close if clicking outside
   closeAddTaskDatePicker({ blurActiveInput: true });
+}
+
+function handleAddTaskDatePickerOutsidePointerUp(event) {
+  const { popup, activeInput } = addTaskDatePickerState;
+  if (!activeInput || !popup || popup.hidden) return;
+  
+  // Check if a date was clicked
+  const dayButton = event.target.closest('[data-date]');
+  if (!dayButton || dayButton.disabled) return;
+  
+  // Don't close here; let the click handler take care of it
+  event.stopPropagation();
 }
 
 function handleAddTaskDatePickerFocusIn(event) {

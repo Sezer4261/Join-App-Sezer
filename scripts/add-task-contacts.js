@@ -100,10 +100,25 @@ function keepMobileEditDropdownVisible(select, dropdown, scrollContainer) {
  * @returns {void} Result.
  */
 function toggleDropdown(event) {
-  if (event) event.stopPropagation();
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  
   const trigger = event?.currentTarget || event?.target;
-  const select = trigger?.closest?.(".custom-select") || null;
-  const dropdown = select?.querySelector?.(".dropdown-content") || null;
+  const select = trigger?.closest?.(".custom-select") ?? null;
+  
+  if (!select) {
+    console.warn("toggleDropdown: Could not find .custom-select element", { trigger });
+    return;
+  }
+  
+  const dropdown = select.querySelector(".dropdown-content");
+  if (!dropdown) {
+    console.warn("toggleDropdown: Could not find .dropdown-content element", { select });
+    return;
+  }
+  
   const scrollContainer = getDropdownScrollContainer(select);
   const previousScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
   document.querySelectorAll(".dropdown-content.show").forEach(d => { if (d !== dropdown) d.classList.remove("show"); });

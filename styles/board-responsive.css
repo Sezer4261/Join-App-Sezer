@@ -6,7 +6,7 @@
 
 @media (max-width: 1260px) {
     .column-title {
-        font-size: 20px;
+        font-size: 27px;
     }
 
     .board-search input::placeholder {
@@ -467,22 +467,72 @@
     }
 
     .task-wrapper {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-        align-items: start;
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        align-items: flex-start;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 8px;
+        min-height: 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .task-wrapper::-webkit-scrollbar {
+        display: none;
     }
 
     .task-wrapper .task-card {
-        width: 100%;
-        max-width: 100%;
+        width: 200px;
+        min-width: 200px;
         margin-bottom: 0;
+        padding: 14px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .task-wrapper .task-card h2 {
+        font-size: 15px;
+        margin-bottom: 6px;
+        word-break: break-word;
+        line-height: 1.2;
+        max-height: 3em;
+        overflow: hidden;
+    }
+
+    .task-wrapper .task-card h3 {
+        font-size: 13px;
+        margin: 3px 0 8px;
+    }
+
+    .task-wrapper .task-card span {
+        font-size: 13px;
+        margin-bottom: 6px;
+        -webkit-line-clamp: 2;
+    }
+
+    .task-wrapper .task-card .task-category {
+        font-size: 12px;
+        height: 24px;
+        padding: 0 8px;
+        margin-bottom: 6px;
+    }
+
+    .task-wrapper .task-card .task-footer {
+        font-size: 12px;
+        gap: 4px;
+    }
+
+    .task-wrapper .task-card .subtask-progress-bar {
+        width: 80px;
+        height: 6px;
     }
 
     .task-wrapper .task-card:only-child,
     .task-wrapper .no-tasks,
     .task-wrapper .task-card-summary {
-        grid-column: 1 / -1;
+        flex-shrink: 0;
     }
 }
 

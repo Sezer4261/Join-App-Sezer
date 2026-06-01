@@ -4,6 +4,55 @@ const ADD_CONTACT_FIELD_IDS = ['ac-name', 'ac-email', 'ac-phone'];
 const EDIT_CONTACT_FIELD_IDS = ['edit-name', 'edit-email', 'edit-phone'];
 
 /**
+ * Validates contact name input (only letters allowed).
+ * @param {string} value - Input value.
+ * @returns {{isValid: boolean, normalizedName: string, error: string}} Result.
+ */
+function validateContactNameInput(value) {
+  const normalized = value?.trim() ?? '';
+  if (!normalized) {
+    return { isValid: false, normalizedName: normalized, error: 'Name is required.' };
+  }
+  if (!/^[a-zA-Z\s]*$/.test(normalized)) {
+    return { isValid: false, normalizedName: normalized, error: 'Only letters allowed.' };
+  }
+  return { isValid: true, normalizedName: normalized, error: '' };
+}
+
+/**
+ * Validates contact phone number (only digits allowed).
+ * @param {string} value - Input value.
+ * @returns {{isValid: boolean, normalizedPhone: string, error: string}} Result.
+ */
+function validateContactPhoneNumber(value) {
+  const normalized = value?.trim() ?? '';
+  if (!normalized) {
+    return { isValid: false, normalizedPhone: normalized, error: 'Phone is required.' };
+  }
+  if (!/^\d+$/.test(normalized)) {
+    return { isValid: false, normalizedPhone: normalized, error: 'Only digits allowed.' };
+  }
+  return { isValid: true, normalizedPhone: normalized, error: '' };
+}
+
+/**
+ * Validates email address like signup.
+ * @param {string} value - Input value.
+ * @returns {{isValid: boolean, normalizedEmail: string, error: string}} Result.
+ */
+function validateEmailLikeSignup(value) {
+  const normalized = value?.trim() ?? '';
+  if (!normalized) {
+    return { isValid: false, normalizedEmail: normalized, error: 'Email is required.' };
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(normalized)) {
+    return { isValid: false, normalizedEmail: normalized, error: 'Valid email required.' };
+  }
+  return { isValid: true, normalizedEmail: normalized, error: '' };
+}
+
+/**
  * Returns the error span id for a given input id.
  * @param {string} fieldId - Input id.
  * @returns {string} Span id.
@@ -188,7 +237,16 @@ function updateAddContactSubmitState(dialog) {
  */
 function bindContactFieldListeners(field, fieldIds, handler) {
   field.addEventListener('focus', () => showContactFieldErrorMessage(field.id, fieldIds));
-  field.addEventListener('input', () => { clearContactDialogFieldErrorIfResolved(field.id); handler(); });
+  field.addEventListener('input', () => {
+    // Validate and show errors in real-time for contacts
+    const check = validateContactDialogField(field.id, field.value ?? '');
+    if (!check.isValid) {
+      applyContactInlineValidation(field.id, field, check.error);
+    } else {
+      clearContactDialogFieldErrorIfResolved(field.id);
+    }
+    handler();
+  });
   field.addEventListener('change', () => { clearContactDialogFieldErrorIfResolved(field.id); handler(); });
   field.addEventListener('blur', () => { validateContactDialogFieldOnBlur(field.id); handler(); });
 }

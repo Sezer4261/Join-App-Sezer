@@ -405,13 +405,13 @@
 .add-task-dialog .actions {
     position: absolute;
     right: 24px;
-    bottom: 32px;
+    bottom: -70px;
     z-index: 5;
 }
 
 .add-task-dialog .note-outside {
     position: absolute;
     left: 36px;
-    bottom: 48px;
+    bottom: -70px;
     z-index: 5;
 }
