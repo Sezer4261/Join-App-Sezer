@@ -61,6 +61,38 @@ function getScrollContainerViewport(scrollContainer) {
 }
 
 /**
+ * Positions the edit-task dropdown so it stays inside the modal.
+ * Prefers opening upwards when there isn't enough space below.
+ * @param {HTMLElement|null} select - Dropdown trigger.
+ * @param {HTMLElement|null} dropdown - Dropdown panel.
+ * @returns {void} Result.
+ */
+function positionEditTaskDropdown(select, dropdown) {
+  if (!select || !dropdown) return;
+  if (!select.closest('.edit-task-form')) return;
+  if (!dropdown.classList.contains('show')) {
+    dropdown.classList.remove('open-up');
+    dropdown.style.maxHeight = '';
+    return;
+  }
+
+  const modalContent = select.closest('.modal-content') || select.closest('#task-modal') || document.body;
+  const modalRect = modalContent.getBoundingClientRect();
+  const selectRect = select.getBoundingClientRect();
+  const gap = 6;
+  const padding = 12;
+
+  const availableBelow = modalRect.bottom - (selectRect.bottom + gap) - padding;
+  const availableAbove = (selectRect.top - gap) - modalRect.top - padding;
+
+  const shouldOpenUp = availableBelow < 140 && availableAbove > availableBelow;
+  dropdown.classList.toggle('open-up', shouldOpenUp);
+
+  const available = Math.max(80, Math.floor((shouldOpenUp ? availableAbove : availableBelow)));
+  dropdown.style.maxHeight = `${Math.min(180, available)}px`;
+}
+
+/**
  * Keeps the mobile board edit dropdown within the visible scroll area.
  * @param {HTMLElement|null} select - Dropdown trigger element.
  * @param {HTMLElement|null} dropdown - Dropdown panel element.
@@ -85,7 +117,9 @@ function keepMobileEditDropdownVisible(select, dropdown, scrollContainer) {
 
   const overflowBelow = dropdownRect.bottom - (viewport.bottom - bottomPadding);
   if (overflowBelow > 0) {
-    delta += overflowBelow;
+    // Prefer opening upwards to avoid jumping the scroll position.
+    positionEditTaskDropdown(select, dropdown);
+    return;
   }
 
   if (delta !== 0) {
@@ -127,6 +161,7 @@ function toggleDropdown(event) {
   if (!scrollContainer) return;
   requestAnimationFrame(() => {
     scrollContainer.scrollTop = previousScrollTop;
+    positionEditTaskDropdown(select, dropdown);
     keepMobileEditDropdownVisible(select, dropdown, scrollContainer);
   });
 }

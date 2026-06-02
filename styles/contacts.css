@@ -1,27 +1,44 @@
 main {
     gap: 0px;
-    min-height: 100vh;
+    min-height: 0;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
     background-color: rgb(246, 247, 248);
     display: flex;
     flex-direction: column;
     padding-bottom: 0px;
     padding-top: 80px !important;
     margin-top: 0 !important;
+    box-sizing: border-box;
 }
 
 .wrapper {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
     height: 100%;
+    overflow: hidden;
     padding: 0px 0px;
     gap: 0px !important;
-    flex: 1;
+}
+
+#contact-details {
+    min-width: 0;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .contact-section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
     width: 100%;
     max-width: 420px;
     margin-left: 0;
@@ -33,7 +50,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding-right: 8px;
+    padding-right: 50px;
 }
 
 .contact-group-letter {
@@ -57,7 +74,7 @@ main {
 .contact-area {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 20px;
     padding: 12px 24px;
     cursor: pointer;
     transition: background-color 120ms ease;
@@ -89,17 +106,18 @@ main {
 }
 
 .contact-avatar {
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: #FFA500;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 17px;
     color: #fff;
     margin-right: 0;
+    flex-shrink: 0;
 }
 
 .contact-avatar-large {
@@ -110,7 +128,7 @@ main {
 }
 
 .avatar-placeholder {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -159,27 +177,30 @@ main {
     gap: 2px;
     padding: 12px 24px;
     margin-top: 12px;
-    width: 352px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .contact-name-wrapper {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
 .contact-initials {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     color: #fff;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 0;
     border: 1px solid #fff;
+    flex-shrink: 0;
 }
 
 .contact-data-mail {
@@ -233,8 +254,13 @@ main {
 .contact-div-right {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
     gap: 32px;
     margin: 16px 0 0 40px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .contact-maintitle-container {
@@ -269,40 +295,56 @@ main {
 
 .contact-section-left {
     display: flex;
-    min-height: calc(100vh - 96px);
-    height: auto;
+    flex-direction: column;
+    flex: 0 1 auto;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
+    max-width: min(420px, 42vw);
     background-color: white;
+    box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
 }
 
 .contact-section-right {
     display: flex;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
     padding: 0 16px 0 16px;
     width: 100%;
     height: 100%;
+    max-height: 100%;
+    overflow: hidden;
     background-color: rgb(246, 247, 248);
     justify-content: left;
     flex-direction: column;
 }
 
-.contact-section-left {
-    box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
-}
-
 hr {
     color: #d1d1d1d2;
-    width: 352px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.contact-details-container {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .contact-initials-large {
-    width: 120px;
-    height: 120px;
+    width: 128px;
+    height: 128px;
     border-radius: 50%;
     background: #FFA500;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 47px;
+    font-size: 50px;
     color: #fff;
     margin-right: 16px;
     border: 3px solid #fff;
@@ -383,4 +425,21 @@ hr {
     gap: 16px;
     display: flex;
     flex-direction: column;
+}
+
+@media (min-width: 781px) {
+    .contact-section {
+        padding-left: 52px;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 780px) {
+    .contact-section-left {
+        max-width: none;
+    }
+
+    .contact-section {
+        padding-left: 0;
+    }
 }

@@ -115,13 +115,9 @@
     font-size: 16px;
 }
 
-.edit-form-scroll:has(.dropdown-content.show) {
-    overflow: visible;
-}
-
-.modal-content:has(.edit-assigned .dropdown-content.show),
-.modal-content:has(.edit-label .dropdown-content.show) {
-    overflow: visible;
+/* Keep dropdowns contained within the edit modal to avoid page scroll jumps */
+.edit-form-scroll {
+    overflow-x: hidden;
 }
 
 .edit-assigned .custom-select span,
@@ -140,6 +136,12 @@
     touch-action: pan-y;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+}
+
+.edit-assigned .dropdown-content.open-up,
+.edit-label .dropdown-content.open-up {
+    top: auto;
+    bottom: calc(100% + 6px);
 }
 
 .edit-assigned .custom-select span,

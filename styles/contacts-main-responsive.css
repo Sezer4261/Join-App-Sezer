@@ -150,26 +150,28 @@
 
     .ac-formwrap {
         flex-direction: column;
-        padding: 0 12px 24px;
+        align-items: center;
+        padding: 44px 12px 24px;
+        gap: 0;
+        position: relative;
     }
 
     .ac-avatar {
-        margin-bottom: 0px;
+        margin-bottom: 0;
         position: absolute;
-        bottom: 79%;
+        top: 0;
+        left: 50%;
+        bottom: auto;
+        transform: translate(-50%, -50%);
         z-index: 5;
     }
 
     .ac-form {
         width: 100%;
         max-width: 280px;
-        gap: 8px;
+        gap: 20px;
         align-items: center;
-        margin-top: 32px;
-    }
-
-    .ac-formwrap {
-        gap: 0px;
+        margin-top: 8px;
     }
 
     .ac-field {
@@ -185,11 +187,13 @@
 
     .ac-actions {
         width: 100%;
-        margin-top: 12px;
+        margin-top: 16px;
     }
 
     .ac-hero {
-        height: 192px;
+        height: auto;
+        min-height: 96px;
+        padding: 16px 24px 12px;
         justify-content: center;
     }
 
@@ -205,10 +209,14 @@
         width: 305px;
     }
 
-    .ac-avatar img {
+    .ac-avatar img,
+    .ac-avatar .contact-initials-large {
         width: 80px;
         height: 80px;
-        opacity: 1;
+    }
+
+    .ac-avatar .contact-initials-large {
+        font-size: 32px;
     }
 
     .responsive-close-btn {
@@ -219,6 +227,11 @@
 @media (max-width: 780px) {
     .ac-title {
         font-size: 35px;
+    }
+
+    #add-contact-dialog .ac-title,
+    #edit-contact-dialog .ac-title {
+        font-size: 47px;
     }
 
     .ac-subtitle {
@@ -243,26 +256,56 @@
 
     .ac-formwrap {
         flex-direction: column;
-        padding: 0 12px 24px;
+        align-items: center;
+        padding: 44px 12px 24px;
+        gap: 0;
+        position: relative;
     }
 
-    .ac-avatar {
-        margin-bottom: 0px;
+    .ac-avatar:not(.ac-avatar-on-divider) {
+        margin-bottom: 0;
         position: absolute;
-        bottom: 82%;
+        top: 0;
+        left: 50%;
+        bottom: auto;
+        transform: translate(-50%, -50%);
         z-index: 5;
+    }
+
+    #add-contact-dialog .ac-hero,
+    #edit-contact-dialog .ac-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 10px 24px 40px;
+        min-height: 104px;
+    }
+
+    #add-contact-dialog .ac-hero-heading .ac-underline,
+    #edit-contact-dialog .ac-hero-heading .ac-underline {
+        display: block;
+    }
+
+    #add-contact-dialog .ac-avatar-on-divider,
+    #edit-contact-dialog .ac-avatar-on-divider {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        margin: -40px auto !important;
+        align-self: center;
+    }
+
+    #edit-contact-dialog .ac-avatar-on-divider .contact-initials-large {
+        margin: 0 !important;
     }
 
     .ac-form {
         width: 100%;
         max-width: 280px;
-        gap: 8px;
+        gap: 20px;
         align-items: center;
-        margin-top: 32px;
-    }
-
-    .ac-formwrap {
-        gap: 0px;
+        margin-top: 8px;
     }
 
     .ac-field {
@@ -278,11 +321,13 @@
 
     .ac-actions {
         width: 100%;
-        margin-top: 12px;
+        margin-top: 16px;
     }
 
-    .ac-hero {
-        height: 192px;
+    .ac-hero:not(#add-contact-dialog .ac-hero):not(#edit-contact-dialog .ac-hero) {
+        height: auto;
+        min-height: 96px;
+        padding: 16px 24px 12px;
         justify-content: center;
     }
 
@@ -290,10 +335,14 @@
         width: 305px;
     }
 
-    .ac-avatar img {
+    .ac-avatar img,
+    .ac-avatar .contact-initials-large {
         width: 80px;
         height: 80px;
-        opacity: 1;
+    }
+
+    .ac-avatar .contact-initials-large {
+        font-size: 32px;
     }
 }
 

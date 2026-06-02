@@ -4,52 +4,25 @@ const ADD_CONTACT_FIELD_IDS = ['ac-name', 'ac-email', 'ac-phone'];
 const EDIT_CONTACT_FIELD_IDS = ['edit-name', 'edit-email', 'edit-phone'];
 
 /**
- * Validates contact name input (only letters allowed).
- * @param {string} value - Input value.
- * @returns {{isValid: boolean, normalizedName: string, error: string}} Result.
- */
-function validateContactNameInput(value) {
-  const normalized = value?.trim() ?? '';
-  if (!normalized) {
-    return { isValid: false, normalizedName: normalized, error: 'Name is required.' };
-  }
-  if (!/^[a-zA-Z\s]*$/.test(normalized)) {
-    return { isValid: false, normalizedName: normalized, error: 'Only letters allowed.' };
-  }
-  return { isValid: true, normalizedName: normalized, error: '' };
-}
-
-/**
- * Validates contact phone number (only digits allowed).
- * @param {string} value - Input value.
- * @returns {{isValid: boolean, normalizedPhone: string, error: string}} Result.
- */
-function validateContactPhoneNumber(value) {
-  const normalized = value?.trim() ?? '';
-  if (!normalized) {
-    return { isValid: false, normalizedPhone: normalized, error: 'Phone is required.' };
-  }
-  if (!/^\d+$/.test(normalized)) {
-    return { isValid: false, normalizedPhone: normalized, error: 'Only digits allowed.' };
-  }
-  return { isValid: true, normalizedPhone: normalized, error: '' };
-}
-
-/**
- * Validates email address like signup.
+ * Fallback email validation for contacts dialogs.
+ * Prefer the shared `validateEmailLikeSignup` from `script.js` when available.
  * @param {string} value - Input value.
  * @returns {{isValid: boolean, normalizedEmail: string, error: string}} Result.
  */
-function validateEmailLikeSignup(value) {
-  const normalized = value?.trim() ?? '';
-  if (!normalized) {
-    return { isValid: false, normalizedEmail: normalized, error: 'Email is required.' };
+function validateEmailLikeContactDialog(value) {
+  const trimmed = value?.trim() ?? '';
+  if (!trimmed) {
+    return { isValid: false, normalizedEmail: trimmed, error: 'Email is required.' };
   }
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(normalized)) {
-    return { isValid: false, normalizedEmail: normalized, error: 'Valid email required.' };
+  const normalizedEmail = trimmed.toLowerCase();
+  if (normalizedEmail.length > 254) {
+    return { isValid: false, normalizedEmail, error: 'Email address is too long.' };
   }
-  return { isValid: true, normalizedEmail: normalized, error: '' };
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
+  if (!emailRegex.test(normalizedEmail)) {
+    return { isValid: false, normalizedEmail, error: 'Please enter a valid email address.' };
+  }
+  return { isValid: true, normalizedEmail, error: '' };
 }
 
 /**
@@ -123,7 +96,6 @@ function clearAllContactInlineErrors(fieldIds) {
  * @returns {void} Result.
  */
 function showContactFieldErrorMessage(fieldId, fieldIds) {
-  (fieldIds || []).forEach((id) => setContactErrorText(getContactErrorSpanId(id), ''));
   const message = contactDialogFieldErrors[fieldId];
   if (message) {
     setContactErrorText(getContactErrorSpanId(fieldId), message);
@@ -142,7 +114,10 @@ function validateContactDialogField(fieldId, value) {
     return { isValid: c.isValid, normalizedValue: c.normalizedName, error: c.error };
   }
   if (fieldId === 'ac-email' || fieldId === 'edit-email') {
-    const c = validateEmailLikeSignup(value);
+    const validate = typeof window.validateEmailLikeSignup === 'function'
+      ? window.validateEmailLikeSignup
+      : validateEmailLikeContactDialog;
+    const c = validate(value);
     return { isValid: c.isValid, normalizedValue: c.normalizedEmail, error: c.error };
   }
   if (fieldId === 'ac-phone' || fieldId === 'edit-phone') {
@@ -217,7 +192,10 @@ function computeAddContactValidity(dialog) {
   const e = dialog.querySelector('#ac-email');
   const p = dialog.querySelector('#ac-phone');
   const nc = validateContactNameInput(n?.value ?? '');
-  const ec = validateEmailLikeSignup(e?.value ?? '');
+  const validate = typeof window.validateEmailLikeSignup === 'function'
+    ? window.validateEmailLikeSignup
+    : validateEmailLikeContactDialog;
+  const ec = validate(e?.value ?? '');
   const pc = validateContactPhoneNumber(p?.value ?? '');
   return applyContactFieldValidity(n, nc) & applyContactFieldValidity(e, ec) & applyContactFieldValidity(p, pc);
 }
@@ -292,7 +270,10 @@ function computeEditContactValidity(dialog) {
   const e = dialog.querySelector('#edit-email');
   const p = dialog.querySelector('#edit-phone');
   const nc = validateContactNameInput(n?.value ?? '');
-  const ec = validateEmailLikeSignup(e?.value ?? '');
+  const validate = typeof window.validateEmailLikeSignup === 'function'
+    ? window.validateEmailLikeSignup
+    : validateEmailLikeContactDialog;
+  const ec = validate(e?.value ?? '');
   const pc = validateContactPhoneNumber(p?.value ?? '');
   return applyContactFieldValidity(n, nc) & applyContactFieldValidity(e, ec) & applyContactFieldValidity(p, pc);
 }
@@ -318,4 +299,46 @@ function initEditContactDialogValidation(dialog) {
   bindContactValidationReset(dialog, handler, '#edit-contact-form', EDIT_CONTACT_FIELD_IDS);
   dialog.dataset.editValidationInit = '1';
   handler();
+}
+
+/**
+ * Resets native validity and inline errors for contact dialog fields.
+ * @param {string[]} fieldIds - Field ids.
+ * @returns {void} Result.
+ */
+function resetContactDialogFieldState(fieldIds) {
+  contactDialogFieldErrors = {};
+  clearAllContactInlineErrors(fieldIds);
+  (fieldIds || []).forEach((id) => {
+    const input = document.getElementById(id);
+    input?.setCustomValidity?.('');
+  });
+}
+
+/**
+ * Clears all add-contact form inputs and validation state.
+ * @returns {void} Result.
+ */
+function clearAddContactForm() {
+  const dialog = document.getElementById('add-contact-dialog');
+  const form = dialog?.querySelector('#add-contact-form');
+  if (!form) return;
+  form.reset();
+  resetContactDialogFieldState(ADD_CONTACT_FIELD_IDS);
+  if (dialog) updateAddContactSubmitState(dialog);
+}
+
+/**
+ * Clears all edit-contact form inputs and validation state.
+ * @returns {void} Result.
+ */
+function clearEditContactForm() {
+  const dialog = document.getElementById('edit-contact-dialog');
+  if (!dialog) return;
+  EDIT_CONTACT_FIELD_IDS.forEach((id) => {
+    const input = dialog.querySelector(`#${id}`);
+    if (input) input.value = '';
+  });
+  resetContactDialogFieldState(EDIT_CONTACT_FIELD_IDS);
+  updateEditContactSubmitState(dialog);
 }

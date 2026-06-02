@@ -3,6 +3,15 @@
   --content-padding-x: 24px;
 }
 
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 /*
   Global content limiter utility.
   Apply `.content-limit` to any block whose inner content should not exceed 1440px.

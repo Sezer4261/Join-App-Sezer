@@ -134,6 +134,26 @@
     gap: 20px;
 }
 
+.ac-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.ac-form .error-message {
+    color: #8d0000;
+    font-size: 14px;
+    line-height: 1.25;
+    margin: 4px 0 0 8px;
+    min-height: 0;
+    display: block;
+}
+
+.ac-form .error-message:empty {
+    display: none;
+    margin: 0;
+}
+
 .ac-field {
     position: relative;
     display: flex;
@@ -171,10 +191,26 @@
 }
 
 .ac-actions {
-    display: flex;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
     margin-top: 24px;
-    justify-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ac-actions .btn-ghost {
+    width: 100%;
+    justify-content: center;
+    min-width: 0;
+    padding: 0 16px;
+}
+
+.ac-actions .btn-primary {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
 }
 
 .ac-dialog {
@@ -198,10 +234,19 @@
     }
 }
 
+@media (max-width: 780px) {
+    .ac-dialog {
+        top: max(16px, env(safe-area-inset-top, 0px));
+        transform: translate(-50%, 0);
+        max-height: calc(100dvh - 32px);
+        overflow-y: auto;
+    }
+}
+
 /* Stack layout vertically at narrow viewports */
 @media (max-width: 680px) {
     .ac-dialog {
-        max-height: 90vh;
+        max-height: calc(100dvh - 32px);
         overflow-y: auto;
     }
     .ac {
@@ -215,15 +260,53 @@
         gap: 12px;
         min-height: auto;
     }
+
     .ac-logo { width: 32px; margin-top: 0; }
     .ac-title { font-size: 26px; margin: 0; }
     .ac-subtitle { display: none; }
     .ac-underline { display: none; }
-    .ac-formwrap { padding: 16px 20px 20px; flex-direction: column; }
-    .ac-avatar { display: none; }
-    .ac-form { max-width: 100%; gap: 12px; }
-    .ac-actions { margin-top: 12px; flex-wrap: wrap; gap: 8px; }
-    .btn-primary { min-width: auto; flex: 1; }
+    .ac-formwrap {
+        padding: 44px 20px 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .ac-avatar:not(.ac-avatar-on-divider) {
+        display: none;
+    }
+
+    #add-contact-dialog .ac-hero,
+    #edit-contact-dialog .ac-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 10px 24px 40px;
+    }
+
+    #add-contact-dialog .ac-title,
+    #edit-contact-dialog .ac-title {
+        font-size: 47px;
+    }
+
+    #add-contact-dialog .ac-hero-heading .ac-underline,
+    #edit-contact-dialog .ac-hero-heading .ac-underline {
+        display: block;
+    }
+    .ac-form {
+        max-width: 100%;
+        gap: 20px;
+        margin-top: 0;
+        padding-bottom: 8px;
+    }
+
+    .ac-actions {
+        margin-top: 12px;
+        gap: 10px;
+        max-width: 100%;
+    }
+
+    .ac-formwrap {
+        padding-bottom: 28px;
+    }
 }
 
 .ac-field.input-error {
@@ -236,4 +319,286 @@
 
 .ac-field input.input-error {
     box-shadow: none;
+}
+
+.ac-hero-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+#add-contact-dialog .ac-hero-heading .ac-title,
+#edit-contact-dialog .ac-hero-heading .ac-title {
+    font-size: 35px;
+    white-space: nowrap;
+}
+
+#add-contact-dialog .ac-hero-heading .ac-underline,
+#edit-contact-dialog .ac-hero-heading .ac-underline {
+    display: block;
+    width: 56px;
+    height: 3px;
+    margin-top: 0;
+}
+
+#add-contact-dialog .ac-avatar-add-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #d6dce3;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+#add-contact-dialog .ac-avatar-add-empty img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    opacity: 0.55;
+}
+
+/* Add / Edit contact dialogs – responsive layout */
+@media (max-width: 780px) {
+    #add-contact-dialog.ac-dialog,
+    #edit-contact-dialog.ac-dialog {
+        top: 96px;
+        bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: min(360px, calc(100vw - 24px));
+        max-width: calc(100vw - 24px);
+        max-height: none;
+        height: auto;
+        margin: 0;
+        overflow: hidden;
+        animation: editContactDialogIn 0.3s ease-out;
+    }
+
+    #add-contact-dialog.ac-dialog[open],
+    #edit-contact-dialog.ac-dialog[open] {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+    }
+
+    #add-contact-dialog .ac,
+    #edit-contact-dialog .ac {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #add-contact-dialog .ac-hero,
+    #edit-contact-dialog .ac-hero {
+        --ac-dialog-avatar-size: 80px;
+        --ac-dialog-avatar-overlap: calc(var(--ac-dialog-avatar-size) / 2);
+        flex: 0 0 auto;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        text-align: left;
+        min-height: 104px;
+        height: auto;
+        padding: 10px 24px var(--ac-dialog-avatar-overlap);
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+    }
+
+    #add-contact-dialog .ac-subtitle {
+        display: none;
+    }
+
+    #add-contact-dialog .ac-hero-heading,
+    #edit-contact-dialog .ac-hero-heading {
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    #add-contact-dialog .ac-title,
+    #edit-contact-dialog .ac-title {
+        width: auto;
+        text-align: left;
+        margin: 0;
+        font-size: 47px;
+        white-space: nowrap;
+    }
+
+    #add-contact-dialog .ac-avatar-on-divider,
+    #edit-contact-dialog .ac-avatar-on-divider {
+        --ac-dialog-avatar-size: 80px;
+        --ac-dialog-avatar-overlap: calc(var(--ac-dialog-avatar-size) / 2);
+        display: flex !important;
+        flex-shrink: 0;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        width: var(--ac-dialog-avatar-size);
+        height: var(--ac-dialog-avatar-size);
+        margin: calc(var(--ac-dialog-avatar-overlap) * -1) auto !important;
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        right: auto !important;
+        transform: none !important;
+        z-index: 20;
+        pointer-events: auto;
+    }
+
+    #edit-contact-dialog .ac-avatar-on-divider .contact-avatar-large {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #edit-contact-dialog .ac-avatar-on-divider .contact-initials-large {
+        width: var(--ac-dialog-avatar-size);
+        height: var(--ac-dialog-avatar-size);
+        font-size: 32px;
+        margin: 0 !important;
+    }
+
+    #add-contact-dialog .ac-formwrap,
+    #edit-contact-dialog .ac-formwrap {
+        --ac-dialog-avatar-overlap: 40px;
+        flex: 1;
+        min-height: 0;
+        width: 100%;
+        overflow-y: auto;
+        padding: var(--ac-dialog-avatar-overlap) 12px 24px;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+        margin-top: 0;
+    }
+
+    #add-contact-dialog .ac-form,
+    #edit-contact-dialog .ac-form {
+        margin-top: 0;
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+@media (min-width: 781px) and (max-width: 919px) {
+    #add-contact-dialog .ac,
+    #edit-contact-dialog .ac {
+        flex-direction: column;
+    }
+
+    #add-contact-dialog .ac-hero,
+    #edit-contact-dialog .ac-hero {
+        min-height: 104px;
+        padding: 10px 20px 40px;
+        justify-content: center;
+    }
+
+    #add-contact-dialog .ac-avatar-on-divider,
+    #edit-contact-dialog .ac-avatar-on-divider {
+        position: relative;
+        left: auto;
+        top: auto;
+        margin: -40px auto;
+        transform: none;
+        z-index: 20;
+    }
+
+    #add-contact-dialog .ac-formwrap,
+    #edit-contact-dialog .ac-formwrap {
+        flex-direction: column;
+        margin-top: 0;
+        padding-top: 40px;
+    }
+}
+
+@media (min-width: 920px) {
+    #add-contact-dialog .ac,
+    #edit-contact-dialog .ac {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    #add-contact-dialog .ac-hero,
+    #edit-contact-dialog .ac-hero {
+        padding: 56px 23px 0 23px;
+        z-index: auto;
+        align-items: flex-start;
+    }
+
+    #add-contact-dialog .ac-subtitle {
+        display: block;
+    }
+
+    #add-contact-dialog .ac-avatar-add-empty {
+        width: 128px;
+        height: 128px;
+    }
+
+    #add-contact-dialog .ac-avatar-add-empty img {
+        width: 64px;
+        height: 64px;
+    }
+
+    #add-contact-dialog .ac-avatar-on-divider,
+    #edit-contact-dialog .ac-avatar-on-divider {
+        position: absolute;
+        left: 340px;
+        top: 50%;
+        margin: 0;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+    }
+
+    #add-contact-dialog .ac-hero-heading .ac-underline,
+    #edit-contact-dialog .ac-hero-heading .ac-underline {
+        display: block;
+    }
+
+    #add-contact-dialog .ac-formwrap,
+    #edit-contact-dialog .ac-formwrap {
+        flex-direction: row;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 0;
+        padding: 56px 40px 40px 40px;
+        align-items: center;
+    }
+}
+
+@media (max-width: 620px) {
+    #add-contact-dialog.ac-dialog,
+    #edit-contact-dialog.ac-dialog {
+        bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+@media (max-width: 600px) {
+    #add-contact-dialog.ac-dialog,
+    #edit-contact-dialog.ac-dialog {
+        top: 60px;
+    }
+}
+
+@keyframes editContactDialogIn {
+    from {
+        opacity: 0;
+        transform: translate(calc(-50% + 32px), 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%);
+    }
 }

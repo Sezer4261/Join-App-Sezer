@@ -31,9 +31,14 @@ async function performAddContactSave(contact) {
   const saved = await saveContact(contact);
   if (!saved) return;
   await renderContactGroup();
+  const contactId = saved.name
+    || contacts.find((c) => c.email === contact.email && c.name === contact.name)?.id;
   document.getElementById("add-contact-dialog")?.close();
   document.getElementById('add-contact-form')?.reset();
-  setTimeout(() => showContactsToast('Contact successfully created'), 0);
+  if (contactId) {
+    showContactInDetailsPanel(contactId, contact);
+  }
+  setTimeout(() => showContactsToast('You have created a contact'), 0);
 }
 
 async function addContact(event) {
@@ -111,8 +116,13 @@ async function fetchContactDetails(contactId) {
 async function deleteContact(contactId) {
   try {
     const response = await fetch(`${BASE_URL}/contacts/${contactId}.json`, { method: "DELETE" });
-    if (response.ok) { await renderContactGroup(); }
-    else { console.error("Fehler beim Löschen des Kontakts."); }
+    if (response.ok) {
+      await renderContactGroup();
+      refreshContactDetails();
+      setTimeout(() => showContactsToast('Contact successfully deleted'), 0);
+      return;
+    }
+    console.error("Fehler beim Löschen des Kontakts.");
   } catch (error) {
     console.error("Fehler beim Löschen des Kontakts:", error);
   }

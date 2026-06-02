@@ -126,8 +126,8 @@ function validateEmailLikeSignup(email) {
   if (!trimmedEmail)
     return { isValid: false, normalizedEmail: trimmedEmail, error: "Please enter an email address.", reason: 'required' };
   const normalizedEmail = trimmedEmail.toLowerCase();
-  if (normalizedEmail.length > 20)
-    return { isValid: false, normalizedEmail, error: "Maximum 20 characters allowed.", reason: 'too_long' };
+  if (normalizedEmail.length > 254)
+    return { isValid: false, normalizedEmail, error: "Email address is too long.", reason: 'too_long' };
   if (!buildStrictEmailPattern().test(normalizedEmail))
     return { isValid: false, normalizedEmail, error: "Please enter a valid email address.", reason: 'pattern' };
   return { isValid: true, normalizedEmail, error: "" };

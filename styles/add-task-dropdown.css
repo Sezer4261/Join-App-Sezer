@@ -150,14 +150,14 @@ textarea {
 }
 
 .form-left label:has(textarea) {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  padding-bottom: var(--add-task-field-error-reserve, 18px);
+  box-sizing: border-box;
 }
 
 .form-left label:has(textarea) textarea {
-  flex: 1;
-  resize: none;
+  resize: vertical;
 }
 
 .note {
@@ -313,7 +313,7 @@ select:focus,
   gap: 6px;
   flex: 1 1 0;
   min-width: 0;
-  padding: 4px 4px;
+  padding: 12px 4px;
   border: 1px solid #d1d1d1;
   border-radius: 8px;
   cursor: pointer;

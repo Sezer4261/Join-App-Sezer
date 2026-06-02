@@ -54,7 +54,8 @@
     }
 
     .contact-scroll {
-        width: 330px !important;
+        width: 100%;
+        max-width: 100%;
     }
 
     .add-contact-btn {
@@ -173,11 +174,25 @@
 
     .ac-form {
         max-width: 75%;
-        gap: 16px;
+        gap: 20px;
     }
 
     .ac-formwrap {
-        padding-top: 40px;
+        padding-top: 24px;
+        padding-bottom: 28px;
+    }
+
+    .ac-hero {
+        padding-top: 24px;
+        padding-bottom: 16px;
+    }
+
+    #add-contact-dialog .ac-hero,
+    #edit-contact-dialog .ac-hero {
+        min-height: 104px;
+        padding-top: 10px;
+        padding-bottom: 40px;
+        justify-content: center;
     }
 
     .ac-close {

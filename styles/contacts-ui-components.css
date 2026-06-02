@@ -1,7 +1,8 @@
 .add-contact-btn {
+    flex-shrink: 0;
     border: none;
     width: 100%;
-    max-width: 352px;
+    max-width: 278px;
     color: white;
     background-color: rgb(24, 36, 53);
     padding: 12px 0;
@@ -16,7 +17,6 @@
     gap: 12px;
     margin-bottom: 0;
     margin-top: 45px;
-    margin-left: 24px;
 }
 
 .add-contact-btn:hover {
@@ -113,6 +113,10 @@
     white-space: nowrap;
 }
 
+.ac-actions .btn-primary {
+    min-width: 0;
+}
+
 .btn-primary:disabled,
 .btn-primary[aria-disabled="true"] {
     background: #9aa3ad;
@@ -144,11 +148,11 @@
 }
 
 .contacts-toast {
-    position: fixed;
-    right: -100%;
-    bottom: 150px;
-    top: auto;
-    transform: translateX(0);
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: min(420px, 100%);
+    margin: 24px auto 0;
     opacity: 0;
     background: #2A3647;
     color: #fff;
@@ -157,19 +161,17 @@
     font-size: 16px;
     font-weight: 500;
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-    z-index: 100;
+    z-index: 1;
     pointer-events: none;
-    max-width: calc(100vw - 32px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: opacity 180ms ease, right 180ms ease;
-    will-change: opacity, right;
+    text-align: center;
+    white-space: normal;
+    transition: opacity 220ms ease;
+    will-change: opacity;
+    flex-shrink: 0;
 }
 
 .contacts-toast-visible {
     opacity: 1;
-    right: 50%;
 }
 
 .contact-list::-webkit-scrollbar {
@@ -193,27 +195,30 @@
 .contact-scroll {
     flex: 1;
     min-height: 0;
+    min-width: 0;
     overflow-y: auto;
-    width: 400px !important;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
     padding-top: 0;
     padding-bottom: 50px;
     box-sizing: border-box;
 }
 
-@keyframes slideInFromRight {
+@keyframes contactDetailsFadeIn {
     from {
-        transform: translateX(100%);
         opacity: 0;
+        transform: translateX(12px);
     }
 
     to {
-        transform: translateX(0);
         opacity: 1;
+        transform: translateX(0);
     }
 }
 
 .contact-details-container {
-    animation: slideInFromRight 0.3s ease-out;
+    animation: contactDetailsFadeIn 0.3s ease-out;
 }
 
 @keyframes slideInDialogFromRight {

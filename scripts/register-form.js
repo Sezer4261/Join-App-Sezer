@@ -151,7 +151,7 @@ function getSignupEmailErrorMessage(emailCheck) {
         case 'required':
             return 'Please enter an email address.';
         case 'too_long':
-            return 'Maximum 20 characters allowed.';
+            return 'Email address is too long.';
         case 'pattern':
             return 'Please enter a valid email address.';
         default:
@@ -220,8 +220,8 @@ function validatePolicyField(fields, state) {
 function setSignupFieldError(fieldId, message, input, state) {
     signupFieldErrors[fieldId] = message;
     input.classList.add('input-error');
+    setSignupErrorText(getSignupErrorId(fieldId), message);
     if (!state.firstErrorShown) {
-        setSignupErrorText(getSignupErrorId(fieldId), message);
         input.focus();
         state.firstErrorShown = true;
     }

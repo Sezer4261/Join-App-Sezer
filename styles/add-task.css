@@ -67,6 +67,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  --add-task-field-error-reserve: 18px;
   padding-bottom: 57px;
 }
 
@@ -89,7 +90,7 @@ label,
 label {
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  gap: 8px;
 }
 
 .req {

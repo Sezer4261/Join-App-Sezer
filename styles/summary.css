@@ -16,6 +16,7 @@ body {
     display: flex;
     align-items: stretch;
     height: 100vh;
+    min-width: 0;
 }
 
 .sidebar {
@@ -38,8 +39,10 @@ main {
     flex-direction: column;
     align-items: stretch;
     flex: 1 1 auto;
+    min-width: 0;
     gap: 75px;
     height: 100vh;
+    overflow-x: hidden;
     overflow-y: auto;
     padding-top: 182px;
     padding-bottom: 206px;

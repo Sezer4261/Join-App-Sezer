@@ -77,13 +77,25 @@ function closeAddContactDialogWithAnimation() {
  * @param {*} durationMs - Parameter.
  * @returns {void} Result.
  */
-function showContactsToast(message, durationMs = 2200) {
+function getContactsToastAnchor() {
+  const details = document.getElementById('contact-details');
+  if (details?.parentElement) return details.parentElement;
+  return document.querySelector('.contact-section-right .contact-div-right')
+    || document.querySelector('.contact-section-right');
+}
+
+function showContactsToast(message, durationMs = 2600) {
   const old = document.getElementById('contacts-toast');
   if (old) old.remove();
-  document.body.insertAdjacentHTML('beforeend', getContactsToastTemplate(message));
+  const anchor = getContactsToastAnchor();
+  if (!anchor) return;
+  anchor.insertAdjacentHTML('beforeend', getContactsToastTemplate(message));
   const toast = document.getElementById('contacts-toast');
   if (!toast) return;
-  requestAnimationFrame(() => toast.classList.add('contacts-toast-visible'));
+  requestAnimationFrame(() => {
+    toast.classList.add('contacts-toast-visible');
+    toast.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
   window.setTimeout(() => {
     toast.classList.remove('contacts-toast-visible');
     window.setTimeout(() => toast.remove(), 220);

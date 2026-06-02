@@ -33,9 +33,11 @@ function getAddContactDialogHeroHTML() {
   return `
     <div class="ac-hero">
       <div class="ac-brand"><img class="ac-logo" src="./assets/img/join-logo-white.svg" alt="Join Logo"></div>
-      <h2 id="ac-title" class="ac-title">Add contact</h2>
+      <div class="ac-hero-heading">
+        <h2 id="ac-title" class="ac-title">Add contact</h2>
+        <span class="ac-underline" aria-hidden="true"></span>
+      </div>
       <p class="ac-subtitle">Tasks are better with a team!</p>
-      <span class="ac-underline" aria-hidden="true"></span>
     </div>
   `;
 }
@@ -52,6 +54,7 @@ function getAddContactFormHTML() {
       <div class="ac-input-wrapper"><div class="ac-field"><input class="input-focus" id="ac-phone" name="phone" type="tel" placeholder="Phone" required><img src="./assets/img/call.png"></div><span class="error-message" id="ac-phone-error"></span></div>
       <div class="ac-actions">
         <button onclick="closeAddContactDialogWithAnimation()" type="button" class="btn btn-ghost responsive-close-btn" data-ac-cancel aria-label="Cancel"><span>Cancel</span><span class="btn-x">×</span></button>
+        <button type="button" class="btn btn-ghost" data-ac-clear onclick="clearAddContactForm()" aria-label="Clear form"><span>Clear</span></button>
         <button type="submit" class="btn btn-primary" data-ac-submit aria-label="Create contact"><span>Create contact</span><span class="btn-check" aria-hidden="true"><svg width="18" height="14" viewBox="0 0 18 14"><path d="M1 7l5 5L17 1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
       </div>
     </form>
@@ -64,8 +67,10 @@ function getDialogAddContact() {
         <div class="ac">
             ${getAddContactDialogHeroHTML()}
             <button type="button" class="ac-close" aria-label="Close">×</button>
+            <div class="ac-avatar ac-avatar-on-divider ac-avatar-add-empty" aria-label="Avatar placeholder">
+                <img src="./assets/icons/person.svg" alt="">
+            </div>
             <div class="ac-formwrap">
-                <div class="ac-avatar" aria-label="Avatar placeholder"><img src="./assets/img/person.png" alt="Person Icon"></div>
                 ${getAddContactFormHTML()}
             </div>
         </div>
@@ -215,6 +220,7 @@ function getEditContactFormHTML(id, name, email, phone) {
       <div class="ac-input-wrapper"><div class="ac-field"><input class="input-focus" id="edit-phone" name="phone" type="tel" placeholder="Phone" value="${phone || ''}" required><img src="./assets/img/call.png"></div><span class="error-message" id="edit-phone-error"></span></div>
       <div class="ac-actions">
         <button type="button" class="btn btn-ghost" onclick="closeEditContactDialog(); deleteContact('${id}')" aria-label="Delete contact"><span>Delete</span></button>
+        <button type="button" class="btn btn-ghost" data-edit-clear onclick="clearEditContactForm()" aria-label="Clear form"><span>Clear</span></button>
         <button type="submit" class="btn btn-primary" data-edit-submit aria-label="Save contact"><span>Save</span><span class="btn-check" aria-hidden="true"><svg width="18" height="14" viewBox="0 0 18 14"><path d="M1 7l5 5L17 1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
       </div>
     </form>
@@ -227,12 +233,14 @@ function getEditContactDialog(id, name, email, phone, initials) {
         <div class="ac ac-dialog-content">
             <div class="ac-hero">
                 <div class="ac-brand"><img class="ac-logo" src="./assets/img/join-logo-white.svg" alt="Join Logo"></div>
-                <h2 class="ac-title">Edit contact</h2>
-                <span class="ac-underline" aria-hidden="true"></span>
+                <div class="ac-hero-heading">
+                    <h2 class="ac-title">Edit contact</h2>
+                    <span class="ac-underline" aria-hidden="true"></span>
+                </div>
             </div>
             <button type="button" class="ac-close" aria-label="Close" onclick="closeEditContactDialog()">×</button>
+            <div class="ac-avatar ac-avatar-on-divider ac-avatar-edit-split" aria-label="Avatar placeholder"><div class="contact-avatar-large"><div class="contact-initials-large">${initials}</div></div></div>
             <div class="ac-formwrap">
-                <div class="ac-avatar" aria-label="Avatar placeholder"><div class="contact-avatar-large"><div class="contact-initials-large">${initials}</div></div></div>
                 ${getEditContactFormHTML(id, name, email, phone)}
             </div>
         </div>

@@ -479,6 +479,10 @@
         margin: 0;
     }
 
+    .form-left label:has(textarea) {
+        padding-bottom: 0;
+    }
+
     input,
     textarea,
     .custom-select,

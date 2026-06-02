@@ -28,12 +28,28 @@ function suppressHorizontalOverflowDuringDetailsAnimation() {
  */
 function renderContactDetailsPanel(contactData, contactId) {
   const container = document.getElementById('contact-details');
+  if (!container) return;
   const initials = getContactInitialsFromName(contactData.name);
   const phone = contactData.phone || '';
   container.innerHTML = getContactDetailsTemplate(initials, contactData.name, contactData.email, phone, contactId);
   suppressHorizontalOverflowDuringDetailsAnimation();
   initContactMoreMenuAutoClose();
-  if (window.innerWidth <= 780) document.querySelector('.wrapper').classList.add('show-contact-details');
+  if (window.innerWidth <= 780) document.querySelector('.wrapper')?.classList.add('show-contact-details');
+}
+
+/**
+ * Selects a contact in the list and shows its details on the right.
+ * @param {string} contactId - Contact ID.
+ * @param {Object} contactData - Contact data (name, email, phone).
+ * @returns {void} Result.
+ */
+function showContactInDetailsPanel(contactId, contactData) {
+  if (!contactId || !contactData) return;
+  document.querySelectorAll('.contact-area, .contact-item').forEach((el) => el.classList.remove('selected'));
+  const listItem = document.querySelector(`.contact-item[data-id="${CSS.escape(contactId)}"]`);
+  listItem?.classList.add('selected');
+  renderContactDetailsPanel(contactData, contactId);
+  listItem?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 
 async function handleContactClick(event) {
