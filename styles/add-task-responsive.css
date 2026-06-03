@@ -454,6 +454,7 @@
         flex: 1;
         min-height: 0;
         overflow-y: auto;
+        scrollbar-gutter: stable;
         padding-bottom: calc(140px + env(safe-area-inset-bottom));
         -webkit-overflow-scrolling: touch;
     }
@@ -470,13 +471,21 @@
         margin-bottom: 0 !important;
     }
 
-    /* Collapse empty error divs so they don't add invisible height */
+    #title-error,
+    #date-error,
+    #category-error,
+    #subtask-error {
+        display: block;
+        min-height: var(--add-task-error-height, 18px);
+        line-height: var(--add-task-error-height, 18px);
+        margin-top: 2px;
+    }
+
     #title-error:empty,
     #date-error:empty,
-    #category-error:empty {
-        display: none;
-        min-height: 0;
-        margin: 0;
+    #category-error:empty,
+    #subtask-error:empty {
+        visibility: hidden;
     }
 
     .form-left label:has(textarea) {

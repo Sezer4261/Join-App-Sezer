@@ -321,8 +321,7 @@ function computeContactHash(key) {
 }
 
 function getContactColorClass(name) {
-  const classes = ['bg-blue','bg-green','bg-purple','bg-orange','bg-pink','bg-red','bg-teal','bg-brown'];
   const key = String(name || '').trim().toLowerCase();
-  const index = key ? Math.abs(computeContactHash(key)) % classes.length : 0;
-  return classes[index];
+  const index = key ? Math.abs(computeContactHash(key)) % INITIALS_COLOR_CLASSES.length : 0;
+  return INITIALS_COLOR_CLASSES[index];
 }

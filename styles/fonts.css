@@ -16,10 +16,12 @@
 
 :root {
   --app-font-family: 'Open Sans', Arial, sans-serif;
-}
-
-html {
-  scrollbar-gutter: stable;
+  --contact-mobile-breakpoint: 780px;
+  --board-compact-min-width: 621px;
+  --board-compact-medium-max: 1140px;
+  --dialog-close-ms: 300ms;
+  --contact-details-anim-ms: 320ms;
+  --add-task-error-height: 18px;
 }
 
 html,

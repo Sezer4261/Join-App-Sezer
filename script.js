@@ -1,5 +1,20 @@
 let BASE_URL = "https://join-app-firebase-default-rtdb.europe-west1.firebasedatabase.app";
-let columns = ["To Do", "In Progress", "Await Feedback", "Done"];
+const BOARD_COLUMN_CONFIGS = [
+  { id: "todo-column", status: "To Do" },
+  { id: "inprogress-column", status: "In Progress" },
+  { id: "awaiting-column", status: "Await Feedback" },
+  { id: "done-column", status: "Done" }
+];
+const DIALOG_CLOSE_MS = 300;
+const CONTACT_DETAILS_ANIM_MS = 320;
+const CONTACT_MOBILE_BREAKPOINT = 780;
+const BOARD_COMPACT_MIN_WIDTH = 621;
+const BOARD_COMPACT_MEDIUM_MAX = 1140;
+const BOARD_COMPACT_MEDIUM_VISIBLE = 2;
+const BOARD_COMPACT_DESKTOP_VISIBLE = 4;
+const INITIALS_COLOR_CLASSES = [
+  "bg-blue", "bg-green", "bg-purple", "bg-orange", "bg-pink", "bg-red", "bg-teal", "bg-brown"
+];
 let draggedTaskId = null;
 let activeTask = null;
 let users = [
@@ -37,21 +52,26 @@ function getContactInitialsFromName(name) {
   return raw.slice(0, 2);
 }
 
-/**
- * Validates a contact name.
- * Rules:
- * - Only letters and hyphen per name part (hyphen allowed inside a part)
- * - 1 to 3 name parts (space separated)
- * - At least 2 letters total
- * - Maximum 20 characters total
- * @param {string} name - Name input.
- * @returns {{ isValid: boolean, normalizedName: string, initials: string, error: string, reason?: 'required'|'too_long'|'too_many_parts'|'invalid_chars'|'part_too_short'|'too_few_letters' }} Result.
- */
-/**
- * Checks basic name constraints (required, length, parts count).
- * @param {string} normalizedName - Normalized name.
- * @returns {Object|null} Error object or null if valid.
- */
+function getRandomInitialsColorClass() {
+  return INITIALS_COLOR_CLASSES[Math.floor(Math.random() * INITIALS_COLOR_CLASSES.length)];
+}
+
+function formatHiddenBoardTasksLabel(hiddenCount) {
+  if (hiddenCount === 1) return "1 more task";
+  return `${hiddenCount} more tasks`;
+}
+
+function lockPageScrollForOverlay() {
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+  if (scrollbarWidth > 0) document.body.style.paddingRight = `${scrollbarWidth}px`;
+  document.documentElement.style.overflow = "hidden";
+}
+
+function unlockPageScrollForOverlay() {
+  document.body.style.paddingRight = "";
+  document.documentElement.style.overflow = "";
+}
+
 function checkContactNameBasics(normalizedName) {
   if (!normalizedName)
     return { isValid: false, error: "Please enter a name.", reason: 'required' };
@@ -63,11 +83,6 @@ function checkContactNameBasics(normalizedName) {
   return null;
 }
 
-/**
- * Checks validity of each name part.
- * @param {string[]} parts - Name parts.
- * @returns {Object|null} Error object or null if valid.
- */
 function checkContactNamePartValidity(parts) {
   const partPattern = /^[\p{L}]+(?:-[\p{L}]+)*$/u;
   for (const part of parts) {
@@ -463,6 +478,4 @@ window.addEventListener("pageshow", (event) => {
   if (!localStorage.getItem("user")) {
     window.location.replace(getPagePath("index.html"));
   }
-});
-window.addEventListener("beforeunload", () => {
 });

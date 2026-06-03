@@ -174,35 +174,23 @@
     opacity: 1;
 }
 
-.contact-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-.contact-list::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-.contact-list::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-}
-
-.contact-list::-webkit-scrollbar-thumb:hover {
-    background: #666;
-}
-
 .contact-scroll {
     flex: 1;
     min-height: 0;
     min-width: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    scrollbar-gutter: stable;
     width: 100%;
     max-width: 100%;
     padding-top: 0;
     padding-bottom: 50px;
     box-sizing: border-box;
+}
+
+body.contact-dialog-open .contact-scroll,
+body.contact-dialog-open .contact-div-right {
+    overflow-y: scroll;
 }
 
 @keyframes contactDetailsFadeIn {

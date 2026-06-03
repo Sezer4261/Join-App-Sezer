@@ -47,7 +47,7 @@ async function showAddTaskDialog(status = "To Do") {
   if (!dialogOverlay || !modalContent) return;
   dialogOverlay.dataset.closing = "false";
   if (!dialogOverlay.open) dialogOverlay.showModal();
-  document.documentElement.style.overflow = 'hidden';
+  lockPageScrollForOverlay();
   modalContent.classList.remove("is-open");
   initAddTaskDialogBackdropHandler(dialogOverlay);
   await initAddTaskDialogContent(modalContent);
@@ -85,7 +85,7 @@ function closeAddTaskDialog() {
   dialogOverlay.dataset.closing = "true";
   const cleanup = () => {
     dialogOverlay.close();
-    document.documentElement.style.overflow = '';
+    unlockPageScrollForOverlay();
     dialogOverlay.dataset.closing = "false";
   };
   if (!modalContent) { cleanup(); return; }

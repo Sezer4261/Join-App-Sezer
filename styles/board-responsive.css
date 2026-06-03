@@ -167,6 +167,14 @@
 }
 
 @media (max-width: 1140px) and (min-width: 621px) {
+    .task-card-summary-title {
+        font-size: 15px;
+    }
+
+    .task-card-summary-subtitle {
+        font-size: 12px;
+    }
+
     .content {
         padding-bottom: 48px;
     }

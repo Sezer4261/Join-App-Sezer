@@ -202,78 +202,26 @@ textarea {
   border-color: #8d0000 !important;
 }
 
-.error-message {
+#add-task-form .error-message,
+#title-error,
+#date-error,
+#category-error,
+#subtask-error {
   color: #8d0000;
   font-size: 16px;
-  display: none;
-  min-height: 0;
-}
-
-.error-message:not(:empty) {
   display: block;
-  height: 16px;
-  line-height: 16px;
+  min-height: var(--add-task-error-height, 18px);
+  line-height: var(--add-task-error-height, 18px);
+  margin-top: 2px;
   overflow: hidden;
 }
 
-#title-error {
-  display: block;
-  min-height: 16px;
-  line-height: 16px;
-  margin-top: 2px;
-}
-
-#title-error:empty {
-  visibility: hidden;
-}
-
-#title-error:not(:empty) {
-  visibility: visible;
-}
-
-#date-error {
-  display: block;
-  min-height: 16px;
-  line-height: 16px;
-  margin-top: 2px;
-}
-
-#date-error:empty {
-  visibility: hidden;
-}
-
-#date-error:not(:empty) {
-  visibility: visible;
-}
-
-#category-error {
-  display: block;
-  min-height: 16px;
-  line-height: 16px;
-  margin-top: 2px;
-}
-
-#category-error:empty {
-  visibility: hidden;
-}
-
-#category-error:not(:empty) {
-  visibility: visible;
-}
-
-#subtask-error {
-  display: block;
-  min-height: 16px;
-  line-height: 16px;
-  margin-top: 2px;
-}
-
+#add-task-form .error-message:empty,
+#title-error:empty,
+#date-error:empty,
+#category-error:empty,
 #subtask-error:empty {
   visibility: hidden;
-}
-
-#subtask-error:not(:empty) {
-  visibility: visible;
 }
 
 #add-task-content #subtask-error:not(:empty) + .subtask-list {

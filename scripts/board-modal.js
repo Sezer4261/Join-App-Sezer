@@ -59,7 +59,7 @@ function openModal(id) {
     const modal = createModalElement(task);
     document.body.appendChild(modal);
     modal.showModal();
-    document.documentElement.style.overflow = 'hidden';
+    lockPageScrollForOverlay();
     bindModalEvents(modal);
     animateModalOpen(modal, task);
 }
@@ -126,7 +126,7 @@ function closeModal() {
     if (modal.dataset.closing === "true") return;
     modal.dataset.closing = "true";
     const modalContent = modal.querySelector(".modal-content");
-    const cleanup = () => { if (modal?.parentNode) { modal.close(); modal.remove(); } document.documentElement.style.overflow = ''; activeTask = null; };
+    const cleanup = () => { if (modal?.parentNode) { modal.close(); modal.remove(); } unlockPageScrollForOverlay(); activeTask = null; };
     if (!modalContent) { cleanup(); return; }
     runModalCloseAnimation(modalContent, cleanup);
 }

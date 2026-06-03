@@ -1,160 +1,99 @@
 let contactDetailsOverflowTimeoutId;
 
-/**
- * Temporarily hides horizontal overflow while contact details slide in.
- * @returns {void} Result.
- */
 function suppressHorizontalOverflowDuringDetailsAnimation() {
-  const detailsSection = document.querySelector('.contact-section-right');
+  const detailsSection = document.querySelector(".contact-section-right");
   if (!detailsSection) return;
-
-  detailsSection.style.overflowX = 'hidden';
+  detailsSection.style.overflowX = "hidden";
   window.clearTimeout(contactDetailsOverflowTimeoutId);
   contactDetailsOverflowTimeoutId = window.setTimeout(() => {
-    detailsSection.style.overflowX = '';
-  }, 320);
+    detailsSection.style.overflowX = "";
+  }, CONTACT_DETAILS_ANIM_MS);
 }
 
-/**
- * Executes handle contact click logic.
- * @param {Event} event - Browser event.
- * @returns {Promise<*>} Result.
- */
-/**
- * Renders the contact details panel for the given contact.
- * @param {Object} contactData - Contact data object.
- * @param {string} contactId - Contact ID.
- * @returns {void} Result.
- */
 function renderContactDetailsPanel(contactData, contactId) {
-  const container = document.getElementById('contact-details');
+  const container = document.getElementById("contact-details");
   if (!container) return;
   const initials = getContactInitialsFromName(contactData.name);
-  const phone = contactData.phone || '';
+  const phone = contactData.phone || "";
   container.innerHTML = getContactDetailsTemplate(initials, contactData.name, contactData.email, phone, contactId);
   suppressHorizontalOverflowDuringDetailsAnimation();
   initContactMoreMenuAutoClose();
-  if (window.innerWidth <= 780) document.querySelector('.wrapper')?.classList.add('show-contact-details');
+  if (window.innerWidth <= CONTACT_MOBILE_BREAKPOINT) {
+    document.querySelector(".wrapper")?.classList.add("show-contact-details");
+  }
 }
 
-/**
- * Selects a contact in the list and shows its details on the right.
- * @param {string} contactId - Contact ID.
- * @param {Object} contactData - Contact data (name, email, phone).
- * @returns {void} Result.
- */
 function showContactInDetailsPanel(contactId, contactData) {
   if (!contactId || !contactData) return;
-  document.querySelectorAll('.contact-area, .contact-item').forEach((el) => el.classList.remove('selected'));
+  document.querySelectorAll(".contact-area, .contact-item").forEach((el) => el.classList.remove("selected"));
   const listItem = document.querySelector(`.contact-item[data-id="${CSS.escape(contactId)}"]`);
-  listItem?.classList.add('selected');
+  listItem?.classList.add("selected");
   renderContactDetailsPanel(contactData, contactId);
-  listItem?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  listItem?.scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
 async function handleContactClick(event) {
   const clickedContact = event.currentTarget;
-  document.querySelectorAll('.contact-area, .contact-item').forEach(c => c.classList.remove('selected'));
-  clickedContact.classList.add('selected');
+  document.querySelectorAll(".contact-area, .contact-item").forEach((c) => c.classList.remove("selected"));
+  clickedContact.classList.add("selected");
   const contactId = clickedContact.dataset.id;
   const contactData = await fetchContactDetails(contactId);
-  if (!contactData) { console.error("Kontakt konnte nicht geladen werden."); return; }
+  if (!contactData) {
+    console.error("Kontakt konnte nicht geladen werden.");
+    return;
+  }
   renderContactDetailsPanel(contactData, contactId);
 }
 
-/**
- * Adds contact click listeners.
- * @returns {void} Result.
- */
 function addContactClickListeners() {
-  document.querySelectorAll('.contact-item[data-id], .contact-area[data-id]').forEach(contact => {
-    contact.addEventListener('click', handleContactClick);
+  document.querySelectorAll(".contact-item[data-id], .contact-area[data-id]").forEach((contact) => {
+    contact.addEventListener("click", handleContactClick);
   });
 }
 
-/**
- * Renders contact group.
- * @returns {Promise<*>} Result.
- */
 async function renderContactGroup() {
   await loadContacts();
-  const contactListRef = document.getElementById('contact-list');
-  contactListRef.innerHTML = '';
+  const contactListRef = document.getElementById("contact-list");
+  contactListRef.innerHTML = "";
   renderContactEntries(contactListRef, contacts);
   colorizeContactInitials();
   addContactClickListeners();
 }
 
-/**
- * Renders contact entries.
- * @param {*} contactListRef - Parameter.
- * @param {*} contactsData - Parameter.
- * @returns {void} Result.
- */
-/**
- * Appends header and contact item for a single contact entry.
- * @param {HTMLElement} contactListRef - Contact list container.
- * @param {Object} contact - Contact object.
- * @param {string} currentLetter - Current group letter (mutated by caller via return).
- * @returns {string} Updated current letter.
- */
 function appendContactEntry(contactListRef, contact, currentLetter) {
-  const firstLetter = (contact.name || 'Unnamed').charAt(0).toUpperCase();
+  const firstLetter = (contact.name || "Unnamed").charAt(0).toUpperCase();
   if (currentLetter !== firstLetter) {
     contactListRef.innerHTML += getHeaderLetter(firstLetter);
     currentLetter = firstLetter;
   }
-  const name = contact.name || 'Unnamed';
-  contactListRef.innerHTML += getContactItemWrapper(contact.id, contact.phone, getContactItem(name, contact.email, getContactInitialsFromName(name)));
+  const name = contact.name || "Unnamed";
+  contactListRef.innerHTML += getContactItemWrapper(
+    contact.id,
+    contact.phone,
+    getContactItem(name, contact.email, getContactInitialsFromName(name))
+  );
   return currentLetter;
 }
 
 function renderContactEntries(contactListRef, contactsData) {
-  let currentLetter = '';
-  contactsData.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  let currentLetter = "";
+  contactsData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
   for (let i = 0; i < contactsData.length; i++) {
     currentLetter = appendContactEntry(contactListRef, contactsData[i], currentLetter);
   }
 }
 
-/**
- * Executes refresh contact details logic.
- * @returns {void} Result.
- */
 function refreshContactDetails() {
-  const contactDetailsContainerRef = document.getElementById('contact-details');
-  contactDetailsContainerRef.innerHTML = '';
-  if (window.innerWidth <= 780) {
-    document.querySelector('.wrapper').classList.remove('show-contact-details');
+  const contactDetailsContainerRef = document.getElementById("contact-details");
+  contactDetailsContainerRef.innerHTML = "";
+  if (window.innerWidth <= CONTACT_MOBILE_BREAKPOINT) {
+    document.querySelector(".wrapper")?.classList.remove("show-contact-details");
   }
 }
 
-/**
- * Executes colorize contact initials logic.
- * @returns {void} Result.
- */
 function colorizeContactInitials() {
-  const initialsElements = document.querySelectorAll('.contact-initials');
-  initialsElements.forEach(el => {
-    el.classList.remove('bg-blue', 'bg-green', 'bg-purple', 'bg-orange', 'bg-pink', 'bg-red', 'bg-teal', 'bg-brown');
+  document.querySelectorAll(".contact-initials").forEach((el) => {
+    el.classList.remove(...INITIALS_COLOR_CLASSES);
     el.classList.add(getRandomInitialsColorClass());
   });
-}
-
-/**
- * Returns random initials color class.
- * @returns {*} Result.
- */
-function getRandomInitialsColorClass() {
-  const colorClasses = [
-    'bg-blue',
-    'bg-green',
-    'bg-purple',
-    'bg-orange',
-    'bg-pink',
-    'bg-red',
-    'bg-teal',
-    'bg-brown'
-  ];
-  return colorClasses[Math.floor(Math.random() * colorClasses.length)];
 }
