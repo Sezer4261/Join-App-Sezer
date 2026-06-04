@@ -256,8 +256,8 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        min-height: 190px;
-        padding: 10px 24px 40px;
+        min-height: 104px;
+        padding: 10px 24px var(--ac-dialog-avatar-overlap, 40px);
         text-align: left;
     }
 
@@ -272,9 +272,9 @@
         left: auto !important;
         top: auto !important;
         transform: none !important;
-        margin: -40px auto !important;
+        margin: calc(var(--ac-dialog-avatar-overlap, 40px) * -1) auto 0 !important;
         align-self: center;
-        z-index: 20;
+        z-index: 5;
     }
 
     #edit-contact-dialog .ac-avatar-on-divider .contact-initials-large {
@@ -283,8 +283,10 @@
 
     #add-contact-dialog .ac-formwrap,
     #edit-contact-dialog .ac-formwrap {
-        margin-top: 0;
-        padding-top: 40px;
+        margin-top: calc(var(--ac-dialog-avatar-overlap, 40px) * -1);
+        padding-top: var(--ac-dialog-avatar-form-gap, 16px);
+        overflow-y: auto;
+        min-height: 0;
     }
 
 }

@@ -1,7 +1,9 @@
 function getTaskCardBody(task) {
-  const catColor = task.category === "User Story" ? "#0038FF" : "#1FD7C1";
+  const isUserStory = task.category === "User Story";
+  const catColor = isUserStory ? "#0038FF" : "#1FD7C1";
+  const catClass = isUserStory ? "task-category--user-story" : "task-category--technical-task";
   return /*html*/ `
-      <h2 class="task-category" style="background-color: ${catColor}">${task.category}</h2>
+      <h2 class="task-category ${catClass}" style="background-color: ${catColor}">${task.category}</h2>
       <h3>${highlightText(task.title)}</h3>
       <span>${highlightText(task.description)}</span>
       <div class="subtask-card">${renderSubtaskProgress(task)}</div>

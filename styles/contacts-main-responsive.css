@@ -257,9 +257,13 @@
     .ac-formwrap {
         flex-direction: column;
         align-items: center;
-        padding: 44px 12px 24px;
         gap: 0;
         position: relative;
+    }
+
+    #add-contact-dialog .ac-formwrap,
+    #edit-contact-dialog .ac-formwrap {
+        padding: 8px 12px 24px;
     }
 
     .ac-avatar:not(.ac-avatar-on-divider) {
@@ -292,8 +296,9 @@
         left: auto !important;
         top: auto !important;
         transform: none !important;
-        margin: -40px auto !important;
+        margin: calc(var(--ac-dialog-avatar-overlap, 40px) * -1) auto 0 !important;
         align-self: center;
+        z-index: 5;
     }
 
     #edit-contact-dialog .ac-avatar-on-divider .contact-initials-large {

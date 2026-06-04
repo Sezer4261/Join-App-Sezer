@@ -31,7 +31,15 @@ Alle Skripte nutzen **globale Funktionen** (keine ES-Module). Die Ladereihenfolg
 | `board-render.js` | Board rendern, Suche |
 | `board-avatars.js` | Avatar-Farben |
 | `board-api.js` | Firebase Tasks |
-| `board-dnd.js` | Drag & Drop |
+| `app-globals.js` | Globale Variablen, Konstanten |
+| `contact-validation.js` | Namens-/E-Mail-/Telefon-Validierung |
+| `message-box.js` | Zentrale Statusmeldung |
+| `app-contacts.js` | Kontakte aus Firebase laden |
+| `app-ui.js` | Scroll-Lock, Profilmenü, Board-Labels |
+| `app-auth.js` | Auth-Guard, Logout, Session |
+| `board-dnd-order.js` | DnD: Reihenfolge, Spalten-Placement |
+| `board-dnd-desktop.js` | DnD: HTML5 Drag (Desktop) |
+| `board-dnd-touch.js` | DnD: Touch / Long-Press |
 | `board-modal.js` | Task-Modal öffnen/schließen |
 | `board-edit-validation.js` | Edit-Validierung |
 | `board-edit-subtasks.js` | Edit-Subtasks |
@@ -44,7 +52,8 @@ Alle Skripte nutzen **globale Funktionen** (keine ES-Module). Die Ladereihenfolg
 | `contacts.js` | Kontaktliste rendern |
 | `sidebar.js` | Navigation |
 | `summary.js` | Summary-Seite |
-| `login.js` / `register*.js` / `toast.js` | Auth & Registrierung |
+| `login-intro.js` / `login-form.js` / `login-auth.js` | Login |
+| `register*.js` / `toast.js` | Registrierung & Toasts |
 
 ## Add-Task-Ladereihenfolge (`board.html`, `add-task.html`)
 
@@ -57,7 +66,18 @@ Alle Skripte nutzen **globale Funktionen** (keine ES-Module). Die Ladereihenfolg
 7. `add-task-subtasks.js`
 8. `add-task.js`
 
-Danach (nur Board): Board-Templates → State → Render → …
+Danach (nur Board): Board-Templates → State → Render → API → `board-dnd-order.js` → `board-dnd-desktop.js` → `board-dnd-touch.js` → Modal/Edit …
+
+## App-Core (`firebase.js` + geschützte Seiten)
+
+1. `app-globals.js`
+2. `contact-validation.js`
+3. `message-box.js`
+4. `app-contacts.js`
+5. `app-ui.js`
+6. `app-auth.js`
+
+Login (`index.html`): `app-globals.js` → `app-auth.js` → `toast.js` → `login-intro.js` → `login-form.js` → `login-auth.js`
 
 ## Bekannte Ausnahmen
 

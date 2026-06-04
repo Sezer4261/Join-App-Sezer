@@ -7,11 +7,13 @@ const MODAL_EDIT_SVG = `<svg width="24" height="24" viewBox="0 0 33 32" fill="no
  * @returns {string} Result.
  */
 function getModalHeaderHTML(task) {
-  const catColor = task.category === "User Story" ? "#0038FF" : "#1FD7C1";
+  const isUserStory = task.category === "User Story";
+  const catColor = isUserStory ? "#0038FF" : "#1FD7C1";
+  const catClass = isUserStory ? "task-category--user-story" : "task-category--technical-task";
   const prioSrc = task.priority === "urgent" ? "./assets/img/category-urgent.svg"
     : task.priority === "medium" ? "./assets/icons/medium-orange.svg" : "./assets/img/category-low.svg";
   return /*html*/ `
-    <div class="task-category" style="background-color: ${catColor}">${task.category}</div>
+    <div class="task-category ${catClass}" style="background-color: ${catColor}">${task.category}</div>
     <div class="modal-title"><h2>${task.title}</h2></div>
     <div class="modal-description">${task.description}</div>
     <div class="modal-date"><span class="modal-titles-task">Due date:</span> ${task.dueDate}</div>

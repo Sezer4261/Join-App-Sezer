@@ -1,0 +1,245 @@
+﻿/* Board responsive: wide and tablet breakpoints. */
+@media (max-width: 1316px) {
+    .column-title {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1260px) {
+    .column-title {
+        font-size: 27px;
+    }
+
+    .board-search input::placeholder {
+        font-size: 16px;
+    }
+
+    .content {
+        padding: 16px 16px 16px;
+    }
+
+    .board-search {
+        width: 215px;
+    }
+
+    .board-search input {
+        width: 100%;
+    }
+
+    .board-columns {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 12px;
+        align-items: flex-start;
+        overflow-x: auto;
+        padding-bottom: 16px;
+    }
+
+    .board-column {
+        flex: 1 1 200px;
+        min-width: 200px;
+        min-height: auto;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 621px) {
+    .app {
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
+    .main {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* Header is fixed (header.css). Ensure content is not hidden under it on this breakpoint */
+    .content {
+        padding: 16px 8px;
+    }
+}
+
+
+@media (max-width: 1070px) {
+
+
+    .add-task-dialog {
+        display: flex;
+        flex-direction: column;
+        width: 95vw;
+        height: 90vh;
+        max-width: 95vw;
+        max-height: 90vh;
+        overflow: hidden;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 0;
+    }
+
+    /* form-scroll handles inner scrolling — dialog itself stays clipped */
+    .add-task-dialog .form-scroll {
+        flex: 1;
+        min-height: 0;
+        max-height: none;
+        overflow-y: auto;
+        padding-bottom: 16px;
+    }
+
+    .add-task-dialog .form-footer {
+        flex-shrink: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 8px 12px;
+        margin-top: 0;
+        padding-top: 16px;
+        padding-right: 0;
+        position: relative;
+    }
+
+    .add-task-dialog .actions {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+        width: 100%;
+        right: unset;
+        bottom: unset;
+    }
+
+    .add-task-dialog .note-outside {
+        position: static;
+        flex: 1 1 100%;
+        margin-right: 0;
+        left: unset;
+        bottom: unset;
+    }
+
+    .add-task-dialog .task-form {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .add-task-dialog .form-left,
+    .add-task-dialog .form-right {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .add-task-dialog label,
+    .add-task-dialog .assigned-to-label,
+    .add-task-dialog .category,
+    .add-task-dialog .priority {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .content {
+        padding: 16px 20px;
+    }
+}
+
+@media (max-width: 820px) {
+    .board-header {
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .board-header h1 {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .board-actions {
+        width: 100%;
+        flex-wrap: nowrap;
+    }
+
+    .board-search {
+        flex: 1;
+        width: auto;
+        max-width: 100%;
+    }
+
+    .task-card .task-category--user-story {
+        width: 50%;
+        max-width: 50%;
+    }
+
+    .task-card .task-category--technical-task {
+        width: 58%;
+        max-width: 58%;
+    }
+}
+
+@media (max-width: 1140px) and (min-width: 621px) {
+    .task-card-summary-title {
+        font-size: 15px;
+    }
+
+    .task-card-summary-subtitle {
+        font-size: 12px;
+    }
+
+    .content {
+        padding-bottom: 48px;
+    }
+
+    .board-columns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        align-items: start;
+        overflow: visible;
+        flex: 0 0 auto;
+        min-height: auto;
+        padding-bottom: 0;
+    }
+
+    .board-column {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 780px) and (min-width: 621px) {
+    .board-columns {
+        gap: 12px;
+    }
+
+    .board-column {
+        padding: 8px;
+    }
+
+    .column-header {
+        margin-bottom: 12px;
+        align-items: flex-start;
+    }
+
+    .column-header img {
+        margin-left: 4px;
+    }
+
+    .column-title {
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    .task-card {
+        padding: 12px;
+    }
+
+    .task-card .task-category {
+        font-size: 14px;
+    }
+
+    .task-card h3 {
+        font-size: 15px;
+    }
+}
+

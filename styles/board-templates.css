@@ -29,7 +29,7 @@
     display: flex;
     flex-direction: column;
     background: #fff;
-    border-radius: 12px;
+    border-radius: 18px;
     padding: 15px;
     margin-bottom: 15px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -42,7 +42,7 @@
     transform: scale(1.02);
 }
 
-.task-card h2 {
+.task-card h2:not(.task-category) {
     font-size: 18px;
     margin-bottom: 8px;
 }
@@ -108,19 +108,47 @@
   }
 
 .task-category {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    background-color: blue;
+    align-self: flex-start;
+    flex-shrink: 0;
+    box-sizing: border-box;
     color: white;
-    width: auto;
-    max-width: 100%;
     height: 25px;
-    border-radius: 5px;
-    padding: 0 8px;
+    border-radius: 8px;
+    padding: 0 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.task-card .task-category {
+    margin-bottom: 8px;
+}
+
+.task-card .task-category--user-story {
+    width: 50%;
+    max-width: 50%;
+}
+
+.task-card .task-category--technical-task {
+    width: 58%;
+    max-width: 58%;
+}
+
+.modal-content .task-category {
+    width: fit-content;
+    max-width: calc(100% - 4px);
+    margin: 0 0 12px 0;
+}
+
+.modal-content .task-category--user-story,
+.modal-content .task-category--technical-task {
+    width: fit-content;
+    max-width: calc(100% - 4px);
 }
 
 .subtask-card {

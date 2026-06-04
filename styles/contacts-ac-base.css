@@ -1,0 +1,229 @@
+﻿/* Contact autocomplete dialog: base layout. */
+.ac-dialog {
+    border: none;
+    border-radius: 24px;
+    padding: 0;
+    width: 900px;
+    max-width: 98vw;
+    background: transparent;
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    display: none;
+}
+
+.ac-dialog[open] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ac {
+    display: flex;
+    width: 900px;
+    min-height: 530px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+}
+
+.ac-hero {
+    background: #2A3647;
+    color: #fff;
+    width: 340px;
+    padding: 56px 23px 0 23px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    min-height: 100%;
+}
+
+.ac-brand {
+    margin-bottom: 8px;
+}
+
+.ac-logo {
+    width: 48px;
+    height: auto;
+    margin-top: 50px;
+}
+
+.ac-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    letter-spacing: -1px;
+}
+
+.ac-subtitle {
+    font-size: 21px;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.ac-underline {
+    display: block;
+    width: 56px;
+    height: 3px;
+    background: #29ABE2;
+    border-radius: 2px;
+    margin-top: 8px;
+}
+
+.ac-close {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #2A3647;
+    cursor: pointer;
+    z-index: 2;
+    transition: color 120ms, background 120ms;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.ac-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
+
+.ac-formwrap {
+    flex: 1;
+    background: rgb(246, 247, 248);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 56px 40px 40px 40px;
+    position: relative;
+}
+
+.ac-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.ac-avatar img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    opacity: 0.7;
+}
+
+.ac-form {
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ac-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.ac-form .error-message {
+    color: #8d0000;
+    font-size: 14px;
+    line-height: 1.25;
+    margin: 4px 0 0 8px;
+    min-height: 0;
+    display: block;
+}
+
+.ac-form .error-message:empty {
+    display: none;
+    margin: 0;
+}
+
+.ac-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    background-color: rgb(246, 247, 248);
+    border-radius: 8px;
+    border: 1px solid #D1D1D1;
+    margin-bottom: 0;
+    height: 48px;
+    padding-right: 16px;
+}
+
+.ac-field:focus-within {
+    border-color: #29ABE2;
+}
+
+.ac-field input.input-focus {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 18px;
+    padding: 0 16px;
+    height: 48px;
+    border-radius: 8px;
+    color: #2A3647;
+    border-color: #29ABE2;
+}
+
+.ac-field img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.6;
+}
+
+.ac-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ac-actions .btn-ghost {
+    width: 100%;
+    justify-content: center;
+    min-width: 0;
+    padding: 0 16px;
+}
+
+.ac-actions .btn-primary {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+}
+
+.ac-dialog {
+    animation: slideInDialogFromRight 0.3s ease-out;
+}
+
+.ac-dialog.closing {
+    animation: slideOutDialogToRight 0.3s ease-out forwards;
+}
+
+/* Backdrop overlay for contact dialogs */
+.ac-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+}
+

@@ -1,0 +1,279 @@
+﻿/* Board responsive: mobile board and modals. */
+@media (max-width: 620px) {
+    .modal {
+        padding-left: 0;
+    }
+
+    .modal-content {
+        border-radius: 20px;
+        padding: 18px 20px;
+    }
+
+    .modal-content .task-category {
+        width: fit-content;
+        max-width: calc(100% - 4px);
+        height: 24px;
+        font-size: 14px;
+        padding: 0 10px;
+        border-radius: 8px;
+        margin: 0 0 10px 0;
+    }
+
+    .task-card,
+    .task-wrapper .task-card {
+        border-radius: 20px;
+    }
+
+    .task-card-summary {
+        border-radius: 20px;
+    }
+
+    .board-header h1 {
+        margin-left: 0;
+    }
+
+    .content {
+        padding: 16px 16px 83px;
+        margin-top: 76px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .board-columns {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .board-column {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 12px;
+    }
+
+    .task-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+        overflow: visible;
+    }
+
+    .task-wrapper .task-card {
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Long-press drag: no text selection/callout; allow custom drag instead of scroll */
+    .task-card {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: none;
+    }
+
+    .modal-content .edit-task-form {
+        gap: 20px;
+    }
+
+    .modal-content .edit-task-form h1 {
+        font-size: 22px;
+    }
+
+    .modal-content .edit-input,
+    .modal-content .edit-textarea {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .modal-content .edit-task-form .priority-options {
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+
+    .modal-content .edit-task-form .priority-options label {
+        min-width: 90px;
+        padding: 6px 12px;
+        font-size: 16px;
+    }
+
+    .modal-content .edit-actions button {
+        padding: 8px 12px;
+        font-size: 16px;
+    }
+
+    .modal-content .edit-assigned .custom-select {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 500px) {
+    .board-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .board-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .board-search {
+        width: 100%;
+    }
+
+    .board-search input {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .add-task-btn {
+        width: 100%;
+    }
+
+    .add-task-dialog .note {
+        display: block;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 320px) {
+    .board-column {
+        padding: 10px;
+    }
+
+    .task-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        align-items: flex-start;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 8px;
+        min-height: 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .task-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    .task-wrapper .task-card {
+        width: 200px;
+        min-width: 200px;
+        margin-bottom: 0;
+        padding: 14px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .task-wrapper .task-card .task-category {
+        font-size: 12px;
+        margin-bottom: 6px;
+        line-height: 1.2;
+    }
+
+    .task-wrapper .task-card .task-category--user-story {
+        width: 50%;
+        max-width: 50%;
+    }
+
+    .task-wrapper .task-card .task-category--technical-task {
+        width: 58%;
+        max-width: 58%;
+    }
+
+    .task-wrapper .task-card h3 {
+        font-size: 13px;
+        margin: 3px 0 8px;
+    }
+
+    .task-wrapper .task-card span {
+        font-size: 13px;
+        margin-bottom: 6px;
+        -webkit-line-clamp: 2;
+    }
+
+    .task-wrapper .task-card .task-category {
+        height: 24px;
+        padding: 0 8px;
+    }
+
+    .task-wrapper .task-card .task-footer {
+        font-size: 12px;
+        gap: 4px;
+    }
+
+    .task-wrapper .task-card .subtask-progress-bar {
+        width: 80px;
+        height: 6px;
+    }
+
+    .task-wrapper .task-card:only-child,
+    .task-wrapper .no-tasks,
+    .task-wrapper .task-card-summary {
+        flex-shrink: 0;
+    }
+}
+
+/* ── Mobile drag-and-drop target overlay ─────────────────────── */
+.mobile-drop-overlay {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    background: rgba(42, 54, 71, 0.97);
+    padding: 12px 16px 28px;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.mobile-drop-overlay.active {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mobile-drop-label {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.65;
+}
+
+.mobile-drop-targets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.mobile-drop-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 16px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.mobile-drop-btn.drop-active {
+    background: #29ABE2;
+    border-color: #29ABE2;
+    color: #fff;
+}

@@ -191,8 +191,14 @@
     #edit-contact-dialog .ac-hero {
         min-height: 104px;
         padding-top: 10px;
-        padding-bottom: 40px;
+        padding-bottom: var(--ac-dialog-avatar-overlap, 40px);
         justify-content: center;
+    }
+
+    #add-contact-dialog .ac-formwrap,
+    #edit-contact-dialog .ac-formwrap {
+        margin-top: calc(var(--ac-dialog-avatar-overlap, 40px) * -1);
+        padding-top: var(--ac-dialog-avatar-form-gap, 16px);
     }
 
     .ac-close {

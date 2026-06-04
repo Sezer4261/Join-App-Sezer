@@ -66,9 +66,16 @@ h1 {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   --add-task-field-error-reserve: 18px;
   padding-bottom: 57px;
+}
+
+.form-left {
+  gap: 18px;
+}
+
+.form-right {
+  gap: 24px;
 }
 
 .form-right {

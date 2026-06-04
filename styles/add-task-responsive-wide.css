@@ -1,0 +1,165 @@
+﻿/* Add task page: tablet and wide breakpoints. */
+@media (max-width: 1024px) {
+    .content {
+        padding-top: 105px;
+    }
+
+    #add-task-content {
+        padding-bottom: 70px;
+    }
+
+    .clear,
+    .create {
+        padding: 8px 14px;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    .form-left,
+    .form-right {
+        min-width: 0;
+    }
+
+    .priority-options {
+        flex-wrap: nowrap;
+    }
+
+    .priority-options label {
+        min-width: 0;
+        flex: 1 1 0;
+    }
+}
+
+@media (max-width: 990px) {
+    .task-form {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-left,
+    .form-right {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .form-separator {
+        display: none;
+    }
+}
+
+@media (max-width: 855px) {
+    .priority-options {
+        gap: 6px;
+    }
+
+    .priority-options label {
+        gap: 4px;
+        font-size: 16px;
+        padding: 4px 6px;
+    }
+
+    .priority-options label svg {
+        width: 16px;
+        height: 12px;
+    }
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 70px;
+        align-items: center;
+        padding: 20px 8px;
+    }
+
+    .sidebar-footer {
+        display: none;
+    }
+}
+
+@media (min-width: 621px) and (max-width: 900px) {
+    .header {
+        left: 70px;
+        width: calc(100% - 70px);
+    }
+    
+}
+
+@media (max-width: 800px) {
+
+    .form-left,
+    .form-right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 750px) {
+
+    html,
+    body {
+        min-height: 100%;
+    }
+
+    .clear,
+    .create {
+        padding: 6px 6px;
+    }
+
+    .app {
+        min-height: 100dvh;
+    }
+
+    .main {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main > .content-limit {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        min-height: 0;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #add-task-content {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .task-form {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-separator {
+        display: none;
+    }
+
+    .note {
+        font-size: 16px;
+    }
+
+    .content {
+        min-height: 0;
+    }
+
+    #add-task-content .form-scroll {
+        max-height: calc(100% - 300px);
+        overflow-y: auto;
+    }
+
+    .form-footer {
+        margin-top: 0;
+        position: relative;
+    }
+}
+
