@@ -26,7 +26,6 @@
     width: 900px;
     min-height: 530px;
     border-radius: 24px;
-    overflow: hidden;
     background: #fff;
     position: relative;
 }
@@ -64,6 +63,14 @@
     font-size: 21px;
     font-weight: 400;
     margin-bottom: 0px;
+}
+
+#add-contact-dialog .ac-subtitle {
+    display: block;
+    color: #fff;
+    margin-top: 12px;
+    line-height: 1.35;
+    max-width: 290px;
 }
 
 .ac-underline {
@@ -144,15 +151,14 @@
 .ac-form .error-message {
     color: #8d0000;
     font-size: 14px;
-    line-height: 1.25;
+    line-height: var(--contact-field-error-height, 18px);
+    min-height: var(--contact-field-error-height, 18px);
     margin: 4px 0 0 8px;
-    min-height: 0;
     display: block;
 }
 
 .ac-form .error-message:empty {
-    display: none;
-    margin: 0;
+    visibility: hidden;
 }
 
 .ac-field {

@@ -1,6 +1,5 @@
-@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) {
+﻿@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) {
     body {
-        overflow: hidden;
     }
 
     body>* {
@@ -18,7 +17,7 @@
     }
 
     body::after {
-        content: "Bitte Gerät drehen";
+        content: "Bitte GerÃ¤t drehen";
         position: fixed;
         inset: 0;
         display: grid;

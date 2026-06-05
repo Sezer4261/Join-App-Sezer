@@ -213,7 +213,6 @@ textarea {
   min-height: var(--add-task-error-height, 18px);
   line-height: var(--add-task-error-height, 18px);
   margin-top: 2px;
-  overflow: hidden;
 }
 
 #add-task-form .error-message:empty,

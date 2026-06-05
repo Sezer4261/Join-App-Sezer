@@ -1,14 +1,12 @@
-:root {
+﻿:root {
   --content-max-width: 1440px;
   --content-padding-x: 24px;
 }
 
 html {
-  overflow-x: hidden;
 }
 
 body {
-  overflow-x: hidden;
   max-width: 100%;
 }
 

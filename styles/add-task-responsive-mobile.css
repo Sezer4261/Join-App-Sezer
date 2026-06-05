@@ -238,7 +238,6 @@
         min-height: calc(100dvh - 120px);
         padding-top: 88px;
         padding-bottom: 0;
-        overflow: hidden;
     }
 
     #add-task-content {

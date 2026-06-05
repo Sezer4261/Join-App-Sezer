@@ -1,4 +1,4 @@
-@media (min-width: 601px) and (max-width: 621px) {
+﻿@media (min-width: 601px) and (max-width: 621px) {
     main {
         padding-top: 77px !important;
     }
@@ -29,7 +29,6 @@
 
     .wrapper {
     width: 100%;
-    overflow-x: hidden;
     }
 
     .contact-section-left {

@@ -1,4 +1,4 @@
-* {
+﻿* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -42,7 +42,6 @@ main {
     min-width: 0;
     gap: 75px;
     height: 100vh;
-    overflow-x: hidden;
     overflow-y: auto;
     padding-top: 182px;
     padding-bottom: 206px;

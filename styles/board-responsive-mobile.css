@@ -55,25 +55,47 @@
     }
 
     .task-wrapper {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: 12px;
-        overflow: visible;
-    }
-
-    .task-wrapper .task-card {
-        min-width: 0;
-        max-width: 100%;
         width: 100%;
     }
 
-    /* Long-press drag: no text selection/callout; allow custom drag instead of scroll */
+    .task-wrapper.task-wrapper--horizontal-scroll .task-card {
+        padding: 14px;
+        touch-action: pan-x;
+    }
+
+    .task-wrapper.task-wrapper--horizontal-scroll .task-card .task-category {
+        font-size: 12px;
+        height: 24px;
+        padding: 0 8px;
+        margin-bottom: 6px;
+        line-height: 1.2;
+    }
+
+    .task-wrapper.task-wrapper--horizontal-scroll .task-card h3 {
+        font-size: 13px;
+        margin: 3px 0 8px;
+    }
+
+    .task-wrapper.task-wrapper--horizontal-scroll .task-card span {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+
+    .task-wrapper.task-wrapper--horizontal-scroll .task-card .task-footer {
+        font-size: 12px;
+        gap: 4px;
+    }
+
+    .task-wrapper.task-wrapper--horizontal-scroll .task-card .subtask-progress-bar {
+        width: 80px;
+        height: 6px;
+    }
+
+    /* Long-press drag: no text selection/callout */
     .task-card {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         user-select: none;
-        touch-action: none;
     }
 
     .modal-content .edit-task-form {
@@ -113,15 +135,8 @@
 }
 
 @media (max-width: 500px) {
-    .board-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-    }
-
     .board-actions {
-        width: 100%;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 
     .board-search {
@@ -148,78 +163,8 @@
         padding: 10px;
     }
 
-    .task-wrapper {
-        display: flex;
-        flex-direction: row;
-        gap: 12px;
-        align-items: flex-start;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding-bottom: 8px;
-        min-height: 0;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-
-    .task-wrapper::-webkit-scrollbar {
-        display: none;
-    }
-
-    .task-wrapper .task-card {
-        width: 200px;
-        min-width: 200px;
-        margin-bottom: 0;
-        padding: 14px;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .task-wrapper .task-card .task-category {
-        font-size: 12px;
-        margin-bottom: 6px;
-        line-height: 1.2;
-    }
-
-    .task-wrapper .task-card .task-category--user-story {
-        width: 50%;
-        max-width: 50%;
-    }
-
-    .task-wrapper .task-card .task-category--technical-task {
-        width: 58%;
-        max-width: 58%;
-    }
-
-    .task-wrapper .task-card h3 {
-        font-size: 13px;
-        margin: 3px 0 8px;
-    }
-
-    .task-wrapper .task-card span {
-        font-size: 13px;
-        margin-bottom: 6px;
-        -webkit-line-clamp: 2;
-    }
-
-    .task-wrapper .task-card .task-category {
-        height: 24px;
-        padding: 0 8px;
-    }
-
-    .task-wrapper .task-card .task-footer {
-        font-size: 12px;
-        gap: 4px;
-    }
-
-    .task-wrapper .task-card .subtask-progress-bar {
-        width: 80px;
-        height: 6px;
-    }
-
-    .task-wrapper .task-card:only-child,
-    .task-wrapper .no-tasks,
-    .task-wrapper .task-card-summary {
-        flex-shrink: 0;
+    :root {
+        --board-scroll-task-card-width: 200px;
     }
 }
 

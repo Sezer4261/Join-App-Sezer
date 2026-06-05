@@ -19,6 +19,17 @@ function getTasksForStatusInDisplayOrder(taskList, status) {
   return getTasksInDisplayOrder(taskList.filter((task) => task.status === status));
 }
 
+function shouldUseHorizontalTaskScroll() {
+  return window.innerWidth <= BOARD_COMPACT_MEDIUM_MAX;
+}
+
+function syncBoardTaskWrapperScrollLayout() {
+  const useHorizontal = shouldUseHorizontalTaskScroll();
+  document.querySelectorAll(".task-wrapper").forEach((wrapper) => {
+    wrapper.classList.toggle("task-wrapper--horizontal-scroll", useHorizontal);
+  });
+}
+
 function renderBoard() {
   initBoardSearch();
   initBoardResponsiveCompactMode();
@@ -34,8 +45,12 @@ function initBoardResponsiveCompactMode() {
 }
 
 function handleBoardResponsiveResize() {
+  syncBoardTaskWrapperScrollLayout();
   const nextCompactLimit = getCompactBoardVisibleTaskLimit();
-  if (nextCompactLimit === lastBoardCompactLimit) return;
+  if (nextCompactLimit === lastBoardCompactLimit) {
+    if (typeof initTouchDrag === "function") initTouchDrag();
+    return;
+  }
   lastBoardCompactLimit = nextCompactLimit;
   if (!nextCompactLimit) expandedBoardColumns.clear();
   refreshTaskView();
@@ -104,6 +119,7 @@ function renderTasksIntoColumns() {
   const filteredTasks = getFilteredTasks();
   const compactVisibleLimit = getCompactBoardVisibleTaskLimit();
   BOARD_COLUMN_CONFIGS.forEach((columnConfig) => renderTasksForColumn(columnConfig, filteredTasks, compactVisibleLimit));
+  syncBoardTaskWrapperScrollLayout();
 }
 
 function renderTasksForColumn(columnConfig, filteredTasks, compactVisibleLimit) {

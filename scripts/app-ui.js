@@ -14,17 +14,29 @@ function formatHiddenBoardTasksLabel(hiddenCount) {
   return `${hiddenCount} more tasks`;
 }
 
-/** Prevents layout shift when modals hide the page scrollbar. */
+let pageScrollLockY = 0;
+
+/** Prevents layout shift when modals open without clipping page content. */
 function lockPageScrollForOverlay() {
+  pageScrollLockY = window.scrollY;
   const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   if (scrollbarWidth > 0) document.body.style.paddingRight = `${scrollbarWidth}px`;
-  document.documentElement.style.overflow = "hidden";
+  document.body.style.position = "fixed";
+  document.body.style.top = `-${pageScrollLockY}px`;
+  document.body.style.left = "0";
+  document.body.style.right = "0";
+  document.body.style.width = "100%";
 }
 
 /** Restores page scroll after a modal closes. */
 function unlockPageScrollForOverlay() {
   document.body.style.paddingRight = "";
-  document.documentElement.style.overflow = "";
+  document.body.style.position = "";
+  document.body.style.top = "";
+  document.body.style.left = "";
+  document.body.style.right = "";
+  document.body.style.width = "";
+  window.scrollTo(0, pageScrollLockY);
 }
 
 /**
@@ -43,3 +55,23 @@ document.addEventListener("click", (event) => {
     menu.classList.remove("active");
   }
 });
+
+/** @returns {void} */
+function initUserProfileBadge() {
+  const el = document.getElementById("user-profile");
+  if (!el) return;
+  try {
+    const session = JSON.parse(localStorage.getItem("user") || "null");
+    if (!session) return;
+    if (session.mode === "guest") {
+      el.textContent = "G";
+      return;
+    }
+    const label = session.displayName || session.email || "";
+    el.textContent = label.charAt(0).toUpperCase() || "U";
+  } catch (_) {
+    /* ignore invalid session JSON */
+  }
+}
+
+document.addEventListener("DOMContentLoaded", initUserProfileBadge);

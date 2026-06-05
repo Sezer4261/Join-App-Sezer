@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/fonts.css">
   <link rel="stylesheet" href="./styles/content-limit.css">
-  <link rel="stylesheet" href="./styles/legal-notice.css">
   <link rel="stylesheet" href="./styles/sidebar.css">
   <link rel="stylesheet" href="./styles/header.css">
   <link rel="stylesheet" href="./styles/help.css">
+  <link rel="stylesheet" href="./styles/help-responsive.css">
   <link rel="icon" type="image/png" href="./assets/img/join-logo-white.svg">
 
 
@@ -23,6 +23,7 @@
 </head>
 
 <body>
+  <div class="app">
   <nav class="sidebar">
     <img class="logo-sidebar" src="./assets/img/join-logo-white.svg" alt="Join Logo">
 
@@ -62,7 +63,7 @@
       </div>
     </footer>
   </nav>
-  <main class="main">
+  <main class="main help-main">
     <header class="header">
       <div class="content-limit content-limit--row content-limit--no-padding">
         <img class="header-logo" src="./assets/img/join-logo.svg" alt="Join Logo">
@@ -101,7 +102,7 @@
         <div class="help-page-header">
           <h1>Help</h1>
           <img src="./assets/img/arrow-left-line.svg" alt="Back" class="help-back-btn"
-            onclick="history.back(); return false;">
+            onclick="navigateFromHelpBack(); return false;">
         </div>
         <p class="help-page-description">Welcome to the help page for <span class="blue-text">Join</span>, your guide to
           using our kanban project
@@ -191,6 +192,7 @@
     </div>
 
   </main>
+  </div>
 
 </body>
 

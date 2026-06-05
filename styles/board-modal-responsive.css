@@ -3,9 +3,13 @@
 .modal-content .edit-avatar-container {
     display: flex !important;
     flex-wrap: nowrap !important;
-    overflow: hidden !important;
     gap: 6px !important;
     align-items: center !important;
+    min-width: 0;
+}
+
+.modal-content .edit-avatar-container .avatar {
+    flex-shrink: 0;
 }
 
 /* Compact dropdown items in edit modal on all screen sizes */

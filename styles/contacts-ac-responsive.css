@@ -38,6 +38,12 @@
     .ac-title { font-size: 26px; margin: 0; }
     .ac-subtitle { display: none; }
     .ac-underline { display: none; }
+
+    #add-contact-dialog .ac-subtitle {
+        display: block;
+        font-size: 18px;
+        margin-top: 8px;
+    }
     .ac-formwrap {
         padding: 44px 20px 20px;
         flex-direction: column;
@@ -148,7 +154,6 @@
         max-height: none;
         height: auto;
         margin: 0;
-        overflow: hidden;
         animation: editContactDialogIn 0.3s ease-out;
     }
 
@@ -170,7 +175,6 @@
         flex-direction: column;
         align-items: stretch;
         border-radius: 20px;
-        overflow: hidden;
         position: relative;
     }
 
@@ -193,10 +197,6 @@
         box-sizing: border-box;
         position: relative;
         z-index: 1;
-    }
-
-    #add-contact-dialog .ac-subtitle {
-        display: none;
     }
 
     #add-contact-dialog .ac-hero-heading,
@@ -252,7 +252,6 @@
         flex: 1 1 auto;
         min-height: 0;
         width: 100%;
-        overflow-x: hidden;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         margin-top: calc(var(--ac-dialog-avatar-overlap) * -1);
@@ -270,6 +269,16 @@
         margin-top: 0;
         width: 100%;
         max-width: 280px;
+    }
+
+    #add-contact-dialog .ac-form .error-message,
+    #edit-contact-dialog .ac-form .error-message {
+        min-height: var(--contact-field-error-height, 18px);
+        line-height: var(--contact-field-error-height, 18px);
+    }
+
+    #add-contact-dialog .ac-formwrap {
+        scrollbar-gutter: stable;
     }
 }
 
@@ -313,13 +322,15 @@
 
     #add-contact-dialog .ac-hero,
     #edit-contact-dialog .ac-hero {
-        padding: 56px 23px 0 23px;
+        padding: 56px 23px 32px 23px;
         z-index: auto;
         align-items: flex-start;
+        justify-content: flex-start;
     }
 
     #add-contact-dialog .ac-subtitle {
         display: block;
+        margin-top: 16px;
     }
 
     #add-contact-dialog .ac-avatar-add-empty {
@@ -358,10 +369,21 @@
     }
 }
 
+@media (min-width: 781px) {
+    #add-contact-dialog .ac-subtitle {
+        display: block;
+        color: #fff;
+    }
+}
+
 @media (max-width: 620px) {
     #add-contact-dialog.ac-dialog,
     #edit-contact-dialog.ac-dialog {
         bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    }
+
+    #add-contact-dialog .ac-subtitle {
+        display: none;
     }
 }
 

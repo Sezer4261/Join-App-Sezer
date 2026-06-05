@@ -1,22 +1,9 @@
-let contactDetailsOverflowTimeoutId;
-
-function suppressHorizontalOverflowDuringDetailsAnimation() {
-  const detailsSection = document.querySelector(".contact-section-right");
-  if (!detailsSection) return;
-  detailsSection.style.overflowX = "hidden";
-  window.clearTimeout(contactDetailsOverflowTimeoutId);
-  contactDetailsOverflowTimeoutId = window.setTimeout(() => {
-    detailsSection.style.overflowX = "";
-  }, CONTACT_DETAILS_ANIM_MS);
-}
-
 function renderContactDetailsPanel(contactData, contactId) {
   const container = document.getElementById("contact-details");
   if (!container) return;
   const initials = getContactInitialsFromName(contactData.name);
   const phone = contactData.phone || "";
   container.innerHTML = getContactDetailsTemplate(initials, contactData.name, contactData.email, phone, contactId);
-  suppressHorizontalOverflowDuringDetailsAnimation();
   initContactMoreMenuAutoClose();
   if (window.innerWidth <= CONTACT_MOBILE_BREAKPOINT) {
     document.querySelector(".wrapper")?.classList.add("show-contact-details");

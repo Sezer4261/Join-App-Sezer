@@ -1,0 +1,65 @@
+@media (max-width: 1024px) {
+    main.help-main {
+        padding-bottom: 100px;
+    }
+
+    .help-main .wrapper {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+@media (max-width: 780px) {
+    main.help-main {
+        margin-left: 0;
+        padding-top: 96px;
+    }
+
+    .help-main .wrapper {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .help-page-header h1 {
+        font-size: 47px;
+    }
+}
+
+@media (max-width: 620px) {
+    main.help-main {
+        padding-top: 96px;
+        padding-bottom: 96px;
+    }
+
+    .help-main .wrapper {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .help-page-header h1 {
+        font-size: 42px;
+    }
+
+    .help-main h2 {
+        font-size: 24px;
+    }
+
+    .help-step-number {
+        font-size: 22px;
+        min-width: 28px;
+    }
+
+    .help-step-title {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .help-page-header h1 {
+        font-size: 36px;
+    }
+
+    .help-step {
+        gap: 14px;
+    }
+}

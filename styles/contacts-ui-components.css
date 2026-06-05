@@ -1,4 +1,4 @@
-.add-contact-btn {
+﻿.add-contact-btn {
     flex-shrink: 0;
     border: none;
     width: 100%;
@@ -179,7 +179,6 @@
     min-height: 0;
     min-width: 0;
     overflow-y: auto;
-    overflow-x: hidden;
     scrollbar-gutter: stable;
     width: 100%;
     max-width: 100%;

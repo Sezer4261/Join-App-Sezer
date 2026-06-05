@@ -179,19 +179,16 @@
         max-width: 96vw;
         max-height: 84vh;
         overflow-y: auto;
-        overflow-x: hidden;
     }
 
     .modal-content:has(.edit-assigned .dropdown-content.show),
     .modal-content:has(.edit-label .dropdown-content.show) {
         overflow-y: auto;
-        overflow-x: hidden;
     }
 
     .modal-content .edit-form-scroll,
     .modal-content .edit-form-scroll:has(.dropdown-content.show) {
         overflow-y: visible;
-        overflow-x: hidden;
     }
 
     .modal-content .edit-assigned .custom-select {
@@ -295,25 +292,6 @@
         padding: 16px 8px 83px;
         margin-left: 0px;
         padding-right: 14px;
-    }
-
-    .board-header {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        gap: 10px;
-    }
-
-    .board-actions {
-        grid-column: 1;
-        grid-row: 2;
-        margin-top: 0;
-    }
-
-    .add-task-mobile-btn {
-        grid-column: 1;
-        grid-row: 3;
-        justify-self: end;
-        margin-top: 4px;
     }
 
     .board-column {

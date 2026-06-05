@@ -68,10 +68,36 @@ function getPagePath(fileName) {
   return `${inPublicFolder ? "../" : "./"}${fileName}`;
 }
 
+/** Sends logged-in users away from login/signup entry pages. */
+function redirectLoggedInUserFromEntryPages() {
+  if (!localStorage.getItem("user")) return;
+  const path = String(window.location.pathname || "").replace(/\\/g, "/");
+  const onEntryPage =
+    path === "/" ||
+    path.endsWith("/index.html") ||
+    path.endsWith("/signup.html");
+  if (onEntryPage) {
+    window.location.replace(getPagePath("summary.html"));
+  }
+}
+
+/** Returns from help to the app start page when a session exists. */
+function navigateFromHelpBack() {
+  if (localStorage.getItem("user")) {
+    window.location.href = getPagePath("summary.html");
+    return;
+  }
+  window.history.back();
+}
+
 protectThisPage();
+redirectLoggedInUserFromEntryPages();
 
 window.addEventListener("pageshow", (event) => {
   const currentPage = window.location.pathname;
+  if (event.persisted) {
+    redirectLoggedInUserFromEntryPages();
+  }
   if (!event.persisted || isPublicPage(currentPage)) return;
   if (!localStorage.getItem("user")) {
     window.location.replace(getPagePath("index.html"));

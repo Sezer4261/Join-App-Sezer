@@ -22,6 +22,9 @@
   --dialog-close-ms: 300ms;
   --contact-details-anim-ms: 320ms;
   --add-task-error-height: 18px;
+  --contact-field-error-height: 18px;
+  --board-scroll-task-card-width: 220px;
+  --board-scroll-task-card-min-height: 168px;
 }
 
 html,

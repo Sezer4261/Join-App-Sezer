@@ -2,6 +2,8 @@ const CONTACT_DIALOG_OPEN_CLASS = "contact-dialog-open";
 
 function setContactDialogScrollLock(locked) {
   document.body.classList.toggle(CONTACT_DIALOG_OPEN_CLASS, locked);
+  if (locked) lockPageScrollForOverlay();
+  else unlockPageScrollForOverlay();
 }
 
 function captureContactPanelScrollPositions() {
@@ -16,7 +18,10 @@ function captureContactPanelScrollPositions() {
 }
 
 function bindContactDialogEvents(dialog, onClose) {
-  dialog.addEventListener("close", () => setContactDialogScrollLock(false));
+  dialog.addEventListener("close", () => {
+    setContactDialogScrollLock(false);
+    if (dialog.id === "add-contact-dialog") clearAddContactForm();
+  });
   dialog.addEventListener("click", (event) => {
     if (event.target === dialog) onClose();
   });
@@ -37,9 +42,10 @@ function openContactDialog(dialog) {
 
 function openAddContactDialog() {
   const dialog = ensureAddContactDialog();
+  clearAddContactForm();
+  const formWrap = dialog.querySelector(".ac-formwrap");
+  if (formWrap) formWrap.scrollTop = 0;
   openContactDialog(dialog);
-  contactDialogFieldErrors = {};
-  clearAllContactInlineErrors(ADD_CONTACT_FIELD_IDS);
   initAddContactDialogValidation(dialog);
   updateAddContactSubmitState(dialog);
 }

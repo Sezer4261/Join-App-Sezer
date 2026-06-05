@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --sidebar-bg: #2a3647;
   --sidebar-text: #fff;
   --main-bg: #f6f7f9;
@@ -34,7 +34,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
 .board-header {
@@ -331,7 +330,6 @@ h1 {
   display: block;
   height: 24px;
   line-height: 24px;
-  overflow: hidden;
 }
 
 #edit-subtask-error:not(:empty) + .subtask-list {

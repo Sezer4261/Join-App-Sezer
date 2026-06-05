@@ -1,4 +1,4 @@
-.add-task-btn {
+﻿.add-task-btn {
     background: #2A3647;
     color: white;
     border: none;
@@ -52,7 +52,6 @@
     padding: 36px;
     margin-top: 60px;
     margin-left: 120px;
-    overflow: hidden;
     position: relative;
     transform: translateX(100%);
     opacity: 0;
@@ -81,6 +80,34 @@
 .add-task-dialog .dropdown-content {
     font-size: 16px;
     max-height: 220px;
+    top: calc(100% + 8px);
+}
+
+.add-task-dialog .assigned-to-label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+@media (min-width: 621px) {
+    .add-task-dialog .assigned-to-label.has-avatars {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: 12px;
+        row-gap: 8px;
+        align-items: center;
+    }
+
+    .add-task-dialog .assigned-to-label.has-avatars #select-contacts {
+        grid-column: 1;
+        min-width: 0;
+    }
+
+    .add-task-dialog .assigned-to-label.has-avatars .avatar-container {
+        grid-column: 2;
+        margin-top: 0;
+        flex-shrink: 0;
+    }
 }
 
 .add-task-dialog .dropdown-item {
@@ -96,7 +123,6 @@
     flex: 1 1 auto;
     min-width: 0;
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 
@@ -264,7 +290,6 @@
     display: block;
     min-height: 24px;
     line-height: 24px;
-    overflow: hidden;
     color: #8d0000;
     font-size: 16px;
 }
@@ -338,12 +363,16 @@
 }
 
 .add-task-dialog .avatar-container {
-    margin-top: 3px;
-    padding-left: 10px;
+    margin-top: 0;
+    padding-left: 0;
     display: flex;
     gap: 8px;
     align-items: center;
-    min-height: 40px;
+    min-height: 0;
+}
+
+.add-task-dialog .avatar-container:empty {
+    display: none;
 }
 
 .add-task-dialog .avatar-more {
@@ -354,19 +383,18 @@
     border: 2px solid #fff;
 }
 
-.add-task-dialog .bg-blue { background: #1E90FF; }
-.add-task-dialog .bg-green { background: #27AE60; }
-.add-task-dialog .bg-purple { background: #8E44AD; }
-.add-task-dialog .bg-orange { background: #FFA500; }
-.add-task-dialog .bg-pink { background: #E84393; }
-.add-task-dialog .bg-red { background: #E74C3C; }
-.add-task-dialog .bg-teal { background: #00BFAE; }
-.add-task-dialog .bg-brown { background: #A0522D; }
+.add-task-dialog .avatar.bg-blue { background: #1E90FF; }
+.add-task-dialog .avatar.bg-green { background: #27AE60; }
+.add-task-dialog .avatar.bg-purple { background: #8E44AD; }
+.add-task-dialog .avatar.bg-orange { background: #FFA500; }
+.add-task-dialog .avatar.bg-pink { background: #E84393; }
+.add-task-dialog .avatar.bg-red { background: #E74C3C; }
+.add-task-dialog .avatar.bg-teal { background: #00BFAE; }
+.add-task-dialog .avatar.bg-brown { background: #A0522D; }
 
 .add-task-dialog .form-scroll {
     max-height: calc(100% - 119px);
     overflow-y: auto;
-    overflow-x: hidden;
     padding-right: 6px;
     scrollbar-gutter: stable;
 }

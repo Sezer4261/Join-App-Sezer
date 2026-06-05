@@ -1,4 +1,4 @@
-.header {
+﻿.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -117,7 +117,6 @@
     display: none;
     z-index: 1000;
     margin-top: 8px;
-    overflow: hidden;
     padding: 8px 0;
 }
 
@@ -282,7 +281,6 @@
 @media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) {
 
     body {
-        overflow: hidden;
     }
 
     main,
@@ -312,7 +310,7 @@
     }
 
     body::after {
-        content: "Bitte Gerät drehen";
+        content: "Bitte GerÃ¤t drehen";
         position: fixed;
         inset: 0;
         display: grid;

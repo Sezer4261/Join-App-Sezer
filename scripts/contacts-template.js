@@ -19,7 +19,6 @@ function getAddContactFormHTML() {
       <div class="ac-input-wrapper"><div class="ac-field"><input class="input-focus" id="ac-phone" name="phone" type="tel" placeholder="Phone" required><img src="./assets/img/call.png"></div><span class="error-message" id="ac-phone-error"></span></div>
       <div class="ac-actions">
         <button onclick="closeAddContactDialogWithAnimation()" type="button" class="btn btn-ghost responsive-close-btn" data-ac-cancel aria-label="Cancel"><span>Cancel</span><span class="btn-x">×</span></button>
-        <button type="button" class="btn btn-ghost" data-ac-clear onclick="clearAddContactForm()" aria-label="Clear form"><span>Clear</span></button>
         <button type="submit" class="btn btn-primary" data-ac-submit aria-label="Create contact"><span>Create contact</span><span class="btn-check" aria-hidden="true"><svg width="18" height="14" viewBox="0 0 18 14"><path d="M1 7l5 5L17 1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
       </div>
     </form>
