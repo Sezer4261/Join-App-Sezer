@@ -21,25 +21,9 @@
   gap: 8px;
 }
 
-@media (min-width: 621px) {
-  .assigned-to-label.has-avatars {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    column-gap: 12px;
-    row-gap: 8px;
-    align-items: center;
-  }
-
-  .assigned-to-label.has-avatars #select-contacts {
-    grid-column: 1;
-    min-width: 0;
-  }
-
-  .assigned-to-label.has-avatars .avatar-container {
-    grid-column: 2;
-    margin-top: 0;
-    flex-shrink: 0;
-  }
+.assigned-to-label .avatar-container {
+  width: 100%;
+  margin-top: 0;
 }
 
 .custom-select > span {

@@ -1,10 +1,22 @@
 /** @file Authentication guard, session, and navigation helpers. */
 
+/** @returns {boolean} */
+function isUserLoggedIn() {
+  try {
+    const raw = localStorage.getItem("user");
+    if (!raw) return false;
+    const session = JSON.parse(raw);
+    return !!session && (session.mode === "guest" || session.mode === "user" || !!session.email);
+  } catch (_) {
+    return false;
+  }
+}
+
 /** Redirects unauthenticated users away from protected pages. */
 function protectThisPage() {
   const currentPage = window.location.pathname;
   if (isPublicPage(currentPage)) return;
-  if (!localStorage.getItem("user")) {
+  if (!isUserLoggedIn()) {
     window.location.replace(getPagePath("index.html"));
   }
 }
@@ -19,6 +31,7 @@ function isPublicPage(pathname) {
     normalizedPath === "/" ||
     normalizedPath.endsWith("/index.html") ||
     normalizedPath.endsWith("/signup.html") ||
+    normalizedPath.endsWith("/help.html") ||
     normalizedPath.endsWith("/privacy-policy.html") ||
     normalizedPath.endsWith("/legal-notice.html") ||
     normalizedPath.endsWith("/public/privacy-policy.html") ||
@@ -54,6 +67,11 @@ function redirectToLogin() {
   window.location.replace(getPagePath("index.html"));
 }
 
+/** Opens the app home (summary when logged in, login otherwise). */
+function navigateToAppHome() {
+  window.location.href = getPagePath(isUserLoggedIn() ? "summary.html" : "index.html");
+}
+
 function navigateToHelp() {
   window.location.href = getPagePath("help.html");
 }
@@ -68,38 +86,43 @@ function getPagePath(fileName) {
   return `${inPublicFolder ? "../" : "./"}${fileName}`;
 }
 
-/** Sends logged-in users away from login/signup entry pages. */
-function redirectLoggedInUserFromEntryPages() {
-  if (!localStorage.getItem("user")) return;
+/** Sends folder-root URLs to the login page when no HTML file is in the path. */
+function redirectBareRootToLogin() {
   const path = String(window.location.pathname || "").replace(/\\/g, "/");
-  const onEntryPage =
-    path === "/" ||
-    path.endsWith("/index.html") ||
-    path.endsWith("/signup.html");
-  if (onEntryPage) {
-    window.location.replace(getPagePath("summary.html"));
+  if (/\.html$/i.test(path)) return;
+  if (path === "/" || path.endsWith("/")) {
+    window.location.replace(getPagePath("index.html"));
   }
 }
 
-/** Returns from help to the app start page when a session exists. */
+/** Returns from help to the app home (never back to login when a session exists). */
 function navigateFromHelpBack() {
-  if (localStorage.getItem("user")) {
+  if (isUserLoggedIn()) {
     window.location.href = getPagePath("summary.html");
     return;
   }
-  window.history.back();
+  window.location.href = getPagePath("index.html");
 }
 
+/** Updates mobile footer entry links for the current session. */
+function initSessionAwareNavigation() {
+  const loggedIn = isUserLoggedIn();
+  document.querySelectorAll("[data-app-home-link]").forEach((link) => {
+    link.href = getPagePath(loggedIn ? "summary.html" : "index.html");
+    link.textContent = loggedIn ? "Summary" : "Log In";
+  });
+}
+
+redirectBareRootToLogin();
 protectThisPage();
-redirectLoggedInUserFromEntryPages();
+
+document.addEventListener("DOMContentLoaded", initSessionAwareNavigation);
 
 window.addEventListener("pageshow", (event) => {
   const currentPage = window.location.pathname;
-  if (event.persisted) {
-    redirectLoggedInUserFromEntryPages();
-  }
+  initSessionAwareNavigation();
   if (!event.persisted || isPublicPage(currentPage)) return;
-  if (!localStorage.getItem("user")) {
+  if (!isUserLoggedIn()) {
     window.location.replace(getPagePath("index.html"));
   }
 });

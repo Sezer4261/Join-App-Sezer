@@ -25,7 +25,52 @@
     }
 }
 
+.mobile-footer {
+    display: none;
+}
+
 @media (max-width: 620px) {
+    .help-main .app nav.sidebar,
+    .app > nav.sidebar {
+        display: none;
+    }
+
+    .mobile-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: #2a3647;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 0 16px;
+        z-index: 1000;
+    }
+
+    .mobile-footer-links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .mobile-footer-link {
+        color: #cdcdcd;
+        text-decoration: none;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .mobile-footer-link.active {
+        background: #091931;
+        padding: 31px 18px;
+        border-radius: 12px;
+        color: #fff;
+    }
+
     main.help-main {
         padding-top: 96px;
         padding-bottom: 96px;

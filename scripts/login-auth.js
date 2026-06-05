@@ -28,7 +28,7 @@ function handleLoginResult(credentials, signedUpUser) {
   if (signedUpUser) {
     storeUserSession(credentials.email, signedUpUser);
     showToast("You logged in successfully");
-    setTimeout(() => { window.location.href = "summary.html"; }, 300);
+    setTimeout(() => { window.location.href = getPagePath("summary.html"); }, 300);
     return;
   }
   showLoginError("Check your email and password. Please try again.");
@@ -74,5 +74,5 @@ function navigateToSignup() {
 function guestLogin() {
   localStorage.setItem("user", JSON.stringify({ mode: "guest" }));
   showToast("You logged in successfully");
-  setTimeout(() => { window.location.href = "summary.html"; }, 300);
+  setTimeout(() => { window.location.href = getPagePath("summary.html"); }, 300);
 }
