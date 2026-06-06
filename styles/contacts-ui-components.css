@@ -115,6 +115,7 @@
 
 .ac-actions .btn-primary {
     min-width: 0;
+    width: auto;
 }
 
 .btn-primary:disabled,

@@ -31,10 +31,10 @@ function getDialogAddContact() {
         <div class="ac">
             ${getAddContactDialogHeroHTML()}
             <button type="button" class="ac-close" aria-label="Close">×</button>
-            <div class="ac-avatar ac-avatar-on-divider ac-avatar-add-empty" aria-label="Avatar placeholder">
-                <img src="./assets/icons/person.svg" alt="">
-            </div>
             <div class="ac-formwrap">
+                <div class="ac-avatar ac-avatar-add-empty" aria-label="Avatar placeholder">
+                    <img src="./assets/icons/person.svg" alt="">
+                </div>
                 ${getAddContactFormHTML()}
             </div>
         </div>
@@ -144,8 +144,8 @@ function getEditContactDialog(id, name, email, phone, initials) {
           </div>
         </div>
         <button type="button" class="ac-close" aria-label="Close" onclick="closeEditContactDialog()">×</button>
-        <div class="ac-avatar ac-avatar-on-divider ac-avatar-edit-split" aria-label="Avatar placeholder"><div class="contact-avatar-large"><div class="contact-initials-large">${initials}</div></div></div>
         <div class="ac-formwrap">
+          <div class="ac-avatar ac-avatar-edit-split" aria-label="Avatar placeholder"><div class="contact-avatar-large"><div class="contact-initials-large">${initials}</div></div></div>
           ${getEditContactFormHTML(id, name, email, phone)}
         </div>
       </div>

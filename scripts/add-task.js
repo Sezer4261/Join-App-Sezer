@@ -17,6 +17,11 @@ function initAddTaskHandlers() {
 async function renderAddTask() {
   const content = document.getElementById('add-task-content');
   if (!content) return;
+  const pendingStatus = sessionStorage.getItem("addTaskBoardStatus");
+  if (pendingStatus) {
+    window.currentBoardStatus = pendingStatus;
+    sessionStorage.removeItem("addTaskBoardStatus");
+  }
   setAddTaskActionButtonsDisabled(false);
   applyTodayMinDate();
   await loadContacts();

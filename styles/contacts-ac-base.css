@@ -110,11 +110,19 @@
     flex: 1;
     background: rgb(246, 247, 248);
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 32px;
     padding: 56px 40px 40px 40px;
     position: relative;
+}
+
+.ac-formwrap > .ac-avatar {
+    flex-shrink: 0;
+    margin: 0;
+    position: static;
+    transform: none;
 }
 
 .ac-avatar {
@@ -124,7 +132,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 32px;
+    margin-bottom: 0;
 }
 
 .ac-avatar img {
@@ -198,26 +206,27 @@
 }
 
 .ac-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
     gap: 12px;
     margin-top: 24px;
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     box-sizing: border-box;
 }
 
-.ac-actions .btn-ghost {
-    width: 100%;
-    justify-content: center;
+.ac-actions .btn {
+    width: auto;
     min-width: 0;
-    padding: 0 16px;
 }
 
+.ac-actions .btn-ghost,
 .ac-actions .btn-primary {
-    grid-column: 1 / -1;
-    width: 100%;
-    min-width: 0;
+    width: auto;
     justify-content: center;
+    padding: 0 16px;
 }
 
 .ac-dialog {

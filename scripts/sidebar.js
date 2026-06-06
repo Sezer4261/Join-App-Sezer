@@ -7,10 +7,14 @@ function sidebarHighlightingSummary() {
 }
 
 /**
- * Executes sidebar highlighting add task logic.
+ * Navigates to the add-task page, optionally pre-selecting a board column status.
+ * @param {string} [status] - Board column status (e.g. "To Do", "In Progress").
  * @returns {void} Result.
  */
-function sidebarHighlightingAddTask() {
+function sidebarHighlightingAddTask(status) {
+    if (status) {
+        sessionStorage.setItem("addTaskBoardStatus", status);
+    }
     window.location.href = getPagePath("add-task.html");
 }
 

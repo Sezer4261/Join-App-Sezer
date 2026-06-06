@@ -76,7 +76,7 @@
     .header-right {
         position: absolute;
         left: 50%;
-        top: 360%;
+        top: 380%;
         transform: translateX(-50%);
         margin: 0;
         right: auto;

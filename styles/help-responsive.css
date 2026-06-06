@@ -11,8 +11,29 @@
 
 @media (max-width: 780px) {
     main.help-main {
-        margin-left: 0;
         padding-top: 96px;
+    }
+
+    main.help-main > .header {
+        left: 232px;
+        right: 0;
+        width: auto;
+        max-width: none;
+    }
+
+    main.help-main > .header .center {
+        display: none !important;
+    }
+
+    main.help-main > .header .header-logo {
+        display: block;
+    }
+
+    main.help-main > .header .content-limit--row {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
     }
 
     .help-main .wrapper {
@@ -30,6 +51,19 @@
 }
 
 @media (max-width: 620px) {
+    main.help-main {
+        margin-left: 0;
+        padding-top: 76px;
+    }
+
+    main.help-main > .header {
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        padding: 12px 16px;
+        min-height: 60px;
+    }
+
     .help-main .app nav.sidebar,
     .app > nav.sidebar {
         display: none;
@@ -72,7 +106,6 @@
     }
 
     main.help-main {
-        padding-top: 96px;
         padding-bottom: 96px;
     }
 

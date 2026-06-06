@@ -155,14 +155,11 @@
         position: relative;
     }
 
-    .ac-avatar {
-        margin-bottom: 0;
-        position: absolute;
-        top: 0;
-        left: 50%;
-        bottom: auto;
-        transform: translate(-50%, -50%);
-        z-index: 5;
+    #add-contact-dialog .ac-formwrap > .ac-avatar,
+    #edit-contact-dialog .ac-formwrap > .ac-avatar {
+        margin: 0 0 16px;
+        position: static;
+        transform: none;
     }
 
     .ac-form {
@@ -185,8 +182,10 @@
     }
 
     .ac-actions {
-        width: 100%;
+        width: auto;
+        max-width: 100%;
         margin-top: 16px;
+        justify-content: center;
     }
 
     .ac-hero {
@@ -265,14 +264,12 @@
         padding: 8px 12px 24px;
     }
 
-    .ac-avatar:not(.ac-avatar-on-divider) {
-        margin-bottom: 0;
-        position: absolute;
-        top: 0;
-        left: 50%;
-        bottom: auto;
-        transform: translate(-50%, -50%);
-        z-index: 5;
+    #add-contact-dialog .ac-formwrap > .ac-avatar,
+    #edit-contact-dialog .ac-formwrap > .ac-avatar {
+        margin: 0 0 16px;
+        position: static;
+        transform: none;
+        align-self: center;
     }
 
     #add-contact-dialog .ac-hero,
@@ -280,7 +277,7 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        padding: 10px 24px 40px;
+        padding: 10px 24px 16px;
         min-height: 104px;
     }
 
@@ -289,18 +286,7 @@
         display: block;
     }
 
-    #add-contact-dialog .ac-avatar-on-divider,
-    #edit-contact-dialog .ac-avatar-on-divider {
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        transform: none !important;
-        margin: calc(var(--ac-dialog-avatar-overlap, 40px) * -1) auto 0 !important;
-        align-self: center;
-        z-index: 5;
-    }
-
-    #edit-contact-dialog .ac-avatar-on-divider .contact-initials-large {
+    #edit-contact-dialog .ac-formwrap > .ac-avatar .contact-initials-large {
         margin: 0 !important;
     }
 
@@ -324,8 +310,10 @@
     }
 
     .ac-actions {
-        width: 100%;
+        width: auto;
+        max-width: 100%;
         margin-top: 16px;
+        justify-content: center;
     }
 
     .ac-hero:not(#add-contact-dialog .ac-hero):not(#edit-contact-dialog .ac-hero) {
@@ -363,16 +351,20 @@
         width: 600px;
     }
 
-    .ac-formwrap {
-        flex-direction: column;
-        gap: 0px;
+    #add-contact-dialog .ac-formwrap,
+    #edit-contact-dialog .ac-formwrap {
+        flex-direction: row;
+        align-items: center;
+        gap: 24px;
     }
 
-    .ac-avatar {
-        margin-top: -92px;
+    #add-contact-dialog .ac-formwrap > .ac-avatar,
+    #edit-contact-dialog .ac-formwrap > .ac-avatar {
+        margin: 0;
     }
 
-    .ac-avatar img {
+    #add-contact-dialog .ac-formwrap > .ac-avatar img,
+    #edit-contact-dialog .ac-formwrap > .ac-avatar img {
         opacity: 1;
     }
 }

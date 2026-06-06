@@ -26,6 +26,19 @@ main.help-main {
     min-height: 100vh;
     min-height: 100dvh;
     box-sizing: border-box;
+    overflow: visible;
+}
+
+main.help-main > .header {
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+main.help-main > .header .content-limit {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
 }
 
 .help-main .wrapper {

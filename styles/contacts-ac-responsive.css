@@ -49,8 +49,8 @@
         flex-direction: column;
         align-items: center;
     }
-    .ac-avatar:not(.ac-avatar-on-divider) {
-        display: none;
+    .ac-formwrap > .ac-avatar {
+        display: flex;
     }
 
     #add-contact-dialog .ac-hero,
@@ -193,7 +193,7 @@
         text-align: left;
         min-height: 104px;
         height: auto;
-        padding: 10px 24px var(--ac-dialog-avatar-overlap);
+        padding: 10px 24px 16px;
         box-sizing: border-box;
         position: relative;
         z-index: 1;
@@ -214,8 +214,8 @@
         white-space: nowrap;
     }
 
-    #add-contact-dialog .ac-avatar-on-divider,
-    #edit-contact-dialog .ac-avatar-on-divider {
+    #add-contact-dialog .ac-formwrap > .ac-avatar,
+    #edit-contact-dialog .ac-formwrap > .ac-avatar {
         display: flex !important;
         flex: 0 0 auto;
         align-self: center;
@@ -223,24 +223,21 @@
         align-items: center;
         width: var(--ac-dialog-avatar-size);
         height: var(--ac-dialog-avatar-size);
-        margin: calc(var(--ac-dialog-avatar-overlap) * -1) auto 0 !important;
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        right: auto !important;
+        margin: 0 0 16px !important;
+        position: static !important;
         transform: none !important;
-        z-index: 5;
+        z-index: 1;
         pointer-events: none;
     }
 
-    #edit-contact-dialog .ac-avatar-on-divider .contact-avatar-large {
+    #edit-contact-dialog .ac-formwrap > .ac-avatar .contact-avatar-large {
         margin: 0;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    #edit-contact-dialog .ac-avatar-on-divider .contact-initials-large {
+    #edit-contact-dialog .ac-formwrap > .ac-avatar .contact-initials-large {
         width: var(--ac-dialog-avatar-size);
         height: var(--ac-dialog-avatar-size);
         font-size: 32px;
@@ -254,8 +251,9 @@
         width: 100%;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        margin-top: calc(var(--ac-dialog-avatar-overlap) * -1);
-        padding: var(--ac-dialog-avatar-form-gap) 12px 24px;
+        flex-direction: column;
+        margin-top: 0;
+        padding: 20px 12px 24px;
         align-items: center;
         position: relative;
         z-index: 0;
@@ -291,25 +289,17 @@
     #add-contact-dialog .ac-hero,
     #edit-contact-dialog .ac-hero {
         min-height: 104px;
-        padding: 10px 20px 40px;
+        padding: 10px 20px 16px;
         justify-content: center;
-    }
-
-    #add-contact-dialog .ac-avatar-on-divider,
-    #edit-contact-dialog .ac-avatar-on-divider {
-        position: relative;
-        left: auto;
-        top: auto;
-        margin: calc(var(--ac-dialog-avatar-overlap, 40px) * -1) auto 0;
-        transform: none;
-        z-index: 5;
     }
 
     #add-contact-dialog .ac-formwrap,
     #edit-contact-dialog .ac-formwrap {
-        flex-direction: column;
-        margin-top: calc(var(--ac-dialog-avatar-overlap, 40px) * -1);
-        padding-top: var(--ac-dialog-avatar-form-gap, 16px);
+        flex-direction: row;
+        align-items: center;
+        margin-top: 0;
+        padding: 24px 20px;
+        gap: 24px;
     }
 }
 
@@ -343,14 +333,14 @@
         height: 64px;
     }
 
-    #add-contact-dialog .ac-avatar-on-divider,
-    #edit-contact-dialog .ac-avatar-on-divider {
-        position: absolute;
-        left: 340px;
-        top: 50%;
+    #add-contact-dialog .ac-formwrap > .ac-avatar,
+    #edit-contact-dialog .ac-formwrap > .ac-avatar {
+        position: static;
+        left: auto;
+        top: auto;
         margin: 0;
-        transform: translate(-50%, -50%);
-        z-index: 5;
+        transform: none;
+        z-index: 1;
     }
 
     #add-contact-dialog .ac-hero-heading .ac-underline,
