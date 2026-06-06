@@ -363,8 +363,7 @@
         margin: 0;
     }
 
-    #add-contact-dialog .ac-formwrap > .ac-avatar img,
-    #edit-contact-dialog .ac-formwrap > .ac-avatar img {
+    #add-contact-dialog .ac-formwrap > .ac-avatar img {
         opacity: 1;
     }
 }
