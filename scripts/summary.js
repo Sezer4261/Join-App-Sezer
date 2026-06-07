@@ -1,3 +1,4 @@
+/** @file Summary page greeting and task statistics. */
 /**
  * Executes navigate to board logic.
  * @returns {void} Result.
@@ -302,23 +303,35 @@ function parseIsoDate(value) {
 }
 
 /**
+ * Parses a DD.MM.YYYY date string into a local Date.
+ * @param {string} value - Trimmed value.
+ * @returns {Date|null} Result.
+ */
+function parseDotDate(value) {
+    const [day, month, year] = value.split(".").map(Number);
+    const date = new Date(year, month - 1, day);
+    return Number.isNaN(date.getTime()) ? null : date;
+}
+
+/**
+ * Parses a DD/MM/YYYY date string into a local Date.
+ * @param {string} value - Trimmed value.
+ * @returns {Date|null} Result.
+ */
+function parseSlashDate(value) {
+    const [day, month, year] = value.split("/").map(Number);
+    const date = new Date(year, month - 1, day);
+    return Number.isNaN(date.getTime()) ? null : date;
+}
+
+/**
  * Parses common European/US date string formats.
  * @param {string} value - Trimmed value.
  * @returns {Date|null} Result.
  */
 function parseFallbackDate(value) {
-    const deDotMatch = /^\d{2}\.\d{2}\.\d{4}$/.exec(value);
-    if (deDotMatch) {
-        const [day, month, year] = value.split(".").map(Number);
-        const date = new Date(year, month - 1, day);
-        return Number.isNaN(date.getTime()) ? null : date;
-    }
-    const slashMatch = /^\d{2}\/\d{2}\/\d{4}$/.exec(value);
-    if (slashMatch) {
-        const [day, month, year] = value.split("/").map(Number);
-        const date = new Date(year, month - 1, day);
-        return Number.isNaN(date.getTime()) ? null : date;
-    }
+    if (/^\d{2}\.\d{2}\.\d{4}$/.test(value)) return parseDotDate(value);
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(value)) return parseSlashDate(value);
     const fallback = new Date(value);
     return Number.isNaN(fallback.getTime()) ? null : fallback;
 }

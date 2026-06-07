@@ -1,3 +1,4 @@
+/** @file Toast notification display helper. */
 /**
  * Returns or creates the toast container element.
  * @returns {HTMLElement} Result.

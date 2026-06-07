@@ -1,3 +1,4 @@
+/** @file Sidebar navigation highlighting. */
 /**
  * Executes sidebar highlighting summary logic.
  * @returns {void} Result.

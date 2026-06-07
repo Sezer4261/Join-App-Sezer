@@ -1,0 +1,373 @@
+/** @file Contact dropdown and assigned contacts for add-task. */
+/**
+ * Executes select contacts logic.
+ * @returns {void} Result.
+ */
+function selectContacts() {
+  let select = document.getElementById('dropdown-contacts');
+  select.innerHTML = generateAssignedContacts(contacts);
+}
+
+/**
+ * Toggles dropdown.
+ * @param {Event} event - Browser event.
+ * @returns {void} Result.
+ */
+/**
+ * Closes all dropdowns except the given one, then toggles it.
+ * @param {HTMLElement|null} dropdown - Target dropdown element.
+ * @returns {void} Result.
+ */
+function toggleOrFallbackDropdown(dropdown) {
+  if (dropdown) { dropdown.classList.toggle("show"); return; }
+  document.getElementById("dropdown-contacts")?.classList.toggle("show");
+}
+
+/**
+ * Returns whether the select is in the mobile edit-task form.
+ * @param {HTMLElement} select - Dropdown trigger element.
+ * @returns {boolean} Result.
+ */
+function isMobileEditTaskSelect(select) {
+  return select.closest('.edit-task-form') && window.matchMedia('(max-width: 320px)').matches;
+}
+
+/**
+ * Walks up the DOM to find the nearest scrollable ancestor.
+ * @param {HTMLElement|null} start - Starting element.
+ * @returns {HTMLElement|null} Result.
+ */
+function findScrollableParent(start) {
+  let current = start;
+  while (current) {
+    const style = window.getComputedStyle(current);
+    const overflowY = style.overflowY;
+    if ((overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay') && current.scrollHeight > current.clientHeight) {
+      return current;
+    }
+    current = current.parentElement;
+  }
+  return null;
+}
+
+/**
+ * Resolves the scroll container that should stay stable while toggling a dropdown.
+ * @param {HTMLElement|null} select - Dropdown trigger element.
+ * @returns {HTMLElement|null} Result.
+ */
+function getDropdownScrollContainer(select) {
+  if (!select) return null;
+  if (isMobileEditTaskSelect(select)) return select.closest('.modal-content');
+  return findScrollableParent(select.parentElement) || document.scrollingElement || document.documentElement;
+}
+
+/**
+ * Returns the visible vertical bounds of the given scroll container.
+ * @param {HTMLElement|null} scrollContainer - Scroll container element.
+ * @returns {{top:number,bottom:number}} Result.
+ */
+function getScrollContainerViewport(scrollContainer) {
+  const root = document.scrollingElement || document.documentElement;
+  if (!scrollContainer || scrollContainer === root || scrollContainer === document.documentElement || scrollContainer === document.body) {
+    return { top: 0, bottom: window.innerHeight };
+  }
+  const rect = scrollContainer.getBoundingClientRect();
+  return { top: rect.top, bottom: rect.bottom };
+}
+
+/**
+ * Resets edit-task dropdown positioning styles when closed.
+ * @param {HTMLElement} dropdown - Dropdown panel.
+ * @returns {void} Result.
+ */
+function resetEditTaskDropdownPosition(dropdown) {
+  dropdown.classList.remove('open-up');
+  dropdown.style.maxHeight = '';
+}
+
+/**
+ * Applies open-up direction and max-height to the edit-task dropdown.
+ * @param {HTMLElement} select - Dropdown trigger.
+ * @param {HTMLElement} dropdown - Dropdown panel.
+ * @returns {void} Result.
+ */
+function applyEditTaskDropdownLayout(select, dropdown) {
+  const modalContent = select.closest('.modal-content') || select.closest('#task-modal') || document.body;
+  const modalRect = modalContent.getBoundingClientRect();
+  const selectRect = select.getBoundingClientRect();
+  const gap = 6;
+  const padding = 12;
+  const availableBelow = modalRect.bottom - (selectRect.bottom + gap) - padding;
+  const availableAbove = (selectRect.top - gap) - modalRect.top - padding;
+  const shouldOpenUp = availableBelow < 140 && availableAbove > availableBelow;
+  dropdown.classList.toggle('open-up', shouldOpenUp);
+  const available = Math.max(80, Math.floor(shouldOpenUp ? availableAbove : availableBelow));
+  dropdown.style.maxHeight = `${Math.min(180, available)}px`;
+}
+
+/**
+ * Positions the edit-task dropdown so it stays inside the modal.
+ * Prefers opening upwards when there isn't enough space below.
+ * @param {HTMLElement|null} select - Dropdown trigger.
+ * @param {HTMLElement|null} dropdown - Dropdown panel.
+ * @returns {void} Result.
+ */
+function positionEditTaskDropdown(select, dropdown) {
+  if (!select || !dropdown) return;
+  if (!select.closest('.edit-task-form')) return;
+  if (!dropdown.classList.contains('show')) { resetEditTaskDropdownPosition(dropdown); return; }
+  applyEditTaskDropdownLayout(select, dropdown);
+}
+
+/**
+ * Computes scroll delta to keep the select trigger visible in the viewport.
+ * @param {DOMRect} selectRect - Select bounding rect.
+ * @param {{top:number,bottom:number}} viewport - Visible viewport bounds.
+ * @param {number} topPadding - Top padding in pixels.
+ * @returns {number} Result.
+ */
+function computeSelectScrollDelta(selectRect, viewport, topPadding) {
+  if (selectRect.top < viewport.top + topPadding) {
+    return selectRect.top - (viewport.top + topPadding);
+  }
+  return 0;
+}
+
+/**
+ * Keeps the mobile board edit dropdown within the visible scroll area.
+ * @param {HTMLElement|null} select - Dropdown trigger element.
+ * @param {HTMLElement|null} dropdown - Dropdown panel element.
+ * @param {HTMLElement|null} scrollContainer - Scroll container element.
+ * @returns {void} Result.
+ */
+function keepMobileEditDropdownVisible(select, dropdown, scrollContainer) {
+  if (!select || !dropdown || !scrollContainer || !dropdown.classList.contains('show')) return;
+  if (!isMobileEditTaskSelect(select)) return;
+  const viewport = getScrollContainerViewport(scrollContainer);
+  const selectRect = select.getBoundingClientRect();
+  const dropdownRect = dropdown.getBoundingClientRect();
+  const delta = computeSelectScrollDelta(selectRect, viewport, 12);
+  const overflowBelow = dropdownRect.bottom - (viewport.bottom - 12);
+  if (overflowBelow > 0) { positionEditTaskDropdown(select, dropdown); return; }
+  if (delta !== 0) scrollContainer.scrollTop += delta;
+}
+
+/**
+ * Resolves custom-select and dropdown elements from a toggle event.
+ * @param {Event|null} event - Browser event.
+ * @returns {{select: HTMLElement|null, dropdown: HTMLElement|null, trigger: *}} Result.
+ */
+function resolveToggleDropdownElements(event) {
+  const trigger = event?.currentTarget || event?.target;
+  const select = trigger?.closest?.(".custom-select") ?? null;
+  const dropdown = select?.querySelector(".dropdown-content") ?? null;
+  return { select, dropdown, trigger };
+}
+
+/**
+ * Closes all open dropdown panels except the given one.
+ * @param {HTMLElement} dropdown - Dropdown to keep open.
+ * @returns {void} Result.
+ */
+function closeOtherDropdowns(dropdown) {
+  document.querySelectorAll(".dropdown-content.show").forEach((d) => {
+    if (d !== dropdown) d.classList.remove("show");
+  });
+}
+
+/**
+ * Restores scroll position and repositions the dropdown after toggle.
+ * @param {HTMLElement} select - Dropdown trigger.
+ * @param {HTMLElement} dropdown - Dropdown panel.
+ * @param {HTMLElement} scrollContainer - Scroll container.
+ * @param {number} previousScrollTop - Scroll top before toggle.
+ * @returns {void} Result.
+ */
+function restoreDropdownAfterToggle(select, dropdown, scrollContainer, previousScrollTop) {
+  requestAnimationFrame(() => {
+    scrollContainer.scrollTop = previousScrollTop;
+    positionEditTaskDropdown(select, dropdown);
+    keepMobileEditDropdownVisible(select, dropdown, scrollContainer);
+  });
+}
+
+/**
+ * Toggles the contacts dropdown for the clicked custom-select trigger.
+ * Closes all other open dropdowns first.
+ * @param {Event} event - Browser event.
+ * @returns {void} Result.
+ */
+function toggleDropdown(event) {
+  if (event) { event.stopPropagation(); event.preventDefault(); }
+  const { select, dropdown, trigger } = resolveToggleDropdownElements(event);
+  if (!select) { console.warn("toggleDropdown: Could not find .custom-select element", { trigger }); return; }
+  if (!dropdown) { console.warn("toggleDropdown: Could not find .dropdown-content element", { select }); return; }
+  const scrollContainer = getDropdownScrollContainer(select);
+  const previousScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+  closeOtherDropdowns(dropdown);
+  toggleOrFallbackDropdown(dropdown);
+  if (scrollContainer) restoreDropdownAfterToggle(select, dropdown, scrollContainer, previousScrollTop);
+}
+
+/**
+ * Toggles add category dropdown.
+ * @param {Event} event - Browser event.
+ * @returns {void} Result.
+ */
+function toggleAddCategoryDropdown(event) {
+  event.stopPropagation();
+  const contactsDropdown = document.getElementById("dropdown-contacts");
+  if (contactsDropdown) contactsDropdown.classList.remove("show");
+
+  const dropdown = document.getElementById("category-dropdown");
+  if (!dropdown) return;
+  dropdown.classList.toggle("show");
+}
+
+/**
+ * Sets add category.
+ * @param {string} value - Value.
+ * @returns {void} Result.
+ */
+function setAddCategory(value) {
+  const input = document.getElementById("category");
+  const select = document.getElementById("category-select");
+  if (!input || !select) return;
+  input.value = value;
+  input.classList.remove('input-error');
+  select.classList.remove('input-error');
+  setErrorText('category-error', '');
+  updateAddCategoryLabel(select, value);
+  closeAddCategoryDropdown();
+  updateCreateButtonState();
+}
+
+/**
+ * Updates add category label.
+ * @param {HTMLElement} select - Select element.
+ * @param {string} value - Value.
+ * @returns {void} Result.
+ */
+function updateAddCategoryLabel(select, value) {
+  const label = select.querySelector("span");
+  if (label) {
+    label.childNodes[0].textContent = value + " ";
+  }
+}
+
+/**
+ * Closes add category dropdown.
+ * @returns {void} Result.
+ */
+function closeAddCategoryDropdown() {
+  const dropdown = document.getElementById("category-dropdown");
+  if (dropdown) dropdown.classList.remove("show");
+}
+
+/**
+ * Initializes add dropdown close.
+ * @returns {void} Result.
+ */
+/**
+ * Handles outside clicks to close add task dropdowns.
+ * @param {Event} event - Click event.
+ * @returns {void} Result.
+ */
+function handleAddDropdownOutsideClick(event) {
+  const target = event.target;
+  const clickedInside =
+    document.getElementById("select-contacts")?.contains(target) ||
+    document.getElementById("dropdown-contacts")?.contains(target) ||
+    document.getElementById("category-select")?.contains(target) ||
+    document.getElementById("category-dropdown")?.contains(target);
+  if (!clickedInside) closeAddDropdowns();
+}
+
+function initAddDropdownClose() {
+  if (window.addDropdownHandlerAdded) return;
+  window.addDropdownHandlerAdded = true;
+  document.addEventListener("click", handleAddDropdownOutsideClick, true);
+}
+
+/**
+ * Closes add dropdowns.
+ * @returns {void} Result.
+ */
+function closeAddDropdowns() {
+  const contactsDropdown = document.getElementById("dropdown-contacts");
+  if (contactsDropdown) contactsDropdown.classList.remove("show");
+  const categoryDropdown = document.getElementById("category-dropdown");
+  if (categoryDropdown) categoryDropdown.classList.remove("show");
+}
+
+/**
+ * Toggles contact selection.
+ * @param {string} name - Name.
+ * @param {HTMLInputElement} checkbox - Checkbox element.
+ * @returns {void} Result.
+ */
+function toggleContactSelection(name, checkbox) {
+  if (checkbox.checked) {
+    selectedContacts.push(name);
+  } else {
+    selectedContacts = selectedContacts.filter(c => c !== name);
+  }
+  renderSelectedAvatars();
+}
+
+/**
+ * Updates the assigned-to label visibility based on selected contacts.
+ * @param {HTMLElement|null} assignedBlock - Assigned-to label element.
+ * @returns {void} Result.
+ */
+function updateAssignedAvatarsVisibility(assignedBlock) {
+  if (assignedBlock) assignedBlock.classList.toggle('has-avatars', selectedContacts.length > 0);
+}
+
+/**
+ * Renders selected avatars.
+ * @returns {void} Result.
+ */
+function renderSelectedAvatars() {
+  const container = document.getElementById("selected-avatars");
+  updateAssignedAvatarsVisibility(document.querySelector('.assigned-to-label'));
+  container.innerHTML = "";
+  const maxVisible = 4;
+  const total = selectedContacts.length;
+  selectedContacts.slice(0, maxVisible).forEach((name) => appendSelectedAvatar(container, name));
+  if (total > maxVisible) container.innerHTML += getSelectedAvatarMoreMarkup(total - maxVisible);
+}
+
+/**
+ * Executes append selected avatar logic.
+ * @param {HTMLElement} container - Container element.
+ * @param {string} name - Name.
+ * @returns {void} Result.
+ */
+function appendSelectedAvatar(container, name) {
+  const initials = getContactInitialsFromName(name);
+  const colorClass = getContactColorClass(name);
+  container.innerHTML += getSelectedAvatarMarkup(initials, colorClass);
+}
+
+/**
+ * Returns contact color class based on name.
+ * @param {string} name - Contact name.
+ * @returns {string} Result.
+ */
+/**
+ * Computes a deterministic hash index for the contact key.
+ * @param {string} key - Normalized contact key.
+ * @returns {number} Result.
+ */
+function computeContactHash(key) {
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) hash = (hash * 31 + key.charCodeAt(i)) % 2147483647;
+  return hash;
+}
+
+function getContactColorClass(name) {
+  const key = String(name || '').trim().toLowerCase();
+  const index = key ? Math.abs(computeContactHash(key)) % INITIALS_COLOR_CLASSES.length : 0;
+  return INITIALS_COLOR_CLASSES[index];
+}
