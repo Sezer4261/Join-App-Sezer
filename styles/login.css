@@ -12,6 +12,41 @@ input {
 body {
     background-color: #f4f4f4;
     color: #333;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+html {
+    overflow-x: hidden;
+    height: 100%;
+}
+
+html.intro-active,
+body.intro-active {
+    overflow: hidden;
+    height: 100%;
+    max-height: 100dvh;
+}
+
+.main-content {
+    opacity: 0;
+    animation: fadeIn 1s linear 0.5s forwards;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    width: 100%;
+}
+
+.main-content > .content-limit {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    width: 100%;
 }
 
 .intro-overlay {
@@ -20,11 +55,13 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
+    height: 100dvh;
     background-color: transparent;
     --intro-bg: #f4f4f4;
     display: grid;
     place-items: center;
     z-index: 120;
+    overflow: hidden;
     animation: unlockOverlay 0s linear 1.5s forwards;
 }
 
@@ -49,11 +86,6 @@ body {
 .intro-logo-white {
     grid-area: 1 / 1;
     display: none;
-}
-
-.main-content {
-    opacity: 0;
-    animation: fadeIn 1s linear 0.5s forwards;
 }
 
 @keyframes moveLogo {
@@ -144,8 +176,9 @@ body {
 
 .content {
     width: 100%;
-    min-height: 500px;
+    min-height: 0;
     height: auto;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -323,7 +356,8 @@ button {
 }
 
 footer {
-    margin-top: 50px;
+    margin-top: auto;
+    padding-top: 24px;
     text-align: center;
     display: flex;
     justify-content: center;

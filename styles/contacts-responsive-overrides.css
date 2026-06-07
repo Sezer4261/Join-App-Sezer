@@ -244,13 +244,21 @@
         margin-top: 16px;
     }
 
-    #add-contact-dialog .ac-hero,
+    #add-contact-dialog .ac-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        min-height: 104px;
+        padding: 10px 24px var(--ac-dialog-avatar-overlap, 40px);
+        text-align: left;
+    }
+
     #edit-contact-dialog .ac-hero {
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         min-height: 104px;
-        padding: 10px 24px 16px;
+        padding: 10px 24px var(--ac-dialog-avatar-overlap, 40px);
         text-align: left;
     }
 
@@ -259,23 +267,24 @@
         display: block;
     }
 
-    #add-contact-dialog .ac-formwrap > .ac-avatar,
-    #edit-contact-dialog .ac-formwrap > .ac-avatar {
-        position: static !important;
+    #add-contact-dialog .ac-avatar-on-divider,
+    #edit-contact-dialog .ac-avatar-on-divider {
+        position: relative !important;
         transform: none !important;
-        margin: 0 0 16px !important;
+        margin: calc(var(--ac-dialog-avatar-overlap, 40px) * -1) auto 0 !important;
         align-self: center;
+        z-index: 5;
     }
 
-    #edit-contact-dialog .ac-formwrap > .ac-avatar .contact-initials-large {
+    #edit-contact-dialog .ac-avatar-on-divider .contact-initials-large {
         margin: 0 !important;
     }
 
     #add-contact-dialog .ac-formwrap,
     #edit-contact-dialog .ac-formwrap {
         flex-direction: column;
-        margin-top: 0;
-        padding-top: 20px;
+        margin-top: calc(var(--ac-dialog-avatar-overlap, 40px) * -1);
+        padding-top: var(--ac-dialog-avatar-form-gap, 16px);
         overflow-y: auto;
         min-height: 0;
     }

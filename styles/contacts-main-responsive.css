@@ -155,11 +155,25 @@
         position: relative;
     }
 
-    #add-contact-dialog .ac-formwrap > .ac-avatar,
-    #edit-contact-dialog .ac-formwrap > .ac-avatar {
-        margin: 0 0 16px;
-        position: static;
+    #add-contact-dialog .ac-avatar-on-divider,
+    #edit-contact-dialog .ac-avatar-on-divider {
+        margin: calc(var(--ac-dialog-avatar-overlap, 40px) * -1) auto 0;
+        position: relative;
         transform: none;
+        align-self: center;
+        z-index: 5;
+    }
+
+    #add-contact-dialog .ac-hero,
+    #edit-contact-dialog .ac-hero {
+        padding: 10px 24px var(--ac-dialog-avatar-overlap, 40px);
+        min-height: 104px;
+    }
+
+    #add-contact-dialog .ac-formwrap,
+    #edit-contact-dialog .ac-formwrap {
+        margin-top: calc(var(--ac-dialog-avatar-overlap, 40px) * -1);
+        padding-top: var(--ac-dialog-avatar-form-gap, 16px);
     }
 
     .ac-form {
@@ -264,20 +278,28 @@
         padding: 8px 12px 24px;
     }
 
-    #add-contact-dialog .ac-formwrap > .ac-avatar,
-    #edit-contact-dialog .ac-formwrap > .ac-avatar {
-        margin: 0 0 16px;
-        position: static;
-        transform: none;
+    #add-contact-dialog .ac-avatar-on-divider,
+    #edit-contact-dialog .ac-avatar-on-divider {
+        margin: calc(var(--ac-dialog-avatar-overlap, 40px) * -1) auto 0 !important;
+        position: relative !important;
+        transform: none !important;
         align-self: center;
+        z-index: 5;
     }
 
-    #add-contact-dialog .ac-hero,
+    #add-contact-dialog .ac-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 10px 24px var(--ac-dialog-avatar-overlap, 40px);
+        min-height: 104px;
+    }
+
     #edit-contact-dialog .ac-hero {
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        padding: 10px 24px 16px;
+        padding: 10px 24px var(--ac-dialog-avatar-overlap, 40px);
         min-height: 104px;
     }
 
@@ -286,8 +308,14 @@
         display: block;
     }
 
-    #edit-contact-dialog .ac-formwrap > .ac-avatar .contact-initials-large {
+    #edit-contact-dialog .ac-avatar-on-divider .contact-initials-large {
         margin: 0 !important;
+    }
+
+    #add-contact-dialog .ac-formwrap,
+    #edit-contact-dialog .ac-formwrap {
+        margin-top: calc(var(--ac-dialog-avatar-overlap, 40px) * -1);
+        padding-top: var(--ac-dialog-avatar-form-gap, 16px);
     }
 
     .ac-form {
@@ -351,19 +379,28 @@
         width: 600px;
     }
 
+    #add-contact-dialog .ac-hero,
+    #edit-contact-dialog .ac-hero {
+        min-height: 104px;
+        padding: 10px 20px var(--ac-dialog-avatar-overlap, 40px);
+        justify-content: center;
+    }
+
+    #add-contact-dialog .ac-avatar-on-divider,
+    #edit-contact-dialog .ac-avatar-on-divider {
+        margin: calc(var(--ac-dialog-avatar-overlap, 40px) * -1) auto 0;
+    }
+
     #add-contact-dialog .ac-formwrap,
     #edit-contact-dialog .ac-formwrap {
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
-        gap: 24px;
+        margin-top: calc(var(--ac-dialog-avatar-overlap, 40px) * -1);
+        padding: var(--ac-dialog-avatar-form-gap, 16px) 20px 24px;
+        gap: 0;
     }
 
-    #add-contact-dialog .ac-formwrap > .ac-avatar,
-    #edit-contact-dialog .ac-formwrap > .ac-avatar {
-        margin: 0;
-    }
-
-    #add-contact-dialog .ac-formwrap > .ac-avatar img {
+    #add-contact-dialog .ac-avatar-on-divider.ac-avatar-add-empty img {
         opacity: 1;
     }
 }

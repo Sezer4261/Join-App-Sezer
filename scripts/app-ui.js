@@ -21,6 +21,8 @@ function lockPageScrollForOverlay() {
   pageScrollLockY = window.scrollY;
   const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   if (scrollbarWidth > 0) document.body.style.paddingRight = `${scrollbarWidth}px`;
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
   document.body.style.position = "fixed";
   document.body.style.top = `-${pageScrollLockY}px`;
   document.body.style.left = "0";
@@ -30,6 +32,8 @@ function lockPageScrollForOverlay() {
 
 /** Restores page scroll after a modal closes. */
 function unlockPageScrollForOverlay() {
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
   document.body.style.paddingRight = "";
   document.body.style.position = "";
   document.body.style.top = "";

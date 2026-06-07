@@ -251,7 +251,7 @@
                     <img src="./assets/icons/plus-add-task-mobile.svg"
                         alt="Add Task Button"
                         class="add-task-mobile-btn"
-                        onclick="sidebarHighlightingAddTask()">
+                        onclick="openBoardAddTask()">
 
                     <div class="board-actions">
 
@@ -288,7 +288,7 @@
                         </div>
 
                         <button class="add-task-btn"
-                            onclick="sidebarHighlightingAddTask('To Do')">
+                            onclick="openBoardAddTask('To Do')">
                             Add Task +
                         </button>
 
@@ -315,7 +315,7 @@
                                 alt="Add Task Button"
                                 width="30"
                                 height="30"
-                                onclick="sidebarHighlightingAddTask('To Do')">
+                                onclick="openBoardAddTask('To Do')">
                         </div>
 
                         <div class="task-wrapper">
@@ -345,7 +345,7 @@
                                 alt="Add Task Button"
                                 width="30"
                                 height="30"
-                                onclick="sidebarHighlightingAddTask('In Progress')">
+                                onclick="openBoardAddTask('In Progress')">
                         </div>
 
                         <div class="task-wrapper">
@@ -375,7 +375,7 @@
                                 alt="Add Task Button"
                                 width="30"
                                 height="30"
-                                onclick="sidebarHighlightingAddTask('Await Feedback')">
+                                onclick="openBoardAddTask('Await Feedback')">
                         </div>
 
                         <div class="task-wrapper">
@@ -405,7 +405,7 @@
                                 alt="Add Task Button"
                                 width="30"
                                 height="30"
-                                onclick="sidebarHighlightingAddTask('Done')">
+                                onclick="openBoardAddTask('Done')">
                         </div>
 
                         <div class="task-wrapper">
@@ -424,6 +424,15 @@
         </main>
 
     </div>
+
+    <dialog id="add-task-dialog"
+        class="add-task-dialog-bg">
+
+        <div id="add-task-dialog-message"
+            class="add-task-dialog">
+        </div>
+
+    </dialog>
 
     <!-- Mobile drag-and-drop target overlay (shown only on stacked-column screens) -->
     <div id="mobile-drop-overlay" class="mobile-drop-overlay">

@@ -1,6 +1,8 @@
 /** @file Login page intro logo animation. */
 
 window.addEventListener("DOMContentLoaded", () => {
+  document.documentElement.classList.add("intro-active");
+  document.body.classList.add("intro-active");
   initIntroAlignment();
   scheduleIntroOverlayRemoval();
 });
@@ -55,4 +57,6 @@ function scheduleIntroOverlayRemoval() {
 
 function removeIntroOverlay() {
   document.getElementById("intro-overlay")?.remove();
+  document.documentElement.classList.remove("intro-active");
+  document.body.classList.remove("intro-active");
 }

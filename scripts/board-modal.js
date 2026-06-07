@@ -58,8 +58,8 @@ function openModal(id) {
     if (oldModal) oldModal.remove();
     const modal = createModalElement(task);
     document.body.appendChild(modal);
-    modal.showModal();
     lockPageScrollForOverlay();
+    modal.showModal();
     bindModalEvents(modal);
     animateModalOpen(modal, task);
 }

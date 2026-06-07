@@ -52,6 +52,10 @@ function openAddContactDialog() {
 
 function ensureAddContactDialog() {
   let dialog = document.getElementById("add-contact-dialog");
+  if (dialog && !dialog.querySelector(".ac-avatar-on-divider")) {
+    dialog.remove();
+    dialog = null;
+  }
   if (!dialog) {
     document.body.insertAdjacentHTML("beforeend", getDialogAddContact());
     dialog = document.getElementById("add-contact-dialog");
