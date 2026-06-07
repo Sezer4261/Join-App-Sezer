@@ -38,23 +38,30 @@
         max-height: 100dvh;
     }
 
+    .main-content > .content-limit {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
     .header {
         height: auto;
-        min-height: 108px;
-        margin-bottom: 24px;
+        min-height: 0;
+        margin-bottom: 16px;
     }
 
     .header .content-limit--row {
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
+        justify-content: flex-start;
     }
 
     .header-left {
         margin-top: 16px;
         margin-left: 0;
         align-self: flex-start;
-        padding-left: 24px;
+        padding-left: 16px;
     }
 
     .header-left img {
@@ -64,28 +71,32 @@
         margin-left: 0;
     }
 
-    .header-right {
-        position: static;
-        transform: none;
-        top: auto;
-        left: auto;
-        right: auto;
-        bottom: auto;
-        margin: 0;
-        width: auto;
+    .content {
+        flex: 1;
+        align-items: center;
         justify-content: center;
+        padding: 0 0 12px;
+        min-height: 0;
     }
 
-    .content {
-        align-items: center;
-        padding: 0 16px 16px;
-        min-height: 0;
+    .login-signup-bar {
+        position: static;
+        width: 100%;
+        height: auto;
+        margin: 0px 0px 25px;
+        justify-content: center;
+        gap: 12px;
+        flex-shrink: 0;
+    }
+
+    .login-signup-bar span {
+        font-size: 16px;
     }
 
     .login-error-container {
         width: 100%;
-        max-width: 310px;
-        padding: 0 15px;
+        max-width: none;
+        padding: 0;
         margin-bottom: 8px;
         min-height: 22px;
     }
@@ -107,13 +118,13 @@
 
     footer {
         margin-top: auto;
-        padding: 8px 16px 16px;
+        padding: 8px 0 16px;
     }
 
     .login-buttons {
         flex-direction: column;
         width: 100%;
-        max-width: 300px;
+        max-width: none;
         height: auto;
         gap: 16px;
     }
@@ -126,21 +137,25 @@
     }
 
     .login {
-        width: min(360px, 92vw);
+        width: 100%;
         min-height: 0;
         height: auto;
-        padding: 20px 12px;
+        padding: 20px 16px;
     }
 
     .login-input {
         width: 100%;
-        max-width: 310px;
+        max-width: none;
     }
 
     .login-input input {
         width: 100%;
-        max-width: 280px;
+        max-width: none;
         height: 40px;
+    }
+
+    .input-field {
+        width: 100%;
     }
 
     .login h1 {
@@ -157,13 +172,13 @@
 }
 
 @media (max-width: 375px) {
-    .header {
-        min-height: 108px;
+    .header-left {
+        padding-left: 8px;
     }
 }
 
 @media (max-width: 340px) {
     .login-error-container {
-        padding: 0 7px;
+        padding: 0;
     }
 }
