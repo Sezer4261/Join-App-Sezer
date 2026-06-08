@@ -2,15 +2,15 @@
 
 /**
  * Returns the header HTML for the add-task form.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the add-task dialog header and close button.
  */
 function getAddTaskHeaderHTML() {
   return /*html*/ `<div class="add-task-header"><h1>Add Task</h1><span class="close-btn" onclick="closeAddTaskDialog()">x</span></div>`;
 }
 
 /**
- * Returns the left column (title, description, date) for the add-task form.
- * @returns {string} Result.
+ * Returns the left column fields for the add-task form.
+ * @returns {string} HTML markup for the title, description, and due date fields.
  */
 function getAddTaskFormLeftHTML() {
   return /*html*/ `
@@ -25,7 +25,7 @@ function getAddTaskFormLeftHTML() {
 
 /**
  * Returns the priority section for the add-task form.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the urgent, medium, and low priority radio options.
  */
 function getAddTaskPriorityHTML() {
   return /*html*/ `
@@ -42,7 +42,7 @@ function getAddTaskPriorityHTML() {
 
 /**
  * Returns the contacts dropdown section for the add-task form.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the assigned-to contact selector and avatar container.
  */
 function getAddTaskContactsHTML() {
   return /*html*/ `
@@ -58,7 +58,7 @@ function getAddTaskContactsHTML() {
 
 /**
  * Returns the category section for the add-task form.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the category custom select and hidden input field.
  */
 function getAddTaskCategoryHTML() {
   return /*html*/ `
@@ -75,7 +75,7 @@ function getAddTaskCategoryHTML() {
 
 /**
  * Returns the subtasks section for the add-task form.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the subtask input, actions, error area, and list container.
  */
 function getAddTaskSubtasksHTML() {
   return /*html*/ `
@@ -93,10 +93,10 @@ function getAddTaskSubtasksHTML() {
 }
 
 /**
- * Returns the footer (note + actions) for the add-task form.
- * @param {string} clearLabel - Label for the clear button.
- * @param {string} clearOnClick - onclick handler string.
- * @returns {string} Result.
+ * Returns the footer section for the add-task form.
+ * @param {string} clearLabel - Visible label text for the clear or cancel button.
+ * @param {string} clearOnClick - Inline onclick handler string executed when the clear button is pressed.
+ * @returns {string} HTML markup for the required-field note and form action buttons.
  */
 function getAddTaskFooterHTML(clearLabel, clearOnClick) {
   return /*html*/ `
@@ -110,9 +110,9 @@ function getAddTaskFooterHTML(clearLabel, clearOnClick) {
 }
 
 /**
- * Returns clear-button options based on add-task variant.
- * @param {Object} [options={}] - Add-task options.
- * @returns {{clearLabel: string, clearOnClick: string}} Clear button config.
+ * Returns clear-button options based on the add-task presentation variant.
+ * @param {Object} [options={}] - Configuration object that may specify the dialog variant.
+ * @returns {{clearLabel: string, clearOnClick: string}} Labels and handlers used by the footer clear button.
  */
 function getAddTaskClearOptions(options = {}) {
   const isDialog = options && options.variant === 'dialog';
@@ -124,7 +124,7 @@ function getAddTaskClearOptions(options = {}) {
 
 /**
  * Returns the right column fields for the add-task form.
- * @returns {string} Result.
+ * @returns {string} HTML markup for priority, contacts, category, and subtasks sections.
  */
 function getAddTaskFormRightHTML() {
   return /*html*/ `
@@ -139,7 +139,7 @@ function getAddTaskFormRightHTML() {
 
 /**
  * Returns the scrollable form body for the add-task form.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the scrollable wrapper and add-task form element.
  */
 function getAddTaskFormBodyHTML() {
   return /*html*/ `
@@ -154,8 +154,8 @@ function getAddTaskFormBodyHTML() {
 
 /**
  * Generates the full add-task form markup.
- * @param {Object} [options={}] - Add-task options.
- * @returns {string} Result.
+ * @param {Object} [options={}] - Configuration object that may specify the dialog variant.
+ * @returns {string} Complete HTML markup for the add-task header, form body, and footer.
  */
 function generateAddTask(options = {}) {
   const { clearLabel, clearOnClick } = getAddTaskClearOptions(options);
@@ -167,8 +167,8 @@ function generateAddTask(options = {}) {
 }
 
 /**
- * Generates add category options.
- * @returns {string} Result.
+ * Generates add category dropdown option items.
+ * @returns {string} HTML markup for each selectable task category in the dropdown.
  */
 function generateAddCategoryOptions() {
   const categories = ["Technical Task", "User Story"];
@@ -181,37 +181,37 @@ function generateAddCategoryOptions() {
 
 /**
  * Returns HTML for a single contact in the assigned contacts dropdown.
- * @param {Object} contact - Contact object.
- * @param {number} i - Index.
- * @returns {string} Result.
+ * @param {Object} contact - Contact object containing at least a display name.
+ * @param {number} index - Zero-based index of the contact in the contacts list.
+ * @returns {string} HTML markup for one contact row with avatar, name, and checkbox.
  */
-function getAssignedContactItemHTML(contact, i) {
+function getAssignedContactItemHTML(contact, index) {
   const isChecked = selectedContacts.includes(contact.name);
   const colorClass = typeof getContactColorClass === 'function' ? getContactColorClass(contact.name) : '';
   return /*html*/ `
     <label class="dropdown-item">
       <div class="dropdown-avatar ${colorClass}">${getContactInitialsFromName(contact.name)}</div>
       <span class="dropdown-name">${contact.name}</span>
-      <input type="checkbox" id="contact-${i}" value="${contact.name}" class="contact-checkbox"
+      <input type="checkbox" id="contact-${index}" value="${contact.name}" class="contact-checkbox"
         onchange="toggleContactSelection('${contact.name}', this)" ${isChecked ? "checked" : ""}>
     </label>
   `;
 }
 
 /**
- * Generates assigned contacts dropdown items.
- * @param {Array<Object>} contacts - Contact list.
- * @returns {string} Result.
+ * Generates assigned contacts dropdown items from a contact list.
+ * @param {Array<Object>} contacts - Array of contact objects to render in the dropdown.
+ * @returns {string} Combined HTML markup for all contact dropdown rows.
  */
 function generateAssignedContacts(contacts) {
-  return contacts.map((contact, i) => getAssignedContactItemHTML(contact, i)).join("");
+  return contacts.map((contact, index) => getAssignedContactItemHTML(contact, index)).join("");
 }
 
 /**
- * Returns selected avatar markup.
- * @param {string} initials - Avatar initials.
- * @param {string} [colorClass=''] - Optional color class.
- * @returns {string} Result.
+ * Returns selected avatar markup for one assigned contact.
+ * @param {string} initials - Two-letter initials shown inside the avatar circle.
+ * @param {string} [colorClass=''] - Optional CSS class that sets the avatar background color.
+ * @returns {string} HTML markup for a single selected-contact avatar.
  */
 function getSelectedAvatarMarkup(initials, colorClass = '') {
   const cls = colorClass ? `avatar ${colorClass}` : 'avatar';
@@ -219,10 +219,27 @@ function getSelectedAvatarMarkup(initials, colorClass = '') {
 }
 
 /**
- * Returns selected avatar +x markup.
- * @param {number} count - Remaining count.
- * @returns {string} Result.
+ * Returns selected avatar overflow markup when more contacts are assigned than can be shown.
+ * @param {number} count - Number of additional assigned contacts not rendered as individual avatars.
+ * @returns {string} HTML markup for the +N overflow avatar indicator.
  */
 function getSelectedAvatarMoreMarkup(count) {
   return `<div class="avatar avatar-more">+${count}</div>`;
+}
+
+/**
+ * Returns the inner HTML markup for the add-task date picker popup.
+ * @param {string[]} weekdays - Short weekday labels displayed above the calendar grid.
+ * @returns {string} HTML markup for the date picker header, weekday row, and day grid container.
+ */
+function getAddTaskDatePickerPopupMarkup(weekdays) {
+  return `
+      <div class="add-task-date-picker__header">
+        <button type="button" class="add-task-date-picker__nav" data-action="previous-month" aria-label="Previous month">&#8249;</button>
+        <div class="add-task-date-picker__title" aria-live="polite"></div>
+        <button type="button" class="add-task-date-picker__nav" data-action="next-month" aria-label="Next month">&#8250;</button>
+      </div>
+      <div class="add-task-date-picker__weekdays">${weekdays.map((day) => `<span>${day}</span>`).join('')}</div>
+      <div class="add-task-date-picker__grid" role="grid"></div>
+    `;
 }

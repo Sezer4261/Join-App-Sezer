@@ -1,9 +1,10 @@
 /** @file Validation for edit task modal fields. */
+
 /**
- * Sets edit error text.
- * @param {string} id - Identifier.
- * @param {string} value - Value.
- * @returns {void} Result.
+ * Writes a validation message into an edit-form error element by id.
+ * @param {string} id - DOM id of the error message container.
+ * @param {string} value - Error text to display, or empty string to clear.
+ * @returns {void}
  */
 function setEditErrorText(id, value) {
   const el = document.getElementById(id);
@@ -11,8 +12,8 @@ function setEditErrorText(id, value) {
 }
 
 /**
- * Clears edit validation errors.
- * @returns {void} Result.
+ * Clears all inline validation messages on the edit task form.
+ * @returns {void}
  */
 function clearEditValidationErrors() {
   setEditErrorText('edit-title-error', '');
@@ -21,11 +22,11 @@ function clearEditValidationErrors() {
 }
 
 /**
- * Validates required input in edit form.
- * @param {HTMLElement} input - Input element.
- * @param {string} errorId - Error element id.
- * @param {HTMLElement} highlightElement - Element to highlight (defaults to input).
- * @returns {boolean} Result.
+ * Ensures a required edit-form input has non-empty trimmed content.
+ * @param {HTMLElement} input - Input element whose value is validated.
+ * @param {string} errorId - DOM id of the error message container for this field.
+ * @param {HTMLElement} [highlightElement=input] - Element receiving the input-error class.
+ * @returns {boolean} True when the field contains a non-empty value.
  */
 function validateEditRequiredInput(input, errorId, highlightElement = input) {
   const value = input ? String(input.value ?? '').trim() : '';
@@ -43,8 +44,8 @@ function validateEditRequiredInput(input, errorId, highlightElement = input) {
 }
 
 /**
- * Applies today's date as minimum selectable due date for edit form.
- * @returns {void} Result.
+ * Sets the edit due-date input minimum to today's date in local format.
+ * @returns {void}
  */
 function applyTodayMinDateForEdit() {
   const dateInput = document.getElementById('edit-date');
@@ -53,8 +54,8 @@ function applyTodayMinDateForEdit() {
 }
 
 /**
- * Validates edit due date field.
- * @returns {boolean} Result.
+ * Validates that the edit due-date field is present and not in the past.
+ * @returns {boolean} True when the selected date is today or later.
  */
 function validateEditDateField() {
   const input = document.getElementById('edit-date');
@@ -72,8 +73,8 @@ function validateEditDateField() {
 }
 
 /**
- * Clears edit date error while typing as soon as input is valid and not in the past.
- * @returns {void} Result.
+ * Clears the due-date error while the user types a valid future date.
+ * @returns {void}
  */
 function clearEditDateErrorOnValidInput() {
   const input = document.getElementById('edit-date');
@@ -86,9 +87,9 @@ function clearEditDateErrorOnValidInput() {
 }
 
 /**
- * Scrolls edit form to the given element (inside overflow container).
- * @param {HTMLElement|null} target - Target element.
- * @returns {void} Result.
+ * Scrolls the edit form so the given field or error message is visible.
+ * @param {HTMLElement|null} target - Element to bring into view inside the form.
+ * @returns {void}
  */
 function scrollEditFormTo(target) {
   if (!target) return;
@@ -105,12 +106,8 @@ function scrollEditFormTo(target) {
 }
 
 /**
- * Validates edit form.
- * @returns {boolean} Result.
- */
-/**
- * Collects invalid fields from the edit form.
- * @returns {Array<{errorId: string, focusEl: HTMLElement}>} Result.
+ * Runs field validators and collects descriptors for every invalid edit input.
+ * @returns {Array<{errorId: string, focusEl: HTMLElement}>} Invalid fields in validation order.
  */
 function collectEditFormErrors() {
   const titleInput = document.getElementById('edit-title');
@@ -127,6 +124,10 @@ function collectEditFormErrors() {
   return invalid;
 }
 
+/**
+ * Validates the full edit form and scrolls focus to the first failing field.
+ * @returns {boolean} True when every edit-form field passes validation.
+ */
 function validateEditForm() {
   clearEditValidationErrors();
   const invalid = collectEditFormErrors();

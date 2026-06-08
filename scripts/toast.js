@@ -1,7 +1,8 @@
 /** @file Toast notification display helper. */
+
 /**
- * Returns or creates the toast container element.
- * @returns {HTMLElement} Result.
+ * Returns the existing toast container or creates one and appends it to the document body.
+ * @returns {HTMLElement} The DOM element that stacks and displays toast notifications.
  */
 function getOrCreateToastContainer() {
     let container = document.getElementById('toast-container');
@@ -14,9 +15,9 @@ function getOrCreateToastContainer() {
 }
 
 /**
- * Creates a toast element.
- * @param {string} message - Toast message text.
- * @returns {HTMLElement} Result.
+ * Builds a styled toast element containing the given message text.
+ * @param {string} message - User-facing text shown inside the toast notification.
+ * @returns {HTMLElement} A newly created toast element ready to be appended to the container.
  */
 function createToastElement(message) {
     const toast = document.createElement('div');
@@ -26,9 +27,9 @@ function createToastElement(message) {
 }
 
 /**
- * Shows a toast notification.
- * @param {string} message - Toast message text.
- * @returns {void} Result.
+ * Displays a toast notification that automatically disappears after five seconds.
+ * @param {string} message - User-facing text shown inside the toast notification.
+ * @returns {void}
  */
 function showToast(message) {
     const container = getOrCreateToastContainer();

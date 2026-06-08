@@ -1,67 +1,64 @@
 /** @file HTML templates for add-task subtask list items. */
-/**
- * HTML templates for add-task subtask list items.
- */
 
 /**
- * Generates subtasks.
- * @param {number} i - Index.
- * @returns {string} Result.
+ * Generates HTML for a subtask list item at the given index.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {string} HTML markup for either the edit or display view of the subtask.
  */
-function generateSubtasks(i) {
-  return isEditingSubtask(i) ? getSubtaskEditItem(i) : getSubtaskItem(i);
+function generateSubtasks(index) {
+  return isEditingSubtask(index) ? getSubtaskEditItem(index) : getSubtaskItem(index);
 }
 
 /**
- * Checks whether editing subtask.
- * @param {number} i - Index.
- * @returns {boolean} Result.
+ * Checks whether the subtask at the given index is in edit mode.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {boolean} True when the subtask is currently being edited, otherwise false.
  */
-function isEditingSubtask(i) {
-  return window.editingSubtaskIndex === i;
+function isEditingSubtask(index) {
+  return window.editingSubtaskIndex === index;
 }
 
 /**
  * Returns the input-actions row for a subtask in edit mode.
- * @param {number} i - Subtask index.
- * @returns {string} Result.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {string} HTML markup for the delete and save action buttons.
  */
-function getSubtaskEditActionsHTML(i) {
+function getSubtaskEditActionsHTML(index) {
   return /*html*/ `<div class="subtask-input-actions">
-    <button type="button" class="subtask-icon-btn" onclick="deleteSubtask(${i})" aria-label="Delete subtask"><img src="./assets/icons/delete.svg" alt=""></button>
+    <button type="button" class="subtask-icon-btn" onclick="deleteSubtask(${index})" aria-label="Delete subtask"><img src="./assets/icons/delete.svg" alt=""></button>
     <div class="subtask-input-separator"></div>
-    <button type="button" class="subtask-icon-btn" onclick="saveEditedSubtask(${i})" aria-label="Save subtask"><img src="./assets/icons/checkmark.svg" alt=""></button>
+    <button type="button" class="subtask-icon-btn" onclick="saveEditedSubtask(${index})" aria-label="Save subtask"><img src="./assets/icons/checkmark.svg" alt=""></button>
   </div>`;
 }
 
 /**
- * Returns subtask edit item.
- * @param {number} i - Index.
- * @returns {string} Result.
+ * Returns HTML for a subtask list item in edit mode.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {string} HTML markup for the editable subtask row with its action buttons.
  */
-function getSubtaskEditItem(i) {
+function getSubtaskEditItem(index) {
   return /*html*/ `
     <li class="subtask subtask-edit">
-      <input type="text" id="subtask-edit-${i}" class="subtask-edit-input"
-        value="${subtasks[i].title}" pattern=".*\\S.*" placeholder="Edit subtask">
-      ${getSubtaskEditActionsHTML(i)}
+      <input type="text" id="subtask-edit-${index}" class="subtask-edit-input"
+        value="${subtasks[index].title}" pattern=".*\\S.*" placeholder="Edit subtask">
+      ${getSubtaskEditActionsHTML(index)}
     </li>
   `;
 }
 
 /**
- * Returns subtask item.
- * @param {number} i - Index.
- * @returns {string} Result.
+ * Returns HTML for a subtask list item in display mode.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {string} HTML markup for the read-only subtask row with edit and delete controls.
  */
-function getSubtaskItem(i) {
+function getSubtaskItem(index) {
   return /*html*/ `
     <li class="subtask">
-      <span>${subtasks[i].title}</span>
+      <span>${subtasks[index].title}</span>
       <div class="subtask-actions">
-        <img src="./assets/icons/edit.svg" alt="Edit" onclick="editSubtask(${i})">
+        <img src="./assets/icons/edit.svg" alt="Edit" onclick="editSubtask(${index})">
         <div class="action-separator"></div>
-        <img src="./assets/icons/delete.svg" alt="Delete" onclick="deleteSubtask(${i})">
+        <img src="./assets/icons/delete.svg" alt="Delete" onclick="deleteSubtask(${index})">
       </div>
     </li>
   `;

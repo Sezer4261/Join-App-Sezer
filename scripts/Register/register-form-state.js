@@ -1,7 +1,8 @@
 /** @file Signup form field error state and handlers. */
+
 /**
- * Executes attach signup error focus handlers logic.
- * @returns {void} Result.
+ * Attaches focus handlers that re-show stored validation errors for each signup field.
+ * @returns {void}
  */
 function attachSignupErrorFocusHandlers() {
     const fieldIds = [
@@ -13,17 +14,22 @@ function attachSignupErrorFocusHandlers() {
     ];
     fieldIds.forEach(fieldId => {
         const el = document.getElementById(fieldId);
-        if (el) el.addEventListener('focus', () => showFieldErrorMessage(fieldId));
+        if (el) el.addEventListener('focus', () => handleSignupFieldFocus(fieldId));
     });
 }
 
 /**
- * Updates signup button state.
- * @returns {void} Result.
+ * Re-displays the stored validation error when a signup field receives focus.
+ * @param {string} fieldId - DOM id of the signup field that received focus.
+ * @returns {void}
  */
+function handleSignupFieldFocus(fieldId) {
+    showFieldErrorMessage(fieldId);
+}
+
 /**
- * Returns raw input values from signup form.
- * @returns {Object} Result.
+ * Reads the current raw values from all signup form inputs and the privacy checkbox.
+ * @returns {Object} Current field values used to evaluate form completeness.
  */
 function getSignupInputValues() {
     return {
@@ -36,9 +42,9 @@ function getSignupInputValues() {
 }
 
 /**
- * Returns whether the signup form is complete and error-free.
- * @param {Object} v - Input values.
- * @returns {boolean} Result.
+ * Determines whether every signup field is valid and free of active error state.
+ * @param {Object} v - Current field values from getSignupInputValues.
+ * @returns {boolean} Whether the signup button should be enabled for submission.
  */
 function isSignupFormComplete(v) {
     const nameValid = validateContactNameInput(v.nameRaw).isValid;
@@ -50,6 +56,10 @@ function isSignupFormComplete(v) {
     return nameValid && emailValid && passwordValid && confirmValid && policyValid && !hasActiveErrors;
 }
 
+/**
+ * Enables or disables the signup submit button based on current form completeness.
+ * @returns {void}
+ */
 function updateSignupButtonState() {
     const v = getSignupInputValues();
     const signupButton = document.querySelector('.btn-signup');
@@ -57,24 +67,31 @@ function updateSignupButtonState() {
 }
 
 /**
- * Executes attach signup form state handlers logic.
- * @returns {void} Result.
+ * Clears the privacy policy error and updates button state when the checkbox is checked.
+ * @param {HTMLInputElement} policyCheckbox - Privacy policy acceptance checkbox element.
+ * @returns {void}
  */
+function handlePolicyCheckboxChange(policyCheckbox) {
+    if (policyCheckbox.checked) applySignupPolicyBlurValidation('');
+    updateSignupButtonState();
+}
+
 /**
- * Binds change/blur handlers to the privacy policy checkbox.
- * @param {HTMLElement|null} policyCheckbox - Checkbox element.
- * @returns {void} Result.
+ * Binds change and blur handlers to the privacy policy acceptance checkbox.
+ * @param {HTMLElement|null} policyCheckbox - Privacy policy acceptance checkbox element.
+ * @returns {void}
  */
 function bindPolicyCheckboxHandlers(policyCheckbox) {
     if (!policyCheckbox) return;
-    policyCheckbox.addEventListener('change', () => {
-        if (policyCheckbox.checked) applySignupPolicyBlurValidation('');
-        updateSignupButtonState();
-    });
+    policyCheckbox.addEventListener('change', () => handlePolicyCheckboxChange(policyCheckbox));
     policyCheckbox.addEventListener('change', () => validateSignupFieldOnBlur('accept-privacy'));
     policyCheckbox.addEventListener('blur', () => validateSignupFieldOnBlur('accept-privacy'));
 }
 
+/**
+ * Attaches input and blur handlers to all signup text inputs and the privacy checkbox.
+ * @returns {void}
+ */
 function attachSignupFormStateHandlers() {
     const inputs = getSignupInputElements();
     const policyCheckbox = document.getElementById('accept-privacy');
@@ -83,8 +100,8 @@ function attachSignupFormStateHandlers() {
 }
 
 /**
- * Returns signup input elements.
- * @returns {HTMLElement[]} Result.
+ * Returns an array of non-null signup text input elements.
+ * @returns {HTMLElement[]} Signup input elements for name, email, password, and confirm password.
  */
 function getSignupInputElements() {
     return [
@@ -96,46 +113,70 @@ function getSignupInputElements() {
 }
 
 /**
- * Executes bind signup input handlers logic.
- * @param {HTMLElement} input - Input element.
- * @returns {void} Result.
+ * Clears resolved errors and re-validates a signup field when the user types into it.
+ * @param {HTMLElement} input - Signup input element whose value changed.
+ * @returns {void}
  */
-function bindSignupInputHandlers(input) {
-    input.addEventListener('input', () => {
-        clearSignupFieldErrorIfResolved(input.id);
-        updateSignupButtonState();
-    });
-    input.addEventListener('blur', () => {
-        validateSignupFieldOnBlur(input.id);
-        updateSignupButtonState();
-    });
+function handleSignupInputChange(input) {
+    clearSignupFieldErrorIfResolved(input.id);
+    updateSignupButtonState();
 }
 
 /**
- * Clears an already shown field error once the field becomes valid again.
- * Does not create new errors while typing.
- * @param {string} fieldId - Field identifier.
- * @returns {void} Result.
+ * Validates a signup field and updates button state when it loses focus.
+ * @param {HTMLElement} input - Signup input element that lost focus.
+ * @returns {void}
  */
-/** @param {Object} fields - Signup fields. */
+function handleSignupInputBlur(input) {
+    validateSignupFieldOnBlur(input.id);
+    updateSignupButtonState();
+}
+
+/**
+ * Binds input and blur handlers to a single signup text input field.
+ * @param {HTMLElement} input - Signup input element to wire up with event handlers.
+ * @returns {void}
+ */
+function bindSignupInputHandlers(input) {
+    input.addEventListener('input', () => handleSignupInputChange(input));
+    input.addEventListener('blur', () => handleSignupInputBlur(input));
+}
+
+/**
+ * Clears the name field error when the current value passes contact name validation.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
+ */
 function clearSignupNameErrorIfResolved(fields) {
     const nameCheck = validateContactNameInput(fields.nameInput?.value ?? '');
     if (nameCheck.isValid) applySignupInputBlurValidation('register-name', fields.nameInput, '');
 }
 
-/** @param {Object} fields - Signup fields. */
+/**
+ * Clears the email field error when the current value passes email validation.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
+ */
 function clearSignupEmailErrorIfResolved(fields) {
     const emailCheck = validateEmailLikeSignup(fields.emailInput?.value ?? '');
     if (emailCheck.isValid) applySignupInputBlurValidation('register-email', fields.emailInput, '');
 }
 
-/** @param {Object} fields - Signup fields. */
+/**
+ * Clears the password field error when the field contains a non-empty value.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
+ */
 function clearSignupPasswordErrorIfResolved(fields) {
     if (fields.passwordInput?.value)
         applySignupInputBlurValidation('register-password', fields.passwordInput, '');
 }
 
-/** @param {Object} fields - Signup fields. */
+/**
+ * Clears the confirm-password error when both password fields match and are non-empty.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
+ */
 function clearSignupConfirmErrorIfResolved(fields) {
     const pw = fields.passwordInput?.value ?? '';
     const confirm = fields.confirmPasswordInput?.value ?? '';
@@ -143,6 +184,11 @@ function clearSignupConfirmErrorIfResolved(fields) {
         applySignupInputBlurValidation('register-password-confirm', fields.confirmPasswordInput, '');
 }
 
+/**
+ * Clears a previously shown field error once the field value becomes valid again during typing.
+ * @param {string} fieldId - DOM id of the signup field whose error may be cleared.
+ * @returns {void}
+ */
 function clearSignupFieldErrorIfResolved(fieldId) {
     if (!signupFieldErrors[fieldId]) return;
     const fields = getSignupFields();
@@ -153,11 +199,10 @@ function clearSignupFieldErrorIfResolved(fieldId) {
 }
 
 /**
- * Validates a single signup field on blur.
- * @param {string} fieldId - Field identifier.
- * @returns {void} Result.
+ * Validates the signup name field on blur and normalizes the value when valid.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
  */
-/** @param {Object} fields - Signup fields. */
 function validateSignupNameOnBlur(fields) {
     const nameCheck = validateContactNameInput(fields.nameInput?.value ?? '');
     const message = nameCheck.isValid ? '' : (nameCheck.error || 'Please enter your name.');
@@ -165,7 +210,11 @@ function validateSignupNameOnBlur(fields) {
     if (nameCheck.isValid && fields.nameInput) fields.nameInput.value = nameCheck.normalizedName;
 }
 
-/** @param {Object} fields - Signup fields. */
+/**
+ * Validates the signup email field on blur and normalizes the value when valid.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
+ */
 function validateSignupEmailOnBlur(fields) {
     const emailCheck = validateEmailLikeSignup(fields.emailInput?.value ?? '');
     const message = emailCheck.isValid ? '' : getSignupEmailErrorMessage(emailCheck);
@@ -173,13 +222,21 @@ function validateSignupEmailOnBlur(fields) {
     if (emailCheck.isValid && fields.emailInput) fields.emailInput.value = emailCheck.normalizedEmail;
 }
 
-/** @param {Object} fields - Signup fields. */
+/**
+ * Validates that the signup password field is not empty on blur.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
+ */
 function validateSignupPasswordOnBlur(fields) {
     applySignupInputBlurValidation('register-password', fields.passwordInput,
         fields.passwordInput?.value ? '' : 'Please enter a password.');
 }
 
-/** @param {Object} fields - Signup fields. */
+/**
+ * Validates that the confirm-password field is filled and matches the password on blur.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
+ */
 function validateSignupConfirmOnBlur(fields) {
     const confirmValue = fields.confirmPasswordInput?.value ?? '';
     const passwordValue = fields.passwordInput?.value ?? '';
@@ -189,12 +246,21 @@ function validateSignupConfirmOnBlur(fields) {
     applySignupInputBlurValidation('register-password-confirm', fields.confirmPasswordInput, message);
 }
 
-/** @param {Object} fields - Signup fields. */
+/**
+ * Validates that the privacy policy checkbox is checked on blur.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
+ */
 function validateSignupPolicyOnBlur(fields) {
     const message = fields.policyCheckbox?.checked ? '' : 'Please accept the privacy policy.';
     applySignupPolicyBlurValidation(message);
 }
 
+/**
+ * Dispatches blur validation to the appropriate field handler based on field id.
+ * @param {string} fieldId - DOM id of the signup field that lost focus.
+ * @returns {void}
+ */
 function validateSignupFieldOnBlur(fieldId) {
     const fields = getSignupFields();
     if (fieldId === 'register-name') validateSignupNameOnBlur(fields);
@@ -205,11 +271,11 @@ function validateSignupFieldOnBlur(fieldId) {
 }
 
 /**
- * Applies blur validation state to signup input fields.
- * @param {string} fieldId - Field identifier.
- * @param {HTMLElement} input - Input element.
- * @param {string} message - Validation message.
- * @returns {void} Result.
+ * Applies blur validation state to a signup text input field and its inline error span.
+ * @param {string} fieldId - DOM id of the signup field being validated.
+ * @param {HTMLElement} input - Input element whose error class and span will be updated.
+ * @param {string} message - Validation error message, or empty string when the field is valid.
+ * @returns {void}
  */
 function applySignupInputBlurValidation(fieldId, input, message) {
     const errorId = getSignupErrorId(fieldId);
@@ -225,9 +291,9 @@ function applySignupInputBlurValidation(fieldId, input, message) {
 }
 
 /**
- * Applies blur validation state to the signup privacy field.
- * @param {string} message - Validation message.
- * @returns {void} Result.
+ * Applies blur validation state to the privacy policy checkbox and its error container.
+ * @param {string} message - Validation error message, or empty string when the checkbox is checked.
+ * @returns {void}
  */
 function applySignupPolicyBlurValidation(message) {
     const policyContainer = document.querySelector('.accept-privacy-policy');

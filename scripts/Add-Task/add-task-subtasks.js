@@ -1,32 +1,44 @@
 /** @file Subtask creation and management in add-task form. */
+
 /**
- * Enables creating a subtask via Enter key.
- * Prevents submitting the main task form.
- * @returns {void} Result.
+ * Clears the subtask input error message when the user starts typing.
+ * @returns {void} Nothing is returned after the error message is cleared.
  */
+function handleSubtaskInputClearError() {
+  setSubtaskError('');
+}
+
 /**
- * Binds keydown handler for the subtask input.
- * @param {HTMLElement} input - Subtask input element.
- * @returns {void} Result.
+ * Adds a subtask when Enter is pressed in the subtask input field.
+ * @param {KeyboardEvent} event - Keyboard event from the subtask input.
+ * @returns {void} Nothing is returned after the subtask is added or the error state is updated.
+ */
+function handleSubtaskInputKeydown(event) {
+  const input = /** @type {HTMLInputElement} */ (event.currentTarget);
+  if (event.isComposing || event.key !== 'Enter' || event.shiftKey) return;
+  event.preventDefault();
+  event.stopPropagation();
+  const value = String(input.value || '').trim();
+  if (!value) { setSubtaskError('Subtasks must not be empty.'); return; }
+  subtasks.push({ title: value, done: false });
+  showSubtasks();
+  input.value = '';
+  setSubtaskError('');
+}
+
+/**
+ * Binds input and keydown handlers for the subtask input field.
+ * @param {HTMLElement} input - Subtask text input element to attach listeners to.
+ * @returns {void} Nothing is returned after the event listeners are registered.
  */
 function bindSubtaskKeydownHandler(input) {
-  input.addEventListener('input', () => setSubtaskError(''));
-  input.addEventListener('keydown', (event) => {
-    if (event.isComposing || event.key !== 'Enter' || event.shiftKey) return;
-    event.preventDefault();
-    event.stopPropagation();
-    const value = String(input.value || '').trim();
-    if (!value) { setSubtaskError('Subtasks must not be empty.'); return; }
-    subtasks.push({ title: value, done: false });
-    showSubtasks();
-    input.value = '';
-    setSubtaskError('');
-  });
+  input.addEventListener('input', handleSubtaskInputClearError);
+  input.addEventListener('keydown', handleSubtaskInputKeydown);
 }
 
 /**
  * Initializes the Enter key handler on the subtask input field.
- * @returns {void} Result.
+ * @returns {void} Nothing is returned after the handler is registered or skipped.
  */
 function initAddSubtaskEnter() {
   const input = document.getElementById('subtask');
@@ -37,13 +49,9 @@ function initAddSubtaskEnter() {
 }
 
 /**
- * Shows subtasks.
- * @returns {void} Result.
- */
-/**
- * Applies visibility styles to the subtask area based on count.
- * @param {HTMLElement} subtaskArea - Subtask area element.
- * @returns {void} Result.
+ * Applies visibility styles to the subtask area based on how many subtasks exist.
+ * @param {HTMLElement} subtaskArea - Container element that holds the rendered subtask list.
+ * @returns {void} Nothing is returned after the visibility styles are applied.
  */
 function applySubtaskAreaVisibility(subtaskArea) {
   if (subtasks.length === 0) {
@@ -53,6 +61,10 @@ function applySubtaskAreaVisibility(subtaskArea) {
   }
 }
 
+/**
+ * Renders all subtasks into the subtask list area.
+ * @returns {void} Nothing is returned after the subtask list is rebuilt.
+ */
 function showSubtasks() {
   const subtaskArea = document.getElementById('subtask-area');
   subtaskArea.innerHTML = '';
@@ -61,8 +73,8 @@ function showSubtasks() {
 }
 
 /**
- * Adds subtask.
- * @returns {void} Result.
+ * Adds a subtask from the current value of the subtask input field.
+ * @returns {void} Nothing is returned after the subtask is added or an error is shown.
  */
 function addSubtask() {
   const input = document.getElementById('subtask');
@@ -79,8 +91,8 @@ function addSubtask() {
 }
 
 /**
- * Clears subtask input.
- * @returns {void} Result.
+ * Clears the subtask input field and any associated error state.
+ * @returns {void} Nothing is returned after the input is reset and focused.
  */
 function clearSubtaskInput() {
   const input = document.getElementById('subtask');
@@ -92,45 +104,45 @@ function clearSubtaskInput() {
 }
 
 /**
- * Executes edit subtask logic.
- * @param {number} i - Index.
- * @returns {void} Result.
+ * Enters edit mode for the subtask at the given index.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {void} Nothing is returned after edit mode is activated.
  */
-function editSubtask(i) {
-  setEditingSubtask(i);
+function editSubtask(index) {
+  setEditingSubtask(index);
 }
 
 /**
- * Deletes subtask.
- * @param {number} i - Index.
- * @returns {void} Result.
+ * Deletes the subtask at the given index and refreshes the list.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {void} Nothing is returned after the subtask is removed and the list is re-rendered.
  */
-function deleteSubtask(i) {
-  subtasks.splice(i, 1);
-  if (window.editingSubtaskIndex === i) {
+function deleteSubtask(index) {
+  subtasks.splice(index, 1);
+  if (window.editingSubtaskIndex === index) {
     window.editingSubtaskIndex = null;
   }
   showSubtasks();
 }
 
 /**
- * Sets editing subtask.
- * @param {number} i - Index.
- * @returns {void} Result.
+ * Sets the subtask at the given index into edit mode and focuses its input.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {void} Nothing is returned after the edit UI is shown and focused.
  */
-function setEditingSubtask(i) {
-  window.editingSubtaskIndex = i;
+function setEditingSubtask(index) {
+  window.editingSubtaskIndex = index;
   showSubtasks();
-  focusSubtaskEditInput(i);
+  focusSubtaskEditInput(index);
 }
 
 /**
- * Executes focus subtask edit input logic.
- * @param {number} i - Index.
- * @returns {void} Result.
+ * Focuses the edit input for the subtask at the given index.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {void} Nothing is returned after the cursor is placed at the end of the input.
  */
-function focusSubtaskEditInput(i) {
-  const input = document.getElementById(`subtask-edit-${i}`);
+function focusSubtaskEditInput(index) {
+  const input = document.getElementById(`subtask-edit-${index}`);
   if (input) {
     input.focus();
     input.setSelectionRange(input.value.length, input.value.length);
@@ -138,8 +150,8 @@ function focusSubtaskEditInput(i) {
 }
 
 /**
- * Executes cancel edit subtask logic.
- * @returns {void} Result.
+ * Cancels subtask editing and re-renders the list in display mode.
+ * @returns {void} Nothing is returned after edit mode is cleared and the list is refreshed.
  */
 function cancelEditSubtask() {
   window.editingSubtaskIndex = null;
@@ -148,29 +160,29 @@ function cancelEditSubtask() {
 }
 
 /**
- * Saves edited subtask.
- * @param {number} i - Index.
- * @returns {void} Result.
+ * Saves the edited title for the subtask at the given index.
+ * @param {number} index - Zero-based index of the subtask in the list.
+ * @returns {void} Nothing is returned after the title is saved or a validation error is shown.
  */
-function saveEditedSubtask(i) {
-  const input = document.getElementById(`subtask-edit-${i}`);
+function saveEditedSubtask(index) {
+  const input = document.getElementById(`subtask-edit-${index}`);
   if (!input) return;
   const value = input.value.trim();
   if (!value) {
     setSubtaskError('Subtasks must not be empty.', input);
     return;
   }
-  subtasks[i].title = value;
+  subtasks[index].title = value;
   window.editingSubtaskIndex = null;
   showSubtasks();
   setSubtaskError('');
 }
 
 /**
- * Sets subtask error message.
- * @param {string} message - Message text.
- * @param {HTMLElement} [inputEl] - Optional input to highlight.
- * @returns {void} Result.
+ * Sets the subtask error message and optionally highlights the related input.
+ * @param {string} message - Error message text to display, or an empty string to clear it.
+ * @param {HTMLElement} [inputEl] - Input element to highlight when an error is present.
+ * @returns {void} Nothing is returned after the error message and highlight state are updated.
  */
 function setSubtaskError(message, inputEl) {
   const errorEl = document.getElementById('subtask-error');

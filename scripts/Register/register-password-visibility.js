@@ -1,11 +1,9 @@
 /** @file Password show/hide toggle on signup form. */
+
 /**
- * Initializes password visibility toggle.
- * @param {*} param - Parameter.
- * @param {*} lockIconId - Parameter.
- * @param {*} visibilityOffIconId - Parameter.
- * @param {*} visibilityIconId } - Parameter.
- * @returns {void} Result.
+ * Initializes password visibility toggle icons and handlers for a single signup password field.
+ * @param {{ inputId: string, lockIconId: string, visibilityOffIconId: string, visibilityIconId: string }} config - DOM ids for the password input and its three icons.
+ * @returns {void}
  */
 function initPasswordVisibilityToggle({ inputId, lockIconId, visibilityOffIconId, visibilityIconId }) {
     const elements = getPasswordVisibilityElements(inputId, lockIconId, visibilityOffIconId, visibilityIconId);
@@ -15,12 +13,12 @@ function initPasswordVisibilityToggle({ inputId, lockIconId, visibilityOffIconId
 }
 
 /**
- * Returns password visibility elements.
- * @param {*} inputId - Parameter.
- * @param {*} lockIconId - Parameter.
- * @param {*} visibilityOffIconId - Parameter.
- * @param {*} visibilityIconId - Parameter.
- * @returns {*} Result.
+ * Collects DOM references for a signup password field and its visibility icons.
+ * @param {string} inputId - DOM id of the password input element.
+ * @param {string} lockIconId - DOM id of the lock icon shown when the field is empty.
+ * @param {string} visibilityOffIconId - DOM id of the icon that reveals the password.
+ * @param {string} visibilityIconId - DOM id of the icon that hides the password.
+ * @returns {Object|null} Element references object, or null when any required element is missing.
  */
 function getPasswordVisibilityElements(inputId, lockIconId, visibilityOffIconId, visibilityIconId) {
     const passwordInput = document.getElementById(inputId);
@@ -32,20 +30,47 @@ function getPasswordVisibilityElements(inputId, lockIconId, visibilityOffIconId,
 }
 
 /**
- * Executes bind password visibility handlers logic.
- * @param {*} elements - Parameter.
- * @returns {void} Result.
+ * Binds input and click handlers that control password visibility for a signup field.
+ * @param {Object} elements - Password visibility element references from getPasswordVisibilityElements.
+ * @returns {void}
  */
 function bindPasswordVisibilityHandlers(elements) {
-    elements.passwordInput.addEventListener('input', () => syncPasswordVisibilityIcons(elements));
-    elements.visibilityOffIcon.addEventListener('click', () => showPassword(elements));
-    elements.visibilityIcon.addEventListener('click', () => hidePassword(elements));
+    elements.passwordInput.addEventListener('input', () => handleSignupPasswordInput(elements));
+    elements.visibilityOffIcon.addEventListener('click', () => handleSignupShowPasswordClick(elements));
+    elements.visibilityIcon.addEventListener('click', () => handleSignupHidePasswordClick(elements));
 }
 
 /**
- * Shows password.
- * @param {*} elements - Parameter.
- * @returns {void} Result.
+ * Syncs password icon visibility when the user types in a signup password field.
+ * @param {Object} elements - Password visibility element references from getPasswordVisibilityElements.
+ * @returns {void}
+ */
+function handleSignupPasswordInput(elements) {
+    syncPasswordVisibilityIcons(elements);
+}
+
+/**
+ * Reveals the signup password when the visibility-off icon is clicked.
+ * @param {Object} elements - Password visibility element references from getPasswordVisibilityElements.
+ * @returns {void}
+ */
+function handleSignupShowPasswordClick(elements) {
+    showPassword(elements);
+}
+
+/**
+ * Hides the signup password when the visibility icon is clicked.
+ * @param {Object} elements - Password visibility element references from getPasswordVisibilityElements.
+ * @returns {void}
+ */
+function handleSignupHidePasswordClick(elements) {
+    hidePassword(elements);
+}
+
+/**
+ * Reveals plain-text characters in a signup password field when it contains a value.
+ * @param {Object} elements - Password visibility element references from getPasswordVisibilityElements.
+ * @returns {void}
  */
 function showPassword(elements) {
     if (elements.passwordInput.value.length === 0) return;
@@ -53,9 +78,9 @@ function showPassword(elements) {
 }
 
 /**
- * Hides password.
- * @param {*} elements - Parameter.
- * @returns {void} Result.
+ * Masks characters in a signup password field when it contains a value.
+ * @param {Object} elements - Password visibility element references from getPasswordVisibilityElements.
+ * @returns {void}
  */
 function hidePassword(elements) {
     if (elements.passwordInput.value.length === 0) return;
@@ -63,10 +88,10 @@ function hidePassword(elements) {
 }
 
 /**
- * Sets password visibility.
- * @param {*} elements - Parameter.
- * @param {*} isVisible - Parameter.
- * @returns {void} Result.
+ * Sets the password input type and toggles visibility icon display state.
+ * @param {Object} elements - Password visibility element references from getPasswordVisibilityElements.
+ * @param {boolean} isVisible - Whether password characters should be shown in plain text.
+ * @returns {void}
  */
 function setPasswordVisibility(elements, isVisible) {
     elements.passwordInput.type = isVisible ? 'text' : 'password';
@@ -75,9 +100,9 @@ function setPasswordVisibility(elements, isVisible) {
 }
 
 /**
- * Executes sync password visibility icons logic.
- * @param {*} elements - Parameter.
- * @returns {void} Result.
+ * Syncs lock and visibility icon visibility with the current password input state.
+ * @param {Object} elements - Password visibility element references from getPasswordVisibilityElements.
+ * @returns {void}
  */
 function syncPasswordVisibilityIcons(elements) {
     const hasValue = elements.passwordInput.value.length > 0;
@@ -95,12 +120,8 @@ function syncPasswordVisibilityIcons(elements) {
 }
 
 /**
- * Initializes signup password visibility toggles.
- * @returns {void} Result.
- */
-/**
- * Initializes password visibility for the register-password field.
- * @returns {void} Result.
+ * Initializes password visibility toggle for the main register-password field.
+ * @returns {void}
  */
 function initRegisterPasswordToggle() {
     initPasswordVisibilityToggle({
@@ -112,8 +133,8 @@ function initRegisterPasswordToggle() {
 }
 
 /**
- * Initializes password visibility for the register-password-confirm field.
- * @returns {void} Result.
+ * Initializes password visibility toggle for the register-password-confirm field.
+ * @returns {void}
  */
 function initRegisterConfirmPasswordToggle() {
     initPasswordVisibilityToggle({
@@ -125,8 +146,8 @@ function initRegisterConfirmPasswordToggle() {
 }
 
 /**
- * Initializes password visibility toggles for all signup password fields.
- * @returns {void} Result.
+ * Initializes password visibility toggles for all signup password fields on the page.
+ * @returns {void}
  */
 function initSignupPasswordVisibilityToggles() {
     initRegisterPasswordToggle();

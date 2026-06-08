@@ -1,7 +1,8 @@
 /** @file Form validation for the add-task page. */
+
 /**
- * Validates form.
- * @returns {void} Result.
+ * Validates all required add-task form fields and clears previous errors first.
+ * @returns {boolean} True when every required field passes validation, otherwise false.
  */
 function validateForm() {
   clearValidationErrors();
@@ -13,8 +14,8 @@ function validateForm() {
 }
 
 /**
- * Clears validation errors.
- * @returns {void} Result.
+ * Clears validation error messages for all required fields.
+ * @returns {void} Nothing is returned after the error elements are emptied.
  */
 function clearValidationErrors() {
   setErrorText('title-error', '');
@@ -23,10 +24,10 @@ function clearValidationErrors() {
 }
 
 /**
- * Sets error text.
- * @param {string} id - Identifier.
- * @param {string} value - Value.
- * @returns {void} Result.
+ * Sets the text content of a validation error element.
+ * @param {string} id - DOM id of the error message element to update.
+ * @param {string} value - Error message text to display, or an empty string to clear it.
+ * @returns {void} Nothing is returned after the error text is written.
  */
 function setErrorText(id, value) {
   const el = document.getElementById(id);
@@ -34,8 +35,8 @@ function setErrorText(id, value) {
 }
 
 /**
- * Validates title field.
- * @returns {void} Result.
+ * Validates the add-task title field against the required-input rule.
+ * @returns {boolean} True when the title field contains a non-empty trimmed value, otherwise false.
  */
 function validateTitleField() {
   const input = document.getElementById('title');
@@ -43,8 +44,8 @@ function validateTitleField() {
 }
 
 /**
- * Clears title error while typing as soon as input is valid.
- * @returns {void} Result.
+ * Clears the title error while typing as soon as the input becomes valid.
+ * @returns {void} Nothing is returned after the error state is cleared or left unchanged.
  */
 function clearTitleErrorOnValidInput() {
   const input = document.getElementById('title');
@@ -55,8 +56,8 @@ function clearTitleErrorOnValidInput() {
 }
 
 /**
- * Validates date field.
- * @returns {boolean} Result.
+ * Validates the add-task due date field for presence and a non-past value.
+ * @returns {boolean} True when the date is present and not before today, otherwise false.
  */
 function validateDateField() {
   const input = document.getElementById('date');
@@ -74,8 +75,8 @@ function validateDateField() {
 }
 
 /**
- * Clears date error while typing as soon as input is valid and not in the past.
- * @returns {void} Result.
+ * Clears the date error while typing as soon as the input is valid and not in the past.
+ * @returns {void} Nothing is returned after the error state is cleared or left unchanged.
  */
 function clearDateErrorOnValidInput() {
   const input = document.getElementById('date');
@@ -88,8 +89,8 @@ function clearDateErrorOnValidInput() {
 }
 
 /**
- * Applies today's date as minimum selectable due date.
- * @returns {void} Result.
+ * Applies today's date as the minimum selectable due date on the date input.
+ * @returns {void} Nothing is returned after the min attribute is set.
  */
 function applyTodayMinDate() {
   const dateInput = document.getElementById('date');
@@ -98,8 +99,8 @@ function applyTodayMinDate() {
 }
 
 /**
- * Returns today's local date in yyyy-mm-dd.
- * @returns {string} Result.
+ * Returns today's local date formatted for HTML date inputs.
+ * @returns {string} Today's date as a yyyy-mm-dd string in the local timezone.
  */
 function getTodayDateString() {
   const now = new Date();
@@ -110,8 +111,8 @@ function getTodayDateString() {
 }
 
 /**
- * Validates category field.
- * @returns {boolean} Result.
+ * Validates the add-task category field against the required-input rule.
+ * @returns {boolean} True when a category has been selected, otherwise false.
  */
 function validateCategoryField() {
   const input = document.getElementById('category');
@@ -120,11 +121,11 @@ function validateCategoryField() {
 }
 
 /**
- * Validates required input.
- * @param {HTMLElement} input - Input element.
- * @param {string} errorId - Error element id.
- * @param {HTMLElement} highlightElement - Element to highlight (defaults to input).
- * @returns {boolean} Result.
+ * Validates that a required input has a non-empty trimmed value.
+ * @param {HTMLElement} input - Form input element whose value is checked.
+ * @param {string} errorId - DOM id of the error message element to update on failure.
+ * @param {HTMLElement} [highlightElement=input] - Element that receives the input-error class when validation fails.
+ * @returns {boolean} True when the input contains a non-empty trimmed value, otherwise false.
  */
 function validateRequiredInput(input, errorId, highlightElement = input) {
   if (!input || !input.value.trim()) {

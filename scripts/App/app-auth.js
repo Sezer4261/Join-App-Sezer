@@ -1,6 +1,9 @@
 /** @file Authentication guard, session, and navigation helpers. */
 
-/** @returns {boolean} */
+/**
+ * Checks whether localStorage contains a valid user or guest session.
+ * @returns {boolean} Whether the current visitor is considered logged in.
+ */
 function isUserLoggedIn() {
   try {
     const raw = localStorage.getItem("user");
@@ -12,7 +15,10 @@ function isUserLoggedIn() {
   }
 }
 
-/** Redirects unauthenticated users away from protected pages. */
+/**
+ * Redirects unauthenticated visitors away from protected pages to the login screen.
+ * @returns {void}
+ */
 function protectThisPage() {
   const currentPage = window.location.pathname;
   if (isPublicPage(currentPage)) return;
@@ -22,8 +28,9 @@ function protectThisPage() {
 }
 
 /**
- * @param {string} pathname
- * @returns {boolean}
+ * Determines whether the given pathname belongs to a page accessible without authentication.
+ * @param {string} pathname - Current page pathname from window.location.
+ * @returns {boolean} Whether the page can be viewed without a stored session.
  */
 function isPublicPage(pathname) {
   const normalizedPath = String(pathname || "").replace(/\\/g, "/");
@@ -40,7 +47,8 @@ function isPublicPage(pathname) {
 }
 
 /**
- * @param {Event} [event]
+ * Clears the stored session, signs out of Firebase, and redirects to the login page.
+ * @param {Event} [event] - Optional click event whose default action and propagation should be suppressed.
  * @returns {void}
  */
 function logout(event) {
@@ -51,10 +59,18 @@ function logout(event) {
   redirectToLogin();
 }
 
+/**
+ * Removes the serialized user session from localStorage.
+ * @returns {void}
+ */
 function clearUserSession() {
   localStorage.removeItem("user");
 }
 
+/**
+ * Attempts a Firebase sign-out without throwing when Firebase is unavailable or fails.
+ * @returns {void}
+ */
 function safeFirebaseLogout() {
   try {
     if (typeof window.firebaseLogout === "function") window.firebaseLogout();
@@ -63,22 +79,34 @@ function safeFirebaseLogout() {
   }
 }
 
+/**
+ * Replaces the current browser location with the login page URL.
+ * @returns {void}
+ */
 function redirectToLogin() {
   window.location.replace(getPagePath("index.html"));
 }
 
-/** Opens the app home (summary when logged in, login otherwise). */
+/**
+ * Navigates to the summary page when logged in, otherwise to the login page.
+ * @returns {void}
+ */
 function navigateToAppHome() {
   window.location.href = getPagePath(isUserLoggedIn() ? "summary.html" : "index.html");
 }
 
+/**
+ * Navigates the browser to the help page.
+ * @returns {void}
+ */
 function navigateToHelp() {
   window.location.href = getPagePath("help.html");
 }
 
 /**
- * @param {string} fileName
- * @returns {string}
+ * Builds a relative path to an HTML file, accounting for whether the current page lives under public/.
+ * @param {string} fileName - Target HTML file name such as "summary.html".
+ * @returns {string} Relative URL path suitable for window.location assignment.
  */
 function getPagePath(fileName) {
   const normalizedPath = String(window.location.pathname || "").replace(/\\/g, "/");
@@ -86,7 +114,10 @@ function getPagePath(fileName) {
   return `${inPublicFolder ? "../" : "./"}${fileName}`;
 }
 
-/** Sends folder-root URLs to the login page when no HTML file is in the path. */
+/**
+ * Redirects bare folder-root URLs (without an HTML file) to the login page.
+ * @returns {void}
+ */
 function redirectBareRootToLogin() {
   const path = String(window.location.pathname || "").replace(/\\/g, "/");
   if (/\.html$/i.test(path)) return;
@@ -95,7 +126,10 @@ function redirectBareRootToLogin() {
   }
 }
 
-/** Returns from help to the app home (never back to login when a session exists). */
+/**
+ * Returns from the help page to summary when logged in, otherwise to the login page.
+ * @returns {void}
+ */
 function navigateFromHelpBack() {
   if (isUserLoggedIn()) {
     window.location.href = getPagePath("summary.html");
@@ -104,7 +138,10 @@ function navigateFromHelpBack() {
   window.location.href = getPagePath("index.html");
 }
 
-/** Updates mobile footer entry links for the current session. */
+/**
+ * Updates mobile footer home links to point to summary or login depending on session state.
+ * @returns {void}
+ */
 function initSessionAwareNavigation() {
   const loggedIn = isUserLoggedIn();
   document.querySelectorAll("[data-app-home-link]").forEach((link) => {
@@ -113,16 +150,23 @@ function initSessionAwareNavigation() {
   });
 }
 
-redirectBareRootToLogin();
-protectThisPage();
-
-document.addEventListener("DOMContentLoaded", initSessionAwareNavigation);
-
-window.addEventListener("pageshow", (event) => {
+/**
+ * Re-validates session state when the page is restored from the back-forward cache.
+ * @param {PageTransitionEvent} event - Pageshow event indicating whether the page was persisted.
+ * @returns {void}
+ */
+function handlePageshowSessionCheck(event) {
   const currentPage = window.location.pathname;
   initSessionAwareNavigation();
   if (!event.persisted || isPublicPage(currentPage)) return;
   if (!isUserLoggedIn()) {
     window.location.replace(getPagePath("index.html"));
   }
-});
+}
+
+redirectBareRootToLogin();
+protectThisPage();
+
+document.addEventListener("DOMContentLoaded", initSessionAwareNavigation);
+
+window.addEventListener("pageshow", handlePageshowSessionCheck);

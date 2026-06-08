@@ -1,7 +1,8 @@
 /** @file Firebase task loading and persistence for board. */
+
 /**
- * Loads tasks.
- * @returns {Promise<*>} Result.
+ * Fetches all tasks from Firebase, loads contacts, and renders the board.
+ * @returns {Promise<void>} Resolves when loading and initial render complete.
  */
 async function loadTasks() {
   try {
@@ -18,9 +19,9 @@ async function loadTasks() {
 }
 
 /**
- * Updates task.
- * @param {Object} task - Task object.
- * @returns {Promise<*>} Result.
+ * Writes the full task payload to Firebase under its stored document id.
+ * @param {Object} task - Task to persist, including firebaseId and field values.
+ * @returns {Promise<void>} Resolves when the PUT request finishes.
  */
 async function updateTask(task) {
   try {
@@ -36,8 +37,8 @@ async function updateTask(task) {
 }
 
 /**
- * Deletes task.
- * @returns {Promise<*>} Result.
+ * Removes the active task from Firebase and refreshes the board UI.
+ * @returns {Promise<void>} Resolves after delete, modal close, and re-render.
  */
 async function deleteTask() {
   if (!activeTask) return;

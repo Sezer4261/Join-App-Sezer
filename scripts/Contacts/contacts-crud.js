@@ -1,12 +1,13 @@
 /** @file Contact create, update, delete, and validation. */
+
 /**
  * Validates a contact field and returns the normalized value or null on failure.
- * @param {*} rawValue - Raw field value.
- * @param {string} fieldId - Field id for error display.
- * @param {string[]} fields - All field ids.
- * @param {Function} validator - Validator function.
- * @param {string} normalizedProp - Property name on the check result.
- * @returns {*|null} Normalized value or null when invalid.
+ * @param {*} rawValue - Unvalidated value read from the form field.
+ * @param {string} fieldId - Input element id used to display validation errors.
+ * @param {string[]} fields - All field ids in the dialog for error clearing.
+ * @param {Function} validator - Validation function that returns an isValid flag and normalized value.
+ * @param {string} normalizedProp - Property name on the validation result that holds the normalized value.
+ * @returns {*|null} Normalized field value, or null when validation fails.
  */
 function runContactFieldValidation(rawValue, fieldId, fields, validator, normalizedProp) {
   const check = validator(rawValue);
@@ -19,9 +20,9 @@ function runContactFieldValidation(rawValue, fieldId, fields, validator, normali
 
 /**
  * Validates and normalizes all fields on a new contact object.
- * @param {Object} contact - Contact object to mutate.
- * @param {string[]} fields - Field ids for error display.
- * @returns {boolean} True when all fields are valid.
+ * @param {Object} contact - Contact object whose fields will be validated and mutated in place.
+ * @param {string[]} fields - All field ids in the add-contact dialog for error display.
+ * @returns {boolean} Whether every required field passed validation.
  */
 function validateAndNormalizeNewContact(contact, fields) {
   let value = runContactFieldValidation(contact.name, "ac-name", fields, validateContactNameInput, "normalizedName");
@@ -38,8 +39,8 @@ function validateAndNormalizeNewContact(contact, fields) {
 
 /**
  * Persists a new contact and refreshes the UI.
- * @param {Object} contact - Contact to save.
- * @returns {Promise<void>} Result.
+ * @param {Object} contact - Validated contact record to save to the API.
+ * @returns {Promise<void>}
  */
 async function performAddContactSave(contact) {
   const saved = await saveContact(contact);
@@ -55,8 +56,8 @@ async function performAddContactSave(contact) {
 
 /**
  * Handles add-contact form submission.
- * @param {Event} event - Submit event.
- * @returns {Promise<void>} Result.
+ * @param {Event} event - Submit event from the add-contact form.
+ * @returns {Promise<void>}
  */
 async function addContact(event) {
   event.preventDefault();
@@ -72,8 +73,8 @@ async function addContact(event) {
 
 /**
  * Returns whether all required contact fields are filled.
- * @param {Object} contact - Contact object.
- * @returns {boolean} Result.
+ * @param {Object} contact - Contact object to check for completeness.
+ * @returns {boolean} Whether name, email, and phone are all present.
  */
 function isContactComplete(contact) {
   return contact.name && contact.email && contact.phone;
@@ -81,8 +82,8 @@ function isContactComplete(contact) {
 
 /**
  * POSTs a new contact to the API.
- * @param {Object} contact - Contact payload.
- * @returns {Promise<Object|undefined>} Saved contact or undefined on error.
+ * @param {Object} contact - Contact payload to persist.
+ * @returns {Promise<Object|undefined>} Saved contact data from the API, or undefined on failure.
  */
 async function saveContact(contact) {
   try {
@@ -99,7 +100,7 @@ async function saveContact(contact) {
 
 /**
  * Reads add-contact form values into an object.
- * @returns {Object} Contact object.
+ * @returns {Object} Contact object built from the add-contact form fields.
  */
 function generateObjFromContact() {
   return {
@@ -111,8 +112,8 @@ function generateObjFromContact() {
 
 /**
  * Fetches a single contact by id.
- * @param {string} contactId - Contact identifier.
- * @returns {Promise<Object|null>} Contact or null on error.
+ * @param {string} contactId - Unique identifier of the contact to load.
+ * @returns {Promise<Object|null>} Contact record from the API, or null on failure.
  */
 async function fetchContactDetails(contactId) {
   try {
@@ -127,7 +128,7 @@ async function fetchContactDetails(contactId) {
 
 /**
  * Handles a successful contact delete response.
- * @returns {Promise<void>} Result.
+ * @returns {Promise<void>}
  */
 async function handleContactDeleteSuccess() {
   await renderContactGroup();
@@ -137,8 +138,8 @@ async function handleContactDeleteSuccess() {
 
 /**
  * Deletes a contact and refreshes the UI.
- * @param {string} contactId - Contact identifier.
- * @returns {Promise<void>} Result.
+ * @param {string} contactId - Unique identifier of the contact to delete.
+ * @returns {Promise<void>}
  */
 async function deleteContact(contactId) {
   try {
@@ -153,7 +154,7 @@ async function deleteContact(contactId) {
 
 /**
  * Reads current values from the edit-contact form fields.
- * @returns {Object} Contact object with raw field values.
+ * @returns {Object} Contact object built from the edit-contact form fields.
  */
 function readEditContactFormValues() {
   return {
@@ -165,8 +166,8 @@ function readEditContactFormValues() {
 
 /**
  * Validates edit-contact fields and returns the updated contact object.
- * @param {string[]} fields - Field ids for error display.
- * @returns {Object|null} Updated contact or null when invalid.
+ * @param {string[]} fields - All field ids in the edit-contact dialog for error display.
+ * @returns {Object|null} Validated contact object, or null when validation fails.
  */
 function validateAndBuildUpdatedContact(fields) {
   const contact = readEditContactFormValues();
@@ -184,7 +185,7 @@ function validateAndBuildUpdatedContact(fields) {
 
 /**
  * Refreshes UI after a contact was updated successfully.
- * @returns {Promise<void>} Result.
+ * @returns {Promise<void>}
  */
 async function refreshAfterContactUpdate() {
   await renderContactGroup();
@@ -194,9 +195,9 @@ async function refreshAfterContactUpdate() {
 
 /**
  * Persists an updated contact to the API.
- * @param {string} contactId - Contact identifier.
- * @param {Object} updatedContact - Validated contact data.
- * @returns {Promise<boolean>} True when saved successfully.
+ * @param {string} contactId - Unique identifier of the contact being updated.
+ * @param {Object} updatedContact - Validated contact data to save.
+ * @returns {Promise<boolean>} Whether the update request succeeded.
  */
 async function persistUpdatedContact(contactId, updatedContact) {
   const response = await fetch(`${BASE_URL}/contacts/${contactId}.json`, {
@@ -211,9 +212,9 @@ async function persistUpdatedContact(contactId, updatedContact) {
 
 /**
  * Handles edit-contact form submission.
- * @param {Event} event - Submit event.
- * @param {string} contactId - Contact identifier.
- * @returns {Promise<void>} Result.
+ * @param {Event} event - Submit event from the edit-contact form.
+ * @param {string} contactId - Unique identifier of the contact being edited.
+ * @returns {Promise<void>}
  */
 async function updateContact(event, contactId) {
   event.preventDefault();

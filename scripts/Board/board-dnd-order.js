@@ -11,9 +11,10 @@ const COLUMN_STATUS = {
 };
 
 /**
- * @param {number} x
- * @param {number} y
- * @returns {HTMLElement|null}
+ * Finds the topmost task card under the pointer, excluding the dragged card.
+ * @param {number} x - Pointer X coordinate in viewport pixels.
+ * @param {number} y - Pointer Y coordinate in viewport pixels.
+ * @returns {HTMLElement|null} Matching task card element, or null when none is hit.
  */
 function getTaskCardAtPoint(x, y) {
   const elements = document.elementsFromPoint(x, y);
@@ -27,9 +28,11 @@ function getTaskCardAtPoint(x, y) {
 }
 
 /**
- * @param {number} x
- * @param {number} y
- * @param {string} fallbackStatus
+ * Determines target column status and insert position from pointer coordinates.
+ * @param {number} x - Pointer X coordinate in viewport pixels.
+ * @param {number} y - Pointer Y coordinate in viewport pixels.
+ * @param {string} fallbackStatus - Status used when no task card is under the pointer.
+ * @returns {{ status: string, anchorTaskId: number|null, insertAfter: boolean }} Resolved drop placement.
  */
 function getTaskMovePlacementFromPoint(x, y, fallbackStatus) {
   const targetCard = getTaskCardAtPoint(x, y);
@@ -43,14 +46,22 @@ function getTaskMovePlacementFromPoint(x, y, fallbackStatus) {
   };
 }
 
-/** @param {Array} orderedTasks */
+/**
+ * Assigns evenly spaced order values to tasks in their current list sequence.
+ * @param {Array} orderedTasks - Tasks in the desired display order within one column.
+ * @returns {void}
+ */
 function assignSequentialTaskOrder(orderedTasks) {
   orderedTasks.forEach((task, index) => {
     task.order = (index + 1) * TASK_ORDER_STEP;
   });
 }
 
-/** @param {string[]} affectedStatuses */
+/**
+ * Persists order updates for every task in the affected column statuses.
+ * @param {string[]} affectedStatuses - Kanban status labels whose tasks may have changed order.
+ * @returns {void}
+ */
 function persistColumnTaskOrderChanges(affectedStatuses) {
   const seenFirebaseIds = new Set();
   const changedTasks = [];
@@ -65,11 +76,11 @@ function persistColumnTaskOrderChanges(affectedStatuses) {
 }
 
 /**
- * Resolves the insert index for a task within a target column.
- * @param {Array} targetColumnTasks - Tasks in the target column excluding the dragged task.
- * @param {number|null} anchorTaskId - Anchor task id for relative placement.
- * @param {boolean} insertAfter - Whether to insert after the anchor task.
- * @returns {number}
+ * Calculates where a dragged task should be inserted within a target column.
+ * @param {Array} targetColumnTasks - Tasks in the destination column excluding the dragged task.
+ * @param {number|null} anchorTaskId - Task id used as the relative insertion anchor.
+ * @param {boolean} insertAfter - Whether to place the dragged task after the anchor.
+ * @returns {number} Zero-based index at which the dragged task should be spliced in.
  */
 function getTargetColumnInsertIndex(targetColumnTasks, anchorTaskId, insertAfter) {
   let insertIndex = targetColumnTasks.length;
@@ -80,11 +91,11 @@ function getTargetColumnInsertIndex(targetColumnTasks, anchorTaskId, insertAfter
 }
 
 /**
- * Reorders source and target columns after a task move and persists changes.
- * @param {Object} draggedTask - Moved task object.
- * @param {string} sourceStatus - Original column status.
- * @param {string} targetStatus - Destination column status.
- * @param {Array} targetColumnTasks - Reordered tasks in the target column.
+ * Reorders affected columns after a move and persists the new order values.
+ * @param {Object} draggedTask - Task that changed column or position.
+ * @param {string} sourceStatus - Original kanban status before the move.
+ * @param {string} targetStatus - Destination kanban status after the move.
+ * @param {Array} targetColumnTasks - Reordered task list for the destination column.
  * @returns {void}
  */
 function finalizeTaskColumnReorder(draggedTask, sourceStatus, targetStatus, targetColumnTasks) {
@@ -98,10 +109,12 @@ function finalizeTaskColumnReorder(draggedTask, sourceStatus, targetStatus, targ
 }
 
 /**
- * @param {number|string} taskId
- * @param {string} targetStatus
- * @param {number|null} [anchorTaskId]
- * @param {boolean} [insertAfter]
+ * Moves a task to a target column and inserts it relative to an optional anchor task.
+ * @param {number|string} taskId - Identifier of the task being moved.
+ * @param {string} targetStatus - Destination kanban status label.
+ * @param {number|null} [anchorTaskId=null] - Task id used to position the insertion.
+ * @param {boolean} [insertAfter=false] - Whether to insert after the anchor task.
+ * @returns {void}
  */
 function moveTaskToPlacement(taskId, targetStatus, anchorTaskId = null, insertAfter = false) {
   const draggedTask = tasks.find((task) => task.id === taskId);
@@ -116,9 +129,10 @@ function moveTaskToPlacement(taskId, targetStatus, anchorTaskId = null, insertAf
 }
 
 /**
- * @param {number} x
- * @param {number} y
- * @returns {string|null}
+ * Resolves the board column element id under the given pointer coordinates.
+ * @param {number} x - Pointer X coordinate in viewport pixels.
+ * @param {number} y - Pointer Y coordinate in viewport pixels.
+ * @returns {string|null} Column DOM id when a board column is hit, otherwise null.
  */
 function getColumnIdAtPoint(x, y) {
   const els = document.elementsFromPoint(x, y);

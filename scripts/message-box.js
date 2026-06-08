@@ -1,9 +1,11 @@
 /** @file Centered status message overlay (success / error). */
 
 /**
- * @param {string} message
- * @param {"success"|"error"} [type]
- * @param {{ iconSrc?: string, iconAlt?: string }} [options]
+ * Shows a centered status message overlay with the given style and optional icon.
+ * @param {string} message - User-facing text displayed in the overlay.
+ * @param {"success"|"error"} [type] - Visual style that controls background color and CSS class.
+ * @param {{ iconSrc?: string, iconAlt?: string }} [options] - Optional icon image source and alt text.
+ * @returns {void}
  */
 function showMessage(message, type = "success", options = {}) {
   const box = getOrCreateMessageBox();
@@ -15,7 +17,10 @@ function showMessage(message, type = "success", options = {}) {
   scheduleMessageHide(box);
 }
 
-/** @returns {HTMLElement} */
+/**
+ * Returns the existing message box overlay or creates and appends a new one to the document body.
+ * @returns {HTMLElement} The overlay element used to display status messages.
+ */
 function getOrCreateMessageBox() {
   let box = document.getElementById("msg-box");
   if (!box) {
@@ -29,9 +34,11 @@ function getOrCreateMessageBox() {
 }
 
 /**
- * @param {HTMLElement} box
- * @param {string} message
- * @param {{ iconSrc?: string, iconAlt?: string }} [options]
+ * Clears the message box and sets its text content, optionally appending an icon.
+ * @param {HTMLElement} box - Overlay element whose content will be updated.
+ * @param {string} message - User-facing text displayed in the overlay.
+ * @param {{ iconSrc?: string, iconAlt?: string }} [options] - Optional icon image source and alt text.
+ * @returns {void}
  */
 function setMessageBoxContent(box, message, options = {}) {
   box.innerHTML = "";
@@ -42,8 +49,10 @@ function setMessageBoxContent(box, message, options = {}) {
 }
 
 /**
- * @param {HTMLElement} box
- * @param {{ iconSrc: string, iconAlt?: string }} options
+ * Appends an icon image to the right of the message box text.
+ * @param {HTMLElement} box - Overlay element that will receive the icon.
+ * @param {{ iconSrc: string, iconAlt?: string }} options - Icon image URL and optional accessibility label.
+ * @returns {void}
  */
 function appendMessageIcon(box, options) {
   const iconEl = document.createElement("img");
@@ -56,14 +65,20 @@ function appendMessageIcon(box, options) {
 }
 
 /**
- * @param {HTMLElement} box
- * @param {string} type
+ * Applies the CSS class that reflects the message type (success or error).
+ * @param {HTMLElement} box - Overlay element whose class name will be updated.
+ * @param {string} type - Message category used to pick the CSS modifier class.
+ * @returns {void}
  */
 function setMessageBoxType(box, type) {
   box.className = `msgBox ${type}`;
 }
 
-/** @param {HTMLElement} box */
+/**
+ * Positions the message box fixed at the center of the viewport with a high z-index.
+ * @param {HTMLElement} box - Overlay element whose positioning styles will be applied.
+ * @returns {void}
+ */
 function setMessageBoxBaseStyles(box) {
   box.style.position = "fixed";
   box.style.left = "50%";
@@ -72,7 +87,11 @@ function setMessageBoxBaseStyles(box) {
   box.style.zIndex = "9999";
 }
 
-/** @param {HTMLElement} box */
+/**
+ * Applies flexbox alignment styles so icon and text are centered within the overlay.
+ * @param {HTMLElement} box - Overlay element whose flex layout styles will be applied.
+ * @returns {void}
+ */
 function setMessageBoxFlexStyles(box) {
   box.style.display = "flex";
   box.style.alignItems = "center";
@@ -80,7 +99,11 @@ function setMessageBoxFlexStyles(box) {
   box.style.gap = "10px";
 }
 
-/** @param {HTMLElement} box */
+/**
+ * Applies width, padding, typography, and shadow styles to the message box.
+ * @param {HTMLElement} box - Overlay element whose size and typography styles will be applied.
+ * @returns {void}
+ */
 function setMessageBoxSizeStyles(box) {
   box.style.minWidth = "280px";
   box.style.maxWidth = "min(520px, calc(100vw - 32px))";
@@ -93,21 +116,31 @@ function setMessageBoxSizeStyles(box) {
   box.style.pointerEvents = "none";
 }
 
-/** @param {HTMLElement} box */
+/**
+ * Applies both flex layout and size/typography styles to the message box.
+ * @param {HTMLElement} box - Overlay element that receives the combined layout styles.
+ * @returns {void}
+ */
 function setMessageBoxLayoutStyles(box) {
   setMessageBoxFlexStyles(box);
   setMessageBoxSizeStyles(box);
 }
 
 /**
- * @param {HTMLElement} box
- * @param {string} type
+ * Sets the overlay background color based on whether the message is a success or error.
+ * @param {HTMLElement} box - Overlay element whose background color will be updated.
+ * @param {string} type - Message category that determines which theme color is used.
+ * @returns {void}
  */
 function setMessageBoxColors(box, type) {
   box.style.background = type === "error" ? "var(--urgent, #ff3d00)" : "var(--sidebar-bg, #2a3647)";
 }
 
-/** @param {HTMLElement} box */
+/**
+ * Schedules the message box to hide after a short delay, clearing any previous hide timer.
+ * @param {HTMLElement} box - Overlay element that will be hidden after the delay.
+ * @returns {void}
+ */
 function scheduleMessageHide(box) {
   window.clearTimeout(box._hideTimeout);
   box._hideTimeout = window.setTimeout(() => {

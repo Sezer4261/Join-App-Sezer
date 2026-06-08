@@ -3,9 +3,9 @@ const MODAL_DELETE_SVG = `<svg width="24" height="24" viewBox="0 0 33 32" fill="
 const MODAL_EDIT_SVG = `<svg width="24" height="24" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0-357207-6165" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="33" height="32"><rect x="0.5" width="32" height="32" fill="#D9D9D9"></rect></mask><g mask="url(#mask0-357207-6165)"><path class="edit-svg-path" d="M7.16667 25.3332H9.03333L20.5333 13.8332L18.6667 11.9665L7.16667 23.4665V25.3332ZM26.2333 11.8998L20.5667 6.29984L22.4333 4.43317C22.9444 3.92206 23.5722 3.6665 24.3167 3.6665C25.0611 3.6665 25.6889 3.92206 26.2 4.43317L28.0667 6.29984C28.5778 6.81095 28.8444 7.42761 28.8667 8.14984C28.8889 8.87206 28.6444 9.48873 28.1333 9.99984L26.2333 11.8998ZM24.3 13.8665L10.1667 27.9998H4.5V22.3332L18.6333 8.19984L24.3 13.8665Z"></path></g></svg>`;
 
 /**
- * Returns the priority icon source path for the modal.
- * @param {string} priority - Task priority.
- * @returns {string} Result.
+ * Resolves the image asset path for a task priority icon in the modal.
+ * @param {string} priority - Priority label such as urgent, medium, or low.
+ * @returns {string} Relative asset path for the matching priority icon.
  */
 function getModalPriorityIconSrc(priority) {
   if (priority === "urgent") return "./assets/img/category-urgent.svg";
@@ -14,9 +14,9 @@ function getModalPriorityIconSrc(priority) {
 }
 
 /**
- * Returns header/priority section of task modal.
- * @param {Object} task - Task object.
- * @returns {string} Result.
+ * Builds the modal header section with category, title, description, date, and priority.
+ * @param {Object} task - Task whose fields populate the modal header.
+ * @returns {string} HTML fragment for the modal header area.
  */
 function getModalHeaderHTML(task) {
   const isUserStory = task.category === "User Story";
@@ -34,9 +34,9 @@ function getModalHeaderHTML(task) {
 }
 
 /**
- * Returns contacts and subtasks section of task modal.
- * @param {Object} task - Task object.
- * @returns {string} Result.
+ * Builds the assigned-contacts and subtasks sections of the task modal.
+ * @param {Object} task - Task whose contacts and subtasks are rendered.
+ * @returns {string} HTML fragment for contacts and subtasks areas.
  */
 function getModalContactsAndSubtasksHTML(task) {
   return /*html*/ `
@@ -50,9 +50,9 @@ function getModalContactsAndSubtasksHTML(task) {
 }
 
 /**
- * Returns action buttons section of task modal.
- * @param {Object} task - Task object.
- * @returns {string} Result.
+ * Builds the delete and edit action buttons for the task modal footer.
+ * @param {Object} task - Task whose id is passed to the edit action handler.
+ * @returns {string} HTML fragment for modal action buttons.
  */
 function getModalActionsHTML(task) {
   return /*html*/ `
@@ -69,9 +69,9 @@ function getModalActionsHTML(task) {
 }
 
 /**
- * Returns task modal template.
- * @param {Object} task - Task object.
- * @returns {string} Result.
+ * Assembles the complete read-only task detail modal template.
+ * @param {Object} task - Task whose data fills the modal sections.
+ * @returns {string} Full HTML markup for the task detail modal.
  */
 function getTaskModalTemplate(task) {
   return /*html*/ `
@@ -85,9 +85,9 @@ function getTaskModalTemplate(task) {
 }
 
 /**
- * Returns HTML for a single modal contact item.
- * @param {string} name - Contact name.
- * @returns {string} Result.
+ * Returns one assigned-contact row with avatar initials for the modal list.
+ * @param {string} name - Contact display name shown beside the avatar.
+ * @returns {string} HTML fragment for one contact row, or empty when name is falsy.
  */
 function getModalContactItemHTML(name) {
   if (!name) return "";
@@ -95,9 +95,9 @@ function getModalContactItemHTML(name) {
 }
 
 /**
- * Generates modal assigned contacts.
- * @param {Object} task - Task object.
- * @returns {string} Result.
+ * Builds the assigned-contacts list markup for the task modal.
+ * @param {Object} task - Task whose contacts array drives the rendered list.
+ * @returns {string} Concatenated contact rows, or an em dash when none are assigned.
  */
 function generateModalAssignedContacts(task) {
   if (!task.contacts || task.contacts.length === 0) return "—";
@@ -105,9 +105,9 @@ function generateModalAssignedContacts(task) {
 }
 
 /**
- * Generates modal subtasks.
- * @param {Object} task - Task object.
- * @returns {string} Result.
+ * Builds checkbox rows for every subtask in the task modal.
+ * @param {Object} task - Task whose subtasks appear as toggleable checklist items.
+ * @returns {string} HTML fragment for the subtask checklist area.
  */
 function generateModalSubtasks(task) {
   if (!task.subtasks || task.subtasks.length === 0) {

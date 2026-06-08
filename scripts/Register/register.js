@@ -1,12 +1,9 @@
 /** @file User registration submission and redirect. */
+
 /**
- * Adds user.
- * @returns {Promise<*>} Result.
- */
-/**
- * Performs registration: saves user, saves contact, shows toast, redirects.
- * @param {Object} newUser - New user object.
- * @returns {Promise<void>} Result.
+ * Persists the new user and contact to Firebase, shows a toast, and redirects to login.
+ * @param {Object} newUser - New user payload containing name, email, and password.
+ * @returns {Promise<void>}
  */
 async function performSignupRegistration(newUser) {
     await saveNewUser(newUser);
@@ -17,6 +14,10 @@ async function performSignupRegistration(newUser) {
     }, 300);
 }
 
+/**
+ * Reads signup form values, validates password match, and submits registration to Firebase.
+ * @returns {Promise<void>}
+ */
 async function addUser() {
     const values = getSignupValues();
     if (!isPasswordMatch(values)) { showPasswordMismatch(values.confirmPassword); return; }
@@ -31,8 +32,8 @@ async function addUser() {
 }
 
 /**
- * Returns signup values.
- * @returns {*} Result.
+ * Collects DOM references for all signup form input fields.
+ * @returns {Object} Input element references keyed by field name.
  */
 function getSignupValues() {
     return {
@@ -44,23 +45,18 @@ function getSignupValues() {
 }
 
 /**
- * Checks whether password match.
- * @param {*} values - Parameter.
- * @returns {boolean} Result.
+ * Checks whether the password and confirm-password input values are identical.
+ * @param {Object} values - Signup input element references from getSignupValues.
+ * @returns {boolean} Whether both password fields contain the same value.
  */
 function isPasswordMatch(values) {
     return values.password.value === values.confirmPassword.value;
 }
 
 /**
- * Shows password mismatch.
- * @param {*} confirmPassword - Parameter.
- * @returns {void} Result.
- */
-/**
- * Displays a signup error message via showMessage, or falls back to alert.
- * @param {string} message - Error message to display.
- * @returns {void} Result.
+ * Displays a signup error via the message overlay, falling back to alert when unavailable.
+ * @param {string} message - User-facing error text to display.
+ * @returns {void}
  */
 function showSignupError(message) {
     if (typeof showMessage === 'function') {
@@ -70,15 +66,20 @@ function showSignupError(message) {
     }
 }
 
+/**
+ * Shows a password mismatch error and moves focus to the confirm-password field.
+ * @param {HTMLInputElement} confirmPassword - Confirm password input that will receive focus.
+ * @returns {void}
+ */
 function showPasswordMismatch(confirmPassword) {
     showSignupError('Passwords do not match.');
     confirmPassword.focus();
 }
 
 /**
- * Builds new user.
- * @param {*} values - Parameter.
- * @returns {*} Result.
+ * Builds a trimmed user payload object from the signup form input values.
+ * @param {Object} values - Signup input element references from getSignupValues.
+ * @returns {Object} New user object with name, email, and password properties.
  */
 function buildNewUser(values) {
     return {
@@ -89,18 +90,18 @@ function buildNewUser(values) {
 }
 
 /**
- * Saves new user.
- * @param {*} newUser - Parameter.
- * @returns {Promise<*>} Result.
+ * Posts a new user record to the Firebase users collection.
+ * @param {Object} newUser - New user payload containing name, email, and password.
+ * @returns {Promise<Object>} Firebase response data from the POST request.
  */
 async function saveNewUser(newUser) {
     await postData("users", newUser);
 }
 
 /**
- * Saves new contact.
- * @param {*} newUser - Parameter.
- * @returns {Promise<*>} Result.
+ * Posts a new contact record derived from the registered user's name and email.
+ * @param {Object} newUser - New user payload used to populate the contact record.
+ * @returns {Promise<Object>} Firebase response data from the POST request.
  */
 async function saveNewContact(newUser) {
     const newContact = {
@@ -112,18 +113,18 @@ async function saveNewContact(newUser) {
 }
 
 /**
- * Shows registration failed.
- * @returns {void} Result.
+ * Shows a generic registration failure message when the Firebase request fails.
+ * @returns {void}
  */
 function showRegistrationFailed() {
     showSignupError('Registration failed. Please try again.');
 }
 
 /**
- * Executes post data logic.
- * @param {string} path - API path.
- * @param {Object} user - User payload.
- * @returns {Promise<*>} Result.
+ * Sends a JSON POST request to a Firebase Realtime Database REST endpoint.
+ * @param {string} path - Firebase collection path such as "users" or "contacts".
+ * @param {Object} user - Payload object to serialize and store.
+ * @returns {Promise<Object>} Parsed JSON response body from Firebase.
  */
 async function postData(path = "", user = {}) {
     const response = await fetch(`${BASE_URL}/${path}.json`, {
@@ -136,8 +137,8 @@ async function postData(path = "", user = {}) {
 }
 
 /**
- * Executes navigate to login logic.
- * @returns {void} Result.
+ * Navigates the browser to the login page after registration.
+ * @returns {void}
  */
 function navigateToLogin() {
      window.location.href = "index.html";

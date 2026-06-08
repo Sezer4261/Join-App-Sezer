@@ -1,16 +1,18 @@
 /** @file Contact and signup field validation helpers. */
 
 /**
- * @param {string} name
- * @returns {string}
+ * Trims and collapses whitespace in a contact name.
+ * @param {string} name - Raw name input from the form field.
+ * @returns {string} Trimmed name with consecutive spaces collapsed to one.
  */
 function normalizeContactNameInput(name) {
   return String(name ?? "").trim().replace(/\s+/g, " ");
 }
 
 /**
- * @param {string} name
- * @returns {string}
+ * Derives up to two initials from a contact name.
+ * @param {string} name - Full contact name used to derive initials.
+ * @returns {string} One or two uppercase initials, or an empty string when no letters are found.
  */
 function getContactInitialsFromName(name) {
   const normalizedName = normalizeContactNameInput(name);
@@ -26,8 +28,9 @@ function getContactInitialsFromName(name) {
 }
 
 /**
- * @param {string} normalizedName
- * @returns {object|null}
+ * Validates basic name length and part-count constraints.
+ * @param {string} normalizedName - Trimmed and whitespace-normalized contact name.
+ * @returns {Object|null} Validation error object, or null when basic checks pass.
  */
 function checkContactNameBasics(normalizedName) {
   if (!normalizedName) return { isValid: false, error: "Please enter a name.", reason: "required" };
@@ -38,8 +41,9 @@ function checkContactNameBasics(normalizedName) {
 }
 
 /**
- * @param {string[]} parts
- * @returns {object|null}
+ * Validates each name part for allowed characters and minimum length.
+ * @param {string[]} parts - Individual words split from the contact name.
+ * @returns {Object|null} Validation error object, or null when all parts are valid.
  */
 function checkContactNamePartValidity(parts) {
   const partPattern = /^[\p{L}]+(?:-[\p{L}]+)*$/u;
@@ -51,8 +55,9 @@ function checkContactNamePartValidity(parts) {
 }
 
 /**
- * @param {string} name
- * @returns {{ isValid: boolean, normalizedName: string, initials: string, error: string }}
+ * Validates and normalizes a contact name input.
+ * @param {string} name - Raw name input from the form field.
+ * @returns {{isValid: boolean, normalizedName: string, initials: string, error: string}} Validation result with normalized name and derived initials.
  */
 function validateContactNameInput(name) {
   const normalizedName = normalizeContactNameInput(name);
@@ -68,7 +73,10 @@ function validateContactNameInput(name) {
   return { isValid: true, normalizedName, initials: getContactInitialsFromName(normalizedName), error: "" };
 }
 
-/** @returns {RegExp} */
+/**
+ * Builds the strict email validation pattern used at signup.
+ * @returns {RegExp} Regular expression that enforces signup email format rules.
+ */
 function buildStrictEmailPattern() {
   const localLabel = "[A-Za-zÄÖÜäöüß0-9]+(?:(?:-+|_(?!_))[A-Za-zÄÖÜäöüß0-9]+)*";
   const domainLabel = "[A-Za-zÄÖÜäöüß0-9]+(?:-[A-Za-zÄÖÜäöüß0-9]+)*";
@@ -80,8 +88,9 @@ function buildStrictEmailPattern() {
 }
 
 /**
- * @param {string} email
- * @returns {{ isValid: boolean, normalizedEmail: string, error: string, reason?: string }}
+ * Validates an email address using signup rules.
+ * @param {string} email - Raw email input from the form field.
+ * @returns {{isValid: boolean, normalizedEmail: string, error: string, reason?: string}} Validation result with a lowercased email when valid.
  */
 function validateEmailLikeSignup(email) {
   const trimmedEmail = String(email ?? "").trim();
@@ -93,8 +102,9 @@ function validateEmailLikeSignup(email) {
 }
 
 /**
- * @param {string|number} phone
- * @returns {{ isValid: boolean, normalizedPhone: string, error: string }}
+ * Validates a contact phone number.
+ * @param {string|number} phone - Raw phone input from the form field.
+ * @returns {{isValid: boolean, normalizedPhone: string, error: string}} Validation result with a trimmed digit-only phone when valid.
  */
 function validateContactPhoneNumber(phone) {
   const normalizedPhone = String(phone ?? "").trim();

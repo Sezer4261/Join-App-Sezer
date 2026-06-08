@@ -1,9 +1,9 @@
 /** @file HTML templates for board task cards. */
 
 /**
- * Returns category color and class for a task card.
- * @param {Object} task - Task object.
- * @returns {{color: string, className: string}} Category style.
+ * Resolves the category badge color and CSS class for a task card.
+ * @param {Object} task - Task whose category distinguishes user stories from technical tasks.
+ * @returns {{color: string, className: string}} Inline color and class name for the category badge.
  */
 function getTaskCategoryStyle(task) {
   const isUserStory = task.category === "User Story";
@@ -14,9 +14,9 @@ function getTaskCategoryStyle(task) {
 }
 
 /**
- * Returns the inner body markup for a task card.
- * @param {Object} task - Task object.
- * @returns {string} Result.
+ * Builds the inner markup for a task card including title, description, and footer.
+ * @param {Object} task - Task whose fields populate the card body.
+ * @returns {string} HTML fragment for the card interior.
  */
 function getTaskCardBody(task) {
   const { color: catColor, className: catClass } = getTaskCategoryStyle(task);
@@ -33,9 +33,9 @@ function getTaskCardBody(task) {
 }
 
 /**
- * Returns a draggable task card for the board.
- * @param {Object} task - Task object.
- * @returns {string} Result.
+ * Returns a draggable task card element wired to board drag and modal handlers.
+ * @param {Object} task - Task to render as a board card.
+ * @returns {string} HTML markup for one task card.
  */
 function createTaskCard(task) {
   return /*html*/ `
@@ -48,11 +48,11 @@ function createTaskCard(task) {
 }
 
 /**
- * Returns a summary card for collapsed board columns.
- * @param {string} columnId - Column id.
- * @param {number} hiddenCount - Number of hidden tasks.
- * @param {boolean} expanded - Whether the column is expanded.
- * @returns {string} Result.
+ * Returns the expand/collapse summary button shown when a column hides extra tasks.
+ * @param {string} columnId - DOM id of the board column owning the summary card.
+ * @param {number} hiddenCount - Number of tasks hidden behind the summary.
+ * @param {boolean} expanded - Whether the column currently shows all tasks.
+ * @returns {string} HTML markup for the column summary button.
  */
 function createTaskSummaryCard(columnId, hiddenCount, expanded) {
   const title = expanded ? "Show less" : formatHiddenBoardTasksLabel(hiddenCount);
@@ -69,9 +69,9 @@ function createTaskSummaryCard(columnId, hiddenCount, expanded) {
 }
 
 /**
- * Returns the priority icon markup for a task.
- * @param {string} priority - Task priority.
- * @returns {string} Result.
+ * Returns the priority icon image markup matching the task priority level.
+ * @param {string} priority - Priority label such as urgent, medium, or low.
+ * @returns {string} HTML img element for the matching priority icon.
  */
 function getPriorityIcon(priority) {
   if (priority === "urgent") return '<img src="./assets/img/category-urgent.svg">';
@@ -80,9 +80,9 @@ function getPriorityIcon(priority) {
 }
 
 /**
- * Returns subtask progress bar markup for a task card.
- * @param {Object} task - Task object.
- * @returns {string} Result.
+ * Returns a progress bar and completion count when the task has subtasks.
+ * @param {Object} task - Task whose subtask completion state drives the bar width.
+ * @returns {string} Subtask progress markup, or an empty string when none exist.
  */
 function renderSubtaskProgress(task) {
   if (!task.subtasks || task.subtasks.length === 0) return "";
@@ -98,11 +98,11 @@ function renderSubtaskProgress(task) {
 }
 
 /**
- * Returns avatar circle markup for task cards.
- * @param {string} initials - Avatar initials.
- * @param {string} color - Background color.
- * @param {boolean} [isMore=false] - Whether this is a +N overflow avatar.
- * @returns {string} Result.
+ * Returns a circular avatar element with initials and optional overflow styling.
+ * @param {string} initials - Short text shown inside the avatar circle.
+ * @param {string} color - Background color applied to the avatar.
+ * @param {boolean} [isMore=false] - Whether this avatar represents hidden additional contacts.
+ * @returns {string} HTML markup for one avatar circle.
  */
 function getAvatarMarkup(initials, color, isMore = false) {
   const extraClass = isMore ? " avatar-more" : "";

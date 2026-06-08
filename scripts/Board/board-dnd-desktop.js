@@ -1,20 +1,28 @@
 /** @file Native HTML5 drag-and-drop on wide board layouts. */
 
 /**
- * @param {string|number} id
+ * Records the task id being dragged so drop handlers can resolve the source card.
+ * @param {string|number} id - Identifier of the task card that started dragging.
+ * @returns {void}
  */
 function startDrag(id) {
   draggedTaskId = id;
 }
 
-/** @param {DragEvent} event */
+/**
+ * Enables dropping on a column by cancelling the browser's default drag-over behavior.
+ * @param {DragEvent} event - Drag-over event on a board column.
+ * @returns {void}
+ */
 function allowDrop(event) {
   event.preventDefault();
 }
 
 /**
- * @param {DragEvent} event
- * @param {string} colId
+ * Applies a drag-over highlight to the column entered by the dragged task.
+ * @param {DragEvent} event - Drag-enter event on a board column.
+ * @param {string} colId - DOM id of the column receiving the drag.
+ * @returns {void}
  */
 function dragEnterColumn(event, colId) {
   event.preventDefault();
@@ -23,8 +31,10 @@ function dragEnterColumn(event, colId) {
 }
 
 /**
- * @param {DragEvent} event
- * @param {string} colId
+ * Removes the drag-over highlight when the pointer leaves a column entirely.
+ * @param {DragEvent} event - Drag-leave event on a board column.
+ * @param {string} colId - DOM id of the column being left.
+ * @returns {void}
  */
 function dragLeaveColumn(event, colId) {
   const col = document.getElementById(colId);
@@ -32,8 +42,10 @@ function dragLeaveColumn(event, colId) {
 }
 
 /**
- * @param {DragEvent} event
- * @param {string} newStatus
+ * Drops the dragged task into a column at the pointer position and re-renders the board.
+ * @param {DragEvent} event - Drop event on a board column.
+ * @param {string} newStatus - Kanban status label for the target column.
+ * @returns {void}
  */
 function dropTask(event, newStatus) {
   event.preventDefault();

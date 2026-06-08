@@ -1,13 +1,9 @@
 /** @file Task detail modal open and close behavior. */
+
 /**
- * Opens modal.
- * @param {string} id - Identifier.
- * @returns {void} Result.
- */
-/**
- * Creates and returns the modal DOM element.
- * @param {Object} task - Task object.
- * @returns {HTMLElement} Result.
+ * Builds a dialog element populated with the task detail template.
+ * @param {Object} task - Task whose data fills the modal content.
+ * @returns {HTMLElement} Newly created modal dialog element.
  */
 function createModalElement(task) {
     const modal = document.createElement("dialog");
@@ -18,27 +14,50 @@ function createModalElement(task) {
 }
 
 /**
- * Binds backdrop and content click events to the modal.
- * @param {HTMLElement} modal - Modal element.
- * @returns {void} Result.
+ * Closes the task modal when the user clicks the dialog backdrop.
+ * @param {MouseEvent} event - Click event on the modal dialog.
+ * @returns {void}
  */
-function bindModalEvents(modal) {
-    modal.addEventListener("click", (event) => {
-        if (event.target === modal) closeModal();
-    });
-    modal.addEventListener("cancel", (event) => {
-        event.preventDefault();
-        closeModal();
-    });
-    const content = modal.querySelector(".modal-content");
-    if (content) content.addEventListener("click", (e) => e.stopPropagation());
+function handleModalBackdropClick(event) {
+    if (event.target === event.currentTarget) closeModal();
 }
 
 /**
- * Triggers open animation and subtask update.
- * @param {HTMLElement} modal - Modal element.
- * @param {Object} task - Task object.
- * @returns {void} Result.
+ * Prevents the native dialog cancel event and closes the modal instead.
+ * @param {Event} event - Cancel event from the dialog element.
+ * @returns {void}
+ */
+function handleModalCancel(event) {
+    event.preventDefault();
+    closeModal();
+}
+
+/**
+ * Stops click propagation from modal content so backdrop clicks do not close it.
+ * @param {MouseEvent} event - Click event inside the modal content panel.
+ * @returns {void}
+ */
+function handleModalContentClick(event) {
+    event.stopPropagation();
+}
+
+/**
+ * Attaches backdrop, cancel, and content click handlers to the modal.
+ * @param {HTMLElement} modal - Modal dialog element to wire up.
+ * @returns {void}
+ */
+function bindModalEvents(modal) {
+    modal.addEventListener("click", handleModalBackdropClick);
+    modal.addEventListener("cancel", handleModalCancel);
+    const content = modal.querySelector(".modal-content");
+    if (content) content.addEventListener("click", handleModalContentClick);
+}
+
+/**
+ * Defers subtask rendering and runs the slide-in open animation.
+ * @param {HTMLElement} modal - Open modal dialog element.
+ * @param {Object} task - Task whose subtasks should be rendered in the modal.
+ * @returns {void}
  */
 function animateModalOpen(modal, task) {
     const content = modal.querySelector(".modal-content");
@@ -51,6 +70,11 @@ function animateModalOpen(modal, task) {
     }, 10);
 }
 
+/**
+ * Opens the read-only task detail modal for the given task id.
+ * @param {string} id - Identifier of the task to display.
+ * @returns {void}
+ */
 function openModal(id) {
     const task = tasks.find(t => t.id === id);
     if (!task) return;
@@ -66,11 +90,11 @@ function openModal(id) {
 }
 
 /**
- * Toggles subtask done.
- * @param {number} taskId - Task identifier.
- * @param {number} subIndex - Subtask index.
- * @param {HTMLInputElement} checkbox - Checkbox element.
- * @returns {Promise<*>} Result.
+ * Toggles a subtask checkbox, persists the task, and refreshes board and modal UI.
+ * @param {number} taskId - Identifier of the parent task.
+ * @param {number} subIndex - Zero-based index of the subtask within the task.
+ * @param {HTMLInputElement} checkbox - Checkbox whose checked state reflects completion.
+ * @returns {Promise<void>} Resolves after Firebase update and UI refresh.
  */
 async function toggleSubtaskDone(taskId, subIndex, checkbox) {
   const task = tasks.find(t => t.id === taskId);
@@ -82,9 +106,9 @@ async function toggleSubtaskDone(taskId, subIndex, checkbox) {
 }
 
 /**
- * Updates modal subtasks.
- * @param {Object} task - Task object.
- * @returns {void} Result.
+ * Re-renders the subtask checklist inside the currently open task modal.
+ * @param {Object} task - Task whose subtasks should appear in the modal.
+ * @returns {void}
  */
 function updateModalSubtasks(task) {
   const modal = document.getElementById("task-modal");
@@ -95,13 +119,9 @@ function updateModalSubtasks(task) {
 }
 
 /**
- * Closes modal.
- * @returns {void} Result.
- */
-/**
- * Starts the modal content slide-out transition.
- * @param {HTMLElement} modalContent - Modal content element.
- * @returns {void} Result.
+ * Begins the slide-out opacity and transform transition on modal content.
+ * @param {HTMLElement} modalContent - Inner panel element that animates on close.
+ * @returns {void}
  */
 function startModalCloseTransition(modalContent) {
     requestAnimationFrame(() => {
@@ -111,11 +131,11 @@ function startModalCloseTransition(modalContent) {
 }
 
 /**
- * Schedules a fallback cleanup if the transitionend event does not fire.
- * @param {HTMLElement} modalContent - Modal content element.
- * @param {Function} onTransitionEnd - Transition end handler to remove.
- * @param {Function} cleanup - Cleanup function.
- * @returns {void} Result.
+ * Runs cleanup if the close transition does not emit transitionend within 400 ms.
+ * @param {HTMLElement} modalContent - Inner panel element being animated closed.
+ * @param {Function} onTransitionEnd - Transition-end listener to detach on fallback.
+ * @param {Function} cleanup - Callback that removes the modal and unlocks scroll.
+ * @returns {void}
  */
 function scheduleModalCloseFallback(modalContent, onTransitionEnd, cleanup) {
     setTimeout(() => {
@@ -125,10 +145,10 @@ function scheduleModalCloseFallback(modalContent, onTransitionEnd, cleanup) {
 }
 
 /**
- * Runs the slide-out closing animation, calling cleanup on completion.
- * @param {HTMLElement} modalContent - Modal content element.
- * @param {Function} cleanup - Cleanup function.
- * @returns {void} Result.
+ * Plays the slide-out close animation and invokes cleanup when it finishes.
+ * @param {HTMLElement} modalContent - Inner panel element being animated closed.
+ * @param {Function} cleanup - Callback that removes the modal and unlocks scroll.
+ * @returns {void}
  */
 function runModalCloseAnimation(modalContent, cleanup) {
     const onTransitionEnd = (event) => {
@@ -141,6 +161,10 @@ function runModalCloseAnimation(modalContent, cleanup) {
     scheduleModalCloseFallback(modalContent, onTransitionEnd, cleanup);
 }
 
+/**
+ * Closes the task detail modal with a slide-out animation and clears activeTask.
+ * @returns {void}
+ */
 function closeModal() {
     const modal = document.getElementById("task-modal");
     if (!modal) { activeTask = null; return; }

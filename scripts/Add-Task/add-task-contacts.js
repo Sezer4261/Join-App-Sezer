@@ -1,7 +1,8 @@
 /** @file Contact dropdown and assigned contacts for add-task. */
+
 /**
- * Executes select contacts logic.
- * @returns {void} Result.
+ * Renders the contacts dropdown with all available contacts.
+ * @returns {void} Nothing is returned after the dropdown content is rebuilt.
  */
 function selectContacts() {
   let select = document.getElementById('dropdown-contacts');
@@ -9,14 +10,9 @@ function selectContacts() {
 }
 
 /**
- * Toggles dropdown.
- * @param {Event} event - Browser event.
- * @returns {void} Result.
- */
-/**
  * Closes all dropdowns except the given one, then toggles it.
- * @param {HTMLElement|null} dropdown - Target dropdown element.
- * @returns {void} Result.
+ * @param {HTMLElement|null} dropdown - Dropdown panel to toggle, or null to fall back to the contacts dropdown.
+ * @returns {void} Nothing is returned after the target dropdown visibility is toggled.
  */
 function toggleOrFallbackDropdown(dropdown) {
   if (dropdown) { dropdown.classList.toggle("show"); return; }
@@ -24,9 +20,9 @@ function toggleOrFallbackDropdown(dropdown) {
 }
 
 /**
- * Returns whether the select is in the mobile edit-task form.
- * @param {HTMLElement} select - Dropdown trigger element.
- * @returns {boolean} Result.
+ * Returns whether the select trigger belongs to the mobile edit-task form.
+ * @param {HTMLElement} select - Custom-select element that opens the dropdown.
+ * @returns {boolean} True when the select is inside the edit-task form on a narrow viewport, otherwise false.
  */
 function isMobileEditTaskSelect(select) {
   return select.closest('.edit-task-form') && window.matchMedia('(max-width: 320px)').matches;
@@ -34,8 +30,8 @@ function isMobileEditTaskSelect(select) {
 
 /**
  * Walks up the DOM to find the nearest scrollable ancestor.
- * @param {HTMLElement|null} start - Starting element.
- * @returns {HTMLElement|null} Result.
+ * @param {HTMLElement|null} start - Element from which the upward search begins.
+ * @returns {HTMLElement|null} First ancestor with vertical scrolling enabled, or null when none is found.
  */
 function findScrollableParent(start) {
   let current = start;
@@ -52,8 +48,8 @@ function findScrollableParent(start) {
 
 /**
  * Resolves the scroll container that should stay stable while toggling a dropdown.
- * @param {HTMLElement|null} select - Dropdown trigger element.
- * @returns {HTMLElement|null} Result.
+ * @param {HTMLElement|null} select - Custom-select element that opens the dropdown.
+ * @returns {HTMLElement|null} Scroll container element used to preserve scroll position during toggle.
  */
 function getDropdownScrollContainer(select) {
   if (!select) return null;
@@ -63,8 +59,8 @@ function getDropdownScrollContainer(select) {
 
 /**
  * Returns the visible vertical bounds of the given scroll container.
- * @param {HTMLElement|null} scrollContainer - Scroll container element.
- * @returns {{top:number,bottom:number}} Result.
+ * @param {HTMLElement|null} scrollContainer - Scrollable element whose viewport is measured.
+ * @returns {{top: number, bottom: number}} Top and bottom Y coordinates of the visible scroll area.
  */
 function getScrollContainerViewport(scrollContainer) {
   const root = document.scrollingElement || document.documentElement;
@@ -76,9 +72,9 @@ function getScrollContainerViewport(scrollContainer) {
 }
 
 /**
- * Resets edit-task dropdown positioning styles when closed.
- * @param {HTMLElement} dropdown - Dropdown panel.
- * @returns {void} Result.
+ * Resets edit-task dropdown positioning styles when the panel is closed.
+ * @param {HTMLElement} dropdown - Dropdown panel whose positioning classes and styles are cleared.
+ * @returns {void} Nothing is returned after the dropdown layout state is reset.
  */
 function resetEditTaskDropdownPosition(dropdown) {
   dropdown.classList.remove('open-up');
@@ -87,9 +83,9 @@ function resetEditTaskDropdownPosition(dropdown) {
 
 /**
  * Applies open-up direction and max-height to the edit-task dropdown.
- * @param {HTMLElement} select - Dropdown trigger.
- * @param {HTMLElement} dropdown - Dropdown panel.
- * @returns {void} Result.
+ * @param {HTMLElement} select - Custom-select trigger that anchors the dropdown.
+ * @param {HTMLElement} dropdown - Dropdown panel whose direction and height are adjusted.
+ * @returns {void} Nothing is returned after the dropdown layout is calculated and applied.
  */
 function applyEditTaskDropdownLayout(select, dropdown) {
   const modalContent = select.closest('.modal-content') || select.closest('#task-modal') || document.body;
@@ -107,10 +103,9 @@ function applyEditTaskDropdownLayout(select, dropdown) {
 
 /**
  * Positions the edit-task dropdown so it stays inside the modal.
- * Prefers opening upwards when there isn't enough space below.
- * @param {HTMLElement|null} select - Dropdown trigger.
- * @param {HTMLElement|null} dropdown - Dropdown panel.
- * @returns {void} Result.
+ * @param {HTMLElement|null} select - Custom-select trigger that anchors the dropdown.
+ * @param {HTMLElement|null} dropdown - Dropdown panel to position or reset.
+ * @returns {void} Nothing is returned after the dropdown is positioned or reset.
  */
 function positionEditTaskDropdown(select, dropdown) {
   if (!select || !dropdown) return;
@@ -120,11 +115,11 @@ function positionEditTaskDropdown(select, dropdown) {
 }
 
 /**
- * Computes scroll delta to keep the select trigger visible in the viewport.
- * @param {DOMRect} selectRect - Select bounding rect.
- * @param {{top:number,bottom:number}} viewport - Visible viewport bounds.
- * @param {number} topPadding - Top padding in pixels.
- * @returns {number} Result.
+ * Computes scroll delta needed to keep the select trigger visible in the viewport.
+ * @param {DOMRect} selectRect - Bounding rectangle of the dropdown trigger element.
+ * @param {{top: number, bottom: number}} viewport - Visible top and bottom bounds of the scroll container.
+ * @param {number} topPadding - Minimum padding in pixels between the trigger and the top of the viewport.
+ * @returns {number} Number of pixels to add to scrollTop, or zero when no adjustment is needed.
  */
 function computeSelectScrollDelta(selectRect, viewport, topPadding) {
   if (selectRect.top < viewport.top + topPadding) {
@@ -135,10 +130,10 @@ function computeSelectScrollDelta(selectRect, viewport, topPadding) {
 
 /**
  * Keeps the mobile board edit dropdown within the visible scroll area.
- * @param {HTMLElement|null} select - Dropdown trigger element.
- * @param {HTMLElement|null} dropdown - Dropdown panel element.
- * @param {HTMLElement|null} scrollContainer - Scroll container element.
- * @returns {void} Result.
+ * @param {HTMLElement|null} select - Custom-select trigger that opened the dropdown.
+ * @param {HTMLElement|null} dropdown - Dropdown panel that may need repositioning or scrolling into view.
+ * @param {HTMLElement|null} scrollContainer - Scrollable ancestor that should remain stable while adjusting visibility.
+ * @returns {void} Nothing is returned after the dropdown is scrolled or repositioned as needed.
  */
 function keepMobileEditDropdownVisible(select, dropdown, scrollContainer) {
   if (!select || !dropdown || !scrollContainer || !dropdown.classList.contains('show')) return;
@@ -154,8 +149,8 @@ function keepMobileEditDropdownVisible(select, dropdown, scrollContainer) {
 
 /**
  * Resolves custom-select and dropdown elements from a toggle event.
- * @param {Event|null} event - Browser event.
- * @returns {{select: HTMLElement|null, dropdown: HTMLElement|null, trigger: *}} Result.
+ * @param {Event|null} event - Browser event that triggered the dropdown toggle.
+ * @returns {{select: HTMLElement|null, dropdown: HTMLElement|null, trigger: *}} Matched select trigger, dropdown panel, and original event target.
  */
 function resolveToggleDropdownElements(event) {
   const trigger = event?.currentTarget || event?.target;
@@ -166,8 +161,8 @@ function resolveToggleDropdownElements(event) {
 
 /**
  * Closes all open dropdown panels except the given one.
- * @param {HTMLElement} dropdown - Dropdown to keep open.
- * @returns {void} Result.
+ * @param {HTMLElement} dropdown - Dropdown panel that should remain open while others close.
+ * @returns {void} Nothing is returned after all other open dropdowns are hidden.
  */
 function closeOtherDropdowns(dropdown) {
   document.querySelectorAll(".dropdown-content.show").forEach((d) => {
@@ -177,11 +172,11 @@ function closeOtherDropdowns(dropdown) {
 
 /**
  * Restores scroll position and repositions the dropdown after toggle.
- * @param {HTMLElement} select - Dropdown trigger.
- * @param {HTMLElement} dropdown - Dropdown panel.
- * @param {HTMLElement} scrollContainer - Scroll container.
- * @param {number} previousScrollTop - Scroll top before toggle.
- * @returns {void} Result.
+ * @param {HTMLElement} select - Custom-select trigger that was toggled.
+ * @param {HTMLElement} dropdown - Dropdown panel whose position may need adjustment.
+ * @param {HTMLElement} scrollContainer - Scrollable ancestor whose scrollTop should be restored.
+ * @param {number} previousScrollTop - Scroll position captured before the dropdown was toggled.
+ * @returns {void} Nothing is returned after the scroll position and dropdown layout are restored.
  */
 function restoreDropdownAfterToggle(select, dropdown, scrollContainer, previousScrollTop) {
   requestAnimationFrame(() => {
@@ -193,9 +188,8 @@ function restoreDropdownAfterToggle(select, dropdown, scrollContainer, previousS
 
 /**
  * Toggles the contacts dropdown for the clicked custom-select trigger.
- * Closes all other open dropdowns first.
- * @param {Event} event - Browser event.
- * @returns {void} Result.
+ * @param {Event} event - Browser event from the dropdown trigger interaction.
+ * @returns {void} Nothing is returned after the dropdown is toggled and scroll position is preserved.
  */
 function toggleDropdown(event) {
   if (event) { event.stopPropagation(); event.preventDefault(); }
@@ -210,9 +204,9 @@ function toggleDropdown(event) {
 }
 
 /**
- * Toggles add category dropdown.
- * @param {Event} event - Browser event.
- * @returns {void} Result.
+ * Toggles the add-task category dropdown and closes the contacts dropdown.
+ * @param {Event} event - Browser event from the category dropdown trigger.
+ * @returns {void} Nothing is returned after the category dropdown visibility is toggled.
  */
 function toggleAddCategoryDropdown(event) {
   event.stopPropagation();
@@ -225,9 +219,9 @@ function toggleAddCategoryDropdown(event) {
 }
 
 /**
- * Sets add category.
- * @param {string} value - Value.
- * @returns {void} Result.
+ * Sets the add-task category value and updates the related UI state.
+ * @param {string} value - Category name selected from the dropdown.
+ * @returns {void} Nothing is returned after the category value, label, and button state are updated.
  */
 function setAddCategory(value) {
   const input = document.getElementById("category");
@@ -243,10 +237,10 @@ function setAddCategory(value) {
 }
 
 /**
- * Updates add category label.
- * @param {HTMLElement} select - Select element.
- * @param {string} value - Value.
- * @returns {void} Result.
+ * Updates the visible label on the category select.
+ * @param {HTMLElement} select - Category custom-select element whose label text is updated.
+ * @param {string} value - Selected category name shown in the trigger label.
+ * @returns {void} Nothing is returned after the visible category label is refreshed.
  */
 function updateAddCategoryLabel(select, value) {
   const label = select.querySelector("span");
@@ -256,8 +250,8 @@ function updateAddCategoryLabel(select, value) {
 }
 
 /**
- * Closes add category dropdown.
- * @returns {void} Result.
+ * Closes the add-task category dropdown panel.
+ * @returns {void} Nothing is returned after the category dropdown is hidden.
  */
 function closeAddCategoryDropdown() {
   const dropdown = document.getElementById("category-dropdown");
@@ -265,13 +259,9 @@ function closeAddCategoryDropdown() {
 }
 
 /**
- * Initializes add dropdown close.
- * @returns {void} Result.
- */
-/**
- * Handles outside clicks to close add task dropdowns.
- * @param {Event} event - Click event.
- * @returns {void} Result.
+ * Handles outside clicks to close add-task dropdown panels.
+ * @param {Event} event - Document click event that may have occurred outside the dropdowns.
+ * @returns {void} Nothing is returned after open dropdowns are closed when the click is outside.
  */
 function handleAddDropdownOutsideClick(event) {
   const target = event.target;
@@ -283,6 +273,10 @@ function handleAddDropdownOutsideClick(event) {
   if (!clickedInside) closeAddDropdowns();
 }
 
+/**
+ * Registers a document click handler to close add-task dropdowns on outside click.
+ * @returns {void} Nothing is returned after the global outside-click listener is registered once.
+ */
 function initAddDropdownClose() {
   if (window.addDropdownHandlerAdded) return;
   window.addDropdownHandlerAdded = true;
@@ -290,8 +284,8 @@ function initAddDropdownClose() {
 }
 
 /**
- * Closes add dropdowns.
- * @returns {void} Result.
+ * Closes all add-task dropdown panels.
+ * @returns {void} Nothing is returned after the contacts and category dropdowns are hidden.
  */
 function closeAddDropdowns() {
   const contactsDropdown = document.getElementById("dropdown-contacts");
@@ -301,10 +295,10 @@ function closeAddDropdowns() {
 }
 
 /**
- * Toggles contact selection.
- * @param {string} name - Name.
- * @param {HTMLInputElement} checkbox - Checkbox element.
- * @returns {void} Result.
+ * Toggles a contact in the selected contacts list.
+ * @param {string} name - Display name of the contact being selected or deselected.
+ * @param {HTMLInputElement} checkbox - Checkbox element that reflects the contact selection state.
+ * @returns {void} Nothing is returned after the selection list and avatars are updated.
  */
 function toggleContactSelection(name, checkbox) {
   if (checkbox.checked) {
@@ -317,16 +311,16 @@ function toggleContactSelection(name, checkbox) {
 
 /**
  * Updates the assigned-to label visibility based on selected contacts.
- * @param {HTMLElement|null} assignedBlock - Assigned-to label element.
- * @returns {void} Result.
+ * @param {HTMLElement|null} assignedBlock - Assigned-to label wrapper that shows or hides avatar spacing.
+ * @returns {void} Nothing is returned after the has-avatars class is toggled.
  */
 function updateAssignedAvatarsVisibility(assignedBlock) {
   if (assignedBlock) assignedBlock.classList.toggle('has-avatars', selectedContacts.length > 0);
 }
 
 /**
- * Renders selected avatars.
- * @returns {void} Result.
+ * Renders selected contact avatars in the assigned-to area.
+ * @returns {void} Nothing is returned after the avatar container is rebuilt.
  */
 function renderSelectedAvatars() {
   const container = document.getElementById("selected-avatars");
@@ -339,10 +333,10 @@ function renderSelectedAvatars() {
 }
 
 /**
- * Executes append selected avatar logic.
- * @param {HTMLElement} container - Container element.
- * @param {string} name - Name.
- * @returns {void} Result.
+ * Appends a single selected contact avatar to the container.
+ * @param {HTMLElement} container - Avatar container that receives the new avatar markup.
+ * @param {string} name - Display name of the contact whose avatar is rendered.
+ * @returns {void} Nothing is returned after the avatar HTML is appended.
  */
 function appendSelectedAvatar(container, name) {
   const initials = getContactInitialsFromName(name);
@@ -351,14 +345,9 @@ function appendSelectedAvatar(container, name) {
 }
 
 /**
- * Returns contact color class based on name.
- * @param {string} name - Contact name.
- * @returns {string} Result.
- */
-/**
  * Computes a deterministic hash index for the contact key.
- * @param {string} key - Normalized contact key.
- * @returns {number} Result.
+ * @param {string} key - Normalized contact name used as the hash input.
+ * @returns {number} Non-negative hash value derived from the contact key.
  */
 function computeContactHash(key) {
   let hash = 0;
@@ -366,6 +355,11 @@ function computeContactHash(key) {
   return hash;
 }
 
+/**
+ * Returns a deterministic color class for a contact name.
+ * @param {string} name - Display name used to pick a stable avatar color.
+ * @returns {string} CSS class name from INITIALS_COLOR_CLASSES assigned to the contact.
+ */
 function getContactColorClass(name) {
   const key = String(name || '').trim().toLowerCase();
   const index = key ? Math.abs(computeContactHash(key)) % INITIALS_COLOR_CLASSES.length : 0;

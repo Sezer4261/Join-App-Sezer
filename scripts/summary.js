@@ -1,17 +1,18 @@
 /** @file Summary page greeting and task statistics. */
+
 /**
- * Executes navigate to board logic.
- * @returns {void} Result.
+ * Navigates the browser to the kanban board page.
+ * @returns {void}
  */
 function navigateToBoard() {
     window.location.href = "board.html";
 }
 
 /**
- * Sets text.
- * @param {string} id - Identifier.
- * @param {string} value - Value.
- * @returns {void} Result.
+ * Sets the text content of a DOM element identified by its id when the element exists.
+ * @param {string} id - DOM id of the element whose text content will be updated.
+ * @param {string} value - Text to assign to the element's textContent property.
+ * @returns {void}
  */
 function setText(id, value) {
     const el = document.getElementById(id);
@@ -19,9 +20,9 @@ function setText(id, value) {
 }
 
 /**
- * Returns greeting by time.
- * @param {*} withComma - Parameter.
- * @returns {*} Result.
+ * Returns a time-of-day greeting string based on the current local hour.
+ * @param {boolean} withComma - Whether the greeting should end with a comma instead of an exclamation mark.
+ * @returns {string} Localized greeting phrase such as "Good morning," or "Good evening!".
  */
 function getGreetingByTime(withComma) {
     const hour = new Date().getHours();
@@ -33,8 +34,8 @@ function getGreetingByTime(withComma) {
 }
 
 /**
- * Returns stored session.
- * @returns {*} Result.
+ * Reads and parses the stored user session JSON from localStorage.
+ * @returns {Object|null} Parsed session object, or null when missing or invalid.
  */
 function getStoredSession() {
     try {
@@ -46,9 +47,9 @@ function getStoredSession() {
 }
 
 /**
- * Fetches user name by email.
- * @param {string} email - Email address.
- * @returns {Promise<*>} Result.
+ * Looks up a registered user's display name in Firebase by email address.
+ * @param {string} email - Email address used to find the matching user record.
+ * @returns {Promise<string>} Resolved display name, or an empty string when not found.
  */
 async function fetchUserNameByEmail(email) {
     if (!email) return "";
@@ -65,8 +66,8 @@ async function fetchUserNameByEmail(email) {
 }
 
 /**
- * Renders welcome.
- * @returns {Promise<*>} Result.
+ * Renders the welcome greeting and username on the summary page for the current session.
+ * @returns {Promise<void>}
  */
 async function renderWelcome() {
     const session = getStoredSession();
@@ -80,17 +81,17 @@ async function renderWelcome() {
 }
 
 /**
- * Checks whether guest session.
- * @param {*} session - Parameter.
- * @returns {boolean} Result.
+ * Determines whether the session represents a guest user or is absent entirely.
+ * @param {Object|null} session - Parsed session object from localStorage.
+ * @returns {boolean} Whether the visitor should be treated as a guest.
  */
 function isGuestSession(session) {
     return !session || session.mode === "guest";
 }
 
 /**
- * Renders guest welcome.
- * @returns {void} Result.
+ * Renders the welcome section with a generic greeting and no username for guest users.
+ * @returns {void}
  */
 function renderGuestWelcome() {
     setText("welcome-msg", getGreetingByTime(false));
@@ -98,9 +99,9 @@ function renderGuestWelcome() {
 }
 
 /**
- * Executes resolve user name logic.
- * @param {*} session - Parameter.
- * @returns {Promise<*>} Result.
+ * Resolves the display name from Firebase first, then falls back to session data.
+ * @param {Object} session - Parsed authenticated user session object.
+ * @returns {Promise<string>} Best available display name for the welcome header.
  */
 async function resolveUserName(session) {
     const nameFromDb = await fetchUserNameByEmail(session.email);
@@ -108,15 +109,10 @@ async function resolveUserName(session) {
 }
 
 /**
- * Shows the mobile welcome overlay (<900px) for 1.5s,
- * then fades it out and removes it from the layout.
- * @returns {void} Result.
- */
-/**
- * Resets mobile overlay elements to default state.
- * @param {HTMLElement} aside - Aside element.
- * @param {HTMLElement} welcomeBox - Welcome box element.
- * @returns {void} Result.
+ * Removes mobile welcome overlay classes and restores default aside visibility on desktop.
+ * @param {HTMLElement} aside - Sidebar aside element that hosts the welcome overlay.
+ * @param {HTMLElement} welcomeBox - Welcome message container inside the aside.
+ * @returns {void}
  */
 function resetMobileOverlayToDefault(aside, welcomeBox) {
     aside.classList.remove("is-visible");
@@ -126,26 +122,35 @@ function resetMobileOverlayToDefault(aside, welcomeBox) {
 }
 
 /**
- * Registers the media query change listener once.
- * @param {MediaQueryList} mq - Media query list.
- * @param {HTMLElement} aside - Aside element.
- * @param {HTMLElement} welcomeBox - Welcome box element.
- * @returns {void} Result.
+ * Resets the mobile overlay when the viewport grows beyond the mobile breakpoint.
+ * @param {MediaQueryListEvent} event - Media query change event from matchMedia.
+ * @param {HTMLElement} aside - Sidebar aside element that hosts the welcome overlay.
+ * @param {HTMLElement} welcomeBox - Welcome message container inside the aside.
+ * @returns {void}
+ */
+function handleMobileWelcomeOverlayMqChange(event, aside, welcomeBox) {
+    if (!event.matches) resetMobileOverlayToDefault(aside, welcomeBox);
+}
+
+/**
+ * Registers a one-time media query listener that resets the overlay on viewport resize.
+ * @param {MediaQueryList} mq - Media query list for the mobile breakpoint.
+ * @param {HTMLElement} aside - Sidebar aside element that hosts the welcome overlay.
+ * @param {HTMLElement} welcomeBox - Welcome message container inside the aside.
+ * @returns {void}
  */
 function initMobileOverlayMqListener(mq, aside, welcomeBox) {
     if (window.mobileWelcomeOverlayMqListenerAdded) return;
     window.mobileWelcomeOverlayMqListenerAdded = true;
-    mq.addEventListener("change", (event) => {
-        if (!event.matches) resetMobileOverlayToDefault(aside, welcomeBox);
-    });
+    mq.addEventListener("change", (event) => handleMobileWelcomeOverlayMqChange(event, aside, welcomeBox));
 }
 
 /**
- * Cleans up after overlay transition.
- * @param {HTMLElement} aside - Aside element.
- * @param {HTMLElement} welcomeBox - Welcome box element.
- * @param {Function} onTransitionEnd - Listener to remove.
- * @returns {void} Result.
+ * Hides the aside and removes overlay classes after the fade-out transition completes.
+ * @param {HTMLElement} aside - Sidebar aside element that hosts the welcome overlay.
+ * @param {HTMLElement} welcomeBox - Welcome message container inside the aside.
+ * @param {Function} onTransitionEnd - Transitionend listener reference to remove after cleanup.
+ * @returns {void}
  */
 function cleanupMobileOverlay(aside, welcomeBox, onTransitionEnd) {
     if (aside.classList.contains("is-visible")) return;
@@ -156,26 +161,36 @@ function cleanupMobileOverlay(aside, welcomeBox, onTransitionEnd) {
 }
 
 /**
- * Schedules hide and cleanup timeouts for the mobile overlay.
- * @param {HTMLElement} aside - Aside element.
- * @param {HTMLElement} welcomeBox - Welcome box element.
- * @returns {void} Result.
+ * Handles the opacity transition end event to finalize mobile overlay cleanup.
+ * @param {TransitionEvent} event - Transitionend event from the aside element.
+ * @param {HTMLElement} aside - Sidebar aside element that hosts the welcome overlay.
+ * @param {HTMLElement} welcomeBox - Welcome message container inside the aside.
+ * @param {Function} onTransitionEnd - Same listener reference passed to removeEventListener.
+ * @returns {void}
+ */
+function handleMobileOverlayTransitionEnd(event, aside, welcomeBox, onTransitionEnd) {
+    if (event.propertyName !== "opacity") return;
+    cleanupMobileOverlay(aside, welcomeBox, onTransitionEnd);
+}
+
+/**
+ * Schedules the overlay hide animation and fallback cleanup timeouts.
+ * @param {HTMLElement} aside - Sidebar aside element that hosts the welcome overlay.
+ * @param {HTMLElement} welcomeBox - Welcome message container inside the aside.
+ * @returns {void}
  */
 function scheduleMobileOverlayHide(aside, welcomeBox) {
-    const onTransitionEnd = (event) => {
-        if (event.propertyName !== "opacity") return;
-        cleanupMobileOverlay(aside, welcomeBox, onTransitionEnd);
-    };
+    const onTransitionEnd = (event) => handleMobileOverlayTransitionEnd(event, aside, welcomeBox, onTransitionEnd);
     aside.addEventListener("transitionend", onTransitionEnd);
     setTimeout(() => aside.classList.remove("is-visible"), 1500);
     setTimeout(() => cleanupMobileOverlay(aside, welcomeBox, onTransitionEnd), 2300);
 }
 
 /**
- * Triggers overlay animation and schedules hide.
- * @param {HTMLElement} aside - Aside element.
- * @param {HTMLElement} welcomeBox - Welcome box element.
- * @returns {void} Result.
+ * Applies overlay classes and triggers the fade-in animation on mobile viewports.
+ * @param {HTMLElement} aside - Sidebar aside element that hosts the welcome overlay.
+ * @param {HTMLElement} welcomeBox - Welcome message container inside the aside.
+ * @returns {void}
  */
 function showMobileOverlayAnimation(aside, welcomeBox) {
     aside.classList.add("mobile-welcome-overlay");
@@ -186,6 +201,10 @@ function showMobileOverlayAnimation(aside, welcomeBox) {
     scheduleMobileOverlayHide(aside, welcomeBox);
 }
 
+/**
+ * Shows the animated mobile welcome overlay when the viewport is under 900px wide.
+ * @returns {void}
+ */
 function showMobileWelcomeOverlay() {
     const mq = window.matchMedia("(max-width: 900px)");
     const welcomeBox = document.getElementById("welcome-msg-box");
@@ -198,8 +217,8 @@ function showMobileWelcomeOverlay() {
 }
 
 /**
- * Fetches tasks.
- * @returns {Promise<*>} Result.
+ * Fetches all tasks from the Firebase Realtime Database REST API.
+ * @returns {Promise<Array>} Array of task objects parsed from the Firebase response.
  */
 async function fetchTasks() {
     const response = await fetch(`${BASE_URL}/tasks.json`);
@@ -212,8 +231,8 @@ async function fetchTasks() {
 }
 
 /**
- * Updates dashboard.
- * @returns {Promise<*>} Result.
+ * Loads tasks from Firebase and writes aggregated KPI values to the dashboard DOM.
+ * @returns {Promise<void>}
  */
 async function updateDashboard() {
     try {
@@ -225,9 +244,9 @@ async function updateDashboard() {
 }
 
 /**
- * Executes apply dashboard stats logic.
- * @param {*} tasks - Parameter.
- * @returns {void} Result.
+ * Writes computed task statistics into the summary page KPI elements.
+ * @param {Array<Object>} tasks - Full list of task objects from Firebase.
+ * @returns {void}
  */
 function applyDashboardStats(tasks) {
     const stats = getDashboardStats(tasks);
@@ -241,14 +260,9 @@ function applyDashboardStats(tasks) {
 }
 
 /**
- * Returns dashboard stats.
- * @param {*} tasks - Parameter.
- * @returns {*} Result.
- */
-/**
- * Returns task counts per status.
- * @param {Array} tasks - Task list.
- * @returns {Object} Result.
+ * Counts tasks grouped by their board status column.
+ * @param {Array<Object>} tasks - Full list of task objects from Firebase.
+ * @returns {Object} Status count properties for each board column.
  */
 function getTaskStatusCounts(tasks) {
     return {
@@ -259,6 +273,11 @@ function getTaskStatusCounts(tasks) {
     };
 }
 
+/**
+ * Computes all dashboard KPI values from a task list, including urgent task metrics.
+ * @param {Array<Object>} tasks - Full list of task objects from Firebase.
+ * @returns {Object} Aggregated counts and earliest urgent due date for the dashboard.
+ */
 function getDashboardStats(tasks) {
     const urgentTasks = tasks.filter(t => {
         if (t.priority !== "urgent" || t.status === "Done") return false;
@@ -275,9 +294,9 @@ function getDashboardStats(tasks) {
 }
 
 /**
- * Returns whether a date is strictly in the future (after today).
- * @param {Date} date - Date.
- * @returns {boolean} Result.
+ * Returns whether a date falls strictly after today at midnight local time.
+ * @param {Date} date - Date instance to compare against today's start.
+ * @returns {boolean} Whether the date is in the future relative to today.
  */
 function isStrictlyFutureDate(date) {
     const today = new Date();
@@ -286,15 +305,9 @@ function isStrictlyFutureDate(date) {
 }
 
 /**
- * Parses a task due date string into a Date without timezone shifting.
- * Supports the app's ISO format (YYYY-MM-DD) and a few common fallbacks.
- * @param {string} dueDate - Due date string.
- * @returns {Date|null} Result.
- */
-/**
- * Parses ISO (YYYY-MM-DD) date string into a local Date.
- * @param {string} value - Trimmed value.
- * @returns {Date|null} Result.
+ * Parses an ISO YYYY-MM-DD date string into a local Date without timezone shifting.
+ * @param {string} value - Trimmed ISO date string in YYYY-MM-DD format.
+ * @returns {Date|null} Parsed local date, or null when the components are invalid.
  */
 function parseIsoDate(value) {
     const [year, month, day] = value.split("-").map(Number);
@@ -303,9 +316,9 @@ function parseIsoDate(value) {
 }
 
 /**
- * Parses a DD.MM.YYYY date string into a local Date.
- * @param {string} value - Trimmed value.
- * @returns {Date|null} Result.
+ * Parses a DD.MM.YYYY date string into a local Date without timezone shifting.
+ * @param {string} value - Trimmed date string in DD.MM.YYYY format.
+ * @returns {Date|null} Parsed local date, or null when the components are invalid.
  */
 function parseDotDate(value) {
     const [day, month, year] = value.split(".").map(Number);
@@ -314,9 +327,9 @@ function parseDotDate(value) {
 }
 
 /**
- * Parses a DD/MM/YYYY date string into a local Date.
- * @param {string} value - Trimmed value.
- * @returns {Date|null} Result.
+ * Parses a DD/MM/YYYY date string into a local Date without timezone shifting.
+ * @param {string} value - Trimmed date string in DD/MM/YYYY format.
+ * @returns {Date|null} Parsed local date, or null when the components are invalid.
  */
 function parseSlashDate(value) {
     const [day, month, year] = value.split("/").map(Number);
@@ -325,9 +338,9 @@ function parseSlashDate(value) {
 }
 
 /**
- * Parses common European/US date string formats.
- * @param {string} value - Trimmed value.
- * @returns {Date|null} Result.
+ * Parses common European or US date string formats using dot, slash, or native parsing.
+ * @param {string} value - Trimmed date string in a supported display format.
+ * @returns {Date|null} Parsed local date, or null when no format matches.
  */
 function parseFallbackDate(value) {
     if (/^\d{2}\.\d{2}\.\d{4}$/.test(value)) return parseDotDate(value);
@@ -336,6 +349,11 @@ function parseFallbackDate(value) {
     return Number.isNaN(fallback.getTime()) ? null : fallback;
 }
 
+/**
+ * Parses a task due date string into a local Date, supporting ISO and display formats.
+ * @param {string} dueDate - Raw due date string stored on the task object.
+ * @returns {Date|null} Parsed local date, or null when the value is empty or unparseable.
+ */
 function parseTaskDueDate(dueDate) {
     if (!dueDate || typeof dueDate !== "string") return null;
     const value = dueDate.trim();
@@ -345,9 +363,9 @@ function parseTaskDueDate(dueDate) {
 }
 
 /**
- * Returns the earliest due date among a list of tasks.
- * @param {Array<Object>} tasks - Task list.
- * @returns {Date|null} Result.
+ * Finds the earliest due date among all tasks regardless of whether it is in the future.
+ * @param {Array<Object>} tasks - Task list whose dueDate fields will be compared.
+ * @returns {Date|null} Earliest parsed due date, or null when no valid dates exist.
  */
 function getEarliestDueDate(tasks) {
     let earliest = null;
@@ -360,9 +378,9 @@ function getEarliestDueDate(tasks) {
 }
 
 /**
- * Returns the earliest due date that is strictly in the future.
- * @param {Array<Object>} tasks - Task list.
- * @returns {Date|null} Result.
+ * Finds the earliest due date that is strictly after today among the given tasks.
+ * @param {Array<Object>} tasks - Task list whose dueDate fields will be compared.
+ * @returns {Date|null} Earliest future due date, or null when none qualify.
  */
 function getEarliestFutureDueDate(tasks) {
     let earliest = null;
@@ -375,9 +393,9 @@ function getEarliestFutureDueDate(tasks) {
 }
 
 /**
- * Formats the dashboard due date string.
- * @param {Date|null} date - Date.
- * @returns {string} Result.
+ * Formats a due date for display in the dashboard deadline card.
+ * @param {Date|null} date - Due date to format, or null when no urgent date exists.
+ * @returns {string} Human-readable date string such as "June 08, 2026", or a fallback label.
  */
 function formatDashboardDueDate(date) {
     if (!date) return "No Urgent Date";
@@ -388,13 +406,26 @@ function formatDashboardDueDate(date) {
     }).format(date);
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
+/**
+ * Initializes the summary page by rendering the welcome section and loading dashboard KPIs.
+ * @returns {Promise<void>}
+ */
+async function initSummaryPage() {
     await renderWelcome();
     showMobileWelcomeOverlay();
     await updateDashboard();
-});
+}
 
-document.addEventListener("click", (e) => {
-    const card = e.target.closest(".kpi-card, .deadline-card, .task-summary-card");
+/**
+ * Navigates to the board page when the user clicks a KPI or summary card.
+ * @param {Event} event - Click event that may originate from a dashboard card element.
+ * @returns {void}
+ */
+function handleSummaryCardClick(event) {
+    const card = event.target.closest(".kpi-card, .deadline-card, .task-summary-card");
     if (card) navigateToBoard();
-});
+}
+
+document.addEventListener("DOMContentLoaded", initSummaryPage);
+
+document.addEventListener("click", handleSummaryCardClick);

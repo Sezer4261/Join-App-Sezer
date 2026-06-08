@@ -1,4 +1,11 @@
 /** @file Contact list selection and details panel rendering. */
+
+/**
+ * Renders the contact details panel for the given contact.
+ * @param {Object} contactData - Contact record containing name, email, and phone.
+ * @param {string} contactId - Unique identifier of the contact being displayed.
+ * @returns {void}
+ */
 function renderContactDetailsPanel(contactData, contactId) {
   const container = document.getElementById("contact-details");
   if (!container) return;
@@ -11,6 +18,12 @@ function renderContactDetailsPanel(contactData, contactId) {
   }
 }
 
+/**
+ * Selects a contact in the list and shows its details.
+ * @param {string} contactId - Unique identifier of the contact to select.
+ * @param {Object} contactData - Contact record to render in the details panel.
+ * @returns {void}
+ */
 function showContactInDetailsPanel(contactId, contactData) {
   if (!contactId || !contactData) return;
   document.querySelectorAll(".contact-area, .contact-item").forEach((el) => el.classList.remove("selected"));
@@ -20,6 +33,11 @@ function showContactInDetailsPanel(contactId, contactData) {
   listItem?.scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
+/**
+ * Handles a click on a contact list item.
+ * @param {Event} event - Click event from the selected contact row.
+ * @returns {Promise<void>}
+ */
 async function handleContactClick(event) {
   const clickedContact = event.currentTarget;
   document.querySelectorAll(".contact-area, .contact-item").forEach((c) => c.classList.remove("selected"));
@@ -33,12 +51,20 @@ async function handleContactClick(event) {
   renderContactDetailsPanel(contactData, contactId);
 }
 
+/**
+ * Attaches click listeners to all contact list items.
+ * @returns {void}
+ */
 function addContactClickListeners() {
   document.querySelectorAll(".contact-item[data-id], .contact-area[data-id]").forEach((contact) => {
     contact.addEventListener("click", handleContactClick);
   });
 }
 
+/**
+ * Loads contacts and renders the full contact list.
+ * @returns {Promise<void>}
+ */
 async function renderContactGroup() {
   await loadContacts();
   const contactListRef = document.getElementById("contact-list");
@@ -48,6 +74,13 @@ async function renderContactGroup() {
   addContactClickListeners();
 }
 
+/**
+ * Appends a single contact entry and optional letter header.
+ * @param {HTMLElement} contactListRef - Container element that holds the contact list.
+ * @param {Object} contact - Contact record to append to the list.
+ * @param {string} currentLetter - Letter group currently being rendered.
+ * @returns {string} Updated group letter after the entry is appended.
+ */
 function appendContactEntry(contactListRef, contact, currentLetter) {
   const firstLetter = (contact.name || "Unnamed").charAt(0).toUpperCase();
   if (currentLetter !== firstLetter) {
@@ -63,6 +96,12 @@ function appendContactEntry(contactListRef, contact, currentLetter) {
   return currentLetter;
 }
 
+/**
+ * Renders all contact entries sorted by name.
+ * @param {HTMLElement} contactListRef - Container element that holds the contact list.
+ * @param {Object[]} contactsData - Array of contact records to render.
+ * @returns {void}
+ */
 function renderContactEntries(contactListRef, contactsData) {
   let currentLetter = "";
   contactsData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
@@ -71,6 +110,10 @@ function renderContactEntries(contactListRef, contactsData) {
   }
 }
 
+/**
+ * Clears the contact details panel and hides mobile overlay.
+ * @returns {void}
+ */
 function refreshContactDetails() {
   const contactDetailsContainerRef = document.getElementById("contact-details");
   contactDetailsContainerRef.innerHTML = "";
@@ -79,6 +122,10 @@ function refreshContactDetails() {
   }
 }
 
+/**
+ * Assigns a random color class to each contact initials badge.
+ * @returns {void}
+ */
 function colorizeContactInitials() {
   document.querySelectorAll(".contact-initials").forEach((el) => {
     el.classList.remove(...INITIALS_COLOR_CLASSES);

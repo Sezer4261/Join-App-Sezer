@@ -1,7 +1,8 @@
 /** @file Subtask list rendering in edit task modal. */
+
 /**
- * Renders edit subtasks.
- * @returns {void} Result.
+ * Rebuilds the edit subtask list from the in-memory editSubtasks array.
+ * @returns {void}
  */
 function renderEditSubtasks() {
   const area = document.getElementById("edit-subtask-area");
@@ -11,11 +12,11 @@ function renderEditSubtasks() {
 }
 
 /**
- * Executes append edit subtask logic.
- * @param {HTMLElement} area - Subtask area element.
- * @param {Object} subtask - Subtask object.
- * @param {number} index - Index.
- * @returns {void} Result.
+ * Appends one subtask row in either view or inline-edit mode.
+ * @param {HTMLElement} area - Container element receiving the subtask markup.
+ * @param {Object} subtask - Subtask object with title and done state.
+ * @param {number} index - Position of the subtask within editSubtasks.
+ * @returns {void}
  */
 function appendEditSubtask(area, subtask, index) {
   const isEditing = window.editingEditSubtaskIndex === index;
@@ -26,8 +27,8 @@ function appendEditSubtask(area, subtask, index) {
 }
 
 /**
- * Adds edit subtask.
- * @returns {void} Result.
+ * Reads the subtask input, validates it, and appends a new subtask to the list.
+ * @returns {void}
  */
 function addEditSubtask() {
   const input = document.getElementById("edit-subtask-input");
@@ -44,23 +45,32 @@ function addEditSubtask() {
 }
 
 /**
- * Deletes edit subtask.
- * @param {number} i - Index.
- * @returns {void} Result.
+ * Keeps the inline-edit index consistent after a subtask is removed.
+ * @param {number} removedIndex - Index of the subtask that was deleted.
+ * @returns {void}
+ */
+function adjustEditingIndexAfterDelete(removedIndex) {
+  if (window.editingEditSubtaskIndex === removedIndex) {
+    window.editingEditSubtaskIndex = null;
+  } else if (typeof window.editingEditSubtaskIndex === "number" && removedIndex < window.editingEditSubtaskIndex) {
+    window.editingEditSubtaskIndex -= 1;
+  }
+}
+
+/**
+ * Removes a subtask from the edit list and refreshes the subtask area.
+ * @param {number} i - Index of the subtask to delete.
+ * @returns {void}
  */
 function deleteEditSubtask(i) {
   editSubtasks.splice(i, 1);
-  if (window.editingEditSubtaskIndex === i) {
-    window.editingEditSubtaskIndex = null;
-  } else if (typeof window.editingEditSubtaskIndex === "number" && i < window.editingEditSubtaskIndex) {
-    window.editingEditSubtaskIndex -= 1;
-  }
+  adjustEditingIndexAfterDelete(i);
   renderEditSubtasks();
 }
 
 /**
- * Clears edit subtask input.
- * @returns {void} Result.
+ * Clears the new-subtask input and removes any validation error styling.
+ * @returns {void}
  */
 function clearEditSubtaskInput() {
   const input = document.getElementById("edit-subtask-input");
@@ -71,9 +81,9 @@ function clearEditSubtaskInput() {
 }
 
 /**
- * Executes edit edit subtask logic.
- * @param {number} i - Index.
- * @returns {void} Result.
+ * Switches a subtask row into inline-edit mode and focuses its input.
+ * @param {number} i - Index of the subtask to edit.
+ * @returns {void}
  */
 function editEditSubtask(i) {
   window.editingEditSubtaskIndex = i;
@@ -86,9 +96,9 @@ function editEditSubtask(i) {
 }
 
 /**
- * Saves edited edit subtask.
- * @param {number} i - Index.
- * @returns {void} Result.
+ * Saves the trimmed title from an inline-edited subtask row.
+ * @param {number} i - Index of the subtask being saved.
+ * @returns {void}
  */
 function saveEditedEditSubtask(i) {
   const input = document.getElementById(`edit-subtask-edit-${i}`);
@@ -105,10 +115,10 @@ function saveEditedEditSubtask(i) {
 }
 
 /**
- * Sets edit subtask error message.
- * @param {string} message - Message text.
- * @param {HTMLElement} [inputEl] - Optional input to highlight.
- * @returns {void} Result.
+ * Shows or clears the edit subtask validation message and input highlight.
+ * @param {string} message - Error text to display, or empty string to clear.
+ * @param {HTMLElement} [inputEl] - Input to highlight; defaults to the new-subtask input.
+ * @returns {void}
  */
 function setEditSubtaskError(message, inputEl) {
   const errorEl = document.getElementById('edit-subtask-error');

@@ -2,7 +2,7 @@
 
 /**
  * Returns the hero section for the add-contact dialog.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the add-contact dialog hero block.
  */
 function getAddContactDialogHeroHTML() {
   return `
@@ -19,7 +19,7 @@ function getAddContactDialogHeroHTML() {
 
 /**
  * Returns the form fields for the add-contact dialog.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the add-contact form and action buttons.
  */
 function getAddContactFormHTML() {
   return `
@@ -37,7 +37,7 @@ function getAddContactFormHTML() {
 
 /**
  * Returns the inner add-contact dialog body markup.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the add-contact dialog content wrapper.
  */
 function getAddContactDialogBodyHTML() {
   return `
@@ -53,7 +53,7 @@ function getAddContactDialogBodyHTML() {
 
 /**
  * Returns the full add-contact dialog markup.
- * @returns {string} Result.
+ * @returns {string} Complete HTML markup for the add-contact dialog element.
  */
 function getDialogAddContact() {
   return `<dialog id="add-contact-dialog" class="ac-dialog" role="dialog" aria-modal="true" aria-labelledby="ac-title">${getAddContactDialogBodyHTML()}</dialog>`;
@@ -61,8 +61,8 @@ function getDialogAddContact() {
 
 /**
  * Returns a letter group header for the contacts list.
- * @param {string} firstLetter - Group letter.
- * @returns {string} Result.
+ * @param {string} firstLetter - First letter of the contact name group.
+ * @returns {string} HTML markup for the alphabetical section header.
  */
 function getHeaderLetter(firstLetter) {
   return `
@@ -73,10 +73,10 @@ function getHeaderLetter(firstLetter) {
 
 /**
  * Returns a single contact list item body.
- * @param {string} contactDataName - Contact name.
- * @param {string} contactDataMail - Contact email.
- * @param {string} contactNameInitials - Contact initials.
- * @returns {string} Result.
+ * @param {string} contactDataName - Display name shown in the contact row.
+ * @param {string} contactDataMail - Email address shown beneath the contact name.
+ * @param {string} contactNameInitials - Initials rendered inside the avatar badge.
+ * @returns {string} HTML markup for the inner content of a contact list item.
  */
 function getContactItem(contactDataName, contactDataMail, contactNameInitials) {
   return `
@@ -92,10 +92,10 @@ function getContactItem(contactDataName, contactDataMail, contactNameInitials) {
 
 /**
  * Wraps contact item content in a clickable list row.
- * @param {string} contactId - Contact id.
- * @param {string} contactDataPhone - Contact phone.
- * @param {string} content - Inner HTML.
- * @returns {string} Result.
+ * @param {string} contactId - Unique identifier stored on the list row data attribute.
+ * @param {string} contactDataPhone - Phone number stored on the list row data attribute.
+ * @param {string} content - Inner HTML to render inside the contact row.
+ * @returns {string} HTML markup for a clickable contact list item.
  */
 function getContactItemWrapper(contactId, contactDataPhone, content) {
   return `
@@ -110,12 +110,12 @@ const CONTACT_DELETE_SVG = `<svg width="24" height="24" viewBox="0 0 33 32" fill
 
 /**
  * Returns the overflow menu for a contact detail view.
- * @param {string} id - Contact id.
- * @param {string} name - Contact name.
- * @param {string} email - Contact email.
- * @param {string} phone - Contact phone.
- * @param {string} initials - Contact initials.
- * @returns {string} Result.
+ * @param {string} id - Unique identifier of the contact shown in the details panel.
+ * @param {string} name - Display name passed to the edit dialog opener.
+ * @param {string} email - Email address passed to the edit dialog opener.
+ * @param {string} phone - Phone number passed to the edit dialog opener.
+ * @param {string} initials - Initials passed to the edit dialog opener.
+ * @returns {string} HTML markup for the contact overflow menu.
  */
 function getContactMoreMenuHTML(id, name, email, phone, initials) {
   return `
@@ -131,12 +131,12 @@ function getContactMoreMenuHTML(id, name, email, phone, initials) {
 
 /**
  * Returns the large header block for a contact detail view.
- * @param {string} id - Contact id.
- * @param {string} name - Contact name.
- * @param {string} email - Contact email.
- * @param {string} phone - Contact phone.
- * @param {string} initials - Contact initials.
- * @returns {string} Result.
+ * @param {string} id - Unique identifier of the contact shown in the details panel.
+ * @param {string} name - Display name rendered in the header.
+ * @param {string} email - Email address passed to the edit dialog opener.
+ * @param {string} phone - Phone number passed to the edit dialog opener.
+ * @param {string} initials - Initials rendered in the large avatar badge.
+ * @returns {string} HTML markup for the contact details header section.
  */
 function getContactHeaderLargeHTML(id, name, email, phone, initials) {
   return `
@@ -154,8 +154,8 @@ function getContactHeaderLargeHTML(id, name, email, phone, initials) {
 
 /**
  * Returns the phone section for contact details when a phone exists.
- * @param {string} phone - Contact phone.
- * @returns {string} Result.
+ * @param {string} phone - Phone number to display in the details panel.
+ * @returns {string} HTML markup for the phone section, or an empty string when no phone is provided.
  */
 function getContactDetailsPhoneSection(phone) {
   return phone ? `<div class="contact-info-phone"><p><strong>Phone</strong></p><p>${phone}</p></div>` : "";
@@ -163,9 +163,9 @@ function getContactDetailsPhoneSection(phone) {
 
 /**
  * Returns the contact information block for the detail view.
- * @param {string} email - Contact email.
- * @param {string} phoneSection - Phone section HTML.
- * @returns {string} Result.
+ * @param {string} email - Email address shown in the contact information section.
+ * @param {string} phoneSection - Pre-rendered phone section HTML to insert below the email.
+ * @returns {string} HTML markup for the contact information block.
  */
 function getContactDetailsInfoHTML(email, phoneSection) {
   return `
@@ -179,12 +179,12 @@ function getContactDetailsInfoHTML(email, phoneSection) {
 
 /**
  * Returns the full contact details panel template.
- * @param {string} initials - Contact initials.
- * @param {string} name - Contact name.
- * @param {string} email - Contact email.
- * @param {string} phone - Contact phone.
- * @param {string} id - Contact id.
- * @returns {string} Result.
+ * @param {string} initials - Initials rendered in the large avatar badge.
+ * @param {string} name - Display name shown in the details header.
+ * @param {string} email - Email address shown in the contact information section.
+ * @param {string} phone - Phone number shown when present.
+ * @param {string} id - Unique identifier used by edit and delete actions.
+ * @returns {string} Complete HTML markup for the contact details panel.
  */
 function getContactDetailsTemplate(initials, name, email, phone, id) {
   const phoneSection = getContactDetailsPhoneSection(phone);
@@ -203,11 +203,11 @@ function getContactDetailsTemplate(initials, name, email, phone, id) {
 
 /**
  * Returns the form fields for the edit-contact dialog.
- * @param {string} id - Contact id.
- * @param {string} name - Contact name.
- * @param {string} email - Contact email.
- * @param {string} phone - Contact phone.
- * @returns {string} Result.
+ * @param {string} id - Unique identifier of the contact being edited.
+ * @param {string} name - Current contact name used as the field default value.
+ * @param {string} email - Current email address used as the field default value.
+ * @param {string} phone - Current phone number used as the field default value.
+ * @returns {string} HTML markup for the edit-contact form and action buttons.
  */
 function getEditContactFormHTML(id, name, email, phone) {
   return `
@@ -226,7 +226,7 @@ function getEditContactFormHTML(id, name, email, phone) {
 
 /**
  * Returns the hero section for the edit-contact dialog.
- * @returns {string} Result.
+ * @returns {string} HTML markup for the edit-contact dialog hero block.
  */
 function getEditContactDialogHeroHTML() {
   return `
@@ -242,12 +242,12 @@ function getEditContactDialogHeroHTML() {
 
 /**
  * Returns the full edit-contact dialog markup.
- * @param {string} id - Contact id.
- * @param {string} name - Contact name.
- * @param {string} email - Contact email.
- * @param {string} phone - Contact phone.
- * @param {string} initials - Contact initials.
- * @returns {string} Result.
+ * @param {string} id - Unique identifier of the contact being edited.
+ * @param {string} name - Current contact name used to prefill the form.
+ * @param {string} email - Current email address used to prefill the form.
+ * @param {string} phone - Current phone number used to prefill the form.
+ * @param {string} initials - Initials rendered in the edit dialog avatar badge.
+ * @returns {string} Complete HTML markup for the edit-contact dialog element.
  */
 function getEditContactDialog(id, name, email, phone, initials) {
   return `
@@ -266,8 +266,8 @@ function getEditContactDialog(id, name, email, phone, initials) {
 
 /**
  * Returns a toast notification for the contacts page.
- * @param {string} message - Toast message.
- * @returns {string} Result.
+ * @param {string} message - User-facing text shown inside the toast.
+ * @returns {string} HTML markup for a contacts page toast element.
  */
 function getContactsToastTemplate(message) {
   return `<div id="contacts-toast" class="contacts-toast" role="status" aria-live="polite">${message}</div>`;

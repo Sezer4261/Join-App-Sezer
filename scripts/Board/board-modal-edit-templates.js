@@ -1,8 +1,9 @@
 /** @file HTML templates for edit task modal. */
+
 /**
- * Returns title, description, and due-date labels for the edit form.
- * @param {Object} task - Task object.
- * @returns {string} HTML string.
+ * Builds the title, description, and due-date fields for the edit task form.
+ * @param {Object} task - Task whose current values prefill the top form fields.
+ * @returns {string} HTML fragment for the upper edit form section.
  */
 function getEditFormTopHTML(task) {
   return /*html*/ `
@@ -18,9 +19,9 @@ function getEditFormTopHTML(task) {
 }
 
 /**
- * Returns priority radio-button group for the edit form.
- * @param {Object} task - Task object.
- * @returns {string} HTML string.
+ * Builds the priority radio-button group for the edit task form.
+ * @param {Object} task - Task whose current priority selects the checked radio option.
+ * @returns {string} HTML fragment for the priority selector section.
  */
 function getEditFormPriorityHTML(task) {
   return /*html*/ `
@@ -35,8 +36,8 @@ function getEditFormPriorityHTML(task) {
 }
 
 /**
- * Returns the assigned-contacts section for the edit form.
- * @returns {string} HTML string.
+ * Builds the assigned-contacts picker section for the edit task form.
+ * @returns {string} HTML fragment for the contacts dropdown and avatar container.
  */
 function getEditFormAssignedHTML() {
   return /*html*/ `
@@ -52,9 +53,9 @@ function getEditFormAssignedHTML() {
 }
 
 /**
- * Returns the category dropdown section for the edit form.
- * @param {Object} task - Task object.
- * @returns {string} HTML string.
+ * Builds the category dropdown section for the edit task form.
+ * @param {Object} task - Task whose current category preselects the hidden input value.
+ * @returns {string} HTML fragment for the category selector and error container.
  */
 function getEditFormCategoryHTML(task) {
   return /*html*/ `
@@ -71,8 +72,8 @@ function getEditFormCategoryHTML(task) {
 }
 
 /**
- * Returns the subtasks section for the edit form.
- * @returns {string} HTML string.
+ * Builds the subtask input and list container for the edit task form.
+ * @returns {string} HTML fragment for the subtask editor section.
  */
 function getEditFormSubtasksHTML() {
   return /*html*/ `
@@ -90,8 +91,8 @@ function getEditFormSubtasksHTML() {
 }
 
 /**
- * Returns the submit/close action bar for the edit form.
- * @returns {string} HTML string.
+ * Builds the cancel and save action bar for the edit task form.
+ * @returns {string} HTML fragment for the edit form footer actions.
  */
 function getEditFormActionsHTML() {
   return /*html*/ `
@@ -105,9 +106,9 @@ function getEditFormActionsHTML() {
 }
 
 /**
- * Assembles the complete edit-task form template.
- * @param {Object} task - Task object.
- * @returns {string} HTML string.
+ * Assembles the complete edit-task form template with all field sections.
+ * @param {Object} task - Task whose id and values populate the edit form.
+ * @returns {string} Full HTML markup for the edit task modal form.
  */
 function generateEditTaskTemplate(task) {
   return /*html*/ `
@@ -125,9 +126,9 @@ function generateEditTaskTemplate(task) {
 }
 
 /**
- * Generates the category dropdown options for the edit form.
- * @param {string} current - Currently selected category value.
- * @returns {string} HTML string.
+ * Builds dropdown option rows for the edit form category selector.
+ * @param {string} current - Currently selected category used to render available choices.
+ * @returns {string} HTML fragment containing all category dropdown items.
  */
 function generateEditCategoryOptions(current) {
   const categories = ["Technical Task", "User Story"];
@@ -139,10 +140,10 @@ function generateEditCategoryOptions(current) {
 }
 
 /**
- * Returns the list-item markup for a saved edit subtask.
- * @param {Object} subtask - Subtask object.
- * @param {number} index - Subtask index.
- * @returns {string} HTML string.
+ * Returns list-item markup for a saved subtask in view mode.
+ * @param {Object} subtask - Subtask object whose title is displayed in the row.
+ * @param {number} index - Zero-based index passed to edit and delete handlers.
+ * @returns {string} HTML fragment for one subtask list item.
  */
 function getEditSubtaskItemMarkup(subtask, index) {
   return /*html*/ `
@@ -158,9 +159,9 @@ function getEditSubtaskItemMarkup(subtask, index) {
 }
 
 /**
- * Returns the inline action buttons for an edit-subtask in edit mode.
- * @param {number} index - Subtask index.
- * @returns {string} HTML string.
+ * Returns inline save and delete buttons for a subtask in edit mode.
+ * @param {number} index - Zero-based index passed to save and delete handlers.
+ * @returns {string} HTML fragment for subtask inline action buttons.
  */
 function getEditSubtaskEditActionsHTML(index) {
   return /*html*/ `<div class="subtask-input-actions">
@@ -171,10 +172,10 @@ function getEditSubtaskEditActionsHTML(index) {
 }
 
 /**
- * Returns the list-item markup for an edit-subtask in inline-edit mode.
- * @param {Object} subtask - Subtask object.
- * @param {number} index - Subtask index.
- * @returns {string} HTML string.
+ * Returns list-item markup for a subtask being edited inline.
+ * @param {Object} subtask - Subtask object whose title prefills the edit input.
+ * @param {number} index - Zero-based index used for input and action element ids.
+ * @returns {string} HTML fragment for one inline-edit subtask row.
  */
 function getEditSubtaskEditMarkup(subtask, index) {
   return /*html*/ `

@@ -25,6 +25,10 @@ const addTaskDatePickerState = {
   globalHandlersBound: false,
 };
 
+/**
+ * Binds global document and window handlers for the add-task date picker.
+ * @returns {void} Nothing is returned after the one-time global listeners are registered.
+ */
 function ensureAddTaskDatePickerGlobalHandlers() {
   if (addTaskDatePickerState.globalHandlersBound) return;
   document.addEventListener('pointerdown', handleAddTaskDatePickerOutsidePointerDown, true);
@@ -35,6 +39,11 @@ function ensureAddTaskDatePickerGlobalHandlers() {
   addTaskDatePickerState.globalHandlersBound = true;
 }
 
+/**
+ * Returns whether the target is inside the active date picker or its input.
+ * @param {EventTarget|null} target - DOM node that received the user interaction.
+ * @returns {boolean} True when the target lies within the active picker, input, label, or date error area.
+ */
 function isInsideActiveAddTaskDatePicker(target) {
   const { popup, activeInput } = addTaskDatePickerState;
   if (!activeInput) return false;
@@ -47,10 +56,19 @@ function isInsideActiveAddTaskDatePicker(target) {
   return false;
 }
 
+/**
+ * Returns whether the custom add-task date picker should be used.
+ * @returns {boolean} True when the device reports a fine pointer and the custom calendar should open.
+ */
 function shouldUseCustomAddTaskDatePicker() {
   return typeof window.matchMedia === 'function' && window.matchMedia('(pointer: fine)').matches;
 }
 
+/**
+ * Parses an ISO date string into a Date object.
+ * @param {string} value - ISO date string in yyyy-mm-dd format.
+ * @returns {Date|null} Parsed local Date object, or null when the value is empty or invalid.
+ */
 function parseAddTaskDateValue(value) {
   const normalizedValue = String(value || '').trim();
   if (!normalizedValue) return null;
@@ -61,6 +79,11 @@ function parseAddTaskDateValue(value) {
   return parsedDate;
 }
 
+/**
+ * Formats a Date object as an ISO date string.
+ * @param {Date} date - Local Date object to convert for the date input value.
+ * @returns {string} Date formatted as a yyyy-mm-dd string.
+ */
 function formatAddTaskDateValue(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -68,10 +91,20 @@ function formatAddTaskDateValue(date) {
   return `${year}-${month}-${day}`;
 }
 
+/**
+ * Returns the minimum selectable date value for the date picker.
+ * @param {HTMLElement} dateInput - Due date input whose min attribute or fallback is read.
+ * @returns {string} Earliest allowed date as a yyyy-mm-dd string.
+ */
 function getAddTaskDatePickerMinValue(dateInput) {
   return String(dateInput?.min || getTodayDateString()).trim();
 }
 
+/**
+ * Resolves the initial calendar view date from the date input.
+ * @param {HTMLElement} dateInput - Due date input whose current or minimum value seeds the calendar month.
+ * @returns {Date} Date object representing the month initially shown in the picker.
+ */
 function getAddTaskDatePickerInitialDate(dateInput) {
   return parseAddTaskDateValue(dateInput?.value)
     || parseAddTaskDateValue(getAddTaskDatePickerMinValue(dateInput))
@@ -79,25 +112,9 @@ function getAddTaskDatePickerInitialDate(dateInput) {
 }
 
 /**
- * Returns the inner HTML markup for the add-task date picker popup.
- * @returns {string}
- */
-function getAddTaskDatePickerPopupMarkup() {
-  return `
-      <div class="add-task-date-picker__header">
-        <button type="button" class="add-task-date-picker__nav" data-action="previous-month" aria-label="Previous month">&#8249;</button>
-        <div class="add-task-date-picker__title" aria-live="polite"></div>
-        <button type="button" class="add-task-date-picker__nav" data-action="next-month" aria-label="Next month">&#8250;</button>
-      </div>
-      <div class="add-task-date-picker__weekdays">${ADD_TASK_DATE_PICKER_WEEKDAYS.map((day) => `<span>${day}</span>`).join('')}</div>
-      <div class="add-task-date-picker__grid" role="grid"></div>
-    `;
-}
-
-/**
  * Stores popup element references in add-task date picker state.
- * @param {HTMLElement} popup - Popup root element.
- * @returns {void}
+ * @param {HTMLElement} popup - Root popup element whose title and grid nodes are cached.
+ * @returns {void} Nothing is returned after the popup references are saved in state.
  */
 function cacheAddTaskDatePickerPopupElements(popup) {
   addTaskDatePickerState.popup = popup;
@@ -107,13 +124,13 @@ function cacheAddTaskDatePickerPopupElements(popup) {
 
 /**
  * Creates and caches the add-task date picker popup element.
- * @returns {HTMLElement}
+ * @returns {HTMLElement} Newly created popup element with listeners attached.
  */
 function createAddTaskDatePickerPopup() {
   const popup = document.createElement('div');
   popup.className = 'add-task-date-picker-popup';
   popup.hidden = true;
-  popup.innerHTML = getAddTaskDatePickerPopupMarkup();
+  popup.innerHTML = getAddTaskDatePickerPopupMarkup(ADD_TASK_DATE_PICKER_WEEKDAYS);
   popup.addEventListener('click', handleAddTaskDatePickerClick);
   popup.addEventListener('pointerup', handleAddTaskDatePickerPointerUp);
   cacheAddTaskDatePickerPopupElements(popup);
@@ -122,8 +139,8 @@ function createAddTaskDatePickerPopup() {
 
 /**
  * Mounts the date picker popup under the dialog or document body.
- * @param {HTMLElement} dateInput - Date input element.
- * @returns {void}
+ * @param {HTMLElement} dateInput - Due date input used to locate the nearest dialog parent.
+ * @returns {void} Nothing is returned after the popup is appended to the correct parent.
  */
 function mountAddTaskDatePickerPopup(dateInput) {
   const popupParent = dateInput?.closest('dialog') || document.body;
@@ -134,8 +151,8 @@ function mountAddTaskDatePickerPopup(dateInput) {
 
 /**
  * Ensures the add-task date picker popup exists and is mounted.
- * @param {HTMLElement} dateInput - Date input element.
- * @returns {HTMLElement}
+ * @param {HTMLElement} dateInput - Due date input that will own the active picker instance.
+ * @returns {HTMLElement} Popup element ready to be shown for the given input.
  */
 function ensureAddTaskDatePickerPopup(dateInput) {
   ensureAddTaskDatePickerGlobalHandlers();
@@ -144,6 +161,11 @@ function ensureAddTaskDatePickerPopup(dateInput) {
   return addTaskDatePickerState.popup;
 }
 
+/**
+ * Updates the date input mode and aria attributes for the picker.
+ * @param {HTMLElement} dateInput - Due date input whose readonly and aria-expanded state are synchronized.
+ * @returns {void} Nothing is returned after the input accessibility attributes are updated.
+ */
 function updateAddTaskDateInputMode(dateInput) {
   if (!dateInput) return;
   const useCustomPicker = shouldUseCustomAddTaskDatePicker();
@@ -154,10 +176,10 @@ function updateAddTaskDateInputMode(dateInput) {
 
 /**
  * Builds CSS class names for an add-task date picker day button.
- * @param {Date} dayDate - Calendar day date.
- * @param {number} month - Visible month index.
- * @param {string} selectedValue - Currently selected date value.
- * @returns {string}
+ * @param {Date} dayDate - Calendar date represented by the day button.
+ * @param {number} month - Zero-based index of the month currently displayed in the picker.
+ * @param {string} selectedValue - ISO date string currently selected in the due date input.
+ * @returns {string} Space-separated CSS class names applied to the day button.
  */
 function getAddTaskDatePickerDayClassNames(dayDate, month, selectedValue) {
   const dayValue = formatAddTaskDateValue(dayDate);
@@ -173,26 +195,26 @@ function getAddTaskDatePickerDayClassNames(dayDate, month, selectedValue) {
 }
 
 /**
- * Builds HTML for a single day button in the add-task date picker.
- * @param {Date} dayDate - Calendar day date.
- * @param {number} month - Visible month index.
- * @param {string} selectedValue - Currently selected date value.
- * @param {string} minValue - Minimum selectable date value.
- * @returns {string}
- */
-/**
  * Formats a day button element for the add-task date picker grid.
- * @param {Date} dayDate - Calendar day date.
- * @param {string} dayValue - ISO date value for the day.
- * @param {string} classNames - CSS class names for the button.
- * @param {boolean} isSelected - Whether the day is selected.
- * @param {boolean} isDisabled - Whether the day is disabled.
- * @returns {string}
+ * @param {Date} dayDate - Calendar date shown as the button label.
+ * @param {string} dayValue - ISO date string stored in the button data-date attribute.
+ * @param {string} classNames - CSS class names applied to the rendered button.
+ * @param {boolean} isSelected - Whether the day matches the currently selected due date.
+ * @param {boolean} isDisabled - Whether the day falls before the minimum selectable date.
+ * @returns {string} HTML markup for one calendar day button.
  */
 function formatAddTaskDatePickerDayButton(dayDate, dayValue, classNames, isSelected, isDisabled) {
   return `<button type="button" class="${classNames}" data-date="${dayValue}" ${isDisabled ? 'disabled' : ''} aria-pressed="${isSelected ? 'true' : 'false'}">${dayDate.getDate()}</button>`;
 }
 
+/**
+ * Builds HTML for a single day button in the add-task date picker.
+ * @param {Date} dayDate - Calendar date represented by the day button.
+ * @param {number} month - Zero-based index of the month currently displayed in the picker.
+ * @param {string} selectedValue - ISO date string currently selected in the due date input.
+ * @param {string} minValue - Earliest selectable ISO date string for disabling past days.
+ * @returns {string} HTML markup for one rendered calendar day button.
+ */
 function buildAddTaskDatePickerDayHtml(dayDate, month, selectedValue, minValue) {
   const dayValue = formatAddTaskDateValue(dayDate);
   const isSelected = dayValue === selectedValue;
@@ -203,12 +225,12 @@ function buildAddTaskDatePickerDayHtml(dayDate, month, selectedValue, minValue) 
 
 /**
  * Renders the day grid for the add-task date picker.
- * @param {HTMLElement} grid - Grid container element.
- * @param {number} year - Visible year.
- * @param {number} month - Visible month index.
- * @param {string} selectedValue - Currently selected date value.
- * @param {string} minValue - Minimum selectable date value.
- * @returns {void}
+ * @param {HTMLElement} grid - Grid container that receives the generated day buttons.
+ * @param {number} year - Four-digit year of the month being rendered.
+ * @param {number} month - Zero-based index of the month being rendered.
+ * @param {string} selectedValue - ISO date string currently selected in the due date input.
+ * @param {string} minValue - Earliest selectable ISO date string for disabling past days.
+ * @returns {void} Nothing is returned after the six-week day grid is written.
  */
 function renderAddTaskDatePickerGrid(grid, year, month, selectedValue, minValue) {
   const firstOfMonth = new Date(year, month, 1);
@@ -223,7 +245,7 @@ function renderAddTaskDatePickerGrid(grid, year, month, selectedValue, minValue)
 
 /**
  * Renders the add-task date picker month title and day grid.
- * @returns {void}
+ * @returns {void} Nothing is returned after the visible month title and day buttons are refreshed.
  */
 function renderAddTaskDatePicker() {
   const { activeInput, title, grid, viewDate } = addTaskDatePickerState;
@@ -238,9 +260,9 @@ function renderAddTaskDatePicker() {
 
 /**
  * Clamps the date picker horizontally and flips it above the input when needed.
- * @param {DOMRect} rect - Input bounding rect.
- * @param {DOMRect} popupRect - Popup bounding rect.
- * @returns {void}
+ * @param {DOMRect} rect - Bounding rectangle of the active due date input.
+ * @param {DOMRect} popupRect - Bounding rectangle of the open date picker popup.
+ * @returns {void} Nothing is returned after the popup top and left positions are adjusted.
  */
 function clampAddTaskDatePickerPosition(rect, popupRect) {
   const { popup } = addTaskDatePickerState;
@@ -253,7 +275,7 @@ function clampAddTaskDatePickerPosition(rect, popupRect) {
 
 /**
  * Positions the add-task date picker popup below the active input.
- * @returns {void}
+ * @returns {void} Nothing is returned after the popup size and screen position are updated.
  */
 function updateAddTaskDatePickerPosition() {
   const { popup, activeInput } = addTaskDatePickerState;
@@ -265,6 +287,12 @@ function updateAddTaskDatePickerPosition() {
   clampAddTaskDatePickerPosition(rect, popup.getBoundingClientRect());
 }
 
+/**
+ * Closes the add-task date picker and resets its state.
+ * @param {Object} [options={}] - Optional close behavior flags.
+ * @param {boolean} [options.blurActiveInput=false] - Whether the active input should lose focus when closing.
+ * @returns {void} Nothing is returned after the popup is hidden and active state is cleared.
+ */
 function closeAddTaskDatePicker(options = {}) {
   const { blurActiveInput = false } = options;
   const { popup, activeInput } = addTaskDatePickerState;
@@ -275,6 +303,11 @@ function closeAddTaskDatePicker(options = {}) {
   addTaskDatePickerState.viewDate = null;
 }
 
+/**
+ * Sets the date picker value on the active input and closes the picker.
+ * @param {string} dateValue - ISO date string written to the due date input.
+ * @returns {void} Nothing is returned after the input value is updated and the picker closes.
+ */
 function setAddTaskDatePickerValue(dateValue) {
   const { activeInput } = addTaskDatePickerState;
   if (!activeInput) return;
@@ -287,8 +320,8 @@ function setAddTaskDatePickerValue(dateValue) {
 
 /**
  * Handles month navigation inside the add-task date picker.
- * @param {HTMLElement} actionButton - Previous/next month button.
- * @returns {void}
+ * @param {HTMLElement} actionButton - Previous-month or next-month navigation button that was clicked.
+ * @returns {void} Nothing is returned after the visible month and popup position are refreshed.
  */
 function handleAddTaskDatePickerMonthNav(actionButton) {
   const monthOffset = actionButton.dataset.action === "previous-month" ? -1 : 1;
@@ -300,8 +333,8 @@ function handleAddTaskDatePickerMonthNav(actionButton) {
 
 /**
  * Handles clicks inside the add-task date picker popup.
- * @param {Event} event - Click event.
- * @returns {void}
+ * @param {Event} event - Click event originating inside the date picker popup.
+ * @returns {void} Nothing is returned after month navigation or date selection is handled.
  */
 function handleAddTaskDatePickerClick(event) {
   event.stopPropagation();
@@ -313,6 +346,11 @@ function handleAddTaskDatePickerClick(event) {
   setAddTaskDatePickerValue(dayButton.dataset.date);
 }
 
+/**
+ * Prevents pointer-up propagation on day buttons in the date picker.
+ * @param {Event} event - Pointer event originating on a calendar day button.
+ * @returns {void} Nothing is returned after the event is stopped when a valid day button is targeted.
+ */
 function handleAddTaskDatePickerPointerUp(event) {
   const dayButton = event.target.closest('[data-date]');
   if (!dayButton || dayButton.disabled) return;
@@ -321,10 +359,10 @@ function handleAddTaskDatePickerPointerUp(event) {
 }
 
 /**
- * Returns whether an outside pointer event should stay inside the date picker.
- * @param {Event} event - Pointer event.
- * @param {HTMLElement|null} popup - Date picker popup element.
- * @returns {boolean} Result.
+ * Returns whether an outside pointer event should keep the date picker open.
+ * @param {Event} event - Pointer event that may have occurred outside the picker.
+ * @param {HTMLElement|null} popup - Date picker popup element, which may still be hidden during creation.
+ * @returns {boolean} True when the event target is considered inside the active picker context.
  */
 function shouldKeepAddTaskDatePickerOpen(event, popup) {
   if (popup && !popup.hidden && isInsideActiveAddTaskDatePicker(event.target)) return true;
@@ -333,8 +371,8 @@ function shouldKeepAddTaskDatePickerOpen(event, popup) {
 
 /**
  * Closes the date picker when the user clicks outside it.
- * @param {Event} event - Pointer event.
- * @returns {void}
+ * @param {Event} event - Captured pointerdown event evaluated against the active picker.
+ * @returns {void} Nothing is returned after the picker closes or the event is allowed to continue.
  */
 function handleAddTaskDatePickerOutsidePointerDown(event) {
   const { popup, activeInput } = addTaskDatePickerState;
@@ -343,6 +381,11 @@ function handleAddTaskDatePickerOutsidePointerDown(event) {
   closeAddTaskDatePicker({ blurActiveInput: true });
 }
 
+/**
+ * Stops pointer-up propagation for day buttons handled outside the popup click listener.
+ * @param {Event} event - Captured pointerup event evaluated against the active picker.
+ * @returns {void} Nothing is returned after propagation is stopped for valid day button targets.
+ */
 function handleAddTaskDatePickerOutsidePointerUp(event) {
   const { popup, activeInput } = addTaskDatePickerState;
   if (!activeInput || !popup || popup.hidden) return;
@@ -353,6 +396,11 @@ function handleAddTaskDatePickerOutsidePointerUp(event) {
   event.stopPropagation();
 }
 
+/**
+ * Closes the date picker when focus moves outside it.
+ * @param {Event} event - Focusin event evaluated against the active picker context.
+ * @returns {void} Nothing is returned after the picker closes when focus leaves its context.
+ */
 function handleAddTaskDatePickerFocusIn(event) {
   const { activeInput } = addTaskDatePickerState;
   if (!activeInput) return;
@@ -360,10 +408,20 @@ function handleAddTaskDatePickerFocusIn(event) {
   closeAddTaskDatePicker();
 }
 
+/**
+ * Closes the date picker when the Escape key is pressed.
+ * @param {KeyboardEvent} event - Keydown event inspected for the Escape key.
+ * @returns {void} Nothing is returned after the picker closes on Escape or the event is ignored.
+ */
 function handleAddTaskDatePickerGlobalKeydown(event) {
   if (event.key === 'Escape') closeAddTaskDatePicker();
 }
 
+/**
+ * Opens the custom calendar popup for the add-task date input.
+ * @param {HTMLElement} dateInput - Due date input that should own the open picker.
+ * @returns {void} Nothing is returned after the custom calendar is shown and focused.
+ */
 function openCustomAddTaskDatePicker(dateInput) {
   const popup = ensureAddTaskDatePickerPopup(dateInput);
   addTaskDatePickerState.activeInput = dateInput;
@@ -377,9 +435,9 @@ function openCustomAddTaskDatePicker(dateInput) {
 }
 
 /**
- * Whether the custom date picker is already open for the given input.
- * @param {HTMLElement} dateInput - Date input element.
- * @returns {boolean}
+ * Returns whether the custom date picker is open for the given input.
+ * @param {HTMLElement} dateInput - Due date input being checked for an active custom picker.
+ * @returns {boolean} True when the custom picker is open and bound to the given input.
  */
 function isAddTaskDatePickerOpenForInput(dateInput) {
   return shouldUseCustomAddTaskDatePicker()
@@ -390,8 +448,8 @@ function isAddTaskDatePickerOpenForInput(dateInput) {
 
 /**
  * Opens the native browser date picker for the add-task date input.
- * @param {HTMLElement} dateInput - Date input element.
- * @returns {void}
+ * @param {HTMLElement} dateInput - Due date input that should display the native picker.
+ * @returns {void} Nothing is returned after the native picker is shown or the input is focused.
  */
 function openNativeAddTaskDatePicker(dateInput) {
   addTaskDatePickerState.activeInput = dateInput;
@@ -405,9 +463,9 @@ function openNativeAddTaskDatePicker(dateInput) {
 }
 
 /**
- * Opens the add-task date picker (custom or native depending on device).
- * @param {HTMLElement} dateInput - Date input element.
- * @returns {void}
+ * Opens the add-task date picker using the custom or native implementation for the device.
+ * @param {HTMLElement} dateInput - Due date input that should receive the picker interaction.
+ * @returns {void} Nothing is returned after the appropriate picker is opened or toggled closed.
  */
 function openAddTaskDatePicker(dateInput) {
   if (!dateInput) return;

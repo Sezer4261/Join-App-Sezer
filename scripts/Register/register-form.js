@@ -15,9 +15,9 @@ const SIGNUP_ERROR_ID_MAP = {
 };
 
 /**
- * Executes handle signup submit logic.
- * @param {Event} event - Browser event.
- * @returns {void} Result.
+ * Prevents default form submission and delegates to addUser when validation passes.
+ * @param {Event} event - Submit event from the signup form.
+ * @returns {void}
  */
 function handleSignupSubmit(event) {
     event.preventDefault();
@@ -28,8 +28,8 @@ function handleSignupSubmit(event) {
 }
 
 /**
- * Validates signup form.
- * @returns {void} Result.
+ * Validates all signup form fields and returns whether the form may be submitted.
+ * @returns {boolean} Whether every field passed validation without errors.
  */
 function validateSignupForm() {
     const fields = getSignupFields();
@@ -44,8 +44,8 @@ function validateSignupForm() {
 }
 
 /**
- * Returns signup fields.
- * @returns {*} Result.
+ * Collects DOM references for all signup form inputs and the privacy checkbox.
+ * @returns {Object} Signup field element references keyed by logical field name.
  */
 function getSignupFields() {
     return {
@@ -58,9 +58,9 @@ function getSignupFields() {
 }
 
 /**
- * Executes reset signup errors logic.
- * @param {*} fields - Parameter.
- * @returns {void} Result.
+ * Clears all signup field error states, inline messages, and the policy container highlight.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @returns {void}
  */
 function resetSignupErrors(fields) {
     signupFieldErrors = {};
@@ -72,8 +72,8 @@ function resetSignupErrors(fields) {
 }
 
 /**
- * Clears signup error texts.
- * @returns {void} Result.
+ * Clears the text content of all signup inline error message spans.
+ * @returns {void}
  */
 function clearSignupErrorTexts() {
     setSignupErrorText('register-name-error', '');
@@ -84,10 +84,10 @@ function clearSignupErrorTexts() {
 }
 
 /**
- * Sets signup error text.
- * @param {string} id - Identifier.
- * @param {string} value - Value.
- * @returns {void} Result.
+ * Sets the text content of a signup inline error span identified by its DOM id.
+ * @param {string} id - DOM id of the error message span element.
+ * @param {string} value - Error message text to display, or empty string to clear.
+ * @returns {void}
  */
 function setSignupErrorText(id, value) {
     const el = document.getElementById(id);
@@ -95,8 +95,8 @@ function setSignupErrorText(id, value) {
 }
 
 /**
- * Clears policy error.
- * @returns {void} Result.
+ * Removes error styling from the privacy policy acceptance container.
+ * @returns {void}
  */
 function clearPolicyError() {
     const policyContainer = document.querySelector('.accept-privacy-policy');
@@ -106,10 +106,10 @@ function clearPolicyError() {
 }
 
 /**
- * Validates name field.
- * @param {*} fields - Parameter.
- * @param {*} state - Parameter.
- * @returns {void} Result.
+ * Validates the signup name field using shared contact name rules and normalizes the value.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @param {{ firstErrorShown: boolean }} state - Mutable object tracking whether the first error was shown.
+ * @returns {void}
  */
 function validateNameField(fields, state) {
     const nameValue = fields.nameInput.value;
@@ -124,10 +124,10 @@ function validateNameField(fields, state) {
 }
 
 /**
- * Validates email field.
- * @param {*} fields - Parameter.
- * @param {*} state - Parameter.
- * @returns {void} Result.
+ * Validates the signup email field using strict email rules and normalizes the value.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @param {{ firstErrorShown: boolean }} state - Mutable object tracking whether the first error was shown.
+ * @returns {void}
  */
 function validateEmailField(fields, state) {
     const emailValue = fields.emailInput.value;
@@ -143,9 +143,9 @@ function validateEmailField(fields, state) {
 }
 
 /**
- * Maps strict email validation results to the signup form's error messages.
- * @param {{ isValid: boolean, normalizedEmail: string, error: string, reason?: string }} emailCheck - Validation result.
- * @returns {string} Message.
+ * Maps strict email validation failure reasons to user-facing signup error messages.
+ * @param {{ isValid: boolean, normalizedEmail: string, error: string, reason?: string }} emailCheck - Result object from validateEmailLikeSignup.
+ * @returns {string} Localized error message appropriate for the validation failure reason.
  */
 function getSignupEmailErrorMessage(emailCheck) {
     switch (emailCheck?.reason) {
@@ -161,10 +161,10 @@ function getSignupEmailErrorMessage(emailCheck) {
 }
 
 /**
- * Validates password field.
- * @param {*} fields - Parameter.
- * @param {*} state - Parameter.
- * @returns {void} Result.
+ * Validates that the signup password field is not empty on form submission.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @param {{ firstErrorShown: boolean }} state - Mutable object tracking whether the first error was shown.
+ * @returns {void}
  */
 function validatePasswordField(fields, state) {
     const passwordValue = fields.passwordInput.value;
@@ -174,10 +174,10 @@ function validatePasswordField(fields, state) {
 }
 
 /**
- * Validates confirm password field.
- * @param {*} fields - Parameter.
- * @param {*} state - Parameter.
- * @returns {void} Result.
+ * Validates that the confirm-password field is filled and matches the password field.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @param {{ firstErrorShown: boolean }} state - Mutable object tracking whether the first error was shown.
+ * @returns {void}
  */
 function validateConfirmPasswordField(fields, state) {
     const passwordValue = fields.passwordInput.value;
@@ -192,10 +192,10 @@ function validateConfirmPasswordField(fields, state) {
 }
 
 /**
- * Validates policy field.
- * @param {*} fields - Parameter.
- * @param {*} state - Parameter.
- * @returns {void} Result.
+ * Validates that the privacy policy acceptance checkbox is checked on form submission.
+ * @param {Object} fields - Signup field element references from getSignupFields.
+ * @param {{ firstErrorShown: boolean }} state - Mutable object tracking whether the first error was shown.
+ * @returns {void}
  */
 function validatePolicyField(fields, state) {
     if (fields.policyCheckbox.checked) return;
@@ -211,12 +211,12 @@ function validatePolicyField(fields, state) {
 }
 
 /**
- * Sets signup field error.
- * @param {*} fieldId - Parameter.
- * @param {string} message - Message text.
- * @param {HTMLElement} input - Input element.
- * @param {*} state - Parameter.
- * @returns {void} Result.
+ * Records a field error, updates the UI, and focuses the first invalid field encountered.
+ * @param {string} fieldId - DOM id or logical identifier of the invalid field.
+ * @param {string} message - User-facing validation error message for the field.
+ * @param {HTMLElement} input - Input element that will receive the error CSS class and focus.
+ * @param {{ firstErrorShown: boolean }} state - Mutable object tracking whether the first error was shown.
+ * @returns {void}
  */
 function setSignupFieldError(fieldId, message, input, state) {
     signupFieldErrors[fieldId] = message;
@@ -229,18 +229,18 @@ function setSignupFieldError(fieldId, message, input, state) {
 }
 
 /**
- * Returns signup error id.
- * @param {*} fieldId - Parameter.
- * @returns {*} Result.
+ * Returns the DOM id of the inline error span associated with a signup field id.
+ * @param {string} fieldId - DOM id or logical identifier of the signup field.
+ * @returns {string|undefined} DOM id of the corresponding error message span, if mapped.
  */
 function getSignupErrorId(fieldId) {
     return SIGNUP_ERROR_ID_MAP[fieldId];
 }
 
 /**
- * Shows field error message.
- * @param {*} fieldId - Parameter.
- * @returns {void} Result.
+ * Re-displays the stored validation error message when the user focuses an invalid field.
+ * @param {string} fieldId - DOM id or logical identifier of the focused field.
+ * @returns {void}
  */
 function showFieldErrorMessage(fieldId) {
     clearAllSignupErrorMessages();
@@ -254,8 +254,8 @@ function showFieldErrorMessage(fieldId) {
 }
 
 /**
- * Clears all signup error messages.
- * @returns {void} Result.
+ * Clears the text content of all signup inline error message spans at once.
+ * @returns {void}
  */
 function clearAllSignupErrorMessages() {
     const ids = [
@@ -271,9 +271,15 @@ function clearAllSignupErrorMessages() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+/**
+ * Initializes signup form handlers, password toggles, and button state when the page loads.
+ * @returns {void}
+ */
+function initSignupFormPage() {
     attachSignupErrorFocusHandlers();
     attachSignupFormStateHandlers();
     initSignupPasswordVisibilityToggles();
     updateSignupButtonState();
-});
+}
+
+document.addEventListener('DOMContentLoaded', initSignupFormPage);
