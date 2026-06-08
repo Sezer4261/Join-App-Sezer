@@ -12,7 +12,7 @@ Alle Skripte nutzen **globale Funktionen** (keine ES-Module). Die Ladereihenfolg
 | `scripts/Add-Task/` | Add-Task-Formular, Validierung, Date-Picker, Subtasks |
 | `scripts/Login/` | Login Intro, Formular, Auth |
 | `scripts/Register/` | Registrierung, Passwort-Sichtbarkeit, Formular |
-| `scripts/` (Root) | `form-icons.js`, `message-box.js`, `sidebar.js`, `summary.js`, `toast.js` |
+| `scripts/` (Root) | `form-icons.js`, `message-box.js`, `sidebar.js`, `summary-welcome.js`, `summary.js`, `toast.js` |
 
 ## Konvention
 
@@ -31,11 +31,17 @@ Alle Skripte nutzen **globale Funktionen** (keine ES-Module). Die Ladereihenfolg
 3. `scripts/Add-Task/add-task-contacts.js`
 4. `scripts/Add-Task/add-task-templates.js`
 5. `scripts/Add-Task/add-task-subtask-templates.js`
-6. `scripts/Add-Task/add-task-date-picker.js`
-7. `scripts/Add-Task/add-task-subtasks.js`
-8. `scripts/Add-Task/add-task.js`
+6. `scripts/Add-Task/add-task-date-picker-core.js`
+7. `scripts/Add-Task/add-task-date-picker.js`
+8. `scripts/Add-Task/add-task-subtasks.js`
+9. `scripts/Add-Task/add-task.js`
 
 Danach (nur Board): `scripts/Board/board-*` in der Reihenfolge wie in `board.html`
+
+## Summary-Ladereihenfolge (`summary.html`, `contacts.html`)
+
+1. `scripts/summary-welcome.js`
+2. `scripts/summary.js`
 
 ## App-Core (`firebase.js` + geschützte Seiten)
 
